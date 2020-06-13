@@ -1,0 +1,355 @@
+
+<!DOCTYPE HTML>
+<html lang="" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>src · DarkNet Book</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 3.2.3">
+        <meta name="author" content="JJM">
+        
+        
+    
+    
+
+    
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-advanced-emoji/emoji-website.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-search/search.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-fontsettings/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-theme-api/theme-api.css">
+                
+            
+        
+
+    
+
+    
+        
+        <link rel="stylesheet" href="../website-1592055015622.css">
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    
+    
+        <link rel="shortcut icon" href="./assets/darknet.png" type="image/x-icon">
+    
+    
+    
+
+    
+    <link rel="next" href="DATA.html" />
+    
+    
+    <link rel="prev" href="INSTALL.html" />
+    
+
+    </head>
+    <body>
+        
+<div class="book">
+    <div class="book-summary">
+        
+            <div class="book-logo">   
+                
+                <img src="./assets/darknet.png"/>
+                
+            </div>
+            
+<div id="book-search-input" role="search">
+    <input type="text" placeholder="Type to search" />
+</div>
+
+            
+                <nav role="navigation">
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        
+    
+        
+        <li class="chapter 
+              "
+            data-level="1.1" 
+            data-path="../">
+
+            
+                <a href="../">
+            
+                    
+                    DarkNet
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+                
+    
+        
+        <li class="chapter 
+               hide "
+            data-level="1.1.1" 
+            data-path="INSTALL.html">
+
+            
+                <a href="INSTALL.html">
+            
+                    
+                    설치하기
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        
+        <li class="chapter 
+            active  selected  "
+            data-level="1.2" 
+            data-path="SRC.html">
+
+            
+                <a href="SRC.html">
+            
+                    
+                    src
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                  
+                
+    
+        
+        <li class="chapter 
+              "
+            data-level="1.2.1" 
+            data-path="DATA.html">
+
+            
+                <a href="DATA.html">
+            
+                    
+                    data
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+    
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href=".." >src</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+<div id="book-search-results">
+    <div class="search-noresults">
+    
+                                <section class="normal markdown-section">
+                                
+                                <h1 id="darknet-source-code">DarkNet Source Code</h1>
+<ul>
+<li><p><code>Yolo</code>&#xB97C; &#xAC1C;&#xBC1C;&#xD55C; <code>Joseph Redmon</code>&#xC758; <a href="https://github.com/pjreddie/darknet" target="_blank">DarkNet</a>&#xC744; &#xBD84;&#xC11D;&#xD569;&#xB2C8;&#xB2E4;.</p>
+</li>
+<li><p>DarkNet&#xC740; &#xB525;&#xB7EC;&#xB2DD;&#xC744; C&#xC5B8;&#xC5B4;&#xB85C; &#xAD6C;&#xD604;&#xD588;&#xAE30; &#xB54C;&#xBB38;&#xC5D0; &#xB525;&#xB7EC;&#xB2DD;&#xC774; &#xB3D9;&#xC791;&#xD558;&#xB294; &#xACFC;&#xC815;&#xC744; &#xC790;&#xC138;&#xD788; &#xCF54;&#xB4DC; &#xAD6C;&#xD604;&#xC73C;&#xB85C; &#xC0B4;&#xD3B4;&#xBCFC; &#xC218; &#xC788;&#xB2E4;&#xACE0; &#xC0DD;&#xAC01; &#xB429;&#xB2C8;&#xB2E4;.</p>
+</li>
+<li><p>&#xC800;&#xB294; C&#xC5B8;&#xC5B4;&#xB97C; &#xC790;&#xC138;&#xD788; &#xC54C;&#xC9C0; &#xBABB;&#xD558;&#xAE30; &#xB54C;&#xBB38;&#xC5D0; C&#xC5B8;&#xC5B4; &#xBD80;&#xD130; &#xC790;&#xC138;&#xD558;&#xAC8C; &#xC774;&#xD574;&#xD558;&#xBA74;&#xC11C; &#xB118;&#xC5B4;&#xAC00;&#xACA0;&#xC2B5;&#xB2C8;&#xB2E4;.</p>
+</li>
+</ul>
+<h2 id="project">Project</h2>
+<ul>
+<li>&#xD504;&#xB85C;&#xC81D;&#xD2B8; : &#xD558;&#xB098;&#xC758; &#xC2E4;&#xD589;&#xD30C;&#xC77C;&#xC744; &#xB9CC;&#xB4E4;&#xC5B4; &#xB0B4;&#xAE30; &#xC704;&#xD574; &#xD544;&#xC694;&#xD55C; &#xC5EC;&#xB7EC; &#xAC1C;&#xC758; &#xC18C;&#xC2A4; &#xD30C;&#xC77C;&#xACFC; &#xD5E4;&#xB354; &#xD30C;&#xC77C; &#xB4F1;&#xC744; &#xD558;&#xB098;&#xB85C; &#xBB36;&#xC5B4; &#xB193;&#xC740; &#xAC83;&#xC744; &#xB9D0;&#xD569;&#xB2C8;&#xB2E4;.</li>
+<li><p><code>&#xD504;&#xB85C;&#xC81D;&#xD2B8;&#xC774;&#xB984;.vcxproj</code> : &#xD504;&#xB85C;&#xC81D;&#xD2B8;, &#xC2E4;&#xD589;&#xD30C;&#xC77C;&#xC774;&#xB098; dll(&#xB3D9;&#xC801; &#xC5F0;&#xACB0; &#xB77C;&#xC774;&#xBE0C;&#xB7EC;&#xB9AC;)&#xB4F1;&#xACFC; &#xAC19;&#xC740; &#xD30C;&#xC77C;&#xC744; &#xB9CC;&#xB4ED;&#xB2C8;&#xB2E4;.</p>
+</li>
+<li><p>&#xC194;&#xB8E8;&#xC158; : &#xC5EC;&#xB7EC; &#xAC1C;&#xC758; &#xD504;&#xB85C;&#xC81D;&#xD2B8;&#xC758; &#xBAA8;&#xC784;, &#xC751;&#xC6A9; &#xD504;&#xB85C;&#xADF8;&#xB7A8;&#xB9C8;&#xB2E4; &#xD558;&#xB098;&#xAC00; &#xC874;&#xC7AC;&#xD558;&#xACE0; &#xD504;&#xB85C;&#xC81D;&#xD2B8;&#xB97C; &#xC0DD;&#xC131;&#xD558;&#xB294; &#xACFC;&#xC815;&#xC5D0;&#xC11C; &#xD504;&#xB85C;&#xC81D;&#xD2B8;&#xC640; &#xB3D9;&#xC77C;&#xD55C; &#xC774;&#xB984;&#xC73C;&#xB85C; &#xC790;&#xB3D9; &#xC0DD;&#xC131;&#xB429;&#xB2C8;&#xB2E4;.</p>
+</li>
+<li><code>&#xC194;&#xB8E8;&#xC158;&#xC774;&#xB984;.sln</code> : &#xC194;&#xB8E8;&#xC158;, &#xD504;&#xB85C;&#xC81D;&#xD2B8;&#xB97C; &#xAD00;&#xB9AC;&#xD558;&#xB294; &#xD30C;&#xC77C; &#xC785;&#xB2C8;&#xB2E4;.</li>
+</ul>
+<h1 id="darknet-&#xAD6C;&#xC131;&#xC694;&#xC18C;">DarkNet &#xAD6C;&#xC131;&#xC694;&#xC18C;</h1>
+<pre><code class="lang-shell">/cfg
+/data
+/examples
+/include
+/python
+/scripts
+/src
+LICENCE
+Makefile
+</code></pre>
+<h1 id="licence">LICENCE</h1>
+<pre><code>                                  YOLO LICENSE
+                             Version 2, July 29 2016
+
+THIS SOFTWARE LICENSE IS PROVIDED &quot;ALL CAPS&quot; SO THAT YOU KNOW IT IS SUPER
+SERIOUS AND YOU DON&apos;T MESS AROUND WITH COPYRIGHT LAW BECAUSE YOU WILL GET IN
+TROUBLE HERE ARE SOME OTHER BUZZWORDS COMMONLY IN THESE THINGS WARRANTIES
+LIABILITY CONTRACT TORT LIABLE CLAIMS RESTRICTION MERCHANTABILITY. NOW HERE&apos;S
+THE REAL LICENSE:
+
+0. Darknet is public domain.
+1. Do whatever you want with it.
+2. Stop emailing me about it!
+</code></pre><p>YOLO &#xAC1C;&#xBC1C;&#xC790;&#xB2E4;&#xC6B4; &#xC7AC;&#xBBF8;&#xC788;&#xB294; <code>LICENCE</code> &#xC785;&#xB2C8;&#xB2E4;.</p>
+<ol>
+<li>DarkNet&#xC740; &#xACF5;&#xC6A9; &#xB3C4;&#xBA54;&#xC778; &#xC785;&#xB2C8;&#xB2E4;.</li>
+<li>&#xC6D0;&#xD558;&#xB294; &#xACF3; &#xC5B4;&#xB514;&#xC5D0;&#xB4E0; &#xC0AC;&#xC6A9;&#xD574;&#xB3C4; &#xC88B;&#xC2B5;&#xB2C8;&#xB2E4;.</li>
+<li>&#xC774;&#xBA54;&#xC77C;&#xC744; &#xBCF4;&#xB0B4;&#xC9C0; &#xB9C8;&#xC138;&#xC694;</li>
+</ol>
+
+                                
+                                </section>
+                            
+    </div>
+    <div class="search-results">
+        <div class="has-results">
+            
+            <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+            <ul class="search-results-list"></ul>
+            
+        </div>
+        <div class="no-results">
+            
+            <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+            
+        </div>
+    </div>
+</div>
+
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="INSTALL.html" class="navigation navigation-prev " aria-label="Previous page: 설치하기">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="DATA.html" class="navigation navigation-next " aria-label="Next page: data">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"src","level":"1.2","depth":1,"next":{"title":"data","level":"1.2.1","depth":2,"path":"post/DATA.md","ref":"post/DATA.md","articles":[]},"previous":{"title":"설치하기","level":"1.1.1","depth":2,"path":"post/INSTALL.md","ref":"post/INSTALL.md","articles":[]},"dir":"ltr"},"config":{"plugins":["advanced-emoji","theme-gestalt","-theme-default","styles-sass-fix","theme-api"],"root":"./","styles":{"website":"website-1592055015622.css"},"pluginsConfig":{"styles-sass-fix":{},"theme-gestalt":{"showLevel":false,"styles":{"website":"styles/website.css"},"logo":"./assets/darknet.png","favicon":"./assets/darknet.png","baseUrl":null,"excludeDefaultStyles":true,"doNotHideChildrenChapters":false},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"theme-api":{"languages":[],"split":true,"theme":"light"},"advanced-emoji":{"embedEmojis":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]}},"theme":"default","author":"JJM","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"DarkNet Book","output.name":"site","gitbook":"*"},"file":{"path":"post/SRC.md","mtime":"2020-06-13T12:10:56.481Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-06-13T13:30:10.037Z"},"basePath":"..","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <script src="../gitbook/gitbook.js"></script>
+    <script src="../gitbook/theme.js"></script>
+    
+        
+        <script src="../gitbook/gitbook-plugin-search/search-engine.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-search/search.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lunr/lunr.min.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lunr/search-lunr.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-sharing/buttons.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-fontsettings/fontsettings.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-theme-api/theme-api.js"></script>
+        
+    
+
+    </body>
+</html>
+

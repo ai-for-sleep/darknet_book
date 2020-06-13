@@ -2532,7 +2532,7 @@ table {
 
 html, body {
   height: 100%;
-  font-size: 16px; }
+  font-size: 14px; }
 
 body {
   text-rendering: optimizeLegibility;
@@ -2574,7 +2574,7 @@ body {
   left: 0px;
   bottom: 0px;
   overflow-y: auto;
-  color: red;
+  color: #00ffff;
   background: black; }
   @media (max-width: 1240px) {
     .book-body .body-inner {
@@ -2603,7 +2603,7 @@ body {
   height: 50px;
   z-index: 2;
   padding: 0px 5px;
-  color: red;
+  color: #00ffff;
   background: transparent; }
 
 .book-header .btn {
@@ -2615,7 +2615,7 @@ body {
   line-height: 50px;
   box-shadow: none !important;
   position: relative;
-  font-size: 16px;
+  font-size: 14px;
   color: #cccccc; }
 
 .book-header .btn:hover {
@@ -2728,7 +2728,7 @@ body {
   padding-top: 0; }
 
 .book-summary ul.summary li.header.selected {
-  color: #bfff00; }
+  color: #FFBF00; }
 
 .book-summary ul.summary li.divider {
   height: 1px;
@@ -2745,7 +2745,7 @@ body {
   white-space: nowrap;
   padding: 10px 0;
   border-bottom: none;
-  color: red;
+  color: #00ffff;
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; }
 
 .book-summary ul.summary li.selected > a,
@@ -2754,14 +2754,14 @@ body {
 
 .book-summary ul.summary li.active > a,
 .book-summary ul.summary li a:hover {
-  color: #bfff00;
+  color: #FFBF00;
   text-decoration: none; }
 
 .book-summary ul.summary li ul {
   padding-left: 10px; }
 
 a {
-  color: #bfff00;
+  color: #FFBF00;
   text-decoration: none; }
 
 a:hover {
@@ -2832,38 +2832,38 @@ hr {
   background-color: #4d4d4d; }
 
 h1 {
-  color: #bfff00;
-  border-bottom: 3px solid #bfff00;
+  color: #FFBF00;
+  border-bottom: 3px solid #FFBF00;
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-size: 2rem; }
 
 h2 {
-  color: #bfff00;
-  border-bottom: 3px solid #bfff00;
+  color: #FFBF00;
+  border-bottom: 3px solid #FFBF00;
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-size: 1.6rem; }
 
 h3 {
-  color: #bfff00;
-  border-bottom: 3px solid #bfff00;
+  color: #FFBF00;
+  border-bottom: 3px solid #FFBF00;
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-size: 1.2rem; }
 
 h4 {
-  color: #bfff00;
-  border-bottom: 3px solid #bfff00;
+  color: #FFBF00;
+  border-bottom: 3px solid #FFBF00;
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-size: 1rem; }
 
 h5 {
-  color: #bfff00;
-  border-bottom: 3px solid #bfff00;
+  color: #FFBF00;
+  border-bottom: 3px solid #FFBF00;
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-size: 0.9rem; }
 
 h6 {
-  color: #bfff00;
-  border-bottom: 3px solid #bfff00;
+  color: #FFBF00;
+  border-bottom: 3px solid #FFBF00;
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-size: 0.8rem; }
 
@@ -2872,6 +2872,7 @@ code, pre {
   font-family: Consolas, "Liberation Mono", Menlo, Courier, monospace;
   margin: 0px;
   padding: 0px;
+  background-color: #0431B4;
   border: none; }
 
 pre {
@@ -2880,7 +2881,7 @@ pre {
   margin: 0px;
   padding: 0.85em 1em;
   margin-bottom: 10px;
-  background: #f2f2f2; }
+  background: #0431B4; }
 
 pre > code {
   display: inline;
@@ -2890,8 +2891,9 @@ pre > code {
   overflow: initial;
   line-height: inherit;
   white-space: pre;
-  font-size: 0.85em;
-  background: transparent; }
+  font-size: 0.9em;
+  color: #00FF40;
+  background: #0431B4; }
   pre > code:before, pre > code:after {
     content: normal; }
 
@@ -2899,7 +2901,8 @@ code {
   padding: 0.2em;
   margin: 0;
   font-size: 0.85em;
-  background-color: #f2f2f2; }
+  color: #00FF40;
+  background-color: #0431B4; }
   code:before, code:after {
     letter-spacing: -0.2em;
     content: "\00a0"; }
@@ -2940,7 +2943,7 @@ td {
 blockquote {
   margin: 0 0 0 10px;
   padding: 0 20px;
-  color: #999999;
+  color: red;
   border-left: 4px solid #4d4d4d; }
   blockquote:first-child {
     margin-top: 0; }
@@ -3064,7 +3067,7 @@ body.with-search .navigation {
   padding: 0;
   margin: 2px 0 0;
   list-style: none;
-  font-size: 16px;
+  font-size: 14px;
   background-color: black;
   border: 1px solid #4d4d4d;
   border-radius: 1px;

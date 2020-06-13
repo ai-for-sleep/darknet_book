@@ -1,0 +1,355 @@
+
+<!DOCTYPE HTML>
+<html lang="" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>설치하기 · DarkNet Book</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 3.2.3">
+        <meta name="author" content="JJM">
+        
+        
+    
+    
+
+    
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-advanced-emoji/emoji-website.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-search/search.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-fontsettings/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-theme-api/theme-api.css">
+                
+            
+        
+
+    
+
+    
+        
+        <link rel="stylesheet" href="../website-1592055015622.css">
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    
+    
+        <link rel="shortcut icon" href="./assets/darknet.png" type="image/x-icon">
+    
+    
+    
+
+    
+    <link rel="next" href="SRC.html" />
+    
+    
+    <link rel="prev" href="../" />
+    
+
+    </head>
+    <body>
+        
+<div class="book">
+    <div class="book-summary">
+        
+            <div class="book-logo">   
+                
+                <img src="./assets/darknet.png"/>
+                
+            </div>
+            
+<div id="book-search-input" role="search">
+    <input type="text" placeholder="Type to search" />
+</div>
+
+            
+                <nav role="navigation">
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        
+    
+        
+        <li class="chapter 
+              selected  "
+            data-level="1.1" 
+            data-path="../">
+
+            
+                <a href="../">
+            
+                    
+                    DarkNet
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                  
+                
+    
+        
+        <li class="chapter 
+            active  selected  "
+            data-level="1.1.1" 
+            data-path="INSTALL.html">
+
+            
+                <a href="INSTALL.html">
+            
+                    
+                    설치하기
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="1.2" 
+            data-path="SRC.html">
+
+            
+                <a href="SRC.html">
+            
+                    
+                    src
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+                
+    
+        
+        <li class="chapter 
+              "
+            data-level="1.2.1" 
+            data-path="DATA.html">
+
+            
+                <a href="DATA.html">
+            
+                    
+                    data
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+    
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href=".." >설치하기</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+<div id="book-search-results">
+    <div class="search-noresults">
+    
+                                <section class="normal markdown-section">
+                                
+                                <h1 id="install">Install</h1>
+<ul>
+<li>OS : <code>Window 10</code></li>
+<li>GPU : <code>RTX-2080 Ti</code></li>
+<li>Visual Studio : <code>Community 2019</code></li>
+<li>Opencv : <code>4.3.0</code></li>
+<li>CUDA : <code>10.1</code></li>
+<li>cudnn : <code>7.65</code></li>
+</ul>
+<p>GPU &#xBC84;&#xC804;&#xC5D0; &#xB9DE;&#xAC8C; CUDA&#xC640; cudnn&#xC744; &#xC124;&#xCE58;&#xB97C; &#xD558;&#xC2DC;&#xBA74; &#xB429;&#xB2C8;&#xB2E4;.</p>
+<ul>
+<li>CUDA : <a href="https://developer.nvidia.com/cuda-toolkit-archive" target="_blank">https://developer.nvidia.com/cuda-toolkit-archive</a></li>
+<li>cudnn : <a href="https://developer.nvidia.com/rdp/form/cudnn-download-survey" target="_blank">https://developer.nvidia.com/rdp/form/cudnn-download-survey</a></li>
+</ul>
+<h2 id="cuda-version-&#xD655;&#xC778;">CUDA version &#xD655;&#xC778;</h2>
+<pre><code class="lang-shell">nvcc --version
+</code></pre>
+<h2 id="cudnn-version-&#xD655;&#xC778;">cudnn version &#xD655;&#xC778;</h2>
+<p><code>C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v10.1\include\cudnn.h</code></p>
+<pre><code class="lang-c"><span class="hljs-meta">#<span class="hljs-meta-keyword">define</span> CUDNN_MAJOR 7</span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">define</span> CUDNN_MINOR 6</span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">define</span> CUDNN_PATCHLEVEL 5</span>
+</code></pre>
+<p>version : <code>7.65</code></p>
+<hr>
+<h2 id="visual-studio-&#xC124;&#xCE58;">Visual Studio &#xC124;&#xCE58;</h2>
+<ul>
+<li><p><a href="https://visualstudio.microsoft.com/ko/" target="_blank">https://visualstudio.microsoft.com/ko/</a></p>
+</li>
+<li><p>Visual Studio &#xB2E4;&#xC6B4;&#xB85C;&#xB4DC; -&gt; Community 2019</p>
+</li>
+<li><p>C++&#xB97C; &#xC0AC;&#xC6A9;&#xD55C; &#xB370;&#xC2A4;&#xD06C;&#xD1B1; &#xAC1C;&#xBC1C; Check</p>
+</li>
+</ul>
+<h2 id="opencv-&#xC124;&#xCE58;">Opencv &#xC124;&#xCE58;</h2>
+<ul>
+<li><a href="https://opencv.org/releases/" target="_blank">https://opencv.org/releases/</a></li>
+</ul>
+<h2 id="darknet-&#xC124;&#xCE58;">Darknet &#xC124;&#xCE58;</h2>
+<p>Yolov4</p>
+<pre><code class="lang-shell">git clone https://github.com/AlexeyAB/darknet.git
+</code></pre>
+<hr>
+<h2 id="darknet-&#xC2E4;&#xD589;&#xD558;&#xAE30;">DarkNet &#xC2E4;&#xD589;&#xD558;&#xAE30;</h2>
+<h2 id="&#xCC38;&#xACE0;&#xC790;&#xB8CC;">&#xCC38;&#xACE0;&#xC790;&#xB8CC;</h2>
+<ul>
+<li><a href="https://mickael-k.tistory.com/10" target="_blank">https://mickael-k.tistory.com/10</a></li>
+</ul>
+
+                                
+                                </section>
+                            
+    </div>
+    <div class="search-results">
+        <div class="has-results">
+            
+            <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+            <ul class="search-results-list"></ul>
+            
+        </div>
+        <div class="no-results">
+            
+            <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+            
+        </div>
+    </div>
+</div>
+
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="../" class="navigation navigation-prev " aria-label="Previous page: DarkNet">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="SRC.html" class="navigation navigation-next " aria-label="Next page: src">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"설치하기","level":"1.1.1","depth":2,"next":{"title":"src","level":"1.2","depth":1,"path":"post/SRC.md","ref":"post/SRC.md","articles":[{"title":"data","level":"1.2.1","depth":2,"path":"post/DATA.md","ref":"post/DATA.md","articles":[]}]},"previous":{"title":"DarkNet","level":"1.1","depth":1,"path":"README.md","ref":"README.md","articles":[{"title":"설치하기","level":"1.1.1","depth":2,"path":"post/INSTALL.md","ref":"post/INSTALL.md","articles":[]}]},"dir":"ltr"},"config":{"plugins":["advanced-emoji","theme-gestalt","-theme-default","styles-sass-fix","theme-api"],"root":"./","styles":{"website":"website-1592055015622.css"},"pluginsConfig":{"styles-sass-fix":{},"theme-gestalt":{"showLevel":false,"styles":{"website":"styles/website.css"},"logo":"./assets/darknet.png","favicon":"./assets/darknet.png","baseUrl":null,"excludeDefaultStyles":true,"doNotHideChildrenChapters":false},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"theme-api":{"languages":[],"split":true,"theme":"light"},"advanced-emoji":{"embedEmojis":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]}},"theme":"default","author":"JJM","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"DarkNet Book","output.name":"site","gitbook":"*"},"file":{"path":"post/INSTALL.md","mtime":"2020-06-13T11:32:27.914Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-06-13T13:30:10.037Z"},"basePath":"..","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <script src="../gitbook/gitbook.js"></script>
+    <script src="../gitbook/theme.js"></script>
+    
+        
+        <script src="../gitbook/gitbook-plugin-search/search-engine.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-search/search.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lunr/lunr.min.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lunr/search-lunr.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-sharing/buttons.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-fontsettings/fontsettings.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-theme-api/theme-api.js"></script>
+        
+    
+
+    </body>
+</html>
+

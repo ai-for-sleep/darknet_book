@@ -5,19 +5,63 @@ $book-background: black;
 $page-background: black;
 $sidebar-background: black;
 $color-border: $color-gray-dark;
+$font-size-base 					: 14px;
+$font-size-large					: 1.5rem;
+$font-size-small 					: 0.8rem;
 
 $sidebar-padding-v : 0px;
 $sidebar-padding-h : 0px;
 
 $sidebar-logo-height: auto;
 
-$color-primary: #bfff00;
-$color-text: red;
+$color-primary: #FFBF00;
+$color-text: #00ffff;
 
 $heading-map : (
                 color: $color-primary,
                 border-bottom: 3px solid $color-primary,
                 font-family: $font-family-sans
                 );
+
+$blockquote-map : (
+                margin: 0 0 0 $spacing-unit,
+                padding: 0 $spacing-unit * 2,
+                color: red,
+                border-left: 4px solid $color-border
+                ) !default;
+
+// Styling for PRE elements
+$pre-map        : (
+                margin: 0px,
+                padding: 0.85em 1em,
+                margin-bottom: $spacing-unit,
+                background: #0431B4,
+               ) !default;
+
+// Styling for code block divs
+$code-block-map : (
+                font-family: $font-family-mono,
+                margin: 0px,
+                padding: 0px,
+                background-color: #0431B4,
+                border: none
+            ) !default;
+
+// Styling for text inside code blocks
+$code-block-text-map : (
+                        font-size: 0.9em,
+                        color: #00FF40,
+                        background: #0431B4
+                       ) !default;
+
+// Styling for inline code snippets
+$code-inline-map     : (
+                       padding: 0.2em,
+                       margin: 0,
+                       font-size: 0.85em,
+                       color: #00FF40,
+                       background-color: #0431B4
+                      ) !default;
+
 
 @import "../node_modules/gitbook-plugin-theme-gestalt/src/scss/all";
