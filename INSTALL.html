@@ -42,7 +42,7 @@
 
     
         
-        <link rel="stylesheet" href="website-1592058805713.css">
+        <link rel="stylesheet" href="website-1592074759937.css">
         
     
 
@@ -61,7 +61,7 @@
     
 
     
-    <link rel="next" href="SRC.html" />
+    <link rel="next" href="part1_paper/yolov1.html" />
     
     
     <link rel="prev" href="./" />
@@ -97,10 +97,13 @@
     
         
         
+        <li class="header  selected ">DARKNET</li>
+        
+        
     
         
         <li class="chapter 
-              selected  "
+              "
             data-level="1.1" 
             data-path="./">
 
@@ -114,14 +117,12 @@
             
 
             
-            <ul class="articles">
-                  
-                
+        </li>
     
         
         <li class="chapter 
             active  selected  "
-            data-level="1.1.1" 
+            data-level="1.2" 
             data-path="INSTALL.html">
 
             
@@ -137,41 +138,24 @@
         </li>
     
 
-            </ul>
-            
-        </li>
+    
+        
+        
+        <li class="header ">Paper</li>
+        
+        
     
         
         <li class="chapter 
               "
-            data-level="1.2" 
-            data-path="SRC.html">
+            data-level="2.1" 
+            data-path="part1_paper/yolov1.html">
 
             
-                <a href="SRC.html">
+                <a href="part1_paper/yolov1.html">
             
                     
-                    src
-            
-                </a>
-            
-
-            
-            <ul class="articles">
-                
-                
-    
-        
-        <li class="chapter 
-              "
-            data-level="1.2.1" 
-            data-path="DATA.html">
-
-            
-                <a href="DATA.html">
-            
-                    
-                    data
+                    YOLOv1
             
                 </a>
             
@@ -179,8 +163,101 @@
             
         </li>
     
+        
+        <li class="chapter 
+              "
+            data-level="2.2" 
+            data-path="part1_paper/yolov2.html">
 
-            </ul>
+            
+                <a href="part1_paper/yolov2.html">
+            
+                    
+                    YOLOv2
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="2.3" 
+            data-path="part1_paper/yolov3.html">
+
+            
+                <a href="part1_paper/yolov3.html">
+            
+                    
+                    YOLOv3
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="2.4" 
+            data-path="part1_paper/yolov4.html">
+
+            
+                <a href="part1_paper/yolov4.html">
+            
+                    
+                    YOLOv4
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+        
+        
+        <li class="header ">SOURCE</li>
+        
+        
+    
+        
+        <li class="chapter 
+              "
+            data-level="3.1" 
+            data-path="part2_src/SRC.html">
+
+            
+                <a href="part2_src/SRC.html">
+            
+                    
+                    /src
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="3.2" 
+            data-path="part2_src/DATA.html">
+
+            
+                <a href="part2_src/DATA.html">
+            
+                    
+                    /data
+            
+                </a>
+            
+
             
         </li>
     
@@ -234,6 +311,7 @@
 <ul>
 <li>CUDA : <a href="https://developer.nvidia.com/cuda-toolkit-archive" target="_blank">https://developer.nvidia.com/cuda-toolkit-archive</a></li>
 <li>cudnn : <a href="https://developer.nvidia.com/rdp/form/cudnn-download-survey" target="_blank">https://developer.nvidia.com/rdp/form/cudnn-download-survey</a></li>
+<li>&#xD658;&#xACBD;&#xBCC0;&#xC218; &#xB4F1;&#xB85D; !!</li>
 </ul>
 <h2 id="cuda-version-&#xD655;&#xC778;">CUDA version &#xD655;&#xC778;</h2>
 <pre><code class="lang-shell">nvcc --version
@@ -254,17 +332,63 @@
 </li>
 <li><p>C++&#xB97C; &#xC0AC;&#xC6A9;&#xD55C; &#xB370;&#xC2A4;&#xD06C;&#xD1B1; &#xAC1C;&#xBC1C; Check</p>
 </li>
+<li><p>&#xC124;&#xCE58;</p>
+</li>
 </ul>
 <h2 id="opencv-&#xC124;&#xCE58;">Opencv &#xC124;&#xCE58;</h2>
 <ul>
-<li><a href="https://opencv.org/releases/" target="_blank">https://opencv.org/releases/</a></li>
+<li><p><a href="https://opencv.org/releases/" target="_blank">https://opencv.org/releases/</a></p>
+</li>
+<li><p>&#xD658;&#xACBD;&#xBCC0;&#xC218; &#xB4F1;&#xB85D; !!</p>
+</li>
 </ul>
 <h2 id="darknet-&#xC124;&#xCE58;">Darknet &#xC124;&#xCE58;</h2>
-<p>Yolov4</p>
 <pre><code class="lang-shell">git clone https://github.com/AlexeyAB/darknet.git
 </code></pre>
-<hr>
 <h2 id="darknet-&#xC2E4;&#xD589;&#xD558;&#xAE30;">DarkNet &#xC2E4;&#xD589;&#xD558;&#xAE30;</h2>
+<ol>
+<li><p><code>darknet/build/darknet/darknet.sln</code> &#xC811;&#xC18D;</p>
+</li>
+<li><p><code>&#xD504;&#xB85C;&#xC81D;&#xD2B8;</code> -&gt; <code>&#xC18D;&#xC131;</code></p>
+<ul>
+<li><p>2.0 <code>&#xAD6C;&#xC131; : Releases / &#xD50C;&#xB7AB;&#xD3FC; : x64</code></p>
+</li>
+<li><p>2.1 <code>C/C++</code> -&gt; <code>&#xC77C;&#xBC18;</code> -&gt;  <code>&#xCD94;&#xAC00; &#xD3EC;&#xD568; &#xB514;&#xB809;&#xD130;&#xB9AC;</code> -&gt; <code>opencv &#xACBD;&#xB85C; &#xCD94;&#xAC00; (~\opencv\build\include)</code></p>
+</li>
+<li><p>2.2 <code>&#xC804;&#xCC98;&#xB9AC;&#xAE30;</code> -&gt; <code>&#xC804;&#xCC98;&#xB9AC;&#xAE30; &#xC815;&#xC758;</code> -&gt; <code>OPENCV &#xCD94;&#xAC00;</code></p>
+</li>
+<li><p>2.3 <code>&#xB9C1;&#xCEE4;</code> -&gt; <code>&#xC77C;&#xBC18;</code> -&gt; <code>&#xCD94;&#xAC00; &#xB77C;&#xC774;&#xBE0C;&#xB7EC;&#xB9AC; &#xB514;&#xB809;&#xD130;&#xB9AC;</code> -&gt; <code>opencv &#xACBD;&#xB85C; &#xCD94;&#xAC00; (~\opencv\build\x64\vc14\lib)</code></p>
+</li>
+<li><p>2.4 <code>&#xAD6C;&#xC131; : Debug / &#xD50C;&#xB7AB;&#xD3FC; : x64</code>&#xC5D0;&#xB3C4; &#xB611;&#xAC19;&#xC774; &#xC801;&#xC6A9;</p>
+</li>
+</ul>
+</li>
+<li><p><code>&#xC194;&#xB8E8;&#xC158; &#xD0D0;&#xC0C9;&#xAE30;</code> -&gt; <code>darknet &#xC6B0;&#xD074;&#xB9AD;</code> -&gt; <code>&#xBE4C;&#xB4DC; &#xC885;&#xC18D;&#xC131;</code> -&gt; <code>&#xC0AC;&#xC6A9;&#xC790; &#xC9C0;&#xC815; &#xBE4C;&#xB4DC;</code> -&gt; <code>CUDA Check</code></p>
+</li>
+<li><p><code>~\opencv\build\x64\vc14\bin</code> -&gt; <code>opencv_ffmpeg3410_64.dll</code>, <code>opencv_world3410.dll</code> &#xBCF5;&#xC0AC; -&gt; <code>~\darknet\build\darknet\x64</code> &#xB514;&#xB809;&#xD1A0;&#xB9AC;&#xC5D0; &#xBD99;&#xC5EC;&#xB123;&#xAE30;</p>
+</li>
+<li><p><code>ctrl + F5</code></p>
+</li>
+<li><p><code>&#xBE4C;&#xB4DC; &#xC131;&#xACF5; ^^</code></p>
+</li>
+</ol>
+<h2 id="&#xBB38;&#xC81C;&#xC810;-&#xD574;&#xACB0;">&#xBB38;&#xC81C;&#xC810; &#xD574;&#xACB0;</h2>
+<ul>
+<li>CUDA 10.1&#xC778; &#xACBD;&#xC6B0; &#xCC98;&#xC74C;&#xC5D0; &#xBE4C;&#xB4DC; &#xC885;&#xC18D;&#xC131;&#xC5D0;&#xC11C; &#xCC3E;&#xC744; &#xC218; &#xC5C6;&#xC2B5;&#xB2C8;&#xB2E4;.</li>
+</ul>
+<p><a href="https://bigcode.tistory.com/47" target="_blank">&#xC5EC;&#xAE30;</a>&#xB97C; &#xCC38;&#xC870;&#xD574; &#xB530;&#xB77C;&#xD558;&#xACE0; &#xBE4C;&#xB4DC; &#xC885;&#xC18D;&#xC131;&#xC744; <code>CUDA 10.1</code>&#xB85C; &#xBCC0;&#xACBD;&#xD558;&#xC2DC;&#xBA74; &#xB429;&#xB2C8;&#xB2E4;.</p>
+<h2 id="&#xC608;&#xC81C;-&#xC2E4;&#xD589;">&#xC608;&#xC81C; &#xC2E4;&#xD589;</h2>
+<ul>
+<li><p>yolov3 weights : <a href="https://pjreddie.com/media/files/yolov3.weights" target="_blank">https://pjreddie.com/media/files/yolov3.weights</a></p>
+</li>
+<li><p>tiny yolov3 weights : <a href="https://pjreddie.com/media/files/yolov3-tiny.weights" target="_blank">https://pjreddie.com/media/files/yolov3-tiny.weights</a></p>
+</li>
+</ul>
+<pre><code class="lang-shell">cd ~/darknet/build/darknet/x64
+</code></pre>
+<pre><code class="lang-shell">darknet.exe detector test data/coco.data cfg/yolov3.cfg yolov3.weights -i 0 dog.jpg
+</code></pre>
+<p><img src="figure/darknet_ex1.png" alt="coco"></p>
 <h2 id="&#xCC38;&#xACE0;&#xC790;&#xB8CC;">&#xCC38;&#xACE0;&#xC790;&#xB8CC;</h2>
 <ul>
 <li><a href="https://mickael-k.tistory.com/10" target="_blank">https://mickael-k.tistory.com/10</a></li>
@@ -301,7 +425,7 @@
                 </a>
                 
                 
-                <a href="SRC.html" class="navigation navigation-next " aria-label="Next page: src">
+                <a href="part1_paper/yolov1.html" class="navigation navigation-next " aria-label="Next page: YOLOv1">
                     <i class="fa fa-angle-right"></i>
                 </a>
                 
@@ -312,7 +436,7 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"설치하기","level":"1.1.1","depth":2,"next":{"title":"src","level":"1.2","depth":1,"path":"SRC.md","ref":"SRC.md","articles":[{"title":"data","level":"1.2.1","depth":2,"path":"DATA.md","ref":"DATA.md","articles":[]}]},"previous":{"title":"DarkNet","level":"1.1","depth":1,"path":"README.md","ref":"README.md","articles":[{"title":"설치하기","level":"1.1.1","depth":2,"path":"INSTALL.md","ref":"INSTALL.md","articles":[]}]},"dir":"ltr"},"config":{"plugins":["advanced-emoji","theme-gestalt","-theme-default","styles-sass-fix","theme-api"],"root":"./","styles":{"website":"website-1592058805713.css"},"pluginsConfig":{"styles-sass-fix":{},"theme-gestalt":{"showLevel":false,"styles":{"website":"styles/website.css"},"logo":"/darknet_book/assets/darknet.png","baseUrl":null,"excludeDefaultStyles":true,"doNotHideChildrenChapters":false},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"theme-api":{"languages":[],"split":true,"theme":"light"},"advanced-emoji":{"embedEmojis":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]}},"theme":"default","author":"JJM","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"DarkNet Book","output.name":"site","gitbook":"*"},"file":{"path":"INSTALL.md","mtime":"2020-06-13T11:32:27.914Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-06-13T14:33:19.229Z"},"basePath":".","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"설치하기","level":"1.2","depth":1,"next":{"title":"YOLOv1","level":"2.1","depth":1,"path":"part1_paper/yolov1.md","ref":"part1_paper/yolov1.md","articles":[]},"previous":{"title":"DarkNet","level":"1.1","depth":1,"path":"README.md","ref":"README.md","articles":[]},"dir":"ltr"},"config":{"plugins":["advanced-emoji","theme-gestalt","-theme-default","styles-sass-fix","theme-api"],"root":"./","styles":{"website":"website-1592074759937.css"},"pluginsConfig":{"styles-sass-fix":{},"theme-gestalt":{"showLevel":false,"styles":{"website":"styles/website.css"},"logo":"/darknet_book/assets/darknet.png","baseUrl":null,"excludeDefaultStyles":true,"doNotHideChildrenChapters":false},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"theme-api":{"languages":[],"split":true,"theme":"light"},"advanced-emoji":{"embedEmojis":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]}},"theme":"default","author":"JJM","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"DarkNet Book","output.name":"site","gitbook":"*"},"file":{"path":"INSTALL.md","mtime":"2020-06-13T18:43:30.663Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-06-13T18:59:17.331Z"},"basePath":".","book":{"language":""}});
         });
     </script>
 </div>

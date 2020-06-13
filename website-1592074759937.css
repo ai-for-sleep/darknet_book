@@ -2532,7 +2532,7 @@ table {
 
 html, body {
   height: 100%;
-  font-size: 14px; }
+  font-size: 12px; }
 
 body {
   text-rendering: optimizeLegibility;
@@ -2615,7 +2615,7 @@ body {
   line-height: 50px;
   box-shadow: none !important;
   position: relative;
-  font-size: 14px;
+  font-size: 12px;
   color: #cccccc; }
 
 .book-header .btn:hover {
@@ -3067,7 +3067,7 @@ body.with-search .navigation {
   padding: 0;
   margin: 2px 0 0;
   list-style: none;
-  font-size: 14px;
+  font-size: 12px;
   background-color: black;
   border: 1px solid #4d4d4d;
   border-radius: 1px;

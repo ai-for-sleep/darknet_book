@@ -22,6 +22,14 @@
 
 ---
 
+# /data/labels
+
+- 알파벳 이미지가 다양한 크기별로 들어있는 폴더 입니다.
+
+- 이미지에 라벨을 그리기 위한 용도 입니다.
+
+---
+
 # Dataset
 
 - `Object Detection`에서 가장 많이 사용되는 데이터셋은 대표적으로 `ImageNet`, `Pascal VOC`, `COCO`가 있습니다.
@@ -84,9 +92,3 @@
 
 
 ![coco](/figure/coco_stuff.png)
-
-
-
-# `/data/labels`
-
-- 알파벳 이미지가 다양한 크기별로 들어있는 폴더로 name을 이미지로 나타낼 때 사용된다고 생각 할 수 있다.
