@@ -4,7 +4,7 @@
     <head>
         <meta charset="UTF-8">
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
-        <title>YOLOv1 · DarkNet Book</title>
+        <title>project · DarkNet Book</title>
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="description" content="">
         <meta name="generator" content="GitBook 3.2.3">
@@ -61,10 +61,10 @@
     
 
     
-    <link rel="next" href="yolov2.html" />
+    <link rel="next" href="1_DATA.html" />
     
     
-    <link rel="prev" href="../INSTALL.html" />
+    <link rel="prev" href="../part1_paper/yolov4.html" />
     
 
     </head>
@@ -141,18 +141,18 @@
     
         
         
-        <li class="header  selected ">Paper</li>
+        <li class="header ">Paper</li>
         
         
     
         
         <li class="chapter 
-            active  selected  "
+              "
             data-level="2.1" 
-            data-path="yolov1.html">
+            data-path="../part1_paper/yolov1.html">
 
             
-                <a href="yolov1.html">
+                <a href="../part1_paper/yolov1.html">
             
                     
                     YOLOv1
@@ -167,10 +167,10 @@
         <li class="chapter 
               "
             data-level="2.2" 
-            data-path="yolov2.html">
+            data-path="../part1_paper/yolov2.html">
 
             
-                <a href="yolov2.html">
+                <a href="../part1_paper/yolov2.html">
             
                     
                     YOLOv2
@@ -185,10 +185,10 @@
         <li class="chapter 
               "
             data-level="2.3" 
-            data-path="yolov3.html">
+            data-path="../part1_paper/yolov3.html">
 
             
-                <a href="yolov3.html">
+                <a href="../part1_paper/yolov3.html">
             
                     
                     YOLOv3
@@ -203,10 +203,10 @@
         <li class="chapter 
               "
             data-level="2.4" 
-            data-path="yolov4.html">
+            data-path="../part1_paper/yolov4.html">
 
             
-                <a href="yolov4.html">
+                <a href="../part1_paper/yolov4.html">
             
                     
                     YOLOv4
@@ -221,18 +221,18 @@
     
         
         
-        <li class="header ">SOURCE</li>
+        <li class="header  selected ">SOURCE</li>
         
         
     
         
         <li class="chapter 
-              "
+            active  selected  "
             data-level="3.1" 
-            data-path="../part2_source/0_Project.html">
+            data-path="0_Project.html">
 
             
-                <a href="../part2_source/0_Project.html">
+                <a href="0_Project.html">
             
                     
                     project
@@ -247,10 +247,10 @@
         <li class="chapter 
               "
             data-level="3.2" 
-            data-path="../part2_source/1_DATA.html">
+            data-path="1_DATA.html">
 
             
-                <a href="../part2_source/1_DATA.html">
+                <a href="1_DATA.html">
             
                     
                     /data
@@ -265,10 +265,10 @@
         <li class="chapter 
               "
             data-level="3.3" 
-            data-path="../part2_source/2_CFG.html">
+            data-path="2_CFG.html">
 
             
-                <a href="../part2_source/2_CFG.html">
+                <a href="2_CFG.html">
             
                     
                     /cfg
@@ -283,10 +283,10 @@
         <li class="chapter 
               "
             data-level="3.4" 
-            data-path="../part2_source/3_EXAMPLE.html">
+            data-path="3_EXAMPLE.html">
 
             
-                <a href="../part2_source/3_EXAMPLE.html">
+                <a href="3_EXAMPLE.html">
             
                     
                     /example
@@ -301,10 +301,10 @@
         <li class="chapter 
               "
             data-level="3.5" 
-            data-path="../part2_source/4_SRC.html">
+            data-path="4_SRC.html">
 
             
-                <a href="../part2_source/4_SRC.html">
+                <a href="4_SRC.html">
             
                     
                     /src
@@ -1829,7 +1829,7 @@
     <!-- Title -->
     <h1>
         <i class="fa fa-circle-o-notch fa-spin"></i>
-        <a href=".." >YOLOv1</a>
+        <a href=".." >project</a>
     </h1>
 </div>
 
@@ -1844,7 +1844,55 @@
     
                                 <section class="normal markdown-section">
                                 
-                                
+                                <h1 id="darknet-source-code">DarkNet Source Code</h1>
+<ul>
+<li><p><code>Yolo</code>&#xB97C; &#xAC1C;&#xBC1C;&#xD55C; <code>Joseph Redmon</code>&#xC758; <a href="https://github.com/pjreddie/darknet" target="_blank">DarkNet</a>&#xC744; &#xBD84;&#xC11D;&#xD569;&#xB2C8;&#xB2E4;.</p>
+</li>
+<li><p>DarkNet&#xC740; &#xB525;&#xB7EC;&#xB2DD;&#xC744; C&#xC5B8;&#xC5B4;&#xB85C; &#xAD6C;&#xD604;&#xD588;&#xAE30; &#xB54C;&#xBB38;&#xC5D0; &#xB525;&#xB7EC;&#xB2DD;&#xC774; &#xB3D9;&#xC791;&#xD558;&#xB294; &#xACFC;&#xC815;&#xC744; &#xC790;&#xC138;&#xD788; &#xCF54;&#xB4DC; &#xAD6C;&#xD604;&#xC73C;&#xB85C; &#xC0B4;&#xD3B4;&#xBCFC; &#xC218; &#xC788;&#xB2E4;&#xACE0; &#xC0DD;&#xAC01; &#xB429;&#xB2C8;&#xB2E4;.</p>
+</li>
+<li><p>&#xC800;&#xB294; C&#xC5B8;&#xC5B4;&#xB97C; &#xC790;&#xC138;&#xD788; &#xC54C;&#xC9C0; &#xBABB;&#xD558;&#xAE30; &#xB54C;&#xBB38;&#xC5D0; C&#xC5B8;&#xC5B4; &#xBD80;&#xD130; &#xC790;&#xC138;&#xD558;&#xAC8C; &#xC774;&#xD574;&#xD558;&#xBA74;&#xC11C; &#xB118;&#xC5B4;&#xAC00;&#xACA0;&#xC2B5;&#xB2C8;&#xB2E4;.</p>
+</li>
+</ul>
+<h2 id="project">Project</h2>
+<ul>
+<li>&#xD504;&#xB85C;&#xC81D;&#xD2B8; : &#xD558;&#xB098;&#xC758; &#xC2E4;&#xD589;&#xD30C;&#xC77C;&#xC744; &#xB9CC;&#xB4E4;&#xC5B4; &#xB0B4;&#xAE30; &#xC704;&#xD574; &#xD544;&#xC694;&#xD55C; &#xC5EC;&#xB7EC; &#xAC1C;&#xC758; &#xC18C;&#xC2A4; &#xD30C;&#xC77C;&#xACFC; &#xD5E4;&#xB354; &#xD30C;&#xC77C; &#xB4F1;&#xC744; &#xD558;&#xB098;&#xB85C; &#xBB36;&#xC5B4; &#xB193;&#xC740; &#xAC83;&#xC744; &#xB9D0;&#xD569;&#xB2C8;&#xB2E4;.</li>
+<li><p><code>&#xD504;&#xB85C;&#xC81D;&#xD2B8;&#xC774;&#xB984;.vcxproj</code> : &#xD504;&#xB85C;&#xC81D;&#xD2B8;, &#xC2E4;&#xD589;&#xD30C;&#xC77C;&#xC774;&#xB098; dll(&#xB3D9;&#xC801; &#xC5F0;&#xACB0; &#xB77C;&#xC774;&#xBE0C;&#xB7EC;&#xB9AC;)&#xB4F1;&#xACFC; &#xAC19;&#xC740; &#xD30C;&#xC77C;&#xC744; &#xB9CC;&#xB4ED;&#xB2C8;&#xB2E4;.</p>
+</li>
+<li><p>&#xC194;&#xB8E8;&#xC158; : &#xC5EC;&#xB7EC; &#xAC1C;&#xC758; &#xD504;&#xB85C;&#xC81D;&#xD2B8;&#xC758; &#xBAA8;&#xC784;, &#xC751;&#xC6A9; &#xD504;&#xB85C;&#xADF8;&#xB7A8;&#xB9C8;&#xB2E4; &#xD558;&#xB098;&#xAC00; &#xC874;&#xC7AC;&#xD558;&#xACE0; &#xD504;&#xB85C;&#xC81D;&#xD2B8;&#xB97C; &#xC0DD;&#xC131;&#xD558;&#xB294; &#xACFC;&#xC815;&#xC5D0;&#xC11C; &#xD504;&#xB85C;&#xC81D;&#xD2B8;&#xC640; &#xB3D9;&#xC77C;&#xD55C; &#xC774;&#xB984;&#xC73C;&#xB85C; &#xC790;&#xB3D9; &#xC0DD;&#xC131;&#xB429;&#xB2C8;&#xB2E4;.</p>
+</li>
+<li><code>&#xC194;&#xB8E8;&#xC158;&#xC774;&#xB984;.sln</code> : &#xC194;&#xB8E8;&#xC158;, &#xD504;&#xB85C;&#xC81D;&#xD2B8;&#xB97C; &#xAD00;&#xB9AC;&#xD558;&#xB294; &#xD30C;&#xC77C; &#xC785;&#xB2C8;&#xB2E4;.</li>
+</ul>
+<h1 id="darknet-&#xAD6C;&#xC131;&#xC694;&#xC18C;">DarkNet &#xAD6C;&#xC131;&#xC694;&#xC18C;</h1>
+<pre><code class="lang-shell">/cfg
+/data
+/examples
+/include
+/python
+/scripts
+/src
+LICENCE
+Makefile
+</code></pre>
+<h1 id="licence">LICENCE</h1>
+<pre><code>                                  YOLO LICENSE
+                             Version 2, July 29 2016
+
+THIS SOFTWARE LICENSE IS PROVIDED &quot;ALL CAPS&quot; SO THAT YOU KNOW IT IS SUPER
+SERIOUS AND YOU DON&apos;T MESS AROUND WITH COPYRIGHT LAW BECAUSE YOU WILL GET IN
+TROUBLE HERE ARE SOME OTHER BUZZWORDS COMMONLY IN THESE THINGS WARRANTIES
+LIABILITY CONTRACT TORT LIABLE CLAIMS RESTRICTION MERCHANTABILITY. NOW HERE&apos;S
+THE REAL LICENSE:
+
+0. Darknet is public domain.
+1. Do whatever you want with it.
+2. Stop emailing me about it!
+</code></pre><p>YOLO &#xAC1C;&#xBC1C;&#xC790;&#xB2E4;&#xC6B4; &#xC7AC;&#xBBF8;&#xC788;&#xB294; <code>LICENCE</code> &#xC785;&#xB2C8;&#xB2E4;.</p>
+<ol>
+<li>DarkNet&#xC740; &#xACF5;&#xC6A9; &#xB3C4;&#xBA54;&#xC778; &#xC785;&#xB2C8;&#xB2E4;.</li>
+<li>&#xC6D0;&#xD558;&#xB294; &#xACF3; &#xC5B4;&#xB514;&#xC5D0;&#xB4E0; &#xC0AC;&#xC6A9;&#xD574;&#xB3C4; &#xC88B;&#xC2B5;&#xB2C8;&#xB2E4;.</li>
+<li>&#xC774;&#xBA54;&#xC77C;&#xC744; &#xBCF4;&#xB0B4;&#xC9C0; &#xB9C8;&#xC138;&#xC694;</li>
+</ol>
+
                                 
                                 </section>
                             
@@ -1871,12 +1919,12 @@
 
             
                 
-                <a href="../INSTALL.html" class="navigation navigation-prev " aria-label="Previous page: 설치하기">
+                <a href="../part1_paper/yolov4.html" class="navigation navigation-prev " aria-label="Previous page: YOLOv4">
                     <i class="fa fa-angle-left"></i>
                 </a>
                 
                 
-                <a href="yolov2.html" class="navigation navigation-next " aria-label="Next page: YOLOv2">
+                <a href="1_DATA.html" class="navigation navigation-next " aria-label="Next page: /data">
                     <i class="fa fa-angle-right"></i>
                 </a>
                 
@@ -1887,7 +1935,7 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"YOLOv1","level":"2.1","depth":1,"next":{"title":"YOLOv2","level":"2.2","depth":1,"path":"part1_paper/yolov2.md","ref":"part1_paper/yolov2.md","articles":[]},"previous":{"title":"설치하기","level":"1.2","depth":1,"path":"INSTALL.md","ref":"INSTALL.md","articles":[]},"dir":"neutral"},"config":{"plugins":["advanced-emoji","theme-gestalt","-theme-default","styles-sass-fix","theme-api"],"root":"./","styles":{"website":"website-1592499269311.css"},"pluginsConfig":{"styles-sass-fix":{},"theme-gestalt":{"showLevel":false,"styles":{"website":"styles/website.css"},"logo":"/darknet_book/assets/darknet.png","baseUrl":null,"excludeDefaultStyles":true,"doNotHideChildrenChapters":false},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"theme-api":{"languages":[],"split":true,"theme":"light"},"advanced-emoji":{"embedEmojis":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]}},"theme":"default","author":"JJM","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"DarkNet Book","output.name":"site","gitbook":"*"},"file":{"path":"part1_paper/yolov1.md","mtime":"2020-06-13T18:21:37.837Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-06-18T16:54:26.504Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"project","level":"3.1","depth":1,"next":{"title":"/data","level":"3.2","depth":1,"path":"part2_source/1_DATA.md","ref":"part2_source/1_DATA.md","articles":[]},"previous":{"title":"YOLOv4","level":"2.4","depth":1,"path":"part1_paper/yolov4.md","ref":"part1_paper/yolov4.md","articles":[]},"dir":"ltr"},"config":{"plugins":["advanced-emoji","theme-gestalt","-theme-default","styles-sass-fix","theme-api"],"root":"./","styles":{"website":"website-1592499269311.css"},"pluginsConfig":{"styles-sass-fix":{},"theme-gestalt":{"showLevel":false,"styles":{"website":"styles/website.css"},"logo":"/darknet_book/assets/darknet.png","baseUrl":null,"excludeDefaultStyles":true,"doNotHideChildrenChapters":false},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"theme-api":{"languages":[],"split":true,"theme":"light"},"advanced-emoji":{"embedEmojis":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]}},"theme":"default","author":"JJM","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"DarkNet Book","output.name":"site","gitbook":"*"},"file":{"path":"part2_source/0_Project.md","mtime":"2020-06-18T13:05:35.856Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-06-18T16:54:26.504Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>

@@ -4,7 +4,7 @@
     <head>
         <meta charset="UTF-8">
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
-        <title>YOLOv1 · DarkNet Book</title>
+        <title>/data · DarkNet Book</title>
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="description" content="">
         <meta name="generator" content="GitBook 3.2.3">
@@ -61,10 +61,10 @@
     
 
     
-    <link rel="next" href="yolov2.html" />
+    <link rel="next" href="2_CFG.html" />
     
     
-    <link rel="prev" href="../INSTALL.html" />
+    <link rel="prev" href="0_Project.html" />
     
 
     </head>
@@ -141,18 +141,18 @@
     
         
         
-        <li class="header  selected ">Paper</li>
+        <li class="header ">Paper</li>
         
         
     
         
         <li class="chapter 
-            active  selected  "
+              "
             data-level="2.1" 
-            data-path="yolov1.html">
+            data-path="../part1_paper/yolov1.html">
 
             
-                <a href="yolov1.html">
+                <a href="../part1_paper/yolov1.html">
             
                     
                     YOLOv1
@@ -167,10 +167,10 @@
         <li class="chapter 
               "
             data-level="2.2" 
-            data-path="yolov2.html">
+            data-path="../part1_paper/yolov2.html">
 
             
-                <a href="yolov2.html">
+                <a href="../part1_paper/yolov2.html">
             
                     
                     YOLOv2
@@ -185,10 +185,10 @@
         <li class="chapter 
               "
             data-level="2.3" 
-            data-path="yolov3.html">
+            data-path="../part1_paper/yolov3.html">
 
             
-                <a href="yolov3.html">
+                <a href="../part1_paper/yolov3.html">
             
                     
                     YOLOv3
@@ -203,10 +203,10 @@
         <li class="chapter 
               "
             data-level="2.4" 
-            data-path="yolov4.html">
+            data-path="../part1_paper/yolov4.html">
 
             
-                <a href="yolov4.html">
+                <a href="../part1_paper/yolov4.html">
             
                     
                     YOLOv4
@@ -221,7 +221,7 @@
     
         
         
-        <li class="header ">SOURCE</li>
+        <li class="header  selected ">SOURCE</li>
         
         
     
@@ -229,10 +229,10 @@
         <li class="chapter 
               "
             data-level="3.1" 
-            data-path="../part2_source/0_Project.html">
+            data-path="0_Project.html">
 
             
-                <a href="../part2_source/0_Project.html">
+                <a href="0_Project.html">
             
                     
                     project
@@ -245,12 +245,12 @@
     
         
         <li class="chapter 
-              "
+            active  selected  "
             data-level="3.2" 
-            data-path="../part2_source/1_DATA.html">
+            data-path="1_DATA.html">
 
             
-                <a href="../part2_source/1_DATA.html">
+                <a href="1_DATA.html">
             
                     
                     /data
@@ -265,10 +265,10 @@
         <li class="chapter 
               "
             data-level="3.3" 
-            data-path="../part2_source/2_CFG.html">
+            data-path="2_CFG.html">
 
             
-                <a href="../part2_source/2_CFG.html">
+                <a href="2_CFG.html">
             
                     
                     /cfg
@@ -283,10 +283,10 @@
         <li class="chapter 
               "
             data-level="3.4" 
-            data-path="../part2_source/3_EXAMPLE.html">
+            data-path="3_EXAMPLE.html">
 
             
-                <a href="../part2_source/3_EXAMPLE.html">
+                <a href="3_EXAMPLE.html">
             
                     
                     /example
@@ -301,10 +301,10 @@
         <li class="chapter 
               "
             data-level="3.5" 
-            data-path="../part2_source/4_SRC.html">
+            data-path="4_SRC.html">
 
             
-                <a href="../part2_source/4_SRC.html">
+                <a href="4_SRC.html">
             
                     
                     /src
@@ -1829,7 +1829,7 @@
     <!-- Title -->
     <h1>
         <i class="fa fa-circle-o-notch fa-spin"></i>
-        <a href=".." >YOLOv1</a>
+        <a href=".." >/data</a>
     </h1>
 </div>
 
@@ -1844,7 +1844,127 @@
     
                                 <section class="normal markdown-section">
                                 
-                                
+                                <h1 id="data">/data</h1>
+<p>&#xB370;&#xC774;&#xD130;&#xC5D0; &#xAD00;&#xB828;&#xB41C; &#xD30C;&#xC77C;&#xB4E4;&#xC744; &#xC800;&#xC7A5;&#xD55C; &#xD3F4;&#xB354; &#xC785;&#xB2C8;&#xB2E4;.</p>
+<ul>
+<li><p><code>9k.label</code> : YOLO9000 dataset label</p>
+</li>
+<li><p><code>9k.names</code> : YOLO9000 dataset names</p>
+</li>
+<li><p><code>9k.tree</code> : YOLO9000 tree &#xC815;&#xBCF4;(label:tree&#xBC88;&#xD638;)</p>
+</li>
+<li><p><code>coco.names</code> : coco dataset names(80&#xAC1C;)</p>
+</li>
+<li><p><code>coco9k.map</code> : coco&#xB97C; tree&#xC5D0; &#xACB0;&#xD569;&#xD55C; &#xC815;&#xBCF4;(tree&#xBC88;&#xD638;)</p>
+</li>
+<li><p><code>imagenet.label.list</code> : imagenet dataset label</p>
+</li>
+<li><p><code>imagenet.shortnames.list</code> : imagenet dataset names</p>
+</li>
+<li><p><code>voc.names</code> : voc dataset names</p>
+</li>
+<li><p><code>openimages.names</code> : openimages dataset names</p>
+</li>
+<li><p><code>inet9k.map</code> : imagenet&#xC744; tree&#xC5D0; &#xACB0;&#xD569;&#xD55C; &#xC815;&#xBCF4;</p>
+</li>
+</ul>
+<hr>
+<h1 id="datalabels">/data/labels</h1>
+<ul>
+<li><p>&#xC54C;&#xD30C;&#xBCB3; &#xC774;&#xBBF8;&#xC9C0;&#xAC00; &#xB2E4;&#xC591;&#xD55C; &#xD06C;&#xAE30;&#xBCC4;&#xB85C; &#xB4E4;&#xC5B4;&#xC788;&#xB294; &#xD3F4;&#xB354; &#xC785;&#xB2C8;&#xB2E4;.</p>
+</li>
+<li><p>&#xC774;&#xBBF8;&#xC9C0;&#xC5D0; &#xB77C;&#xBCA8;&#xC744; &#xADF8;&#xB9AC;&#xAE30; &#xC704;&#xD55C; &#xC6A9;&#xB3C4; &#xC785;&#xB2C8;&#xB2E4;.</p>
+</li>
+</ul>
+<hr>
+<h1 id="dataset">Dataset</h1>
+<ul>
+<li><code>Object Detection</code>&#xC5D0;&#xC11C; &#xAC00;&#xC7A5; &#xB9CE;&#xC774; &#xC0AC;&#xC6A9;&#xB418;&#xB294; &#xB370;&#xC774;&#xD130;&#xC14B;&#xC740; &#xB300;&#xD45C;&#xC801;&#xC73C;&#xB85C; <code>ImageNet</code>, <code>Pascal VOC</code>, <code>COCO</code>&#xAC00; &#xC788;&#xC2B5;&#xB2C8;&#xB2E4;.</li>
+</ul>
+<h2 id="imagenet">ImageNet</h2>
+<p><code>Homepage</code> : <a href="http://www.image-net.org/" target="_blank">http://www.image-net.org/</a></p>
+<p><code>ILSVRC</code> : <a href="http://www.image-net.org/challenges/LSVRC/" target="_blank">http://www.image-net.org/challenges/LSVRC/</a></p>
+<ul>
+<li><p>ImageNet &#xD504;&#xB85C;&#xC81D;&#xD2B8;&#xB294; &#xC2DC;&#xAC01;&#xC801; &#xAC1D;&#xCCB4; &#xC778;&#xC2DD; &#xC18C;&#xD504;&#xD2B8;&#xC6E8;&#xC5B4; &#xC5F0;&#xAD6C;&#xC5D0; &#xC0AC;&#xC6A9;&#xD558;&#xB3C4;&#xB85D; &#xC124;&#xACC4;&#xB41C; &#xB300;&#xD615; &#xC2DC;&#xAC01;&#xC801; &#xB370;&#xC774;&#xD130;&#xBCA0;&#xC774;&#xC2A4;&#xC785;&#xB2C8;&#xB2E4;.</p>
+</li>
+<li><p>&#xD604;&#xC7AC; 1000&#xB9CC;&#xAC1C; &#xC774;&#xC0C1;&#xC758; &#xC774;&#xBBF8;&#xC9C0;&#xAC00; &#xC218;&#xC9D1;&#xB418;&#xC5C8;&#xC2B5;&#xB2C8;&#xB2E4;.</p>
+</li>
+<li><p>20000&#xAC1C; &#xC774;&#xC0C1;&#xC758; &#xD074;&#xB798;&#xC2A4;&#xB97C; &#xAC00;&#xC9C0;&#xACE0; &#xC788;&#xC2B5;&#xB2C8;&#xB2E4;.</p>
+</li>
+<li><p>ImageNet&#xC744; &#xBC14;&#xD0D5;&#xC73C;&#xB85C; <code>ILSVRC(ImageNet Large Scale Visual Recognition Challeng)</code> &#xB77C;&#xB294; &#xC774;&#xBBF8;&#xC9C0; &#xC778;&#xC2DD; &#xB300;&#xD68C;&#xAC00; &#xC5F4;&#xB9BD;&#xB2C8;&#xB2E4;.</p>
+</li>
+<li><p>ILSVRC&#xB294; &#xB300;&#xD68C;&#xB97C; &#xC704;&#xD574;&#xC11C; 1000&#xAC1C;&#xC758; &#xD074;&#xB798;&#xC2A4;&#xB85C; &#xAD6C;&#xC131; &#xB429;&#xB2C8;&#xB2E4;.</p>
+</li>
+<li><p>&#xBCF4;&#xD1B5; ILSVRC&#xB294; 2012&#xB144;&#xB3C4; &#xB370;&#xC774;&#xD130;&#xC14B;&#xC73C;&#xB85C; &#xAC00;&#xC7A5; &#xB9CE;&#xC774; &#xBCA4;&#xCE58;&#xB9C8;&#xD0B9; &#xB429;&#xB2C8;&#xB2E4;.</p>
+</li>
+</ul>
+<h2 id="pascal-voc">Pascal VOC</h2>
+<p><code>Homepage</code> : <a href="http://host.robots.ox.ac.uk/pascal/VOC/" target="_blank">http://host.robots.ox.ac.uk/pascal/VOC/</a></p>
+<ul>
+<li><p>Pascal VOC&#xB294; object class recognition&#xC744; &#xC704;&#xD55C; &#xD45C;&#xC900;&#xD654;&#xB41C; &#xC774;&#xBBF8;&#xC9C0; &#xB370;&#xC774;&#xD130;&#xC14B; &#xC785;&#xB2C8;&#xB2E4;.</p>
+</li>
+<li><p>&#xBCF4;&#xD1B5; Pascal VOC&#xB294; 2007&#xB144;&#xB3C4; &#xB370;&#xC774;&#xD130;&#xC14B;&#xC73C;&#xB85C; &#xAC00;&#xC7A5; &#xB9CE;&#xC774; &#xBCA4;&#xCE58;&#xB9C8;&#xD0B9; &#xB429;&#xB2C8;&#xB2E4;.</p>
+</li>
+<li><p>CLASS</p>
+<ul>
+<li>Person: person</li>
+<li>Animal: bird, cat, cow, dog, horse, sheep</li>
+<li>Vehicle: aeroplane, bicycle, boat, bus, car, motorbike, train</li>
+<li>Indoor: bottle, chair, dining table, potted plant, sofa, tv/monitor</li>
+</ul>
+</li>
+</ul>
+<h2 id="coco">COCO</h2>
+<p><code>Homepage</code> : <a href="http://cocodataset.org/#home" target="_blank">http://cocodataset.org/#home</a></p>
+<p><code>API</code> : <a href="https://github.com/cocodataset/cocoapi" target="_blank">https://github.com/cocodataset/cocoapi</a></p>
+<p><code>&#xC0AC;&#xC6A9;&#xBC95;</code> : <a href="https://jjeamin.github.io/info/2019/06/20/coco_api/" target="_blank">https://jjeamin.github.io/info/2019/06/20/coco_api/</a></p>
+<ul>
+<li><p>COCO&#xB294; Object Detection, Segmentation, Captioning&#xC744; &#xC704;&#xD55C; &#xB370;&#xC774;&#xD130;&#xC14B; &#xC785;&#xB2C8;&#xB2E4;.</p>
+</li>
+<li><p>33&#xB9CC;&#xAC1C;&#xC758; &#xC774;&#xBBF8;&#xC9C0;&#xB97C; &#xAC00;&#xC9C0;&#xACE0; &#xC788;&#xC2B5;&#xB2C8;&#xB2E4;.</p>
+</li>
+<li><p>150&#xB9CC;&#xAC1C;&#xC758; Object instances&#xB97C; &#xD3EC;&#xD568;&#xD569;&#xB2C8;&#xB2E4;.</p>
+</li>
+<li><p>80&#xAC1C;&#xC758; object &#xD074;&#xB798;&#xC2A4;&#xAC00; &#xC788;&#xC2B5;&#xB2C8;&#xB2E4;.</p>
+</li>
+<li><p>91&#xAC1C;&#xC758; stuff &#xD074;&#xB798;&#xC2A4;&#xAC00; &#xC788;&#xC2B5;&#xB2C8;&#xB2E4;.</p>
+</li>
+<li><p>25&#xB9CC;&#xBA85; &#xC0AC;&#xB78C;&#xC5D0; keypoint&#xAC00; annotation &#xB418;&#xC5B4; &#xC788;&#xC2B5;&#xB2C8;&#xB2E4;.</p>
+</li>
+<li><p>&#xC774;&#xBBF8;&#xC9C0;&#xB2F9; 5&#xAC1C;&#xC758; caption&#xC774; &#xC788;&#xC2B5;&#xB2C8;&#xB2E4;.</p>
+</li>
+</ul>
+<p><img src="../figure/coco_stuff.png" alt="coco"></p>
+<h2 id="cifar">CIFAR</h2>
+<p><code>Homepage</code> : <a href="https://www.cs.toronto.edu/~kriz/cifar.html" target="_blank">https://www.cs.toronto.edu/~kriz/cifar.html</a></p>
+<ul>
+<li>&#xC774;&#xBBF8;&#xC9C0; &#xBD84;&#xB958;&#xB97C; &#xC704;&#xD574; &#xC0AC;&#xC6A9;&#xB418;&#xB294; &#xB370;&#xC774;&#xD130;&#xC14B; &#xC785;&#xB2C8;&#xB2E4;.</li>
+<li>&#xBAA8;&#xB4E0; &#xC774;&#xBBF8;&#xC9C0;&#xC758; &#xD06C;&#xAE30;&#xB294; <code>32 x 32</code> &#xC785;&#xB2C8;&#xB2E4;.</li>
+</ul>
+<p><strong>CIFAR10</strong></p>
+<ul>
+<li>10 &#xD074;&#xB798;&#xC2A4;</li>
+<li>train : 50000 (&#xD074;&#xB798;&#xC2A4; &#xB2F9; 5000&#xAC1C;&#xC758; &#xC774;&#xBBF8;&#xC9C0;)</li>
+<li>test : 10000 (&#xD074;&#xB798;&#xC2A4; &#xB2F9; 1000&#xAC1C;&#xC758; &#xC774;&#xBBF8;&#xC9C0;)</li>
+</ul>
+<p><strong>CIFAR100</strong></p>
+<ul>
+<li>100 &#xD074;&#xB798;&#xC2A4;</li>
+<li>train : 50000 (&#xD074;&#xB798;&#xC2A4; &#xB2F9; 500&#xAC1C;&#xC758; &#xC774;&#xBBF8;&#xC9C0;)</li>
+<li>test : 10000 (&#xD074;&#xB798;&#xC2A4; &#xB2F9; 100&#xAC1C;&#xC758; &#xC774;&#xBBF8;&#xC9C0;)</li>
+</ul>
+<h2 id="openimage">Openimage</h2>
+<p><code>Homepage</code> : <a href="https://storage.googleapis.com/openimages/web/index.html" target="_blank">https://storage.googleapis.com/openimages/web/index.html</a></p>
+<ul>
+<li>&#xAD6C;&#xAE00;&#xC774; &#xB9CC;&#xB4E0; &#xB9E4;&#xC6B0; &#xAC70;&#xB300;&#xD55C; &#xB370;&#xC774;&#xD130;&#xC14B; &#xC785;&#xB2C8;&#xB2E4;.</li>
+<li>&#xD604;&#xC7AC; V6 &#xAE4C;&#xC9C0; &#xB098;&#xC640; &#xC788;&#xC2B5;&#xB2C8;&#xB2E4;.</li>
+<li>600&#xAC1C;&#xC758; &#xD074;&#xB798;&#xC2A4;&#xC5D0; 15,851,536&#xAC1C;&#xC758; box&#xB97C; &#xAC00;&#xC9C0;&#xACE0; &#xC788;&#xC2B5;&#xB2C8;&#xB2E4;.</li>
+<li>350&#xAC1C;&#xC758; &#xD074;&#xB798;&#xC2A4;&#xC5D0; 2,785,498&#xAC1C;&#xC758; box&#xB97C; &#xAC00;&#xC9C0;&#xACE0; &#xC788;&#xC2B5;&#xB2C8;&#xB2E4;.</li>
+<li>19957&#xAC1C;&#xC758; &#xD074;&#xB798;&#xC2A4;&#xC5D0; 59,919,574&#xAC1C;&#xC758; &#xC774;&#xBBF8;&#xC9C0; &#xB77C;&#xBCA8;&#xC744; &#xAC00;&#xC9C0;&#xACE0; &#xC788;&#xC2B5;&#xB2C8;&#xB2E4;.</li>
+<li>507,444&#xAC1C;&#xC758; <a href="https://google.github.io/localized-narratives/" target="_blank">Localized narratives</a>&#xAC00; &#xC788;&#xC2B5;&#xB2C8;&#xB2E4;.</li>
+<li>1,466&#xAC1C;&#xC758; &#xAD00;&#xACC4;&#xC5D0; 3,284,282&#xAC1C;&#xC758; &#xAD00;&#xACC4; &#xC8FC;&#xC11D;&#xC774; &#xC788;&#xC2B5;&#xB2C8;&#xB2E4;.</li>
+</ul>
+
                                 
                                 </section>
                             
@@ -1871,12 +1991,12 @@
 
             
                 
-                <a href="../INSTALL.html" class="navigation navigation-prev " aria-label="Previous page: 설치하기">
+                <a href="0_Project.html" class="navigation navigation-prev " aria-label="Previous page: project">
                     <i class="fa fa-angle-left"></i>
                 </a>
                 
                 
-                <a href="yolov2.html" class="navigation navigation-next " aria-label="Next page: YOLOv2">
+                <a href="2_CFG.html" class="navigation navigation-next " aria-label="Next page: /cfg">
                     <i class="fa fa-angle-right"></i>
                 </a>
                 
@@ -1887,7 +2007,7 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"YOLOv1","level":"2.1","depth":1,"next":{"title":"YOLOv2","level":"2.2","depth":1,"path":"part1_paper/yolov2.md","ref":"part1_paper/yolov2.md","articles":[]},"previous":{"title":"설치하기","level":"1.2","depth":1,"path":"INSTALL.md","ref":"INSTALL.md","articles":[]},"dir":"neutral"},"config":{"plugins":["advanced-emoji","theme-gestalt","-theme-default","styles-sass-fix","theme-api"],"root":"./","styles":{"website":"website-1592499269311.css"},"pluginsConfig":{"styles-sass-fix":{},"theme-gestalt":{"showLevel":false,"styles":{"website":"styles/website.css"},"logo":"/darknet_book/assets/darknet.png","baseUrl":null,"excludeDefaultStyles":true,"doNotHideChildrenChapters":false},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"theme-api":{"languages":[],"split":true,"theme":"light"},"advanced-emoji":{"embedEmojis":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]}},"theme":"default","author":"JJM","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"DarkNet Book","output.name":"site","gitbook":"*"},"file":{"path":"part1_paper/yolov1.md","mtime":"2020-06-13T18:21:37.837Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-06-18T16:54:26.504Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"/data","level":"3.2","depth":1,"next":{"title":"/cfg","level":"3.3","depth":1,"path":"part2_source/2_CFG.md","ref":"part2_source/2_CFG.md","articles":[]},"previous":{"title":"project","level":"3.1","depth":1,"path":"part2_source/0_Project.md","ref":"part2_source/0_Project.md","articles":[]},"dir":"ltr"},"config":{"plugins":["advanced-emoji","theme-gestalt","-theme-default","styles-sass-fix","theme-api"],"root":"./","styles":{"website":"website-1592499269311.css"},"pluginsConfig":{"styles-sass-fix":{},"theme-gestalt":{"showLevel":false,"styles":{"website":"styles/website.css"},"logo":"/darknet_book/assets/darknet.png","baseUrl":null,"excludeDefaultStyles":true,"doNotHideChildrenChapters":false},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"theme-api":{"languages":[],"split":true,"theme":"light"},"advanced-emoji":{"embedEmojis":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]}},"theme":"default","author":"JJM","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"DarkNet Book","output.name":"site","gitbook":"*"},"file":{"path":"part2_source/1_DATA.md","mtime":"2020-06-18T16:47:54.415Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-06-18T16:54:26.504Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>

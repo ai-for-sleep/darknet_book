@@ -35,7 +35,7 @@ $pre-map        : (
                 margin: 0px,
                 padding: 0.85em 1em,
                 margin-bottom: $spacing-unit,
-                background: #0431B4,
+                background: white,
                ) !default;
 
 // Styling for code block divs
@@ -50,8 +50,8 @@ $code-block-map : (
 // Styling for text inside code blocks
 $code-block-text-map : (
                         font-size: 0.9em,
-                        color: #00FF40,
-                        background: #0431B4
+                        color: black,
+                        background: white
                        ) !default;
 
 // Styling for inline code snippets
