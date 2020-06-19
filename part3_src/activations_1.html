@@ -4,7 +4,7 @@
     <head>
         <meta charset="UTF-8">
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
-        <title>YOLOv3 · DarkNet Book</title>
+        <title>activation_layer.c · DarkNet Book</title>
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="description" content="">
         <meta name="generator" content="GitBook 3.2.3">
@@ -61,10 +61,10 @@
     
 
     
-    <link rel="next" href="yolov4.html" />
+    <link rel="next" href="activations_2.html" />
     
     
-    <link rel="prev" href="yolov2.html" />
+    <link rel="prev" href="../part2_source/4_SRC.html" />
     
 
     </head>
@@ -141,7 +141,7 @@
     
         
         
-        <li class="header  selected ">Paper</li>
+        <li class="header ">Paper</li>
         
         
     
@@ -149,10 +149,10 @@
         <li class="chapter 
               "
             data-level="2.1" 
-            data-path="yolov1.html">
+            data-path="../part1_paper/yolov1.html">
 
             
-                <a href="yolov1.html">
+                <a href="../part1_paper/yolov1.html">
             
                     
                     YOLOv1
@@ -167,10 +167,10 @@
         <li class="chapter 
               "
             data-level="2.2" 
-            data-path="yolov2.html">
+            data-path="../part1_paper/yolov2.html">
 
             
-                <a href="yolov2.html">
+                <a href="../part1_paper/yolov2.html">
             
                     
                     YOLOv2
@@ -183,12 +183,12 @@
     
         
         <li class="chapter 
-            active  selected  "
+              "
             data-level="2.3" 
-            data-path="yolov3.html">
+            data-path="../part1_paper/yolov3.html">
 
             
-                <a href="yolov3.html">
+                <a href="../part1_paper/yolov3.html">
             
                     
                     YOLOv3
@@ -203,10 +203,10 @@
         <li class="chapter 
               "
             data-level="2.4" 
-            data-path="yolov4.html">
+            data-path="../part1_paper/yolov4.html">
 
             
-                <a href="yolov4.html">
+                <a href="../part1_paper/yolov4.html">
             
                     
                     YOLOv4
@@ -319,18 +319,18 @@
     
         
         
-        <li class="header ">/SRC</li>
+        <li class="header  selected ">/SRC</li>
         
         
     
         
         <li class="chapter 
-              "
+            active  selected  "
             data-level="4.1" 
-            data-path="../part3_src/activations_1.html">
+            data-path="activations_1.html">
 
             
-                <a href="../part3_src/activations_1.html">
+                <a href="activations_1.html">
             
                     
                     activation_layer.c
@@ -345,10 +345,10 @@
         <li class="chapter 
               "
             data-level="4.2" 
-            data-path="../part3_src/activations_2.html">
+            data-path="activations_2.html">
 
             
-                <a href="../part3_src/activations_2.html">
+                <a href="activations_2.html">
             
                     
                     activations.c
@@ -1829,7 +1829,7 @@
     <!-- Title -->
     <h1>
         <i class="fa fa-circle-o-notch fa-spin"></i>
-        <a href=".." >YOLOv3</a>
+        <a href=".." >activation_layer.c</a>
     </h1>
 </div>
 
@@ -1844,7 +1844,187 @@
     
                                 <section class="normal markdown-section">
                                 
-                                
+                                <h1 id="activation-function-&#xC774;&#xB780;">Activation Function &#xC774;&#xB780;?</h1>
+<p><em>&#xD37C;&#xC149;&#xD2B8;&#xB860;&#xACFC; &#xB525;&#xB7EC;&#xB2DD;&#xC758; &#xCC28;&#xC774;&#xC810;</em></p>
+<p>&#xB525;&#xB7EC;&#xB2DD; &#xB124;&#xD2B8;&#xC6CC;&#xD06C;&#xC5D0;&#xC11C; <code>Layer</code>&#xC0AC;&#xC774;&#xC5D0; &#xD56D;&#xC0C1; &#xD65C;&#xC131;&#xD654; &#xD568;&#xC218;(Activation Function)&#xAC00; &#xC788;&#xC2B5;&#xB2C8;&#xB2E4;. &#xC774;&#xB7EC;&#xD55C; <code>activation function</code>&#xC740; &#xC5B4;&#xB5A4; &#xC5ED;&#xD560;&#xC744; &#xD558;&#xB294; &#xAC83; &#xC77C;&#xAE4C;&#xC694;?
+&#xD65C;&#xC131;&#xD654; &#xD568;&#xC218;&#xB780; &#xAC12;&#xC744; &#xD65C;&#xC131;&#xD654;&#xC2DC;&#xD0A4;&#xB294; &#xBE44;&#xC120;&#xD615; &#xD568;&#xC218; &#xC785;&#xB2C8;&#xB2E4;.
+&#xBE44;&#xC120;&#xD615; &#xD568;&#xC218;&#xAC00; &#xD65C;&#xC131;&#xD654; &#xD568;&#xC218;&#xC758; &#xD575;&#xC2EC; &#xC785;&#xB2C8;&#xB2E4;.
+&#xB9CC;&#xC57D; &#xB525;&#xB7EC;&#xB2DD; &#xB124;&#xD2B8;&#xC6CC;&#xD06C;&#xC5D0; &#xD65C;&#xC131;&#xD654; &#xD568;&#xC218;&#xAC00; &#xC5C6;&#xACE0; &#xC120;&#xD615; &#xD568;&#xC218;&#xB9CC; &#xC874;&#xC7AC;&#xD558;&#xB294; &#xACBD;&#xC6B0; Layer&#xB97C; &#xC544;&#xBB34;&#xB9AC; &#xCD94;&#xAC00;&#xD574;&#xB3C4; &#xACB0;&#xAD6D;&#xC740; &#xD558;&#xB098;&#xC758; Layer&#xAC00; &#xC788;&#xB294; &#xB124;&#xD2B8;&#xC6CC;&#xD06C;&#xC640; &#xAC19;&#xAC8C; &#xB429;&#xB2C8;&#xB2E4;. ( <script type="math/tex; ">a(a(ax + b) + b) + b = ax' + b</script> )
+&#xC989;, &#xB525;&#xB7EC;&#xB2DD; &#xB124;&#xD2B8;&#xC6CC;&#xD06C;&#xB294; &#xD65C;&#xC131;&#xD654; &#xD568;&#xC218;&#xC758; &#xC874;&#xC7AC;&#xB85C; Layer&#xAC00; &#xAE4A;&#xC5B4;&#xC9C8; &#xC218; &#xC788;&#xACE0; &#xC218;&#xB9CE;&#xC740; &#xC5F0;&#xC0B0;&#xC73C;&#xB85C; &#xB9CE;&#xC740; &#xAC83;&#xC744; &#xD45C;&#xD604;&#xD560; &#xC218; &#xC788;&#xAC8C; &#xB429;&#xB2C8;&#xB2E4;.</p>
+<hr>
+<h1 id="activationsc">activations.c</h1>
+<pre><code class="lang-c"><span class="hljs-comment">// darknet.h</span>
+
+<span class="hljs-keyword">typedef</span> <span class="hljs-keyword">enum</span>{
+    LOGISTIC, RELU, RELIE, LINEAR, RAMP, TANH, PLSE, LEAKY, ELU, LOGGY, STAIR, HARDTAN, LHTAN, SELU
+} ACTIVATION;
+</code></pre>
+<ul>
+<li><code>enum</code> : &#xC5F4;&#xAC70;&#xD615;, &#xC815;&#xC218;&#xD615; &#xC0C1;&#xC218;&#xB97C; &#xC120;&#xC5B8;&#xD560; &#xB54C; &#xC77C;&#xC77C;&#xC774; &#xC120;&#xC5B8;&#xD558;&#xC9C0; &#xC5B4;&#xB824;&#xC6B4; &#xBD80;&#xBD84;&#xC744; &#xD574;&#xACB0;&#xD558;&#xAE30; &#xC704;&#xD55C; &#xD0A4;&#xC6CC;&#xB4DC; &#xC785;&#xB2C8;&#xB2E4;.</li>
+</ul>
+<p>&#xC704;&#xC5D0; &#xC5F4;&#xAC70;&#xD615;&#xC758; &#xACBD;&#xC6B0; &#xC774;&#xB984;&#xC740; <code>ACTIVATION</code>&#xC774;&#xACE0; <code>LOGISTIC : 0 ... SELU : 13</code> &#xAC12;&#xC774; &#xD560;&#xB2F9; &#xB429;&#xB2C8;&#xB2E4;.</p>
+<h2 id="getactivationstring">get_activation_string</h2>
+<pre><code class="lang-c"><span class="hljs-function"><span class="hljs-keyword">char</span> *<span class="hljs-title">get_activation_string</span><span class="hljs-params">(ACTIVATION a)</span>
+</span>{
+    <span class="hljs-keyword">switch</span>(a){
+        <span class="hljs-keyword">case</span> LOGISTIC:
+            <span class="hljs-keyword">return</span> <span class="hljs-string">&quot;logistic&quot;</span>;
+        <span class="hljs-keyword">case</span> LOGGY:
+            <span class="hljs-keyword">return</span> <span class="hljs-string">&quot;loggy&quot;</span>;
+        <span class="hljs-keyword">case</span> RELU:
+            <span class="hljs-keyword">return</span> <span class="hljs-string">&quot;relu&quot;</span>;
+        <span class="hljs-keyword">case</span> ELU:
+            <span class="hljs-keyword">return</span> <span class="hljs-string">&quot;elu&quot;</span>;
+        <span class="hljs-keyword">case</span> SELU:
+            <span class="hljs-keyword">return</span> <span class="hljs-string">&quot;selu&quot;</span>;
+        <span class="hljs-keyword">case</span> RELIE:
+            <span class="hljs-keyword">return</span> <span class="hljs-string">&quot;relie&quot;</span>;
+        <span class="hljs-keyword">case</span> RAMP:
+            <span class="hljs-keyword">return</span> <span class="hljs-string">&quot;ramp&quot;</span>;
+        <span class="hljs-keyword">case</span> LINEAR:
+            <span class="hljs-keyword">return</span> <span class="hljs-string">&quot;linear&quot;</span>;
+        <span class="hljs-keyword">case</span> TANH:
+            <span class="hljs-keyword">return</span> <span class="hljs-string">&quot;tanh&quot;</span>;
+        <span class="hljs-keyword">case</span> PLSE:
+            <span class="hljs-keyword">return</span> <span class="hljs-string">&quot;plse&quot;</span>;
+        <span class="hljs-keyword">case</span> LEAKY:
+            <span class="hljs-keyword">return</span> <span class="hljs-string">&quot;leaky&quot;</span>;
+        <span class="hljs-keyword">case</span> STAIR:
+            <span class="hljs-keyword">return</span> <span class="hljs-string">&quot;stair&quot;</span>;
+        <span class="hljs-keyword">case</span> HARDTAN:
+            <span class="hljs-keyword">return</span> <span class="hljs-string">&quot;hardtan&quot;</span>;
+        <span class="hljs-keyword">case</span> LHTAN:
+            <span class="hljs-keyword">return</span> <span class="hljs-string">&quot;lhtan&quot;</span>;
+        <span class="hljs-keyword">default</span>:
+            <span class="hljs-keyword">break</span>;
+    }
+    <span class="hljs-keyword">return</span> <span class="hljs-string">&quot;relu&quot;</span>;
+}
+</code></pre>
+<p><code>ACTIVATION</code>&#xC744; &#xC785;&#xB825;&#xBC1B;&#xC544; &#xBB38;&#xC790;&#xC5F4;&#xACFC; &#xB9E4;&#xD551;&#xD558;&#xB294; &#xD568;&#xC218;&#xC785;&#xB2C8;&#xB2E4;.</p>
+<h2 id="getactivation">get_activation</h2>
+<pre><code class="lang-c"><span class="hljs-function">ACTIVATION <span class="hljs-title">get_activation</span><span class="hljs-params">(<span class="hljs-keyword">char</span> *s)</span>
+</span>{
+    <span class="hljs-keyword">if</span> (<span class="hljs-built_in">strcmp</span>(s, <span class="hljs-string">&quot;logistic&quot;</span>)==<span class="hljs-number">0</span>) <span class="hljs-keyword">return</span> LOGISTIC;
+    <span class="hljs-keyword">if</span> (<span class="hljs-built_in">strcmp</span>(s, <span class="hljs-string">&quot;loggy&quot;</span>)==<span class="hljs-number">0</span>) <span class="hljs-keyword">return</span> LOGGY;
+    <span class="hljs-keyword">if</span> (<span class="hljs-built_in">strcmp</span>(s, <span class="hljs-string">&quot;relu&quot;</span>)==<span class="hljs-number">0</span>) <span class="hljs-keyword">return</span> RELU;
+    <span class="hljs-keyword">if</span> (<span class="hljs-built_in">strcmp</span>(s, <span class="hljs-string">&quot;elu&quot;</span>)==<span class="hljs-number">0</span>) <span class="hljs-keyword">return</span> ELU;
+    <span class="hljs-keyword">if</span> (<span class="hljs-built_in">strcmp</span>(s, <span class="hljs-string">&quot;selu&quot;</span>)==<span class="hljs-number">0</span>) <span class="hljs-keyword">return</span> SELU;
+    <span class="hljs-keyword">if</span> (<span class="hljs-built_in">strcmp</span>(s, <span class="hljs-string">&quot;relie&quot;</span>)==<span class="hljs-number">0</span>) <span class="hljs-keyword">return</span> RELIE;
+    <span class="hljs-keyword">if</span> (<span class="hljs-built_in">strcmp</span>(s, <span class="hljs-string">&quot;plse&quot;</span>)==<span class="hljs-number">0</span>) <span class="hljs-keyword">return</span> PLSE;
+    <span class="hljs-keyword">if</span> (<span class="hljs-built_in">strcmp</span>(s, <span class="hljs-string">&quot;hardtan&quot;</span>)==<span class="hljs-number">0</span>) <span class="hljs-keyword">return</span> HARDTAN;
+    <span class="hljs-keyword">if</span> (<span class="hljs-built_in">strcmp</span>(s, <span class="hljs-string">&quot;lhtan&quot;</span>)==<span class="hljs-number">0</span>) <span class="hljs-keyword">return</span> LHTAN;
+    <span class="hljs-keyword">if</span> (<span class="hljs-built_in">strcmp</span>(s, <span class="hljs-string">&quot;linear&quot;</span>)==<span class="hljs-number">0</span>) <span class="hljs-keyword">return</span> LINEAR;
+    <span class="hljs-keyword">if</span> (<span class="hljs-built_in">strcmp</span>(s, <span class="hljs-string">&quot;ramp&quot;</span>)==<span class="hljs-number">0</span>) <span class="hljs-keyword">return</span> RAMP;
+    <span class="hljs-keyword">if</span> (<span class="hljs-built_in">strcmp</span>(s, <span class="hljs-string">&quot;leaky&quot;</span>)==<span class="hljs-number">0</span>) <span class="hljs-keyword">return</span> LEAKY;
+    <span class="hljs-keyword">if</span> (<span class="hljs-built_in">strcmp</span>(s, <span class="hljs-string">&quot;tanh&quot;</span>)==<span class="hljs-number">0</span>) <span class="hljs-keyword">return</span> TANH;
+    <span class="hljs-keyword">if</span> (<span class="hljs-built_in">strcmp</span>(s, <span class="hljs-string">&quot;stair&quot;</span>)==<span class="hljs-number">0</span>) <span class="hljs-keyword">return</span> STAIR;
+    <span class="hljs-built_in">fprintf</span>(<span class="hljs-built_in">stderr</span>, <span class="hljs-string">&quot;Couldn&apos;t find activation function %s, going with ReLU\n&quot;</span>, s);
+    <span class="hljs-keyword">return</span> RELU;
+}
+</code></pre>
+<p>&#xBB38;&#xC790;&#xC5F4;&#xC744; &#xC785;&#xB825;&#xBC1B;&#xC544; <code>ACTIVATION</code>&#xACFC; &#xB9E4;&#xD551;&#xD558;&#xB294; &#xD568;&#xC218;&#xC785;&#xB2C8;&#xB2E4;.</p>
+<h2 id="activate">activate</h2>
+<pre><code class="lang-c"><span class="hljs-function"><span class="hljs-keyword">float</span> <span class="hljs-title">activate</span><span class="hljs-params">(<span class="hljs-keyword">float</span> x, ACTIVATION a)</span>
+</span>{
+    <span class="hljs-keyword">switch</span>(a){
+        <span class="hljs-keyword">case</span> LINEAR:
+            <span class="hljs-keyword">return</span> linear_activate(x);
+        <span class="hljs-keyword">case</span> LOGISTIC:
+            <span class="hljs-keyword">return</span> logistic_activate(x);
+        <span class="hljs-keyword">case</span> LOGGY:
+            <span class="hljs-keyword">return</span> loggy_activate(x);
+        <span class="hljs-keyword">case</span> RELU:
+            <span class="hljs-keyword">return</span> relu_activate(x);
+        <span class="hljs-keyword">case</span> ELU:
+            <span class="hljs-keyword">return</span> elu_activate(x);
+        <span class="hljs-keyword">case</span> SELU:
+            <span class="hljs-keyword">return</span> selu_activate(x);
+        <span class="hljs-keyword">case</span> RELIE:
+            <span class="hljs-keyword">return</span> relie_activate(x);
+        <span class="hljs-keyword">case</span> RAMP:
+            <span class="hljs-keyword">return</span> ramp_activate(x);
+        <span class="hljs-keyword">case</span> LEAKY:
+            <span class="hljs-keyword">return</span> leaky_activate(x);
+        <span class="hljs-keyword">case</span> TANH:
+            <span class="hljs-keyword">return</span> tanh_activate(x);
+        <span class="hljs-keyword">case</span> PLSE:
+            <span class="hljs-keyword">return</span> plse_activate(x);
+        <span class="hljs-keyword">case</span> STAIR:
+            <span class="hljs-keyword">return</span> stair_activate(x);
+        <span class="hljs-keyword">case</span> HARDTAN:
+            <span class="hljs-keyword">return</span> hardtan_activate(x);
+        <span class="hljs-keyword">case</span> LHTAN:
+            <span class="hljs-keyword">return</span> lhtan_activate(x);
+    }
+    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+}
+
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">activate_array</span><span class="hljs-params">(<span class="hljs-keyword">float</span> *x, <span class="hljs-keyword">const</span> <span class="hljs-keyword">int</span> n, <span class="hljs-keyword">const</span> ACTIVATION a)</span>
+</span>{
+    <span class="hljs-keyword">int</span> i;
+    <span class="hljs-keyword">for</span>(i = <span class="hljs-number">0</span>; i &lt; n; ++i){
+        x[i] = activate(x[i], a);
+    }
+}
+</code></pre>
+<ul>
+<li><p><code>ACTIVATION</code>&#xC5D0; &#xD574;&#xB2F9;&#xD558;&#xB294; &#xD568;&#xC218;&#xB97C; &#xBC18;&#xD658;&#xD558;&#xB294; &#xD568;&#xC218;&#xC785;&#xB2C8;&#xB2E4;.</p>
+</li>
+<li><p>activation &#xD568;&#xC218;&#xB97C; &#xC801;&#xC6A9;&#xD558;&#xAE30; &#xC704;&#xD55C; &#xD568;&#xC218;&#xC785;&#xB2C8;&#xB2E4;.</p>
+</li>
+</ul>
+<h2 id="gradient">gradient</h2>
+<pre><code class="lang-c"><span class="hljs-function"><span class="hljs-keyword">float</span> <span class="hljs-title">gradient</span><span class="hljs-params">(<span class="hljs-keyword">float</span> x, ACTIVATION a)</span>
+</span>{
+    <span class="hljs-keyword">switch</span>(a){
+        <span class="hljs-keyword">case</span> LINEAR:
+            <span class="hljs-keyword">return</span> linear_gradient(x);
+        <span class="hljs-keyword">case</span> LOGISTIC:
+            <span class="hljs-keyword">return</span> logistic_gradient(x);
+        <span class="hljs-keyword">case</span> LOGGY:
+            <span class="hljs-keyword">return</span> loggy_gradient(x);
+        <span class="hljs-keyword">case</span> RELU:
+            <span class="hljs-keyword">return</span> relu_gradient(x);
+        <span class="hljs-keyword">case</span> ELU:
+            <span class="hljs-keyword">return</span> elu_gradient(x);
+        <span class="hljs-keyword">case</span> SELU:
+            <span class="hljs-keyword">return</span> selu_gradient(x);
+        <span class="hljs-keyword">case</span> RELIE:
+            <span class="hljs-keyword">return</span> relie_gradient(x);
+        <span class="hljs-keyword">case</span> RAMP:
+            <span class="hljs-keyword">return</span> ramp_gradient(x);
+        <span class="hljs-keyword">case</span> LEAKY:
+            <span class="hljs-keyword">return</span> leaky_gradient(x);
+        <span class="hljs-keyword">case</span> TANH:
+            <span class="hljs-keyword">return</span> tanh_gradient(x);
+        <span class="hljs-keyword">case</span> PLSE:
+            <span class="hljs-keyword">return</span> plse_gradient(x);
+        <span class="hljs-keyword">case</span> STAIR:
+            <span class="hljs-keyword">return</span> stair_gradient(x);
+        <span class="hljs-keyword">case</span> HARDTAN:
+            <span class="hljs-keyword">return</span> hardtan_gradient(x);
+        <span class="hljs-keyword">case</span> LHTAN:
+            <span class="hljs-keyword">return</span> lhtan_gradient(x);
+    }
+    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+}
+
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">gradient_array</span><span class="hljs-params">(<span class="hljs-keyword">const</span> <span class="hljs-keyword">float</span> *x, <span class="hljs-keyword">const</span> <span class="hljs-keyword">int</span> n, <span class="hljs-keyword">const</span> ACTIVATION a, <span class="hljs-keyword">float</span> *delta)</span>
+</span>{
+    <span class="hljs-keyword">int</span> i;
+    <span class="hljs-keyword">for</span>(i = <span class="hljs-number">0</span>; i &lt; n; ++i){
+        delta[i] *= gradient(x[i], a);
+    }
+}
+</code></pre>
+<ul>
+<li><p><code>ACTIVATION</code>&#xC5D0; &#xD574;&#xB2F9;&#xD558;&#xB294; gradient&#xB97C; &#xBC18;&#xD658;&#xD558;&#xB294; &#xD568;&#xC218;&#xC785;&#xB2C8;&#xB2E4;.</p>
+</li>
+<li><p>activation gradient &#xD568;&#xC218;&#xB97C; &#xC801;&#xC6A9;&#xD558;&#xAE30; &#xC704;&#xD55C; &#xD568;&#xC218;&#xC785;&#xB2C8;&#xB2E4;.</p>
+</li>
+</ul>
+
                                 
                                 </section>
                             
@@ -1871,12 +2051,12 @@
 
             
                 
-                <a href="yolov2.html" class="navigation navigation-prev " aria-label="Previous page: YOLOv2">
+                <a href="../part2_source/4_SRC.html" class="navigation navigation-prev " aria-label="Previous page: /src">
                     <i class="fa fa-angle-left"></i>
                 </a>
                 
                 
-                <a href="yolov4.html" class="navigation navigation-next " aria-label="Next page: YOLOv4">
+                <a href="activations_2.html" class="navigation navigation-next " aria-label="Next page: activations.c">
                     <i class="fa fa-angle-right"></i>
                 </a>
                 
@@ -1887,7 +2067,7 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"YOLOv3","level":"2.3","depth":1,"next":{"title":"YOLOv4","level":"2.4","depth":1,"path":"part1_paper/yolov4.md","ref":"part1_paper/yolov4.md","articles":[]},"previous":{"title":"YOLOv2","level":"2.2","depth":1,"path":"part1_paper/yolov2.md","ref":"part1_paper/yolov2.md","articles":[]},"dir":"neutral"},"config":{"plugins":["advanced-emoji","theme-gestalt","-theme-default","styles-sass-fix","theme-api","mathjax"],"root":"./","styles":{"website":"website-1592596202267.css"},"pluginsConfig":{"styles-sass-fix":{},"theme-gestalt":{"showLevel":false,"styles":{"website":"styles/website.css"},"logo":"/darknet_book/assets/darknet.png","baseUrl":null,"excludeDefaultStyles":true,"doNotHideChildrenChapters":false},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"theme-api":{"languages":[],"split":true,"theme":"light"},"mathjax":{"forceSVG":false,"version":"2.6-latest"},"advanced-emoji":{"embedEmojis":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]}},"theme":"default","author":"JJM","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"DarkNet Book","output.name":"site","gitbook":"*"},"file":{"path":"part1_paper/yolov3.md","mtime":"2020-06-13T18:21:58.896Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-06-19T19:49:57.992Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"activation_layer.c","level":"4.1","depth":1,"next":{"title":"activations.c","level":"4.2","depth":1,"path":"part3_src/activations_2.md","ref":"part3_src/activations_2.md","articles":[]},"previous":{"title":"/src","level":"3.5","depth":1,"path":"part2_source/4_SRC.md","ref":"part2_source/4_SRC.md","articles":[]},"dir":"ltr"},"config":{"plugins":["advanced-emoji","theme-gestalt","-theme-default","styles-sass-fix","theme-api","mathjax"],"root":"./","styles":{"website":"website-1592596202267.css"},"pluginsConfig":{"styles-sass-fix":{},"theme-gestalt":{"showLevel":false,"styles":{"website":"styles/website.css"},"logo":"/darknet_book/assets/darknet.png","baseUrl":null,"excludeDefaultStyles":true,"doNotHideChildrenChapters":false},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"theme-api":{"languages":[],"split":true,"theme":"light"},"mathjax":{"forceSVG":false,"version":"2.6-latest"},"advanced-emoji":{"embedEmojis":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]}},"theme":"default","author":"JJM","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"DarkNet Book","output.name":"site","gitbook":"*"},"file":{"path":"part3_src/activations_1.md","mtime":"2020-06-19T15:24:16.643Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-06-19T19:49:57.992Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>
