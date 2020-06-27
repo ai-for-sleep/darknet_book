@@ -4,7 +4,7 @@
     <head>
         <meta charset="UTF-8">
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
-        <title>/cfg · DarkNet Book</title>
+        <title>avgpool_layer.c · DarkNet Book</title>
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="description" content="">
         <meta name="generator" content="GitBook 3.2.3">
@@ -61,10 +61,8 @@
     
 
     
-    <link rel="next" href="3_EXAMPLE.html" />
     
-    
-    <link rel="prev" href="1_DATA.html" />
+    <link rel="prev" href="activations_2.html" />
     
 
     </head>
@@ -221,7 +219,7 @@
     
         
         
-        <li class="header  selected ">SOURCE</li>
+        <li class="header ">SOURCE</li>
         
         
     
@@ -229,10 +227,10 @@
         <li class="chapter 
               "
             data-level="3.1" 
-            data-path="0_Project.html">
+            data-path="../part2_source/0_Project.html">
 
             
-                <a href="0_Project.html">
+                <a href="../part2_source/0_Project.html">
             
                     
                     project
@@ -247,10 +245,10 @@
         <li class="chapter 
               "
             data-level="3.2" 
-            data-path="1_DATA.html">
+            data-path="../part2_source/1_DATA.html">
 
             
-                <a href="1_DATA.html">
+                <a href="../part2_source/1_DATA.html">
             
                     
                     /data
@@ -263,12 +261,12 @@
     
         
         <li class="chapter 
-            active  selected  "
+              "
             data-level="3.3" 
-            data-path="2_CFG.html">
+            data-path="../part2_source/2_CFG.html">
 
             
-                <a href="2_CFG.html">
+                <a href="../part2_source/2_CFG.html">
             
                     
                     /cfg
@@ -283,10 +281,10 @@
         <li class="chapter 
               "
             data-level="3.4" 
-            data-path="3_EXAMPLE.html">
+            data-path="../part2_source/3_EXAMPLE.html">
 
             
-                <a href="3_EXAMPLE.html">
+                <a href="../part2_source/3_EXAMPLE.html">
             
                     
                     /example
@@ -301,10 +299,10 @@
         <li class="chapter 
               "
             data-level="3.5" 
-            data-path="4_SRC.html">
+            data-path="../part2_source/4_SRC.html">
 
             
-                <a href="4_SRC.html">
+                <a href="../part2_source/4_SRC.html">
             
                     
                     /src
@@ -319,7 +317,7 @@
     
         
         
-        <li class="header ">/SRC</li>
+        <li class="header  selected ">/SRC</li>
         
         
     
@@ -345,10 +343,10 @@
         <li class="chapter 
               "
             data-level="4.2" 
-            data-path="../part3_src/activations_1.html">
+            data-path="activations_1.html">
 
             
-                <a href="../part3_src/activations_1.html">
+                <a href="activations_1.html">
             
                     
                     activations.c
@@ -365,10 +363,10 @@
         <li class="chapter 
                hide "
             data-level="4.2.1" 
-            data-path="../part3_src/activations_2.html">
+            data-path="activations_2.html">
 
             
-                <a href="../part3_src/activations_2.html">
+                <a href="activations_2.html">
             
                     
                     activation.h
@@ -386,12 +384,12 @@
     
         
         <li class="chapter 
-              "
+            active  selected  "
             data-level="4.3" 
-            data-path="../part3_src/avgpool.html">
+            data-path="avgpool.html">
 
             
-                <a href="../part3_src/avgpool.html">
+                <a href="avgpool.html">
             
                     
                     avgpool_layer.c
@@ -1854,7 +1852,7 @@
     <!-- Title -->
     <h1>
         <i class="fa fa-circle-o-notch fa-spin"></i>
-        <a href=".." >/cfg</a>
+        <a href=".." >avgpool_layer.c</a>
     </h1>
 </div>
 
@@ -1869,26 +1867,95 @@
     
                                 <section class="normal markdown-section">
                                 
-                                <h1 id="cfg">/cfg</h1>
-<p>&#xBAA8;&#xB378;&#xB4E4;&#xC758; &#xAD6C;&#xC870;&#xB97C; &#xBAA8;&#xC544; &#xB193;&#xC740; &#xD3F4;&#xB354; &#xC785;&#xB2C8;&#xB2E4;.</p>
-<ul>
-<li><code>alexnet</code>, <code>resnet</code>, <code>densenet</code>, <code>resxnet</code>, <code>vgg</code>, <code>darknet</code>, <code>rnn</code>, <code>gru</code>, <code>yolov1</code>, <code>yolov2</code>, <code>yolov3</code> &#xB4F1; &#xB2E4;&#xC591;&#xD55C; &#xBAA8;&#xB378; &#xAD6C;&#xC870;&#xB97C; &#xB2F4;&#xC740; &#xD30C;&#xC77C;&#xC774; &#xC788;&#xC2B5;&#xB2C8;&#xB2E4;.</li>
-</ul>
-<h2 id="structure">structure</h2>
-<pre><code>[net]
-parameter1
-parameter2
-parameter3
+                                <h1 id="average-pooling-layer-&#xB780;">Average Pooling Layer &#xB780;?</h1>
+<p>Feature Map&#xC758; &#xD3C9;&#xADE0; &#xAC12;&#xC744; &#xACC4;&#xC0B0;&#xD574; &#xC804;&#xD30C;&#xC2DC;&#xD0A4;&#xB294; Layer &#xC785;&#xB2C8;&#xB2E4;.</p>
+<p><img src="../figure/avgpool.png" alt="avgpool"></p>
+<p>Forward&#xB294; &#xC704;&#xC640; &#xAC19;&#xC774; &#xACC4;&#xC0B0;&#xB429;&#xB2C8;&#xB2E4;.</p>
+<p><img src="../figure/avgpool_grad.png" alt="avgpool"></p>
+<p>Backward&#xB294; &#xC704;&#xC640; &#xAC19;&#xC774; &#xACC4;&#xC0B0;&#xB429;&#xB2C8;&#xB2E4;.</p>
+<h1 id="avgpoollayerc">avgpool_layer.c</h1>
+<pre><code class="lang-c"><span class="hljs-comment">//avgpool_layer.h</span>
 
-[convolutional]
-parameter1
-parameter2
-parameter3
-</code></pre><ul>
-<li><p>&#xB300;&#xAD04;&#xD638;([])&#xC548;&#xC5D0; Deep Neural Network Layer&#xC758; &#xC774;&#xB984;&#xC774; &#xB4E4;&#xC5B4;&#xAC00;&#xACE0; &#xADF8; &#xC544;&#xB798;&#xC5D0;&#xB294; &#xD574;&#xB2F9; <code>Layer&#xC5D0;</code> &#xD544;&#xC694;&#xD55C; &#xD30C;&#xB77C;&#xBBF8;&#xD130; &#xAC12;&#xC774; &#xCD94;&#xAC00; &#xB429;&#xB2C8;&#xB2E4;.</p>
-</li>
-<li><p>&#xBAA8;&#xB378;&#xC774; &#xB3D9;&#xC791;&#xD558;&#xB294; &#xC21C;&#xC11C;&#xB300;&#xB85C; &#xC815;&#xC758;&#xD558;&#xBA74; &#xB429;&#xB2C8;&#xB2E4;.</p>
-</li>
+<span class="hljs-keyword">typedef</span> layer avgpool_layer;
+</code></pre>
+<h2 id="makeavgpoollayer">make_avgpool_layer</h2>
+<pre><code class="lang-c"><span class="hljs-function">avgpool_layer <span class="hljs-title">make_avgpool_layer</span><span class="hljs-params">(<span class="hljs-keyword">int</span> batch, <span class="hljs-keyword">int</span> w, <span class="hljs-keyword">int</span> h, <span class="hljs-keyword">int</span> c)</span>
+</span>{
+    <span class="hljs-built_in">fprintf</span>(<span class="hljs-built_in">stderr</span>, <span class="hljs-string">&quot;avg                     %4d x%4d x%4d   -&gt;  %4d\n&quot;</span>,  w, h, c, c);
+    avgpool_layer l = {<span class="hljs-number">0</span>};
+    l.type = AVGPOOL;
+    l.batch = batch;
+    l.h = h;
+    l.w = w;
+    l.c = c;
+    l.out_w = <span class="hljs-number">1</span>;
+    l.out_h = <span class="hljs-number">1</span>;
+    l.out_c = c;
+    l.outputs = l.out_c;
+    l.inputs = h*w*c;
+    <span class="hljs-keyword">int</span> output_size = l.outputs * batch;
+    l.output =  <span class="hljs-built_in">calloc</span>(output_size, <span class="hljs-keyword">sizeof</span>(<span class="hljs-keyword">float</span>));
+    l.delta =   <span class="hljs-built_in">calloc</span>(output_size, <span class="hljs-keyword">sizeof</span>(<span class="hljs-keyword">float</span>));
+    l.forward = forward_avgpool_layer;
+    l.backward = backward_avgpool_layer;
+    <span class="hljs-meta">#<span class="hljs-meta-keyword">ifdef</span> GPU</span>
+    l.forward_gpu = forward_avgpool_layer_gpu;
+    l.backward_gpu = backward_avgpool_layer_gpu;
+    l.output_gpu  = cuda_make_array(l.output, output_size);
+    l.delta_gpu   = cuda_make_array(l.delta, output_size);
+    <span class="hljs-meta">#<span class="hljs-meta-keyword">endif</span></span>
+    <span class="hljs-keyword">return</span> l;
+}
+</code></pre>
+<p><code>Average Pooling Layer</code>&#xB97C; &#xB9CC;&#xB4DC;&#xB294; &#xD568;&#xC218;&#xC785;&#xB2C8;&#xB2E4;.</p>
+<h2 id="resizeavgpoollayer">resize_avgpool_layer</h2>
+<pre><code class="lang-c"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">resize_avgpool_layer</span><span class="hljs-params">(avgpool_layer *l, <span class="hljs-keyword">int</span> w, <span class="hljs-keyword">int</span> h)</span>
+</span>{
+    l-&gt;w = w;
+    l-&gt;h = h;
+    l-&gt;inputs = h*w*l-&gt;c;
+}
+</code></pre>
+<h2 id="forwardavgpoollayer">forward_avgpool_layer</h2>
+<pre><code class="lang-c"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">forward_avgpool_layer</span><span class="hljs-params">(<span class="hljs-keyword">const</span> avgpool_layer l, network net)</span>
+</span>{
+    <span class="hljs-keyword">int</span> b,i,k;
+
+    <span class="hljs-keyword">for</span>(b = <span class="hljs-number">0</span>; b &lt; l.batch; ++b){
+        <span class="hljs-keyword">for</span>(k = <span class="hljs-number">0</span>; k &lt; l.c; ++k){
+            <span class="hljs-keyword">int</span> out_index = k + b*l.c;
+            l.output[out_index] = <span class="hljs-number">0</span>;
+            <span class="hljs-keyword">for</span>(i = <span class="hljs-number">0</span>; i &lt; l.h*l.w; ++i){
+                <span class="hljs-keyword">int</span> in_index = i + l.h*l.w*(k + b*l.c);
+                l.output[out_index] += net.input[in_index];
+            }
+            l.output[out_index] /= l.h*l.w;
+        }
+    }
+}
+</code></pre>
+<ul>
+<li>Feature Map&#xC758; &#xD3C9;&#xADE0;&#xAC12;&#xC744; &#xC804;&#xD30C; &#xD569;&#xB2C8;&#xB2E4;.</li>
+</ul>
+<h2 id="backwardavgpoollayer">backward_avgpool_layer</h2>
+<pre><code class="lang-c"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">backward_avgpool_layer</span><span class="hljs-params">(<span class="hljs-keyword">const</span> avgpool_layer l, network net)</span>
+</span>{
+    <span class="hljs-keyword">int</span> b,i,k;
+
+    <span class="hljs-keyword">for</span>(b = <span class="hljs-number">0</span>; b &lt; l.batch; ++b){
+        <span class="hljs-keyword">for</span>(k = <span class="hljs-number">0</span>; k &lt; l.c; ++k){
+            <span class="hljs-keyword">int</span> out_index = k + b*l.c;
+            <span class="hljs-keyword">for</span>(i = <span class="hljs-number">0</span>; i &lt; l.h*l.w; ++i){
+                <span class="hljs-keyword">int</span> in_index = i + l.h*l.w*(k + b*l.c);
+                net.delta[in_index] += l.delta[out_index] / (l.h*l.w);
+            }
+        }
+    }
+}
+</code></pre>
+<ul>
+<li>&#xAD6D;&#xBD80;&#xC801; &#xAE30;&#xC6B8;&#xAE30;&#xB294; <script type="math/tex; ">\frac{1}{h \times w}</script>&#xAC00; &#xB418;&#xAE30; &#xB54C;&#xBB38;&#xC5D0; &#xC5ED;&#xC804;&#xD30C;&#xB41C; &#xAE30;&#xC6B8;&#xAE30; &#xAC12;&#xC5D0; <script type="math/tex; ">\frac{1}{h \times w}</script>&#xB97C; &#xACF1;&#xD574;&#xC11C; &#xC5ED;&#xC804;&#xD30C;&#xD569;&#xB2C8;&#xB2E4;.</li>
+<li>&#xD558;&#xB098;&#xC758; Feature Map&#xC758; &#xBAA8;&#xB4E0; &#xAE30;&#xC6B8;&#xAE30; &#xAC12;&#xC740; &#xB3D9;&#xC77C;&#xD569;&#xB2C8;&#xB2E4;.</li>
 </ul>
 
                                 
@@ -1917,14 +1984,10 @@ parameter3
 
             
                 
-                <a href="1_DATA.html" class="navigation navigation-prev " aria-label="Previous page: /data">
+                <a href="activations_2.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page: activation.h">
                     <i class="fa fa-angle-left"></i>
                 </a>
                 
-                
-                <a href="3_EXAMPLE.html" class="navigation navigation-next " aria-label="Next page: /example">
-                    <i class="fa fa-angle-right"></i>
-                </a>
                 
             
         
@@ -1933,7 +1996,7 @@ parameter3
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"/cfg","level":"3.3","depth":1,"next":{"title":"/example","level":"3.4","depth":1,"path":"part2_source/3_EXAMPLE.md","ref":"part2_source/3_EXAMPLE.md","articles":[]},"previous":{"title":"/data","level":"3.2","depth":1,"path":"part2_source/1_DATA.md","ref":"part2_source/1_DATA.md","articles":[]},"dir":"ltr"},"config":{"plugins":["advanced-emoji","theme-gestalt","-theme-default","styles-sass-fix","theme-api","mathjax"],"root":"./","styles":{"website":"website-1593264076366.css"},"pluginsConfig":{"styles-sass-fix":{},"theme-gestalt":{"showLevel":false,"styles":{"website":"styles/website.css"},"logo":"/darknet_book/assets/darknet.png","baseUrl":null,"excludeDefaultStyles":true,"doNotHideChildrenChapters":false},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"theme-api":{"languages":[],"split":true,"theme":"light"},"mathjax":{"forceSVG":false,"version":"2.6-latest"},"advanced-emoji":{"embedEmojis":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]}},"theme":"default","author":"JJM","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"DarkNet Book","output.name":"site","gitbook":"*"},"file":{"path":"part2_source/2_CFG.md","mtime":"2020-06-18T16:28:32.136Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-06-27T13:21:10.672Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"avgpool_layer.c","level":"4.3","depth":1,"next":{"title":"batchnorm_layer.c","level":"4.4","depth":1,"ref":"","articles":[]},"previous":{"title":"activation.h","level":"4.2.1","depth":2,"path":"part3_src/activations_2.md","ref":"part3_src/activations_2.md","articles":[]},"dir":"ltr"},"config":{"plugins":["advanced-emoji","theme-gestalt","-theme-default","styles-sass-fix","theme-api","mathjax"],"root":"./","styles":{"website":"website-1593264076366.css"},"pluginsConfig":{"styles-sass-fix":{},"theme-gestalt":{"showLevel":false,"styles":{"website":"styles/website.css"},"logo":"/darknet_book/assets/darknet.png","baseUrl":null,"excludeDefaultStyles":true,"doNotHideChildrenChapters":false},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"theme-api":{"languages":[],"split":true,"theme":"light"},"mathjax":{"forceSVG":false,"version":"2.6-latest"},"advanced-emoji":{"embedEmojis":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]}},"theme":"default","author":"JJM","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"DarkNet Book","output.name":"site","gitbook":"*"},"file":{"path":"part3_src/avgpool.md","mtime":"2020-06-27T13:14:55.638Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-06-27T13:21:10.672Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>
