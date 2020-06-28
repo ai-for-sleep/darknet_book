@@ -42,7 +42,7 @@
 
     
         
-        <link rel="stylesheet" href="../website-1593264076366.css">
+        <link rel="stylesheet" href="../website-1593328566520.css">
         
     
 
@@ -1869,7 +1869,138 @@
     
                                 <section class="normal markdown-section">
                                 
-                                
+                                <h1 id="yolov1">YOLOv1</h1>
+<ul>
+<li>Paper : <a href="https://arxiv.org/abs/1506.02640" target="_blank">https://arxiv.org/abs/1506.02640</a></li>
+</ul>
+<p>Object Detection&#xC5D0; &#xB300;&#xD55C; &#xC0C8;&#xB85C;&#xC6B4; &#xC811;&#xADFC;&#xBC95;(one stage object detection) YOLO(You Only Look Once)&#xAC00; &#xCC98;&#xC74C; &#xC81C;&#xC548;&#xB41C; &#xB17C;&#xBB38;&#xC785;&#xB2C8;&#xB2E4;.</p>
+<ul>
+<li>&#xD1B5;&#xD569;&#xB41C; &#xAD6C;&#xC870;(bounding box + class probability)&#xB97C; &#xAC00;&#xC9C0;&#xAE30; &#xB54C;&#xBB38;&#xC5D0; &#xBE60;&#xB985;&#xB2C8;&#xB2E4;.</li>
+<li><code>45 FPS / 155 FPS(Fast)</code></li>
+</ul>
+<h2 id="unified-detection">Unified Detection</h2>
+<p><img src="../figure/paper/yolov1/yolov1_fig1.PNG" alt="yolov1_fig1"></p>
+<ul>
+<li>S x S grid (S = 7)</li>
+<li>B(num of bounding box) = 2</li>
+</ul>
+<p><script type="math/tex; ">Confidence Score : Pr(Object) * IOU^{truth}_{pred}</script></p>
+<ul>
+<li>C(num of class) = 20</li>
+</ul>
+<p><script type="math/tex; ">Confidence Class probability : Pr(Class_i | Object)</script></p>
+<ul>
+<li>output tensor : 7 x 7 x (B x 5(x, y, w, h, confidence) + C)</li>
+<li>test time</li>
+</ul>
+<p><script type="math/tex; ">Pr(Class_i | Object) * Pr(Object) * IOU^{truth}_{pred} = Pr(Class_i) * IOU^{truth}_{pred}</script></p>
+<p><img src="../figure/paper/yolov1/yolov1.PNG" alt="yolov1"></p>
+<h2 id="network-design">Network Design</h2>
+<p><img src="../figure/paper/yolov1/yolov1_fig2.PNG" alt="yolov1_fig2"></p>
+<ul>
+<li>GoogLeNet &#xAE30;&#xBC18; &#xBAA8;&#xB378;</li>
+<li>Convolution Layer : 24&#xAC1C;, 9&#xAC1C;(Fast)</li>
+<li>Fully Connected Layer : 2&#xAC1C;</li>
+</ul>
+<h2 id="loss-function">Loss Function</h2>
+<p><img src="../figure/paper/yolov1/yolov1_loss.PNG" alt="yolov1_loss"></p>
+<ul>
+<li><script type="math/tex; ">i</script> : Object&#xAC00; &#xC874;&#xC7AC;&#xD558;&#xB294; Grid Cell</li>
+<li><script type="math/tex; ">j</script> : Predictor Bounding Box</li>
+<li><script type="math/tex; ">1^{obj}_{i, j}</script> : Object&#xAC00; &#xC874;&#xC7AC;&#xD558;&#xB294; &#xACBD;&#xC6B0; grid cell&#xC758; predictor bounding box</li>
+<li><script type="math/tex; ">1^{noobj}_{i, j}</script> : Object&#xAC00; &#xC874;&#xC7AC;&#xD558;&#xC9C0; &#xC54A;&#xB294; &#xACBD;&#xC6B0; grid cell&#xC758; predictor bounding box</li>
+<li><script type="math/tex; ">1^{obj}_{i}</script> : Object&#xAC00; &#xC874;&#xC7AC;&#xD558;&#xB294; &#xACBD;&#xC6B0; grid cell</li>
+</ul>
+<p>&#xC774;&#xBBF8;&#xC9C0; &#xB300;&#xBD80;&#xBD84;&#xC5D0;&#xB294; object&#xAC00; &#xC5C6;&#xC744; &#xAC83;&#xC774;&#xACE0; confidence&#xB294; &#xC804;&#xBD80; 0&#xC73C;&#xB85C; &#xC218;&#xB834;&#xD558;&#xB824;&#xACE0; &#xD560; &#xAC83; &#xC785;&#xB2C8;&#xB2E4;.
+&#xADF8;&#xB85C; &#xC778;&#xD574; &#xBC1C;&#xC0DD;&#xB418;&#xB294; gradient&#xAC00; &#xB108;&#xBB34; &#xCEE4;&#xC9C0;&#xB294; &#xD604;&#xC0C1;&#xC744; &#xB9C9;&#xC544;&#xC8FC;&#xAE30; &#xC704;&#xD574;&#xC11C; &#xCD94;&#xAC00; parameter&#xB97C; &#xC0AC;&#xC6A9;&#xD569;&#xB2C8;&#xB2E4;.</p>
+<ul>
+<li><script type="math/tex; ">\lambda_{coord}</script> : x, y, w, h loss&#xC758; &#xADE0;&#xD615;&#xC744; &#xC704;&#xD55C; parameter. (defalut : 5)</li>
+<li><p><script type="math/tex; ">\lambda_{noobj}</script> : object loss&#xC758; &#xADE0;&#xD615;&#xC744; &#xC704;&#xD55C; parameter. (defalut : 0.5)</p>
+</li>
+<li><p>x, y&#xC758; loss&#xB97C; &#xAD6C;&#xD569;&#xB2C8;&#xB2E4;.</p>
+</li>
+<li>w, h&#xC758; loss&#xB97C; &#xAD6C;&#xD569;&#xB2C8;&#xB2E4;. (&#xAC00;&#xB85C;, &#xC138;&#xB85C;&#xC758; &#xC81C;&#xACF1;&#xADFC;&#xC744; &#xC608;&#xCE21;&#xD569;&#xB2C8;&#xB2E4;.)</li>
+<li>confidence score&#xC758; loss&#xB97C; &#xAD6C;&#xD569;&#xB2C8;&#xB2E4;. (<script type="math/tex; ">C_i = 1</script>)</li>
+<li>confidence score&#xC758; loss&#xB97C; &#xAD6C;&#xD569;&#xB2C8;&#xB2E4;. (<script type="math/tex; ">C_i = 0</script>)</li>
+<li>conditional class probability&#xC758; loss&#xB97C; &#xAD6C;&#xD569;&#xB2C8;&#xB2E4;.</li>
+</ul>
+<h2 id="training">Training</h2>
+<ul>
+<li><p>ImageNet 1000-class competition dataset&#xC73C;&#xB85C; 20&#xAC1C;&#xC758; convolution layer, avg pooling layer, fully connected layer&#xB97C; &#xAC00;&#xC9C4; &#xBAA8;&#xB378;&#xC5D0; pretraining &#xD569;&#xB2C8;&#xB2E4;.
+&#xD569;&#xB2C8;&#xB2E4;.</p>
+<ul>
+<li>randomly initialized weights&#xB97C; &#xAC00;&#xC9C0;&#xB294; 4&#xAC1C;&#xC758; convolution layer&#xC640; 2&#xAC1C;&#xC758; fully connected layer&#xB97C; &#xCD94;&#xAC00;&#xD569;&#xB2C8;&#xB2E4;.</li>
+</ul>
+</li>
+<li><p>&#xC138;&#xBD80;&#xC801;&#xC778; &#xC2DC;&#xAC01;&#xC815;&#xBCF4;&#xB97C; &#xC704;&#xD574; &#xD574;&#xC0C1;&#xB3C4;&#xB97C; 224 x 224&#xC5D0;&#xC11C; 448 x 448&#xB85C; &#xB298;&#xB838;&#xC2B5;&#xB2C8;&#xB2E4;.</p>
+</li>
+<li><p>bounding box&#xC758; &#xD3ED;&#xACFC; &#xB192;&#xC774;&#xB97C; &#xC815;&#xADDC;&#xD654;(0 ~ 1) &#xD558;&#xC600;&#xC2B5;&#xB2C8;&#xB2E4;.</p>
+</li>
+<li><p>&#xB9C8;&#xC9C0;&#xB9C9; Layer&#xC5D0; linear activation function&#xC744; &#xC0AC;&#xC6A9;&#xD558;&#xC600;&#xACE0; &#xB098;&#xBA38;&#xC9C0; &#xB2E4;&#xB978; layer&#xC5D0;&#xB294; leaky relu&#xB97C; &#xC0AC;&#xC6A9;&#xD569;&#xB2C8;&#xB2E4;.</p>
+</li>
+</ul>
+<h4 id="parameters">parameters</h4>
+<ul>
+<li><p><code>epoch</code> : 135</p>
+</li>
+<li><p><code>batch</code> : 64</p>
+</li>
+<li><p><code>momentum</code> : 0.9</p>
+</li>
+<li><p><code>weight decay</code> : 0.0005</p>
+</li>
+<li><p><code>learning rate</code> : 0.001 -&gt; 0.01 -&gt; 0.001 -&gt; 0.0001</p>
+<ul>
+<li><code>75 epoch</code> : 0.01</li>
+<li><code>30 epoch</code> : 0.001</li>
+<li><code>30 epoch</code> : 0.0001</li>
+</ul>
+</li>
+<li><p><code>dropout rate</code> : 0.5</p>
+</li>
+<li><p><code>data augmentation</code></p>
+<ul>
+<li>random scaling</li>
+<li>HSV &#xC0C9;&#xC0C1; &#xACF5;&#xAC04;&#xC5D0;&#xC11C; &#xCD5C;&#xB300; 1.5&#xBC30; &#xAE4C;&#xC9C0; exposure&#xACFC; saturation&#xC744; &#xC784;&#xC758;&#xB85C; &#xC870;&#xC815;&#xD569;&#xB2C8;&#xB2E4;.</li>
+</ul>
+</li>
+</ul>
+<h2 id="inference">Inference</h2>
+<ul>
+<li><p>one stage&#xB77C;&#xC11C; &#xB9E4;&#xC6B0; &#xBE60;&#xB985;&#xB2C8;&#xB2E4;.</p>
+</li>
+<li><p>&#xC774;&#xBBF8;&#xC9C0;&#xB2F9; 98&#xAC1C;&#xC758; bounding box&#xC640; &#xAC01; box&#xC5D0; &#xB300;&#xD55C; class probability&#xB97C; &#xC608;&#xCE21;&#xD569;&#xB2C8;&#xB2E4;.</p>
+</li>
+<li><p>&#xAC01; object&#xB2F9; &#xD558;&#xB098;&#xC758; bounding box&#xB85C; &#xC608;&#xCE21;&#xD55C;&#xB2E4;.</p>
+</li>
+<li><p>&#xD070; object&#xB098; &#xC5EC;&#xB7EC;&#xAC1C;&#xC758; &#xC140;&#xC758; &#xD14C;&#xB450;&#xB9AC;&#xC5D0; &#xADFC;&#xCC98;&#xC5D0; &#xC788;&#xB294; &#xBB3C;&#xCCB4;&#xB294; &#xC608;&#xCE21;&#xD558;&#xAE30; &#xC5B4;&#xB835;&#xC2B5;&#xB2C8;&#xB2E4;. NMS&#xB85C; &#xD574;&#xACB0;&#xD560; &#xC218; &#xC788;&#xC9C0;&#xB9CC; R-CNN &#xB9CC;&#xD07C; &#xC131;&#xB2A5;&#xC5D0; &#xD06C;&#xAC8C; &#xC601;&#xD5A5;&#xC744; &#xBBF8;&#xCE58;&#xC9C0;&#xB294; &#xC54A;&#xC2B5;&#xB2C8;&#xB2E4;.</p>
+</li>
+</ul>
+<h2 id="limitation">Limitation</h2>
+<ul>
+<li>Small Object&#xAC00; &#xBAA8;&#xC5EC; &#xC788;&#xC73C;&#xBA74; &#xC798; &#xAC80;&#xCD9C;&#xD558;&#xC9C0; &#xBABB;&#xD569;&#xB2C8;&#xB2E4;.</li>
+<li>Localization Error&#xAC00; &#xB192;&#xC2B5;&#xB2C8;&#xB2E4;.</li>
+</ul>
+<h2 id="benchmark">Benchmark</h2>
+<p><img src="../figure/paper/yolov1/yolov1_bench1.PNG" alt="yolov1_bench1"></p>
+<ul>
+<li>Yolo&#xB294; &#xBE60;&#xB974;&#xACE0; &#xAC15;&#xB825;&#xD569;&#xB2C8;&#xB2E4;.</li>
+<li>Yolo &#xC774;&#xC804;&#xC5D0; &#xC0AC;&#xC6A9;&#xB41C; real time object detection &#xBCF4;&#xB2E4; &#xC131;&#xB2A5;&#xC774; &#xC88B;&#xC2B5;&#xB2C8;&#xB2E4;.</li>
+</ul>
+<p><img src="../figure/paper/yolov1/yolov1_bench2.PNG" alt="yolov1_bench2"></p>
+<ul>
+<li>Yolo&#xAC00; Fast-RCNN &#xBCF4;&#xB2E4; Localization Error&#xAC00; &#xC88B;&#xC9C0; &#xC54A;&#xC2B5;&#xB2C8;&#xB2E4;.</li>
+<li>Yolo&#xAC00; Fast-RCNN &#xBCF4;&#xB2E4; Background Error&#xAC00; &#xC88B;&#xC2B5;&#xB2C8;&#xB2E4;.</li>
+</ul>
+<p><img src="../figure/paper/yolov1/yolov1_bench3.PNG" alt="yolov1_bench3"></p>
+<ul>
+<li>Yolo&#xC640; Fast-RCNN&#xC744; &#xACB0;&#xD569;&#xD574;&#xC11C; &#xC0AC;&#xC6A9;&#xD558;&#xBA74; &#xC88B;&#xC2B5;&#xB2C8;&#xB2E4;.</li>
+</ul>
+<p><img src="../figure/paper/yolov1/yolov1_bench4.PNG" alt="yolov1_bench4"></p>
+<ul>
+<li>&#xD074;&#xB798;&#xC2A4; &#xBCC4;&#xB85C; &#xC815;&#xD655;&#xB3C4;&#xB97C; &#xBE44;&#xAD50;&#xD55C; &#xD45C; &#xC785;&#xB2C8;&#xB2E4;.</li>
+</ul>
+
                                 
                                 </section>
                             
@@ -1912,7 +2043,7 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"YOLOv1","level":"2.1","depth":1,"next":{"title":"YOLOv2","level":"2.2","depth":1,"path":"part1_paper/yolov2.md","ref":"part1_paper/yolov2.md","articles":[]},"previous":{"title":"설치하기","level":"1.2","depth":1,"path":"INSTALL.md","ref":"INSTALL.md","articles":[]},"dir":"neutral"},"config":{"plugins":["advanced-emoji","theme-gestalt","-theme-default","styles-sass-fix","theme-api","mathjax"],"root":"./","styles":{"website":"website-1593264076366.css"},"pluginsConfig":{"styles-sass-fix":{},"theme-gestalt":{"showLevel":false,"styles":{"website":"styles/website.css"},"logo":"/darknet_book/assets/darknet.png","baseUrl":null,"excludeDefaultStyles":true,"doNotHideChildrenChapters":false},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"theme-api":{"languages":[],"split":true,"theme":"light"},"mathjax":{"forceSVG":false,"version":"2.6-latest"},"advanced-emoji":{"embedEmojis":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]}},"theme":"default","author":"JJM","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"DarkNet Book","output.name":"site","gitbook":"*"},"file":{"path":"part1_paper/yolov1.md","mtime":"2020-06-13T18:21:37.837Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-06-27T13:21:10.672Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"YOLOv1","level":"2.1","depth":1,"next":{"title":"YOLOv2","level":"2.2","depth":1,"path":"part1_paper/yolov2.md","ref":"part1_paper/yolov2.md","articles":[]},"previous":{"title":"설치하기","level":"1.2","depth":1,"path":"INSTALL.md","ref":"INSTALL.md","articles":[]},"dir":"ltr"},"config":{"plugins":["advanced-emoji","theme-gestalt","-theme-default","styles-sass-fix","theme-api","mathjax"],"root":"./","styles":{"website":"website-1593328566520.css"},"pluginsConfig":{"styles-sass-fix":{},"theme-gestalt":{"showLevel":false,"styles":{"website":"styles/website.css"},"logo":"/darknet_book/assets/darknet.png","baseUrl":null,"excludeDefaultStyles":true,"doNotHideChildrenChapters":false},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"theme-api":{"languages":[],"split":true,"theme":"light"},"mathjax":{"forceSVG":false,"version":"2.6-latest"},"advanced-emoji":{"embedEmojis":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]}},"theme":"default","author":"JJM","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"DarkNet Book","output.name":"site","gitbook":"*"},"file":{"path":"part1_paper/yolov1.md","mtime":"2020-06-28T07:15:18.695Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-06-28T07:16:01.451Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>

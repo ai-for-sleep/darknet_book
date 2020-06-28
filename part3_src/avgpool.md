@@ -6,7 +6,7 @@ Feature Map의 평균 값을 계산해 전파시키는 Layer 입니다.
 
 
 
-![avgpool](/figure/avgpool.png)
+![avgpool](/figure/avgpool.PNG)
 
 
 
@@ -15,7 +15,7 @@ Forward는 위와 같이 계산됩니다.
 
 
 
-![avgpool](/figure/avgpool_grad.png)
+![avgpool_grad](/figure/avgpool_grad.PNG)
 
 
 
