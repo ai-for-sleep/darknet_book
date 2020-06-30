@@ -110,3 +110,15 @@ void scal_cpu(int N, float ALPHA, float *X, int INCX)
 ```
 
 - $$X = X * alpha$$
+
+## fill_cpu
+
+```
+void fill_cpu(int N, float ALPHA, float *X, int INCX)
+{
+    int i;
+    for(i = 0; i < N; ++i) X[i*INCX] = ALPHA;
+}
+```
+
+- X에 alpha로 값을 초기화 합니다.

@@ -4,7 +4,7 @@
     <head>
         <meta charset="UTF-8">
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
-        <title>activation.h · DarkNet Book</title>
+        <title>network · DarkNet Book</title>
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="description" content="">
         <meta name="generator" content="GitBook 3.2.3">
@@ -61,10 +61,10 @@
     
 
     
-    <link rel="next" href="avgpool.html" />
+    <link rel="next" href="layer.html" />
     
     
-    <link rel="prev" href="activations_1.html" />
+    <link rel="prev" href="../part2_source/4_SRC.html" />
     
 
     </head>
@@ -319,18 +319,18 @@
     
         
         
-        <li class="header ">Structure</li>
+        <li class="header  selected ">Structure</li>
         
         
     
         
         <li class="chapter 
-              "
+            active  selected  "
             data-level="4.1" 
-            data-path="../part4_structure/network.html">
+            data-path="network.html">
 
             
-                <a href="../part4_structure/network.html">
+                <a href="network.html">
             
                     
                     network
@@ -345,10 +345,10 @@
         <li class="chapter 
               "
             data-level="4.2" 
-            data-path="../part4_structure/layer.html">
+            data-path="layer.html">
 
             
-                <a href="../part4_structure/layer.html">
+                <a href="layer.html">
             
                     
                     layer
@@ -363,7 +363,7 @@
     
         
         
-        <li class="header  selected ">/SRC</li>
+        <li class="header ">/SRC</li>
         
         
     
@@ -371,10 +371,10 @@
         <li class="chapter 
               "
             data-level="5.1" 
-            data-path="activation_layer.html">
+            data-path="../part3_src/activation_layer.html">
 
             
-                <a href="activation_layer.html">
+                <a href="../part3_src/activation_layer.html">
             
                     
                     activation_layer.c
@@ -387,12 +387,12 @@
     
         
         <li class="chapter 
-              selected  "
+              "
             data-level="5.2" 
-            data-path="activations_1.html">
+            data-path="../part3_src/activations_1.html">
 
             
-                <a href="activations_1.html">
+                <a href="../part3_src/activations_1.html">
             
                     
                     activations.c
@@ -402,17 +402,17 @@
 
             
             <ul class="articles">
-                  
+                
                 
     
         
         <li class="chapter 
-            active  selected  "
+               hide "
             data-level="5.2.1" 
-            data-path="activations_2.html">
+            data-path="../part3_src/activations_2.html">
 
             
-                <a href="activations_2.html">
+                <a href="../part3_src/activations_2.html">
             
                     
                     activation.h
@@ -432,10 +432,10 @@
         <li class="chapter 
               "
             data-level="5.3" 
-            data-path="avgpool.html">
+            data-path="../part3_src/avgpool.html">
 
             
-                <a href="avgpool.html">
+                <a href="../part3_src/avgpool.html">
             
                     
                     avgpool_layer.c
@@ -450,10 +450,10 @@
         <li class="chapter 
               "
             data-level="5.4" 
-            data-path="batchnorm_layer.html">
+            data-path="../part3_src/batchnorm_layer.html">
 
             
-                <a href="batchnorm_layer.html">
+                <a href="../part3_src/batchnorm_layer.html">
             
                     
                     batchnorm_layer.c
@@ -468,10 +468,10 @@
         <li class="chapter 
               "
             data-level="5.5" 
-            data-path="bias.html">
+            data-path="../part3_src/bias.html">
 
             
-                <a href="bias.html">
+                <a href="../part3_src/bias.html">
             
                     
                     blas.c
@@ -558,10 +558,10 @@
         <li class="chapter 
               "
             data-level="5.10" 
-            data-path="convolutional_layer.html">
+            data-path="../part3_src/convolutional_layer.html">
 
             
-                <a href="convolutional_layer.html">
+                <a href="../part3_src/convolutional_layer.html">
             
                     
                     convolutional_layer.c
@@ -720,10 +720,10 @@
         <li class="chapter 
               "
             data-level="5.19" 
-            data-path="gemm.html">
+            data-path="../part3_src/gemm.html">
 
             
-                <a href="gemm.html">
+                <a href="../part3_src/gemm.html">
             
                     
                     gemm.c
@@ -1906,7 +1906,7 @@
     <!-- Title -->
     <h1>
         <i class="fa fa-circle-o-notch fa-spin"></i>
-        <a href=".." >activation.h</a>
+        <a href=".." >network</a>
     </h1>
 </div>
 
@@ -1921,270 +1921,76 @@
     
                                 <section class="normal markdown-section">
                                 
-                                <h1 id="activation">activation</h1>
-<p>activation function</p>
-<h2 id="linear">linear</h2>
-<pre><code class="lang-c"><span class="hljs-function"><span class="hljs-keyword">static</span> <span class="hljs-keyword">inline</span> <span class="hljs-keyword">float</span> <span class="hljs-title">linear_activate</span><span class="hljs-params">(<span class="hljs-keyword">float</span> x)</span></span>{<span class="hljs-keyword">return</span> x;}
+                                <div class="api-method"><div class="api-method-definition"><h2 id="layer-structure">Layer Structure</h2>
+<p>layer &#xAD6C;&#xC870;&#xCCB4; &#xC785;&#xB2C8;&#xB2E4;.</p>
+</div><div class="api-method-code"><div class="api-method-sample" data-lang="c" data-name="C"><pre><code>typedef struct network{
+    int n;                            
+    int batch;                        
+    size_t *seen;
+    int *t;
+    float epoch;                     
+    int subdivisions;
+    layer *layers;
+    float *output;
+    learning_rate_policy policy;
 
-<span class="hljs-function"><span class="hljs-keyword">static</span> <span class="hljs-keyword">inline</span> <span class="hljs-keyword">float</span> <span class="hljs-title">linear_gradient</span><span class="hljs-params">(<span class="hljs-keyword">float</span> x)</span></span>{<span class="hljs-keyword">return</span> <span class="hljs-number">1</span>;}
-</code></pre>
-<p>&#xB2E8;&#xC21C;&#xD55C; &#xC120;&#xD615; &#xD568;&#xC218; &#xC785;&#xB2C8;&#xB2E4;.</p>
-<p><script type="math/tex; ">Linear(x) = x</script></p>
-<h2 id="logistic">logistic</h2>
-<pre><code class="lang-c"><span class="hljs-function"><span class="hljs-keyword">static</span> <span class="hljs-keyword">inline</span> <span class="hljs-keyword">float</span> <span class="hljs-title">logistic_activate</span><span class="hljs-params">(<span class="hljs-keyword">float</span> x)</span></span>{<span class="hljs-keyword">return</span> <span class="hljs-number">1.</span>/(<span class="hljs-number">1.</span> + <span class="hljs-built_in">exp</span>(-x));}
+    float learning_rate;
+    float momentum;
+    float decay;
+    float gamma;
+    float scale;
+    float power;
+    int time_steps;
+    int step;
+    int max_batches;
+    float *scales;
+    int   *steps;
+    int num_steps;
+    int burn_in;
 
-<span class="hljs-function"><span class="hljs-keyword">static</span> <span class="hljs-keyword">inline</span> <span class="hljs-keyword">float</span> <span class="hljs-title">logistic_gradient</span><span class="hljs-params">(<span class="hljs-keyword">float</span> x)</span></span>{<span class="hljs-keyword">return</span> (<span class="hljs-number">1</span>-x)*x;}
-</code></pre>
-<ul>
-<li><code>sigmoid</code></li>
-<li>&#xAC12;&#xC774; 0 ~ 1 &#xC0AC;&#xC774;&#xB85C; &#xC815;&#xADDC;&#xD654; &#xB429;&#xB2C8;&#xB2E4;.</li>
-<li>&#xAC12;&#xC774; 0&#xACFC; 1 &#xC8FC;&#xBCC0;&#xC5D0; &#xBAB0;&#xB824;&#xC788;&#xB294; &#xD604;&#xC0C1;&#xC774; &#xBC1C;&#xC0DD;&#xD558;&#xC5EC; <code>Gradient Vanishing</code> &#xD604;&#xC0C1;&#xC774; &#xBC1C;&#xC0DD; &#xD560; &#xC218; &#xC788;&#xC2B5;&#xB2C8;&#xB2E4;.</li>
-</ul>
-<p><script type="math/tex; ">Sigmoid(x) = \frac{1}{1 + e^{-x}}</script></p>
-<h2 id="loggy">loggy</h2>
-<pre><code class="lang-c"><span class="hljs-function"><span class="hljs-keyword">static</span> <span class="hljs-keyword">inline</span> <span class="hljs-keyword">float</span> <span class="hljs-title">loggy_activate</span><span class="hljs-params">(<span class="hljs-keyword">float</span> x)</span></span>{<span class="hljs-keyword">return</span> <span class="hljs-number">2.</span>/(<span class="hljs-number">1.</span> + <span class="hljs-built_in">exp</span>(-x)) - <span class="hljs-number">1</span>;}
+    int adam;
+    float B1;
+    float B2;
+    float eps;
 
-<span class="hljs-function"><span class="hljs-keyword">static</span> <span class="hljs-keyword">inline</span> <span class="hljs-keyword">float</span> <span class="hljs-title">loggy_gradient</span><span class="hljs-params">(<span class="hljs-keyword">float</span> x)</span>
-</span>{
-    <span class="hljs-keyword">float</span> y = (x+<span class="hljs-number">1.</span>)/<span class="hljs-number">2.</span>;
-    <span class="hljs-keyword">return</span> <span class="hljs-number">2</span>*(<span class="hljs-number">1</span>-y)*y;
-}
-</code></pre>
-<ul>
-<li>-1 ~ 1 &#xC0AC;&#xC774;&#xB85C; &#xC815;&#xADDC;&#xD654; &#xB429;&#xB2C8;&#xB2E4;.</li>
-</ul>
-<p><script type="math/tex; ">Loggy(x) = \frac{2}{1 + e^{-x}} - 1</script></p>
-<h2 id="relu">relu</h2>
-<pre><code class="lang-c"><span class="hljs-function"><span class="hljs-keyword">static</span> <span class="hljs-keyword">inline</span> <span class="hljs-keyword">float</span> <span class="hljs-title">relu_activate</span><span class="hljs-params">(<span class="hljs-keyword">float</span> x)</span></span>{<span class="hljs-keyword">return</span> x*(x&gt;<span class="hljs-number">0</span>);}
+    int inputs;
+    int outputs;
+    int truths;
+    int notruth;
+    int h, w, c;
+    int max_crop;
+    int min_crop;
+    float max_ratio;
+    float min_ratio;
+    int center;
+    float angle;
+    float aspect;
+    float exposure;
+    float saturation;
+    float hue;
+    int random;
 
-<span class="hljs-function"><span class="hljs-keyword">static</span> <span class="hljs-keyword">inline</span> <span class="hljs-keyword">float</span> <span class="hljs-title">relu_gradient</span><span class="hljs-params">(<span class="hljs-keyword">float</span> x)</span></span>{<span class="hljs-keyword">return</span> (x&gt;<span class="hljs-number">0</span>);}
-</code></pre>
-<ul>
-<li><code>Rectified linear unit</code></li>
-<li>&#xAC00;&#xC7A5; &#xB9CE;&#xC774; &#xC0AC;&#xC6A9;&#xB418;&#xB294; &#xD65C;&#xC131;&#xD654; &#xD568;&#xC218; &#xC785;&#xB2C8;&#xB2E4;. &#xC74C;&#xC218;&#xBA74; &#xAC12;&#xC744; 0&#xC73C;&#xB85C; &#xB9CC;&#xB4E4;&#xACE0; &#xC591;&#xC218;&#xBA74; &#xAC12;&#xC744; &#xADF8;&#xB300;&#xB85C; &#xD1B5;&#xACFC;&#xC2DC;&#xD0B5;&#xB2C8;&#xB2E4;.</li>
-<li><p><code>Gradient Vanishing</code> &#xD604;&#xC0C1;&#xC744; &#xBC29;&#xC9C0;&#xD569;&#xB2C8;&#xB2E4;.</p>
-</li>
-<li><p><code>Gradient Exploding</code> &#xD604;&#xC0C1;&#xC774; &#xBC1C;&#xC0DD;&#xD560; &#xC218; &#xC788;&#xC2B5;&#xB2C8;&#xB2E4;.</p>
-</li>
-<li><code>Dead relu problem</code> : &#xB300;&#xBD80;&#xBD84;&#xC758; &#xAC12;&#xC774; 0&#xC774; &#xB418;&#xB294; &#xACBD;&#xC6B0; &#xC5C5;&#xB370;&#xC774;&#xD2B8;&#xAC00; &#xB418;&#xC9C0; &#xC54A;&#xB294; &#xBB38;&#xC81C;&#xB97C; &#xBC1C;&#xC0DD;&#xC2DC;&#xD0AC; &#xC218; &#xC788;&#xC2B5;&#xB2C8;&#xB2E4;.</li>
-<li>&#xD76C;&#xC18C;&#xC131;(<code>sparsity</code>)&#xC774; &#xB9E4;&#xC6B0; &#xB192;&#xC2B5;&#xB2C8;&#xB2E4;.</li>
-</ul>
-<p><script type="math/tex; ">
-RELU(x) = \left\{\begin{matrix}
-x && if \quad x > 0\\
-0 && if \quad x \leq 0
-\end{matrix}\right.
-</script></p>
-<h2 id="elu">elu</h2>
-<pre><code class="lang-c"><span class="hljs-function"><span class="hljs-keyword">static</span> <span class="hljs-keyword">inline</span> <span class="hljs-keyword">float</span> <span class="hljs-title">elu_activate</span><span class="hljs-params">(<span class="hljs-keyword">float</span> x)</span></span>{<span class="hljs-keyword">return</span> (x &gt;= <span class="hljs-number">0</span>)*x + (x &lt; <span class="hljs-number">0</span>)*(<span class="hljs-built_in">exp</span>(x)<span class="hljs-number">-1</span>);}
+    int gpu_index;
+    tree *hierarchy;
 
-<span class="hljs-function"><span class="hljs-keyword">static</span> <span class="hljs-keyword">inline</span> <span class="hljs-keyword">float</span> <span class="hljs-title">elu_gradient</span><span class="hljs-params">(<span class="hljs-keyword">float</span> x)</span></span>{<span class="hljs-keyword">return</span> (x &gt;= <span class="hljs-number">0</span>) + (x &lt; <span class="hljs-number">0</span>)*(x + <span class="hljs-number">1</span>);}
-</code></pre>
-<ul>
-<li><code>Exponential linear unit</code></li>
-<li><p><code>Dead relu problem</code>&#xD604;&#xC0C1;&#xC744; &#xBC29;&#xC9C0;&#xD569;&#xB2C8;&#xB2E4;.</p>
-</li>
-<li><p><code>Gradient Exploding</code> &#xD604;&#xC0C1;&#xC774; &#xBC1C;&#xC0DD;&#xD560; &#xC218; &#xC788;&#xC2B5;&#xB2C8;&#xB2E4;.</p>
-</li>
-<li><code>exponential</code> &#xC5F0;&#xC0B0; &#xB54C;&#xBB38;&#xC5D0; &#xC2DC;&#xAC04;&#xC774; &#xC624;&#xB798; &#xAC78;&#xB9BD;&#xB2C8;&#xB2E4;.</li>
-<li><script type="math/tex; ">\alpha</script> &#xAC12;&#xC774; &#xD559;&#xC2B5; &#xD30C;&#xB77C;&#xBBF8;&#xD130;&#xAC00; &#xC544;&#xB2D9;&#xB2C8;&#xB2E4;.</li>
-</ul>
-<p><script type="math/tex; ">
-ELU(x) = \left\{\begin{matrix}
-x && if \quad x \geq 0\\
-\alpha (e^x - 1) && if \quad x < 0
-\end{matrix}\right.
-</script></p>
-<h2 id="selu">selu</h2>
-<pre><code class="lang-c"><span class="hljs-function"><span class="hljs-keyword">static</span> <span class="hljs-keyword">inline</span> <span class="hljs-keyword">float</span> <span class="hljs-title">selu_activate</span><span class="hljs-params">(<span class="hljs-keyword">float</span> x)</span></span>{<span class="hljs-keyword">return</span> (x &gt;= <span class="hljs-number">0</span>)*<span class="hljs-number">1.0507</span>*x + (x &lt; <span class="hljs-number">0</span>)*<span class="hljs-number">1.0507</span>*<span class="hljs-number">1.6732</span>*(<span class="hljs-built_in">exp</span>(x)<span class="hljs-number">-1</span>);}
+    float *input;
+    float *truth;
+    float *delta;
+    float *workspace;
+    int train;
+    int index;
+    float *cost;
+    float clip;
 
-<span class="hljs-function"><span class="hljs-keyword">static</span> <span class="hljs-keyword">inline</span> <span class="hljs-keyword">float</span> <span class="hljs-title">selu_gradient</span><span class="hljs-params">(<span class="hljs-keyword">float</span> x)</span></span>{<span class="hljs-keyword">return</span> (x &gt;= <span class="hljs-number">0</span>)*<span class="hljs-number">1.0507</span> + (x &lt; <span class="hljs-number">0</span>)*(x + <span class="hljs-number">1.0507</span>*<span class="hljs-number">1.6732</span>);}
-</code></pre>
-<ul>
-<li><code>Scaled Exponential Linear Unit</code></li>
-<li><code>Gradient Vanishing</code> &#xD604;&#xC0C1;&#xC744; &#xBC29;&#xC9C0;&#xD569;&#xB2C8;&#xB2E4;.</li>
-<li><p><code>Gradient Exploding</code> &#xD604;&#xC0C1;&#xC744; &#xBC29;&#xC9C0;&#xD569;&#xB2C8;&#xB2E4;.</p>
-</li>
-<li><p>&#xB525;&#xB7EC;&#xB2DD; &#xB124;&#xD2B8;&#xC6CC;&#xD06C;&#xB97C; &#xC790;&#xCCB4; &#xC815;&#xADDC;&#xD654; &#xD569;&#xB2C8;&#xB2E4;.</p>
-</li>
-<li><code>lecun_normal</code>&#xB85C; &#xAC00;&#xC911;&#xCE58;&#xB97C; &#xCD08;&#xAE30;&#xD654; &#xD574;&#xC57C;&#xD569;&#xB2C8;&#xB2E4;.</li>
-</ul>
-<p><script type="math/tex; ">
-SELU(x) = \lambda \left\{\begin{matrix}
-x && if \quad x \geq 0\\
-\alpha(e^x - 1) && if \quad x < 0
-\end{matrix}\right.
-</script></p>
-<ul>
-<li><script type="math/tex; ">\alpha</script> : 1.6732</li>
-<li><script type="math/tex; ">\lambda</script> : 1.0507</li>
-</ul>
-<h4 id="lecun-normal">lecun normal</h4>
-<p><script type="math/tex; ">
-W ~ N(0, Var(W))
-</script></p>
-<p><script type="math/tex; ">
-Var(W) = \sqrt{\frac{1}{n_{in}}}
-</script></p>
-<h2 id="relie">relie</h2>
-<pre><code class="lang-c"><span class="hljs-function"><span class="hljs-keyword">static</span> <span class="hljs-keyword">inline</span> <span class="hljs-keyword">float</span> <span class="hljs-title">relie_activate</span><span class="hljs-params">(<span class="hljs-keyword">float</span> x)</span></span>{<span class="hljs-keyword">return</span> (x&gt;<span class="hljs-number">0</span>) ? x : <span class="hljs-number">.01</span>*x;}
+#ifdef GPU
+    float *input_gpu;
+    float *truth_gpu;
+    float *delta_gpu;
+    float *output_gpu;
+#endif
 
-<span class="hljs-function"><span class="hljs-keyword">static</span> <span class="hljs-keyword">inline</span> <span class="hljs-keyword">float</span> <span class="hljs-title">relie_gradient</span><span class="hljs-params">(<span class="hljs-keyword">float</span> x)</span></span>{<span class="hljs-keyword">return</span> (x&gt;<span class="hljs-number">0</span>) ? <span class="hljs-number">1</span> : <span class="hljs-number">.01</span>;}
-</code></pre>
-<p><script type="math/tex; ">
-RELIE(x) = \left\{\begin{matrix}
-x && if \quad x > 0\\
-\alpha x && if \quad x \leq 0
-\end{matrix}\right.
-</script></p>
-<ul>
-<li><script type="math/tex; ">\alpha = 0.01</script></li>
-</ul>
-<h2 id="ramp">ramp</h2>
-<pre><code class="lang-c"><span class="hljs-function"><span class="hljs-keyword">static</span> <span class="hljs-keyword">inline</span> <span class="hljs-keyword">float</span> <span class="hljs-title">ramp_activate</span><span class="hljs-params">(<span class="hljs-keyword">float</span> x)</span></span>{<span class="hljs-keyword">return</span> x*(x&gt;<span class="hljs-number">0</span>)+<span class="hljs-number">.1</span>*x;}
-
-<span class="hljs-function"><span class="hljs-keyword">static</span> <span class="hljs-keyword">inline</span> <span class="hljs-keyword">float</span> <span class="hljs-title">ramp_gradient</span><span class="hljs-params">(<span class="hljs-keyword">float</span> x)</span></span>{<span class="hljs-keyword">return</span> (x&gt;<span class="hljs-number">0</span>)+<span class="hljs-number">.1</span>;}
-</code></pre>
-<p><script type="math/tex; ">
-RAMP(x) = \left\{\begin{matrix}
-x + 0.1*x && if \quad x > 0\\
-0.1*x && if \quad x \leq 0
-\end{matrix}\right.
-</script></p>
-<h2 id="leaky-relu">leaky relu</h2>
-<pre><code class="lang-c"><span class="hljs-function"><span class="hljs-keyword">static</span> <span class="hljs-keyword">inline</span> <span class="hljs-keyword">float</span> <span class="hljs-title">leaky_activate</span><span class="hljs-params">(<span class="hljs-keyword">float</span> x)</span></span>{<span class="hljs-keyword">return</span> (x&gt;<span class="hljs-number">0</span>) ? x : <span class="hljs-number">.1</span>*x;}
-
-<span class="hljs-function"><span class="hljs-keyword">static</span> <span class="hljs-keyword">inline</span> <span class="hljs-keyword">float</span> <span class="hljs-title">leaky_gradient</span><span class="hljs-params">(<span class="hljs-keyword">float</span> x)</span></span>{<span class="hljs-keyword">return</span> (x&gt;<span class="hljs-number">0</span>) ? <span class="hljs-number">1</span> : <span class="hljs-number">.1</span>;}
-</code></pre>
-<ul>
-<li><code>Leaky Rectified Linear Unit</code></li>
-<li><p><code>Dead relu problem</code>&#xD604;&#xC0C1;&#xC744; &#xBC29;&#xC9C0;&#xD569;&#xB2C8;&#xB2E4;.</p>
-</li>
-<li><p><code>Gradient Exploding</code> &#xD604;&#xC0C1;&#xC774; &#xBC1C;&#xC0DD;&#xD560; &#xC218; &#xC788;&#xC2B5;&#xB2C8;&#xB2E4;.</p>
-</li>
-<li><script type="math/tex; ">\alpha</script> &#xAC12;&#xC774; &#xD559;&#xC2B5; &#xD30C;&#xB77C;&#xBBF8;&#xD130;&#xAC00; &#xC544;&#xB2D9;&#xB2C8;&#xB2E4;.</li>
-</ul>
-<p><script type="math/tex; ">
-LRELU(x) = \left\{\begin{matrix}
-x && if \quad x > 0\\
-\alpha x && if \quad x \leq 0
-\end{matrix}\right.
-</script></p>
-<ul>
-<li><script type="math/tex; ">\alpha = 0.1</script></li>
-</ul>
-<h2 id="tanh">tanh</h2>
-<pre><code class="lang-c"><span class="hljs-function"><span class="hljs-keyword">static</span> <span class="hljs-keyword">inline</span> <span class="hljs-keyword">float</span> <span class="hljs-title">tanh_activate</span><span class="hljs-params">(<span class="hljs-keyword">float</span> x)</span></span>{<span class="hljs-keyword">return</span> (<span class="hljs-built_in">exp</span>(<span class="hljs-number">2</span>*x)<span class="hljs-number">-1</span>)/(<span class="hljs-built_in">exp</span>(<span class="hljs-number">2</span>*x)+<span class="hljs-number">1</span>);}
-
-<span class="hljs-function"><span class="hljs-keyword">static</span> <span class="hljs-keyword">inline</span> <span class="hljs-keyword">float</span> <span class="hljs-title">tanh_gradient</span><span class="hljs-params">(<span class="hljs-keyword">float</span> x)</span></span>{<span class="hljs-keyword">return</span> <span class="hljs-number">1</span>-x*x;}
-</code></pre>
-<ul>
-<li>&#xAC12;&#xC774; -1 ~ 1 &#xC0AC;&#xC774;&#xB85C; &#xC815;&#xADDC;&#xD654; &#xB429;&#xB2C8;&#xB2E4;.</li>
-<li>&#xAC12;&#xC774; 0&#xACFC; 1 &#xC8FC;&#xBCC0;&#xC5D0; &#xBAB0;&#xB824;&#xC788;&#xB294; &#xD604;&#xC0C1;&#xC774; &#xBC1C;&#xC0DD;&#xD558;&#xC5EC; <code>Gradient Vanishing</code> &#xD604;&#xC0C1;&#xC774; &#xBC1C;&#xC0DD; &#xD560; &#xC218; &#xC788;&#xC2B5;&#xB2C8;&#xB2E4;.</li>
-</ul>
-<p><script type="math/tex; ">
-TANH(x) = \frac{e^{2x} - 1}{e^{2x} + 1}
-</script></p>
-<h2 id="plse">plse</h2>
-<pre><code class="lang-c"><span class="hljs-function"><span class="hljs-keyword">static</span> <span class="hljs-keyword">inline</span> <span class="hljs-keyword">float</span> <span class="hljs-title">plse_activate</span><span class="hljs-params">(<span class="hljs-keyword">float</span> x)</span>
-</span>{
-    <span class="hljs-keyword">if</span>(x &lt; <span class="hljs-number">-4</span>) <span class="hljs-keyword">return</span> <span class="hljs-number">.01</span> * (x + <span class="hljs-number">4</span>);
-    <span class="hljs-keyword">if</span>(x &gt; <span class="hljs-number">4</span>)  <span class="hljs-keyword">return</span> <span class="hljs-number">.01</span> * (x - <span class="hljs-number">4</span>) + <span class="hljs-number">1</span>;
-    <span class="hljs-keyword">return</span> <span class="hljs-number">.125</span>*x + <span class="hljs-number">.5</span>;
-}
-
-<span class="hljs-function"><span class="hljs-keyword">static</span> <span class="hljs-keyword">inline</span> <span class="hljs-keyword">float</span> <span class="hljs-title">plse_gradient</span><span class="hljs-params">(<span class="hljs-keyword">float</span> x)</span></span>{<span class="hljs-keyword">return</span> (x &lt; <span class="hljs-number">0</span> || x &gt; <span class="hljs-number">1</span>) ? <span class="hljs-number">.01</span> : <span class="hljs-number">.125</span>;}
-</code></pre>
-<p><script type="math/tex; ">
-PLSE(x) = \left\{\begin{matrix}
-0.01 * (x + 4) && if \quad x < -4\\
-0.01 * (x - 4) + 1 && if \quad x > 4
-\end{matrix}\right.
-</script></p>
-<pre><code>    __________________               __________________
-                      |             |
-                      ---------------
-                     -4             4
-</code></pre><h2 id="stair">stair</h2>
-<pre><code class="lang-c"><span class="hljs-function"><span class="hljs-keyword">static</span> <span class="hljs-keyword">inline</span> <span class="hljs-keyword">float</span> <span class="hljs-title">stair_activate</span><span class="hljs-params">(<span class="hljs-keyword">float</span> x)</span>
-</span>{
-    <span class="hljs-keyword">int</span> n = <span class="hljs-built_in">floor</span>(x);
-    <span class="hljs-keyword">if</span> (n%<span class="hljs-number">2</span> == <span class="hljs-number">0</span>) <span class="hljs-keyword">return</span> <span class="hljs-built_in">floor</span>(x/<span class="hljs-number">2.</span>);
-    <span class="hljs-keyword">else</span> <span class="hljs-keyword">return</span> (x - n) + <span class="hljs-built_in">floor</span>(x/<span class="hljs-number">2.</span>);
-}
-
-<span class="hljs-function"><span class="hljs-keyword">static</span> <span class="hljs-keyword">inline</span> <span class="hljs-keyword">float</span> <span class="hljs-title">stair_gradient</span><span class="hljs-params">(<span class="hljs-keyword">float</span> x)</span>
-</span>{
-    <span class="hljs-keyword">if</span> (<span class="hljs-built_in">floor</span>(x) == x) <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
-    <span class="hljs-keyword">return</span> <span class="hljs-number">1</span>;
-}
-</code></pre>
-<p><script type="math/tex; ">
-STAIR(x) = \left\{\begin{matrix}
-floor(\frac{x}{2}) && if \quad n \% 2 == 0\\
-(x - n) floor(\frac{x}{2}) && else
-\end{matrix}\right.
-</script></p>
-<ul>
-<li><script type="math/tex; ">n : floor(x)</script></li>
-</ul>
-<pre><code>                   __ /
-               __ /
-           __ /
-          /
-</code></pre><h2 id="hardtan">hardtan</h2>
-<pre><code class="lang-c"><span class="hljs-function"><span class="hljs-keyword">static</span> <span class="hljs-keyword">inline</span> <span class="hljs-keyword">float</span> <span class="hljs-title">hardtan_activate</span><span class="hljs-params">(<span class="hljs-keyword">float</span> x)</span>
-</span>{
-    <span class="hljs-keyword">if</span> (x &lt; <span class="hljs-number">-1</span>) <span class="hljs-keyword">return</span> <span class="hljs-number">-1</span>;
-    <span class="hljs-keyword">if</span> (x &gt; <span class="hljs-number">1</span>) <span class="hljs-keyword">return</span> <span class="hljs-number">1</span>;
-    <span class="hljs-keyword">return</span> x;
-}
-
-<span class="hljs-function"><span class="hljs-keyword">static</span> <span class="hljs-keyword">inline</span> <span class="hljs-keyword">float</span> <span class="hljs-title">hardtan_gradient</span><span class="hljs-params">(<span class="hljs-keyword">float</span> x)</span>
-</span>{
-    <span class="hljs-keyword">if</span> (x &gt; <span class="hljs-number">-1</span> &amp;&amp; x &lt; <span class="hljs-number">1</span>) <span class="hljs-keyword">return</span> <span class="hljs-number">1</span>;
-    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
-}
-</code></pre>
-<p><script type="math/tex; ">
-HARDTAN(x) = \left\{\begin{matrix}
-1 && if \quad x > 1\\
--1 && if \quad x < -1 \\
-x && if \quad -1 \leq x \leq 1
-\end{matrix}\right.
-</script></p>
-<pre><code>                         __________________
-                        /  
-    __________________/
-                     -1  1
-</code></pre><h2 id="lhtan">lhtan</h2>
-<pre><code class="lang-c"><span class="hljs-function"><span class="hljs-keyword">static</span> <span class="hljs-keyword">inline</span> <span class="hljs-keyword">float</span> <span class="hljs-title">lhtan_activate</span><span class="hljs-params">(<span class="hljs-keyword">float</span> x)</span>
-</span>{
-    <span class="hljs-keyword">if</span>(x &lt; <span class="hljs-number">0</span>) <span class="hljs-keyword">return</span> <span class="hljs-number">.001</span>*x;
-    <span class="hljs-keyword">if</span>(x &gt; <span class="hljs-number">1</span>) <span class="hljs-keyword">return</span> <span class="hljs-number">.001</span>*(x<span class="hljs-number">-1</span>) + <span class="hljs-number">1</span>;
-    <span class="hljs-keyword">return</span> x;
-}
-
-<span class="hljs-function"><span class="hljs-keyword">static</span> <span class="hljs-keyword">inline</span> <span class="hljs-keyword">float</span> <span class="hljs-title">lhtan_gradient</span><span class="hljs-params">(<span class="hljs-keyword">float</span> x)</span>
-</span>{
-    <span class="hljs-keyword">if</span>(x &gt; <span class="hljs-number">0</span> &amp;&amp; x &lt; <span class="hljs-number">1</span>) <span class="hljs-keyword">return</span> <span class="hljs-number">1</span>;
-    <span class="hljs-keyword">return</span> <span class="hljs-number">.001</span>;
-}
-</code></pre>
-<p><script type="math/tex; ">
-LHTAN(x) = \left\{\begin{matrix}
-0.001 * (x - 1) + 1 && if \quad x > 1\\
-0.001 * x && if \quad x < 0 \\
-x && if \quad 0 \leq x \leq 1
-\end{matrix}\right.
-</script></p>
-<pre><code>                              __________________
-    _________________________/
-                            0
-</code></pre><h2 id="reference">Reference</h2>
-<ul>
-<li><a href="https://mlfromscratch.com/activation-functions-explained/#/" target="_blank">https://mlfromscratch.com/activation-functions-explained/#/</a></li>
-</ul>
+} network;
+</code></pre></div></div></div>
 
                                 
                                 </section>
@@ -2212,12 +2018,12 @@ x && if \quad 0 \leq x \leq 1
 
             
                 
-                <a href="activations_1.html" class="navigation navigation-prev " aria-label="Previous page: activations.c">
+                <a href="../part2_source/4_SRC.html" class="navigation navigation-prev " aria-label="Previous page: /src">
                     <i class="fa fa-angle-left"></i>
                 </a>
                 
                 
-                <a href="avgpool.html" class="navigation navigation-next " aria-label="Next page: avgpool_layer.c">
+                <a href="layer.html" class="navigation navigation-next " aria-label="Next page: layer">
                     <i class="fa fa-angle-right"></i>
                 </a>
                 
@@ -2228,7 +2034,7 @@ x && if \quad 0 \leq x \leq 1
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"activation.h","level":"5.2.1","depth":2,"next":{"title":"avgpool_layer.c","level":"5.3","depth":1,"path":"part3_src/avgpool.md","ref":"part3_src/avgpool.md","articles":[]},"previous":{"title":"activations.c","level":"5.2","depth":1,"path":"part3_src/activations_1.md","ref":"part3_src/activations_1.md","articles":[{"title":"activation.h","level":"5.2.1","depth":2,"path":"part3_src/activations_2.md","ref":"part3_src/activations_2.md","articles":[]}]},"dir":"ltr"},"config":{"plugins":["advanced-emoji","theme-gestalt","-theme-default","styles-sass-fix","theme-api","mathjax"],"root":"./","styles":{"website":"website-1593526547096.css"},"pluginsConfig":{"styles-sass-fix":{},"theme-gestalt":{"showLevel":false,"styles":{"website":"styles/website.css"},"logo":"/darknet_book/assets/darknet.png","baseUrl":null,"excludeDefaultStyles":true,"doNotHideChildrenChapters":false},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"theme-api":{"languages":[],"split":true,"theme":"light"},"mathjax":{"forceSVG":false,"version":"2.6-latest"},"advanced-emoji":{"embedEmojis":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]}},"theme":"default","author":"JJM","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"DarkNet Book","output.name":"site","gitbook":"*"},"file":{"path":"part3_src/activations_2.md","mtime":"2020-06-19T19:49:48.887Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-06-30T14:15:40.712Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"network","level":"4.1","depth":1,"next":{"title":"layer","level":"4.2","depth":1,"path":"part4_structure/layer.md","ref":"part4_structure/layer.md","articles":[]},"previous":{"title":"/src","level":"3.5","depth":1,"path":"part2_source/4_SRC.md","ref":"part2_source/4_SRC.md","articles":[]},"dir":"ltr"},"config":{"plugins":["advanced-emoji","theme-gestalt","-theme-default","styles-sass-fix","theme-api","mathjax"],"root":"./","styles":{"website":"website-1593526547096.css"},"pluginsConfig":{"styles-sass-fix":{},"theme-gestalt":{"showLevel":false,"styles":{"website":"styles/website.css"},"logo":"/darknet_book/assets/darknet.png","baseUrl":null,"excludeDefaultStyles":true,"doNotHideChildrenChapters":false},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"theme-api":{"languages":[],"split":true,"theme":"light"},"mathjax":{"forceSVG":false,"version":"2.6-latest"},"advanced-emoji":{"embedEmojis":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]}},"theme":"default","author":"JJM","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"DarkNet Book","output.name":"site","gitbook":"*"},"file":{"path":"part4_structure/network.md","mtime":"2020-06-30T13:59:38.362Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-06-30T14:15:40.712Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>

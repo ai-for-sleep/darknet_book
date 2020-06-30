@@ -58,17 +58,6 @@ avgpool_layer make_avgpool_layer(int batch, int w, int h, int c)
 
 `Average Pooling Layer`를 만드는 함수입니다.
 
-## resize_avgpool_layer
-
-```c
-void resize_avgpool_layer(avgpool_layer *l, int w, int h)
-{
-    l->w = w;
-    l->h = h;
-    l->inputs = h*w*l->c;
-}
-```
-
 ## forward_avgpool_layer
 
 ```c
@@ -89,6 +78,8 @@ void forward_avgpool_layer(const avgpool_layer l, network net)
     }
 }
 ```
+
+`forward`
 
 - Feature Map의 평균값을 전파 합니다.
 
@@ -111,5 +102,19 @@ void backward_avgpool_layer(const avgpool_layer l, network net)
 }
 ```
 
+`backward`
+
 - 국부적 기울기는 $$\frac{1}{h \times w}$$가 되기 때문에 역전파된 기울기 값에 $$\frac{1}{h \times w}$$를 곱해서 역전파합니다.
 - 하나의 Feature Map의 모든 기울기 값은 동일합니다.
+
+
+## resize_avgpool_layer
+
+```c
+void resize_avgpool_layer(avgpool_layer *l, int w, int h)
+{
+    l->w = w;
+    l->h = h;
+    l->inputs = h*w*l->c;
+}
+```
