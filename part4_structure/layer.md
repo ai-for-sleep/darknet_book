@@ -1,7 +1,7 @@
 {% method %}
 ## Layer Structure
 
-layer 구조체 입니다.
+Layer 구조체 입니다.
 
 
 

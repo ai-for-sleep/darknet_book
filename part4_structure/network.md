@@ -1,12 +1,12 @@
 {% method %}
-## Layer Structure
+## Network Structure
 
-layer 구조체 입니다.
+Network 구조체 입니다.
 
 
 
 {% sample lang="c" %}
-```
+```c
 typedef struct network{
     int n;                            
     int batch;                        

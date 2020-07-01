@@ -42,7 +42,7 @@
 
     
         
-        <link rel="stylesheet" href="../website-1593526547096.css">
+        <link rel="stylesheet" href="../website-1593578807447.css">
         
     
 
@@ -348,6 +348,24 @@
             
                     
                     layer
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="4.3" 
+            data-path="../part4_structure/etc.html">
+
+            
+                <a href="../part4_structure/etc.html">
+            
+                    
+                    etc
             
                 </a>
             
@@ -752,15 +770,15 @@
         <li class="chapter 
               "
             data-level="5.21" 
-            >
+            data-path="im2col.html">
 
             
-                <span>
+                <a href="im2col.html">
             
                     
                     im2col.c
             
-                </span>
+                </a>
             
 
             
@@ -1937,7 +1955,142 @@
 <p><code>convolutional layer</code>&#xB294; &#xC704;&#xC640; &#xAC19;&#xC774; &#xD45C;&#xD604;&#xD560; &#xC218; &#xC788;&#xC2B5;&#xB2C8;&#xB2E4;.
 &#xC704; &#xADF8;&#xB9BC;&#xC758; &#xACBD;&#xC6B0;&#xB294; <code>stride</code>&#xAC00; <code>kernel size</code>&#xC640; &#xAC19;&#xC740; &#xACBD;&#xC6B0;&#xB97C; &#xC758;&#xBBF8;&#xD569;&#xB2C8;&#xB2E4;.</p>
 <hr>
-<h1 id="">#</h1>
+<h2 id="gemm">gemm</h2>
+<p>gemm(0,0,m,n,k,1,a,k,b,n,1,c,n);</p>
+<pre><code class="lang-c"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">gemm</span><span class="hljs-params">(<span class="hljs-keyword">int</span> TA, <span class="hljs-keyword">int</span> TB, <span class="hljs-keyword">int</span> M, <span class="hljs-keyword">int</span> N, <span class="hljs-keyword">int</span> K, <span class="hljs-keyword">float</span> ALPHA,
+        <span class="hljs-keyword">float</span> *A, <span class="hljs-keyword">int</span> lda,
+        <span class="hljs-keyword">float</span> *B, <span class="hljs-keyword">int</span> ldb,
+        <span class="hljs-keyword">float</span> BETA,
+        <span class="hljs-keyword">float</span> *C, <span class="hljs-keyword">int</span> ldc)</span>
+</span>{
+    gemm_cpu(TA,  TB,  M, N, K, ALPHA, A, lda, B, ldb, BETA, C, ldc);
+}
+</code></pre>
+<ul>
+<li><code>TA</code>    : A &#xD589;&#xB82C;&#xC758; &#xC804;&#xCE58; (0 : &#xC0AC;&#xC6A9;&#xC548;&#xD568; | 1 : &#xC0AC;&#xC6A9;)</li>
+<li><code>TB</code>    : B &#xD589;&#xB82C;&#xC758; &#xC804;&#xCE58; (0 : &#xC0AC;&#xC6A9;&#xC548;&#xD568; | 1 : &#xC0AC;&#xC6A9;)</li>
+<li><code>M</code>     : filter &#xAC1C;&#xC218;</li>
+<li><code>N</code>     : output feature map &#xD06C;&#xAE30;</li>
+<li><code>K</code>     : filter &#xD06C;&#xAE30;</li>
+<li><code>ALPHA</code> : scale factor</li>
+<li><code>A</code>     : filter</li>
+<li><code>lda</code>   : A&#xB97C; &#xC704;&#xD55C; &#xD3EC;&#xC778;&#xD130;</li>
+<li><code>B</code>     : input feature maps</li>
+<li><code>ldb</code>   : B&#xB97C; &#xC704;&#xD55C; &#xD3EC;&#xC778;&#xD130;</li>
+<li><code>BETA</code>  : initial value</li>
+<li><code>C</code>     : output feature maps</li>
+<li><code>ldc</code>   : C&#xB97C; &#xC704;&#xD55C; &#xD3EC;&#xC778;&#xD130;</li>
+</ul>
+<pre><code>void gemm_cpu(int TA, int TB, int M, int N, int K, float ALPHA,
+        float *A, int lda,
+        float *B, int ldb,
+        float BETA,
+        float *C, int ldc)
+{
+    //printf(&quot;cpu: %d %d %d %d %d %f %d %d %f %d\n&quot;,TA, TB, M, N, K, ALPHA, lda, ldb, BETA, ldc);
+    int i, j;
+    for(i = 0; i &lt; M; ++i){
+        for(j = 0; j &lt; N; ++j){
+            C[i*ldc + j] *= BETA;
+        }
+    }
+    if(!TA &amp;&amp; !TB)
+        gemm_nn(M, N, K, ALPHA, A,lda, B, ldb, C, ldc);
+    else if(TA &amp;&amp; !TB)
+        gemm_tn(M, N, K, ALPHA, A,lda, B, ldb, C, ldc);
+    else if(!TA &amp;&amp; TB)
+        gemm_nt(M, N, K, ALPHA, A,lda, B, ldb, C, ldc);
+    else
+        gemm_tt(M, N, K, ALPHA, A,lda, B, ldb, C, ldc);
+}
+</code></pre><ul>
+<li><code>BETA</code>&#xB85C; <code>C(output feature maps)</code>&#xB97C; &#xCD08;&#xAE30;&#xD654; &#xD569;&#xB2C8;&#xB2E4;.</li>
+<li>GEMM &#xC5F0;&#xC0B0;&#xC744; &#xC9C4;&#xD589;&#xD569;&#xB2C8;&#xB2E4;.</li>
+</ul>
+<p><img src="../figure/gemm4.PNG" alt="gemm4"></p>
+<p>&#xCD5C;&#xC885;&#xC801;&#xC73C;&#xB85C; GEMM &#xC5F0;&#xC0B0;&#xC740; &#xC704;&#xC640; &#xAC19;&#xC774; &#xD45C;&#xD604;&#xC774; &#xB420; &#xC218; &#xC788;&#xC2B5;&#xB2C8;&#xB2E4;.</p>
+<pre><code>void gemm_nn(int M, int N, int K, float ALPHA,
+        float *A, int lda,
+        float *B, int ldb,
+        float *C, int ldc)
+{
+    int i,j,k;
+    #pragma omp parallel for
+    for(i = 0; i &lt; M; ++i){
+        for(k = 0; k &lt; K; ++k){
+            register float A_PART = ALPHA*A[i*lda+k];
+            for(j = 0; j &lt; N; ++j){
+                C[i*ldc+j] += A_PART*B[k*ldb+j];
+            }
+        }
+    }
+}
+</code></pre><ul>
+<li><code>A</code> : &#xC804;&#xCE58;&#xD589;&#xB82C; &#xC0AC;&#xC6A9; &#xC548;&#xD568;</li>
+<li><code>B</code> : &#xC804;&#xCE58;&#xD589;&#xB82C; &#xC0AC;&#xC6A9; &#xC548;&#xD568;</li>
+</ul>
+<pre><code>void gemm_nt(int M, int N, int K, float ALPHA,
+        float *A, int lda,
+        float *B, int ldb,
+        float *C, int ldc)
+{
+    int i,j,k;
+    #pragma omp parallel for
+    for(i = 0; i &lt; M; ++i){
+        for(j = 0; j &lt; N; ++j){
+            register float sum = 0;
+            for(k = 0; k &lt; K; ++k){
+                sum += ALPHA*A[i*lda+k]*B[j*ldb + k];
+            }
+            C[i*ldc+j] += sum;
+        }
+    }
+}
+</code></pre><ul>
+<li><code>A</code> : &#xC804;&#xCE58;&#xD589;&#xB82C; &#xC0AC;&#xC6A9; &#xC548;&#xD568;</li>
+<li><code>B</code> : &#xC804;&#xCE58;&#xD589;&#xB82C; &#xC0AC;&#xC6A9;</li>
+</ul>
+<pre><code>void gemm_tn(int M, int N, int K, float ALPHA,
+        float *A, int lda,
+        float *B, int ldb,
+        float *C, int ldc)
+{
+    int i,j,k;
+    #pragma omp parallel for
+    for(i = 0; i &lt; M; ++i){
+        for(k = 0; k &lt; K; ++k){
+            register float A_PART = ALPHA*A[k*lda+i];
+            for(j = 0; j &lt; N; ++j){
+                C[i*ldc+j] += A_PART*B[k*ldb+j];
+            }
+        }
+    }
+}
+</code></pre><ul>
+<li><code>A</code> : &#xC804;&#xCE58;&#xD589;&#xB82C; &#xC0AC;&#xC6A9;</li>
+<li><code>B</code> : &#xC804;&#xCE58;&#xD589;&#xB82C; &#xC0AC;&#xC6A9; &#xC548;&#xD568;</li>
+</ul>
+<pre><code>void gemm_tt(int M, int N, int K, float ALPHA,
+        float *A, int lda,
+        float *B, int ldb,
+        float *C, int ldc)
+{
+    int i,j,k;
+    #pragma omp parallel for
+    for(i = 0; i &lt; M; ++i){
+        for(j = 0; j &lt; N; ++j){
+            register float sum = 0;
+            for(k = 0; k &lt; K; ++k){
+                sum += ALPHA*A[i+k*lda]*B[k+j*ldb];
+            }
+            C[i*ldc+j] += sum;
+        }
+    }
+}
+</code></pre><ul>
+<li><code>A</code> : &#xC804;&#xCE58;&#xD589;&#xB82C; &#xC0AC;&#xC6A9;</li>
+<li><code>B</code> : &#xC804;&#xCE58;&#xD589;&#xB82C; &#xC0AC;&#xC6A9;</li>
+</ul>
 
                                 
                                 </section>
@@ -1973,7 +2126,7 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"gemm.c","level":"5.19","depth":1,"next":{"title":"gru_layer.c","level":"5.20","depth":1,"ref":"","articles":[]},"previous":{"title":"dropout_layer.c","level":"5.18","depth":1,"ref":"","articles":[]},"dir":"ltr"},"config":{"plugins":["advanced-emoji","theme-gestalt","-theme-default","styles-sass-fix","theme-api","mathjax"],"root":"./","styles":{"website":"website-1593526547096.css"},"pluginsConfig":{"styles-sass-fix":{},"theme-gestalt":{"showLevel":false,"styles":{"website":"styles/website.css"},"logo":"/darknet_book/assets/darknet.png","baseUrl":null,"excludeDefaultStyles":true,"doNotHideChildrenChapters":false},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"theme-api":{"languages":[],"split":true,"theme":"light"},"mathjax":{"forceSVG":false,"version":"2.6-latest"},"advanced-emoji":{"embedEmojis":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]}},"theme":"default","author":"JJM","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"DarkNet Book","output.name":"site","gitbook":"*"},"file":{"path":"part3_src/gemm.md","mtime":"2020-06-30T14:07:49.519Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-06-30T14:15:40.712Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"gemm.c","level":"5.19","depth":1,"next":{"title":"gru_layer.c","level":"5.20","depth":1,"ref":"","articles":[]},"previous":{"title":"dropout_layer.c","level":"5.18","depth":1,"ref":"","articles":[]},"dir":"ltr"},"config":{"plugins":["advanced-emoji","theme-gestalt","-theme-default","styles-sass-fix","theme-api","mathjax"],"root":"./","styles":{"website":"website-1593578807447.css"},"pluginsConfig":{"styles-sass-fix":{},"theme-gestalt":{"showLevel":false,"styles":{"website":"styles/website.css"},"logo":"/darknet_book/assets/darknet.png","baseUrl":null,"excludeDefaultStyles":true,"doNotHideChildrenChapters":false},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"theme-api":{"languages":[],"split":true,"theme":"light"},"mathjax":{"forceSVG":false,"version":"2.6-latest"},"advanced-emoji":{"embedEmojis":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]}},"theme":"default","author":"JJM","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"DarkNet Book","output.name":"site","gitbook":"*"},"file":{"path":"part3_src/gemm.md","mtime":"2020-07-01T04:19:22.040Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-07-01T04:46:42.404Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>
