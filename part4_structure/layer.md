@@ -1,12 +1,8 @@
-{% method %}
 ## Layer Structure
 
 Layer 구조체 입니다.
 
-
-
-{% sample lang="c" %}
-```c
+```
 struct layer{
     LAYER_TYPE type;
     ACTIVATION activation;
@@ -224,4 +220,3 @@ struct layer{
     size_t workspace_size;
 };
 ```
-{% endmethod %}

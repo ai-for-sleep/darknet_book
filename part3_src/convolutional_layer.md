@@ -64,17 +64,17 @@ void forward_convolutional_layer(convolutional_layer l, network net)
     int n = l.out_w*l.out_h;                                                        /// output feature map 크기
     for(i = 0; i < l.batch; ++i){
         for(j = 0; j < l.groups; ++j){
-            float *a = l.weights + j*l.nweights/l.groups;                           /// 배열에서 학습 시작 포인터 이동
+            float *a = l.weights + j*l.nweights/l.groups;                           /// 학습 시작 포인터
             float *b = net.workspace;                                               
-            float *c = l.output + (i*l.groups + j)*n*m;                             /// output 위치 이동
-            float *im =  net.input + (i*l.groups + j)*l.c/l.groups*l.h*l.w;         /// 배열에서 input 시작 포인터 이동
+            float *c = l.output + (i*l.groups + j)*n*m;                             /// output 시작 포인터
+            float *im =  net.input + (i*l.groups + j)*l.c/l.groups*l.h*l.w;         /// input 시작 포인터
 
-            if (l.size == 1) {                                                      /// filter size가 1일 때
+            if (l.size == 1) {                                                      
                 b = im;
             } else {
-                im2col_cpu(im, l.c/l.groups, l.h, l.w, l.size, l.stride, l.pad, b); /// image를 columns로 변경
+                im2col_cpu(im, l.c/l.groups, l.h, l.w, l.size, l.stride, l.pad, b); /// 이미지를 columns로 변환
             }
-            gemm(0,0,m,n,k,1,a,k,b,n,1,c,n);                                        /// 실질적인 컨볼루션 연산
+            gemm(0,0,m,n,k,1,a,k,b,n,1,c,n);                                        /// 컨볼루션 연산
         }
     }
 
@@ -91,6 +91,10 @@ void forward_convolutional_layer(convolutional_layer l, network net)
 
 `forward`
 
+- convolution
+- batch normalization(no bias) or bias
+- activation function
+
 
 ## backward_convolutional_layer
 
@@ -100,46 +104,46 @@ void backward_convolutional_layer(convolutional_layer l, network net)
     int i, j;
     int m = l.n/l.groups;                                                           /// filter 개수
     int k = l.size*l.size*l.c/l.groups;                                             /// filter 크기
-    int n = l.out_w*l.out_h;                                                        /// output 크기
+    int n = l.out_w*l.out_h;                                                        /// output feature map 크기
 
-    gradient_array(l.output, l.outputs*l.batch, l.activation, l.delta);             /// activation function 미분값 적용
-                                                                                    /// delta에 값이 있다.
+    gradient_array(l.output, l.outputs*l.batch, l.activation, l.delta);             /// activation function 역전파
+
     if(l.batch_normalize){
-        backward_batchnorm_layer(l, net);                                           /// batch normalize 미분값 적용
+        backward_batchnorm_layer(l, net);                                           /// batch normalize 역전파
     } else {
-        backward_bias(l.bias_updates, l.delta, l.batch, l.n, k);                    /// bias update할 값 업데이트
+        backward_bias(l.bias_updates, l.delta, l.batch, l.n, k);                    /// bias 역전파
     }
 
     for(i = 0; i < l.batch; ++i){
         for(j = 0; j < l.groups; ++j){
             float *a = l.delta + (i*l.groups + j)*m*k;                              /// gradient 포인터 이동
-            float *b = net.workspace;                                               /// 작업공간
-            float *c = l.weight_updates + j*l.nweights/l.groups;                    /// weight update할 값 포인터 이동
+            float *b = net.workspace;                                               
+            float *c = l.weight_updates + j*l.nweights/l.groups;                    /// update 포인터 이동
 
             float *im  = net.input + (i*l.groups + j)*l.c/l.groups*l.h*l.w;         /// 이미지 포인터
-            float *imd = net.delta + (i*l.groups + j)*l.c/l.groups*l.h*l.w;         /// 이미지 작업공간
+            float *imd = net.delta + (i*l.groups + j)*l.c/l.groups*l.h*l.w;         
 
-            if(l.size == 1){                                                        /// filter 사이즈 1
+            if(l.size == 1){                                                       
                 b = im;                                                             
             } else {
                 im2col_cpu(im, l.c/l.groups, l.h, l.w,
-                        l.size, l.stride, l.pad, b);                                /// image를 2차원 matrix로 변환
+                        l.size, l.stride, l.pad, b);                                /// 이미지를 columns로 변환
             }
 
-            gemm(0,1,m,n,k,1,a,k,b,k,1,c,n);                                        /// b(image)를 전치행렬로 계산
+            gemm(0,1,m,n,k,1,a,k,b,k,1,c,n);                                        /// b(image)를 전치행렬로 컨볼루션 연산
 
             if (net.delta) {
                 a = l.weights + j*l.nweights/l.groups;                              /// weight 포인터 이동          
                 b = l.delta + (i*l.groups + j)*m*k;                                 /// gradient 포인터 이동
-                c = net.workspace;                                                  /// 작업공간
+                c = net.workspace;                                                  
                 if (l.size == 1) {
                     c = imd;
                 }
 
-                gemm(1,0,n,k,m,1,a,n,b,k,0,c,k);                                    /// a(weight)를 전치행렬로 계산
+                gemm(1,0,n,k,m,1,a,n,b,k,0,c,k);                                    /// a(weight)를 전치행렬로 컨볼루션 연산
 
                 if (l.size != 1) {
-                    col2im_cpu(net.workspace, l.c/l.groups, l.h, l.w, l.size, l.stride, l.pad, imd);    /// columns -> image로 변환
+                    col2im_cpu(net.workspace, l.c/l.groups, l.h, l.w, l.size, l.stride, l.pad, imd);    /// columns을 이미지로 변환
                 }
             }
         }
@@ -148,3 +152,7 @@ void backward_convolutional_layer(convolutional_layer l, network net)
 ```
 
 `backward`
+
+- activation function
+- batch normalization(no bias) or bias
+- convolution

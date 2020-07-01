@@ -42,7 +42,7 @@
 
     
         
-        <link rel="stylesheet" href="../website-1593578807447.css">
+        <link rel="stylesheet" href="../website-1593611234046.css">
         
     
 
@@ -522,15 +522,15 @@
         <li class="chapter 
               "
             data-level="5.7" 
-            >
+            data-path="../part3_src/col2im.html">
 
             
-                <span>
+                <a href="../part3_src/col2im.html">
             
                     
                     col2im.c
             
-                </span>
+                </a>
             
 
             
@@ -1939,78 +1939,76 @@
     
                                 <section class="normal markdown-section">
                                 
-                                <div class="api-method"><div class="api-method-definition"><h2 id="network-structure">Network Structure</h2>
+                                <h2 id="network-structure">Network Structure</h2>
 <p>Network &#xAD6C;&#xC870;&#xCCB4; &#xC785;&#xB2C8;&#xB2E4;.</p>
-</div><div class="api-method-code"><div class="api-method-sample" data-lang="c" data-name="C"><pre><code class="lang-c"><span class="hljs-keyword">typedef</span> <span class="hljs-keyword">struct</span> network{
-    <span class="hljs-keyword">int</span> n;                            
-    <span class="hljs-keyword">int</span> batch;                        
-    <span class="hljs-keyword">size_t</span> *seen;
-    <span class="hljs-keyword">int</span> *t;
-    <span class="hljs-keyword">float</span> epoch;                     
-    <span class="hljs-keyword">int</span> subdivisions;
+<pre><code>typedef struct network{
+    int n;                            
+    int batch;                        
+    size_t *seen;
+    int *t;
+    float epoch;                     
+    int subdivisions;
     layer *layers;
-    <span class="hljs-keyword">float</span> *output;
+    float *output;
     learning_rate_policy policy;
 
-    <span class="hljs-keyword">float</span> learning_rate;
-    <span class="hljs-keyword">float</span> momentum;
-    <span class="hljs-keyword">float</span> decay;
-    <span class="hljs-keyword">float</span> gamma;
-    <span class="hljs-keyword">float</span> scale;
-    <span class="hljs-keyword">float</span> power;
-    <span class="hljs-keyword">int</span> time_steps;
-    <span class="hljs-keyword">int</span> step;
-    <span class="hljs-keyword">int</span> max_batches;
-    <span class="hljs-keyword">float</span> *scales;
-    <span class="hljs-keyword">int</span>   *steps;
-    <span class="hljs-keyword">int</span> num_steps;
-    <span class="hljs-keyword">int</span> burn_in;
+    float learning_rate;
+    float momentum;
+    float decay;
+    float gamma;
+    float scale;
+    float power;
+    int time_steps;
+    int step;
+    int max_batches;
+    float *scales;
+    int   *steps;
+    int num_steps;
+    int burn_in;
 
-    <span class="hljs-keyword">int</span> adam;
-    <span class="hljs-keyword">float</span> B1;
-    <span class="hljs-keyword">float</span> B2;
-    <span class="hljs-keyword">float</span> eps;
+    int adam;
+    float B1;
+    float B2;
+    float eps;
 
-    <span class="hljs-keyword">int</span> inputs;
-    <span class="hljs-keyword">int</span> outputs;
-    <span class="hljs-keyword">int</span> truths;
-    <span class="hljs-keyword">int</span> notruth;
-    <span class="hljs-keyword">int</span> h, w, c;
-    <span class="hljs-keyword">int</span> max_crop;
-    <span class="hljs-keyword">int</span> min_crop;
-    <span class="hljs-keyword">float</span> max_ratio;
-    <span class="hljs-keyword">float</span> min_ratio;
-    <span class="hljs-keyword">int</span> center;
-    <span class="hljs-keyword">float</span> angle;
-    <span class="hljs-keyword">float</span> aspect;
-    <span class="hljs-keyword">float</span> exposure;
-    <span class="hljs-keyword">float</span> saturation;
-    <span class="hljs-keyword">float</span> hue;
-    <span class="hljs-keyword">int</span> random;
+    int inputs;
+    int outputs;
+    int truths;
+    int notruth;
+    int h, w, c;
+    int max_crop;
+    int min_crop;
+    float max_ratio;
+    float min_ratio;
+    int center;
+    float angle;
+    float aspect;
+    float exposure;
+    float saturation;
+    float hue;
+    int random;
 
-    <span class="hljs-keyword">int</span> gpu_index;
+    int gpu_index;
     tree *hierarchy;
 
-    <span class="hljs-keyword">float</span> *input;
-    <span class="hljs-keyword">float</span> *truth;
-    <span class="hljs-keyword">float</span> *delta;
-    <span class="hljs-keyword">float</span> *workspace;
-    <span class="hljs-keyword">int</span> train;
-    <span class="hljs-keyword">int</span> index;
-    <span class="hljs-keyword">float</span> *cost;
-    <span class="hljs-keyword">float</span> clip;
+    float *input;
+    float *truth;
+    float *delta;
+    float *workspace;
+    int train;
+    int index;
+    float *cost;
+    float clip;
 
-<span class="hljs-meta">#<span class="hljs-meta-keyword">ifdef</span> GPU</span>
-    <span class="hljs-keyword">float</span> *input_gpu;
-    <span class="hljs-keyword">float</span> *truth_gpu;
-    <span class="hljs-keyword">float</span> *delta_gpu;
-    <span class="hljs-keyword">float</span> *output_gpu;
-<span class="hljs-meta">#<span class="hljs-meta-keyword">endif</span></span>
+#ifdef GPU
+    float *input_gpu;
+    float *truth_gpu;
+    float *delta_gpu;
+    float *output_gpu;
+#endif
 
 } network;
 </code></pre>
-</div></div></div>
-
                                 
                                 </section>
                             
@@ -2053,7 +2051,7 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"network","level":"4.1","depth":1,"next":{"title":"layer","level":"4.2","depth":1,"path":"part4_structure/layer.md","ref":"part4_structure/layer.md","articles":[]},"previous":{"title":"/src","level":"3.5","depth":1,"path":"part2_source/4_SRC.md","ref":"part2_source/4_SRC.md","articles":[]},"dir":"ltr"},"config":{"plugins":["advanced-emoji","theme-gestalt","-theme-default","styles-sass-fix","theme-api","mathjax"],"root":"./","styles":{"website":"website-1593578807447.css"},"pluginsConfig":{"styles-sass-fix":{},"theme-gestalt":{"showLevel":false,"styles":{"website":"styles/website.css"},"logo":"/darknet_book/assets/darknet.png","baseUrl":null,"excludeDefaultStyles":true,"doNotHideChildrenChapters":false},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"theme-api":{"languages":[],"split":true,"theme":"light"},"mathjax":{"forceSVG":false,"version":"2.6-latest"},"advanced-emoji":{"embedEmojis":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]}},"theme":"default","author":"JJM","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"DarkNet Book","output.name":"site","gitbook":"*"},"file":{"path":"part4_structure/network.md","mtime":"2020-07-01T04:46:34.476Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-07-01T04:46:42.404Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"network","level":"4.1","depth":1,"next":{"title":"layer","level":"4.2","depth":1,"path":"part4_structure/layer.md","ref":"part4_structure/layer.md","articles":[]},"previous":{"title":"/src","level":"3.5","depth":1,"path":"part2_source/4_SRC.md","ref":"part2_source/4_SRC.md","articles":[]},"dir":"ltr"},"config":{"plugins":["advanced-emoji","theme-gestalt","-theme-default","styles-sass-fix","theme-api","mathjax"],"root":"./","styles":{"website":"website-1593611234046.css"},"pluginsConfig":{"styles-sass-fix":{},"theme-gestalt":{"showLevel":false,"styles":{"website":"styles/website.css"},"logo":"/darknet_book/assets/darknet.png","baseUrl":null,"excludeDefaultStyles":true,"doNotHideChildrenChapters":false},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"theme-api":{"languages":[],"split":true,"theme":"light"},"mathjax":{"forceSVG":false,"version":"2.6-latest"},"advanced-emoji":{"embedEmojis":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]}},"theme":"default","author":"JJM","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"DarkNet Book","output.name":"site","gitbook":"*"},"file":{"path":"part4_structure/network.md","mtime":"2020-07-01T13:46:52.943Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-07-01T13:47:04.968Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>
