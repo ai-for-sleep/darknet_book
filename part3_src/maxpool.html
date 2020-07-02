@@ -4,7 +4,7 @@
     <head>
         <meta charset="UTF-8">
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
-        <title>gemm.c · DarkNet Book</title>
+        <title>maxpool_layer.c · DarkNet Book</title>
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="description" content="">
         <meta name="generator" content="GitBook 3.2.3">
@@ -732,7 +732,7 @@
     
         
         <li class="chapter 
-            active  selected  "
+              "
             data-level="5.19" 
             data-path="gemm.html">
 
@@ -948,7 +948,7 @@
     
         
         <li class="chapter 
-              "
+            active  selected  "
             data-level="5.31" 
             data-path="maxpool.html">
 
@@ -1920,7 +1920,7 @@
     <!-- Title -->
     <h1>
         <i class="fa fa-circle-o-notch fa-spin"></i>
-        <a href=".." >gemm.c</a>
+        <a href=".." >maxpool_layer.c</a>
     </h1>
 </div>
 
@@ -1935,162 +1935,134 @@
     
                                 <section class="normal markdown-section">
                                 
-                                <h1 id="gemm-&#xC774;&#xB780;">GEMM &#xC774;&#xB780;?</h1>
-<p>&#xCC38;&#xACE0; &#xC790;&#xB8CC; : <a href="https://petewarden.com/2015/04/20/why-gemm-is-at-the-heart-of-deep-learning/" target="_blank">https://petewarden.com/2015/04/20/why-gemm-is-at-the-heart-of-deep-learning/</a></p>
+                                <h1 id="max-pooling-layer-&#xB780;">Max Pooling Layer &#xB780;?</h1>
+<p>Feature Map&#xC758; &#xCD5C;&#xB313;&#xAC12;&#xC744; &#xC804;&#xD30C;&#xC2DC;&#xD0A4;&#xB294; Layer &#xC785;&#xB2C8;&#xB2E4;.</p>
+<h1 id="maxpoollayerc">maxpool_layer.c</h1>
+<h2 id="makemaxpoollayer">make_maxpool_layer</h2>
+<p>maxpool_layer make_maxpool_layer(int batch, int h, int w, int c, int size, int stride, int padding)
+{
+    maxpool_layer l = {0};
+    l.type = MAXPOOL;
+    l.batch = batch;
+    l.h = h;
+    l.w = w;
+    l.c = c;
+    l.pad = padding;
+    l.out_w = (w + padding - size)/stride + 1;
+    l.out_h = (h + padding - size)/stride + 1;
+    l.out_c = c;
+    l.outputs = l.out_h <em> l.out_w </em> l.out_c;
+    l.inputs = h<em>w</em>c;
+    l.size = size;
+    l.stride = stride;
+    int output_size = l.out_h <em> l.out_w </em> l.out_c * batch;
+    l.indexes = calloc(output_size, sizeof(int));
+    l.output =  calloc(output_size, sizeof(float));
+    l.delta =   calloc(output_size, sizeof(float));
+    l.forward = forward_maxpool_layer;
+    l.backward = backward_maxpool_layer;</p>
+<pre><code>fprintf(stderr, &quot;max          %d x %d / %d  %4d x%4d x%4d   -&gt;  %4d x%4d x%4d\n&quot;, size, size, stride, w, h, c, l.out_w, l.out_h, l.out_c);
+return l;
+</code></pre><p>}</p>
 <ul>
-<li><code>General Matrix to Matrix Multiplication</code></li>
-<li>1979&#xB144;&#xC5D0; &#xB9CC;&#xB4E4;&#xC5B4;&#xC9C4; BLAS &#xB77C;&#xC774;&#xBE0C;&#xB7EC;&#xB9AC;&#xC758; &#xC77C;&#xBD80; &#xC785;&#xB2C8;&#xB2E4;.</li>
-<li>&#xB450;&#xAC1C;&#xC758; &#xC785;&#xB825; &#xD589;&#xB82C;&#xC744; &#xACF1;&#xD574;&#xC11C; &#xCD9C;&#xB825;&#xC744; &#xC5BB;&#xB294; &#xBC29;&#xBC95; &#xC785;&#xB2C8;&#xB2E4;.</li>
+<li><code>Max Pooling Layer</code>&#xB97C; &#xB9CC;&#xB4DC;&#xB294; &#xD568;&#xC218;&#xC785;&#xB2C8;&#xB2E4;.</li>
 </ul>
-<p>&#xB525;&#xB7EC;&#xB2DD;&#xC5D0;&#xC11C; &#xB300;&#xBD80;&#xBD84;&#xC758; &#xC5F0;&#xC0B0;&#xC740; <code>output = input * weight + bias</code>&#xB85C; &#xD45C;&#xD604;&#xC774; &#xB429;&#xB2C8;&#xB2E4;. &#xC5EC;&#xAE30;&#xC11C; <code>input</code>, <code>output</code>, <code>weight</code>&#xB97C; &#xD589;&#xB82C;&#xB85C; &#xD45C;&#xD604;&#xD574;&#xC11C; GEMM&#xC744; &#xC0AC;&#xC6A9;&#xD574; &#xC5F0;&#xC0B0;&#xD560; &#xC218; &#xC788;&#xC2B5;&#xB2C8;&#xB2E4;.</p>
-<p><img src="../figure/gemm1.PNG" alt="gemm1"></p>
-<h2 id="fully-connected-layer">Fully Connected Layer</h2>
-<p><img src="../figure/gemm2.PNG" alt="gemm2"></p>
-<p><code>fully connected layer</code>&#xB294; &#xC704;&#xC640; &#xAC19;&#xC774; &#xD45C;&#xD604;&#xD560; &#xC218; &#xC788;&#xC2B5;&#xB2C8;&#xB2E4;.</p>
-<h2 id="convolutional-layer">Convolutional Layer</h2>
-<p><img src="../figure/gemm3.PNG" alt="gemm3"></p>
+<h2 id="forwardmaxpoollayer">forward_maxpool_layer</h2>
+<p>void forward_maxpool_layer(const maxpool_layer l, network net)
+{
+    int b,i,j,k,m,n;
+    int w_offset = -l.pad/2;
+    int h_offset = -l.pad/2;</p>
+<pre><code>int h = l.out_h;
+int w = l.out_w;
+int c = l.c;
+
+for(b = 0; b &lt; l.batch; ++b){
+    for(k = 0; k &lt; c; ++k){
+        for(i = 0; i &lt; h; ++i){
+            for(j = 0; j &lt; w; ++j){
+                int out_index = j + w*(i + h*(k + c*b));
+                float max = -FLT_MAX;
+                int max_i = -1;
+                for(n = 0; n &lt; l.size; ++n){
+                    for(m = 0; m &lt; l.size; ++m){
+                        int cur_h = h_offset + i*l.stride + n;
+                        int cur_w = w_offset + j*l.stride + m;
+                        int index = cur_w + l.w*(cur_h + l.h*(k + b*l.c));
+                        int valid = (cur_h &gt;= 0 &amp;&amp; cur_h &lt; l.h &amp;&amp;
+                                     cur_w &gt;= 0 &amp;&amp; cur_w &lt; l.w);
+                        float val = (valid != 0) ? net.input[index] : -FLT_MAX;
+                        max_i = (val &gt; max) ? index : max_i;
+                        max   = (val &gt; max) ? val   : max;
+                    }
+                }
+                l.output[out_index] = max;
+                l.indexes[out_index] = max_i;
+            }
+        }
+    }
+}
+</code></pre><p>}</p>
+<p><code>forward</code></p>
+<p><img src="../figure/avgpool.PNG" alt="avgpool"></p>
 <ul>
-<li><code>im2col</code> : 3&#xCC28;&#xC6D0; &#xC774;&#xBBF8;&#xC9C0; &#xBC30;&#xC5F4;&#xC744; 2&#xCC28;&#xC6D0; &#xBC30;&#xC5F4;&#xB85C; &#xBCC0;&#xD658;&#xD569;&#xB2C8;&#xB2E4;.</li>
+<li>kernel size : 2</li>
+<li>stride : 1</li>
+<li>Feature Map&#xC5D0;&#xC11C; kernel size &#xB2E8;&#xC704;&#xB85C; sliding window &#xD558;&#xBA70; &#xCD5C;&#xB313;&#xAC12;&#xC744; &#xC804;&#xD30C; &#xD569;&#xB2C8;&#xB2E4;.</li>
 </ul>
-<p><code>convolutional layer</code>&#xB294; &#xC704;&#xC640; &#xAC19;&#xC774; &#xD45C;&#xD604;&#xD560; &#xC218; &#xC788;&#xC2B5;&#xB2C8;&#xB2E4;.
-&#xC704; &#xADF8;&#xB9BC;&#xC758; &#xACBD;&#xC6B0;&#xB294; <code>stride</code>&#xAC00; <code>kernel size</code>&#xC640; &#xAC19;&#xC740; &#xACBD;&#xC6B0;&#xB97C; &#xC758;&#xBBF8;&#xD569;&#xB2C8;&#xB2E4;.</p>
-<hr>
-<h2 id="gemm">gemm</h2>
-<p>gemm(0,0,m,n,k,1,a,k,b,n,1,c,n);</p>
-<pre><code class="lang-c"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">gemm</span><span class="hljs-params">(<span class="hljs-keyword">int</span> TA, <span class="hljs-keyword">int</span> TB, <span class="hljs-keyword">int</span> M, <span class="hljs-keyword">int</span> N, <span class="hljs-keyword">int</span> K, <span class="hljs-keyword">float</span> ALPHA,
-        <span class="hljs-keyword">float</span> *A, <span class="hljs-keyword">int</span> lda,
-        <span class="hljs-keyword">float</span> *B, <span class="hljs-keyword">int</span> ldb,
-        <span class="hljs-keyword">float</span> BETA,
-        <span class="hljs-keyword">float</span> *C, <span class="hljs-keyword">int</span> ldc)</span>
-</span>{
-    gemm_cpu(TA,  TB,  M, N, K, ALPHA, A, lda, B, ldb, BETA, C, ldc);
-}
-</code></pre>
-<ul>
-<li><code>TA</code>    : A &#xD589;&#xB82C;&#xC758; &#xC804;&#xCE58; (0 : &#xC0AC;&#xC6A9;&#xC548;&#xD568; | 1 : &#xC0AC;&#xC6A9;)</li>
-<li><code>TB</code>    : B &#xD589;&#xB82C;&#xC758; &#xC804;&#xCE58; (0 : &#xC0AC;&#xC6A9;&#xC548;&#xD568; | 1 : &#xC0AC;&#xC6A9;)</li>
-<li><code>M</code>     : filter &#xAC1C;&#xC218;</li>
-<li><code>N</code>     : output feature map &#xD06C;&#xAE30;</li>
-<li><code>K</code>     : filter &#xD06C;&#xAE30;</li>
-<li><code>ALPHA</code> : scale factor</li>
-<li><code>A</code>     : filter</li>
-<li><code>lda</code>   : A&#xB97C; &#xC704;&#xD55C; &#xD3EC;&#xC778;&#xD130;</li>
-<li><code>B</code>     : input feature maps</li>
-<li><code>ldb</code>   : B&#xB97C; &#xC704;&#xD55C; &#xD3EC;&#xC778;&#xD130;</li>
-<li><code>BETA</code>  : initial value</li>
-<li><code>C</code>     : output feature maps</li>
-<li><code>ldc</code>   : C&#xB97C; &#xC704;&#xD55C; &#xD3EC;&#xC778;&#xD130;</li>
-</ul>
-<pre><code>void gemm_cpu(int TA, int TB, int M, int N, int K, float ALPHA,
-        float *A, int lda,
-        float *B, int ldb,
-        float BETA,
-        float *C, int ldc)
+<h2 id="backwardmaxpoollayer">backward_maxpool_layer</h2>
+<p>void backward_maxpool_layer(const maxpool_layer l, network net)
 {
-    //printf(&quot;cpu: %d %d %d %d %d %f %d %d %f %d\n&quot;,TA, TB, M, N, K, ALPHA, lda, ldb, BETA, ldc);
-    int i, j;
-    for(i = 0; i &lt; M; ++i){
-        for(j = 0; j &lt; N; ++j){
-            C[i*ldc + j] *= BETA;
-        }
+    int i;
+    int h = l.out_h;
+    int w = l.out_w;
+    int c = l.c;
+    for(i = 0; i &lt; h<em>w</em>c*l.batch; ++i){
+        int index = l.indexes[i];
+        net.delta[index] += l.delta[i];
     }
-    if(!TA &amp;&amp; !TB)
-        gemm_nn(M, N, K, ALPHA, A,lda, B, ldb, C, ldc);
-    else if(TA &amp;&amp; !TB)
-        gemm_tn(M, N, K, ALPHA, A,lda, B, ldb, C, ldc);
-    else if(!TA &amp;&amp; TB)
-        gemm_nt(M, N, K, ALPHA, A,lda, B, ldb, C, ldc);
-    else
-        gemm_tt(M, N, K, ALPHA, A,lda, B, ldb, C, ldc);
-}
-</code></pre><ul>
-<li><code>BETA</code>&#xB85C; <code>C(output feature maps)</code>&#xB97C; &#xCD08;&#xAE30;&#xD654; &#xD569;&#xB2C8;&#xB2E4;.</li>
-<li>GEMM &#xC5F0;&#xC0B0;&#xC744; &#xC9C4;&#xD589;&#xD569;&#xB2C8;&#xB2E4;.</li>
-</ul>
-<p><img src="../figure/gemm4.PNG" alt="gemm4"></p>
-<p>&#xCD5C;&#xC885;&#xC801;&#xC73C;&#xB85C; GEMM &#xC5F0;&#xC0B0;&#xC740; &#xC704;&#xC640; &#xAC19;&#xC774; &#xD45C;&#xD604;&#xC774; &#xB420; &#xC218; &#xC788;&#xC2B5;&#xB2C8;&#xB2E4;.</p>
-<pre><code>void gemm_nn(int M, int N, int K, float ALPHA,
-        float *A, int lda,
-        float *B, int ldb,
-        float *C, int ldc)
+}</p>
+<p><code>backward</code></p>
+<h2 id="getmaxpoolimage">get_maxpool_image</h2>
+<p>image get_maxpool_image(maxpool_layer l)
 {
-    int i,j,k;
-    #pragma omp parallel for
-    for(i = 0; i &lt; M; ++i){
-        for(k = 0; k &lt; K; ++k){
-            register float A_PART = ALPHA*A[i*lda+k];
-            for(j = 0; j &lt; N; ++j){
-                C[i*ldc+j] += A_PART*B[k*ldb+j];
-            }
-        }
-    }
-}
-</code></pre><ul>
-<li><code>A</code> : &#xC804;&#xCE58;&#xD589;&#xB82C; &#xC0AC;&#xC6A9; &#xC548;&#xD568;</li>
-<li><code>B</code> : &#xC804;&#xCE58;&#xD589;&#xB82C; &#xC0AC;&#xC6A9; &#xC548;&#xD568;</li>
-</ul>
-<pre><code>void gemm_nt(int M, int N, int K, float ALPHA,
-        float *A, int lda,
-        float *B, int ldb,
-        float *C, int ldc)
+    int h = l.out_h;
+    int w = l.out_w;
+    int c = l.c;
+    return float_to_image(w,h,c,l.output);
+}</p>
+<h2 id="getmaxpooldelta">get_maxpool_delta</h2>
+<p>image get_maxpool_delta(maxpool_layer l)
 {
-    int i,j,k;
-    #pragma omp parallel for
-    for(i = 0; i &lt; M; ++i){
-        for(j = 0; j &lt; N; ++j){
-            register float sum = 0;
-            for(k = 0; k &lt; K; ++k){
-                sum += ALPHA*A[i*lda+k]*B[j*ldb + k];
-            }
-            C[i*ldc+j] += sum;
-        }
-    }
-}
-</code></pre><ul>
-<li><code>A</code> : &#xC804;&#xCE58;&#xD589;&#xB82C; &#xC0AC;&#xC6A9; &#xC548;&#xD568;</li>
-<li><code>B</code> : &#xC804;&#xCE58;&#xD589;&#xB82C; &#xC0AC;&#xC6A9;</li>
-</ul>
-<pre><code>void gemm_tn(int M, int N, int K, float ALPHA,
-        float *A, int lda,
-        float *B, int ldb,
-        float *C, int ldc)
+    int h = l.out_h;
+    int w = l.out_w;
+    int c = l.c;
+    return float_to_image(w,h,c,l.delta);
+}</p>
+<h2 id="resizemaxpoollayer">resize_maxpool_layer</h2>
+<p>void resize_maxpool_layer(maxpool_layer <em>l, int w, int h)
 {
-    int i,j,k;
-    #pragma omp parallel for
-    for(i = 0; i &lt; M; ++i){
-        for(k = 0; k &lt; K; ++k){
-            register float A_PART = ALPHA*A[k*lda+i];
-            for(j = 0; j &lt; N; ++j){
-                C[i*ldc+j] += A_PART*B[k*ldb+j];
-            }
-        }
-    }
-}
-</code></pre><ul>
-<li><code>A</code> : &#xC804;&#xCE58;&#xD589;&#xB82C; &#xC0AC;&#xC6A9;</li>
-<li><code>B</code> : &#xC804;&#xCE58;&#xD589;&#xB82C; &#xC0AC;&#xC6A9; &#xC548;&#xD568;</li>
-</ul>
-<pre><code>void gemm_tt(int M, int N, int K, float ALPHA,
-        float *A, int lda,
-        float *B, int ldb,
-        float *C, int ldc)
-{
-    int i,j,k;
-    #pragma omp parallel for
-    for(i = 0; i &lt; M; ++i){
-        for(j = 0; j &lt; N; ++j){
-            register float sum = 0;
-            for(k = 0; k &lt; K; ++k){
-                sum += ALPHA*A[i+k*lda]*B[k+j*ldb];
-            }
-            C[i*ldc+j] += sum;
-        }
-    }
-}
-</code></pre><ul>
-<li><code>A</code> : &#xC804;&#xCE58;&#xD589;&#xB82C; &#xC0AC;&#xC6A9;</li>
-<li><code>B</code> : &#xC804;&#xCE58;&#xD589;&#xB82C; &#xC0AC;&#xC6A9;</li>
-</ul>
+    l-&gt;h = h;
+    l-&gt;w = w;
+    l-&gt;inputs = h</em>w*l-&gt;c;</p>
+<pre><code>l-&gt;out_w = (w + l-&gt;pad - l-&gt;size)/l-&gt;stride + 1;
+l-&gt;out_h = (h + l-&gt;pad - l-&gt;size)/l-&gt;stride + 1;
+l-&gt;outputs = l-&gt;out_w * l-&gt;out_h * l-&gt;c;
+int output_size = l-&gt;outputs * l-&gt;batch;
+
+l-&gt;indexes = realloc(l-&gt;indexes, output_size * sizeof(int));
+l-&gt;output = realloc(l-&gt;output, output_size * sizeof(float));
+l-&gt;delta = realloc(l-&gt;delta, output_size * sizeof(float));
+
+#ifdef GPU
+cuda_free((float *)l-&gt;indexes_gpu);
+cuda_free(l-&gt;output_gpu);
+cuda_free(l-&gt;delta_gpu);
+l-&gt;indexes_gpu = cuda_make_int_array(0, output_size);
+l-&gt;output_gpu  = cuda_make_array(l-&gt;output, output_size);
+l-&gt;delta_gpu   = cuda_make_array(l-&gt;delta,  output_size);
+#endif
+</code></pre><p>}</p>
 
                                 
                                 </section>
@@ -2126,7 +2098,7 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"gemm.c","level":"5.19","depth":1,"next":{"title":"gru_layer.c","level":"5.20","depth":1,"ref":"","articles":[]},"previous":{"title":"dropout_layer.c","level":"5.18","depth":1,"ref":"","articles":[]},"dir":"ltr"},"config":{"plugins":["advanced-emoji","theme-gestalt","-theme-default","styles-sass-fix","theme-api","mathjax"],"root":"./","styles":{"website":"website-1593690510504.css"},"pluginsConfig":{"styles-sass-fix":{},"theme-gestalt":{"showLevel":false,"styles":{"website":"styles/website.css"},"logo":"/darknet_book/assets/darknet.png","baseUrl":null,"excludeDefaultStyles":true,"doNotHideChildrenChapters":false},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"theme-api":{"languages":[],"split":true,"theme":"light"},"mathjax":{"forceSVG":false,"version":"2.6-latest"},"advanced-emoji":{"embedEmojis":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]}},"theme":"default","author":"JJM","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"DarkNet Book","output.name":"site","gitbook":"*"},"file":{"path":"part3_src/gemm.md","mtime":"2020-07-01T04:19:22.040Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-07-02T11:48:22.815Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"maxpool_layer.c","level":"5.31","depth":1,"next":{"title":"network.c","level":"5.32","depth":1,"ref":"","articles":[]},"previous":{"title":"matrix.c","level":"5.30","depth":1,"ref":"","articles":[]},"dir":"ltr"},"config":{"plugins":["advanced-emoji","theme-gestalt","-theme-default","styles-sass-fix","theme-api","mathjax"],"root":"./","styles":{"website":"website-1593690510504.css"},"pluginsConfig":{"styles-sass-fix":{},"theme-gestalt":{"showLevel":false,"styles":{"website":"styles/website.css"},"logo":"/darknet_book/assets/darknet.png","baseUrl":null,"excludeDefaultStyles":true,"doNotHideChildrenChapters":false},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"theme-api":{"languages":[],"split":true,"theme":"light"},"mathjax":{"forceSVG":false,"version":"2.6-latest"},"advanced-emoji":{"embedEmojis":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]}},"theme":"default","author":"JJM","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"DarkNet Book","output.name":"site","gitbook":"*"},"file":{"path":"part3_src/maxpool.md","mtime":"2020-07-02T11:41:37.719Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-07-02T11:48:22.815Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>

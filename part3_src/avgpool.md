@@ -3,23 +3,6 @@
 
 Feature Map의 평균 값을 계산해 전파시키는 Layer 입니다.
 
-
-
-![avgpool](/figure/avgpool.PNG)
-
-
-
-Forward는 위와 같이 계산됩니다.
-
-
-
-
-![avgpool_grad](/figure/avgpool_grad.PNG)
-
-
-
-Backward는 위와 같이 계산됩니다.
-
 # avgpool_layer.c
 
 ```c
@@ -81,6 +64,12 @@ void forward_avgpool_layer(const avgpool_layer l, network net)
 
 `forward`
 
+
+
+![avgpool](/figure/avgpool.PNG)
+
+
+
 - Feature Map의 평균값을 전파 합니다.
 
 ## backward_avgpool_layer
@@ -103,6 +92,12 @@ void backward_avgpool_layer(const avgpool_layer l, network net)
 ```
 
 `backward`
+
+
+
+![avgpool_grad](/figure/avgpool_grad.PNG)
+
+
 
 - 국부적 기울기는 $$\frac{1}{h \times w}$$가 되기 때문에 역전파된 기울기 값에 $$\frac{1}{h \times w}$$를 곱해서 역전파합니다.
 - 하나의 Feature Map의 모든 기울기 값은 동일합니다.

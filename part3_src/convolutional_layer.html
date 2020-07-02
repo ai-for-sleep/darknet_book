@@ -42,7 +42,7 @@
 
     
         
-        <link rel="stylesheet" href="../website-1593612033721.css">
+        <link rel="stylesheet" href="../website-1593690510504.css">
         
     
 
@@ -61,6 +61,8 @@
     
 
     
+    
+    <link rel="prev" href="connected_layer.html" />
     
 
     </head>
@@ -554,15 +556,15 @@
         <li class="chapter 
               "
             data-level="5.9" 
-            >
+            data-path="connected_layer.html">
 
             
-                <span>
+                <a href="connected_layer.html">
             
                     
                     connected_layer.c
             
-                </span>
+                </a>
             
 
             
@@ -950,15 +952,15 @@
         <li class="chapter 
               "
             data-level="5.31" 
-            >
+            data-path="maxpool.html">
 
             
-                <span>
+                <a href="maxpool.html">
             
                     
                     maxpool_layer.c
             
-                </span>
+                </a>
             
 
             
@@ -1947,7 +1949,7 @@
 <p>Convolutional Layer&#xB294; Feature Maps&#xACFC; Filters&#xC758; Convolution &#xC5F0;&#xC0B0;&#xC744; &#xD1B5;&#xD574; &#xADF8; &#xB2E4;&#xC74C; Feature Maps&#xC744; &#xB9CC;&#xB4E4;&#xC5B4; &#xB0B4;&#xB294; &#xC791;&#xC5C5;&#xC744; &#xBC18;&#xBCF5;&#xD569;&#xB2C8;&#xB2E4;.
 &#xC5EC;&#xAE30;&#xC11C; filters&#xAC00; &#xD559;&#xC2B5; &#xD30C;&#xB77C;&#xBBF8;&#xD130; &#xC785;&#xB2C8;&#xB2E4;.</p>
 <p><code>&#xC785;&#xB825; &#xC774;&#xBBF8;&#xC9C0;</code> -&gt; <code>Filters(kernel)</code> -&gt; <code>Feature Maps(Channels)</code> -&gt; <code>Filters(kernel)</code> -&gt; <code>Feature Maps(Channels)</code> -&gt; <code>...</code></p>
-<p>Convolution Layer&#xB294; &#xC124;&#xC815; &#xAC00;&#xB2A5;&#xD55C; &#xD30C;&#xB77C;&#xBBF8;&#xD130;&#xAC00; &#xC788;&#xC2B5;&#xB2C8;&#xB2E4;.</p>
+<p>Convolutional Layer&#xB294; &#xC124;&#xC815; &#xAC00;&#xB2A5;&#xD55C; &#xD30C;&#xB77C;&#xBBF8;&#xD130;&#xAC00; &#xC788;&#xC2B5;&#xB2C8;&#xB2E4;.</p>
 <ul>
 <li><p><code>stride</code> : filter&#xAC00; &#xC6C0;&#xC9C1;&#xC774;&#xB294; &#xAC04;&#xACA9;&#xC785;&#xB2C8;&#xB2E4;.</p>
 </li>
@@ -1960,9 +1962,13 @@
 <li><p><script type="math/tex; ">H_2 = \frac{H_1 - k + 2 \times padding}{stride_h} + 1</script></p>
 </li>
 </ul>
-<p>&#xCEE8;&#xBCFC;&#xB8E8;&#xC158; &#xC5ED;&#xC804;&#xD30C;&#xB294; &#xC27D;&#xAC8C; &#xD45C;&#xD604;&#xD574;&#xBCF4;&#xBA74; &#xC544;&#xB798; &#xADF8;&#xB9BC;&#xACFC; &#xAC19;&#xC2B5;&#xB2C8;&#xB2E4;.</p>
+<p>Convolutional Layer &#xC5ED;&#xC804;&#xD30C;&#xB294; &#xC27D;&#xAC8C; &#xD45C;&#xD604;&#xD558;&#xB294; &#xACBD;&#xC6B0; &#xC544;&#xB798; &#xADF8;&#xB9BC;&#xACFC; &#xAC19;&#xC2B5;&#xB2C8;&#xB2E4;.</p>
 <p><img src="../figure/conv2.PNG" alt="conv2"></p>
+<p>output&#xC744; &#xACC4;&#xC0B0;&#xD558;&#xAE30; &#xC704;&#xD574;&#xC11C; &#xAC01;&#xC790;&#xC758; id&#xB97C; &#xAC00;&#xC9C0;&#xACE0; &#xC788;&#xB294; weight&#xAC00; &#xC0AC;&#xC6A9;&#xB41C; &#xACF3;&#xC744; &#xBCF4;&#xC2DC;&#xBA74; &#xC774;&#xD574;&#xD558;&#xAE30; &#xC27D;&#xC2B5;&#xB2C8;&#xB2E4;.
+&#xC608;&#xB97C; &#xB4E4;&#xC5B4;&#xC11C; <script type="math/tex; ">w_11$은 </script>$h_11, h_12, h_21, h_22$$&#xB97C; &#xC5F0;&#xC0B0;&#xD558;&#xB294;&#xB370; &#xAC01;&#xAC01; &#xC0AC;&#xC6A9;&#xB418;&#xC5C8;&#xAE30; &#xB54C;&#xBB38;&#xC5D0; &#xC774;&#xB4E4;&#xC758; &#xBBF8;&#xBD84; &#xAC12;&#xC758; &#xD569;&#xC73C;&#xB85C; &#xCD5C;&#xC885;&#xC801;&#xC73C;&#xB85C; &#xC5C5;&#xB370;&#xC774;&#xD2B8; &#xD560; &#xAE30;&#xC6B8;&#xAE30;&#xB97C; &#xB9CC;&#xB4ED;&#xB2C8;&#xB2E4;.
+&#xC5ED;&#xC804;&#xD30C;&#xB294; Layer &#xB530;&#xB85C; &#xB530;&#xB85C; &#xAC04;&#xB2E8;&#xD558;&#xAC8C; &#xC5B4;&#xB5BB;&#xAC8C; &#xB3D9;&#xC791;&#xD558;&#xB294;&#xC9C0;&#xB97C; &#xC804;&#xBD80; &#xC0B4;&#xD3B4;&#xBCF4;&#xACE0; &#xB9C8;&#xC9C0;&#xB9C9;&#xC5D0; &#xBCF4;&#xBA74; &#xB354; &#xC26C;&#xC6B4;&#xAC70; &#xAC19;&#xC2B5;&#xB2C8;&#xB2E4;.</p>
 <hr>
+<h1 id="convolutionallayerc">convolutional_layer.c</h1>
 <h2 id="forwardconvolutionallayer">forward_convolutional_layer</h2>
 <pre><code>void forward_convolutional_layer(convolutional_layer l, network net)
 {
@@ -2007,7 +2013,7 @@
 }
 </code></pre><p><code>forward</code></p>
 <ul>
-<li>convolution</li>
+<li>convolution &#xC5F0;&#xC0B0;</li>
 <li>batch normalization(no bias) or bias</li>
 <li>activation function</li>
 </ul>
@@ -2066,7 +2072,7 @@
 <ul>
 <li>activation function</li>
 <li>batch normalization(no bias) or bias</li>
-<li>convolution</li>
+<li>convolution &#xC5F0;&#xC0B0;</li>
 </ul>
 
                                 
@@ -2095,6 +2101,10 @@
 
             
                 
+                <a href="connected_layer.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page: connected_layer.c">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
                 
             
         
@@ -2103,7 +2113,7 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"convolutional_layer.c","level":"5.10","depth":1,"next":{"title":"cost_layer.c","level":"5.11","depth":1,"ref":"","articles":[]},"previous":{"title":"connected_layer.c","level":"5.9","depth":1,"ref":"","articles":[]},"dir":"ltr"},"config":{"plugins":["advanced-emoji","theme-gestalt","-theme-default","styles-sass-fix","theme-api","mathjax"],"root":"./","styles":{"website":"website-1593612033721.css"},"pluginsConfig":{"styles-sass-fix":{},"theme-gestalt":{"showLevel":false,"styles":{"website":"styles/website.css"},"logo":"/darknet_book/assets/darknet.png","baseUrl":null,"excludeDefaultStyles":true,"doNotHideChildrenChapters":false},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"theme-api":{"languages":[],"split":true,"theme":"light"},"mathjax":{"forceSVG":false,"version":"2.6-latest"},"advanced-emoji":{"embedEmojis":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]}},"theme":"default","author":"JJM","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"DarkNet Book","output.name":"site","gitbook":"*"},"file":{"path":"part3_src/convolutional_layer.md","mtime":"2020-07-01T11:23:21.990Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-07-01T14:00:24.407Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"convolutional_layer.c","level":"5.10","depth":1,"next":{"title":"cost_layer.c","level":"5.11","depth":1,"ref":"","articles":[]},"previous":{"title":"connected_layer.c","level":"5.9","depth":1,"path":"part3_src/connected_layer.md","ref":"part3_src/connected_layer.md","articles":[]},"dir":"ltr"},"config":{"plugins":["advanced-emoji","theme-gestalt","-theme-default","styles-sass-fix","theme-api","mathjax"],"root":"./","styles":{"website":"website-1593690510504.css"},"pluginsConfig":{"styles-sass-fix":{},"theme-gestalt":{"showLevel":false,"styles":{"website":"styles/website.css"},"logo":"/darknet_book/assets/darknet.png","baseUrl":null,"excludeDefaultStyles":true,"doNotHideChildrenChapters":false},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"theme-api":{"languages":[],"split":true,"theme":"light"},"mathjax":{"forceSVG":false,"version":"2.6-latest"},"advanced-emoji":{"embedEmojis":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]}},"theme":"default","author":"JJM","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"DarkNet Book","output.name":"site","gitbook":"*"},"file":{"path":"part3_src/convolutional_layer.md","mtime":"2020-07-02T08:51:35.147Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-07-02T11:48:22.815Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>

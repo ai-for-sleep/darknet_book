@@ -21,7 +21,7 @@ Convolutional Layer는 Feature Maps과 Filters의 Convolution 연산을 통해 �
 `입력 이미지` -> `Filters(kernel)` -> `Feature Maps(Channels)` -> `Filters(kernel)` -> `Feature Maps(Channels)` -> `...`
 
 
-Convolution Layer는 설정 가능한 파라미터가 있습니다.
+Convolutional Layer는 설정 가능한 파라미터가 있습니다.
 
 - `stride` : filter가 움직이는 간격입니다.
 
@@ -33,7 +33,7 @@ Convolution Layer는 설정 가능한 파라미터가 있습니다.
 
 - $$H_2 = \frac{H_1 - k + 2 \times padding}{stride_h} + 1$$
 
-컨볼루션 역전파는 쉽게 표현해보면 아래 그림과 같습니다.
+Convolutional Layer 역전파는 쉽게 표현하는 경우 아래 그림과 같습니다.
 
 
 
@@ -41,7 +41,13 @@ Convolution Layer는 설정 가능한 파라미터가 있습니다.
 
 
 
+output을 계산하기 위해서 각자의 id를 가지고 있는 weight가 사용된 곳을 보시면 이해하기 쉽습니다.
+예를 들어서 $$w_11$은 $$$h_11, h_12, h_21, h_22$$를 연산하는데 각각 사용되었기 때문에 이들의 미분 값의 합으로 최종적으로 업데이트 할 기울기를 만듭니다.
+역전파는 Layer 따로 따로 간단하게 어떻게 동작하는지를 전부 살펴보고 마지막에 보면 더 쉬운거 같습니다.
+
 ---
+
+# convolutional_layer.c
 
 ## forward_convolutional_layer
 
@@ -91,7 +97,7 @@ void forward_convolutional_layer(convolutional_layer l, network net)
 
 `forward`
 
-- convolution
+- convolution 연산
 - batch normalization(no bias) or bias
 - activation function
 
@@ -155,4 +161,4 @@ void backward_convolutional_layer(convolutional_layer l, network net)
 
 - activation function
 - batch normalization(no bias) or bias
-- convolution
+- convolution 연산

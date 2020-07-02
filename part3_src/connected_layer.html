@@ -4,7 +4,7 @@
     <head>
         <meta charset="UTF-8">
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
-        <title>gemm.c · DarkNet Book</title>
+        <title>connected_layer.c · DarkNet Book</title>
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="description" content="">
         <meta name="generator" content="GitBook 3.2.3">
@@ -60,6 +60,8 @@
     
     
 
+    
+    <link rel="next" href="convolutional_layer.html" />
     
     
 
@@ -552,7 +554,7 @@
     
         
         <li class="chapter 
-              "
+            active  selected  "
             data-level="5.9" 
             data-path="connected_layer.html">
 
@@ -732,7 +734,7 @@
     
         
         <li class="chapter 
-            active  selected  "
+              "
             data-level="5.19" 
             data-path="gemm.html">
 
@@ -1920,7 +1922,7 @@
     <!-- Title -->
     <h1>
         <i class="fa fa-circle-o-notch fa-spin"></i>
-        <a href=".." >gemm.c</a>
+        <a href=".." >connected_layer.c</a>
     </h1>
 </div>
 
@@ -1935,161 +1937,79 @@
     
                                 <section class="normal markdown-section">
                                 
-                                <h1 id="gemm-&#xC774;&#xB780;">GEMM &#xC774;&#xB780;?</h1>
-<p>&#xCC38;&#xACE0; &#xC790;&#xB8CC; : <a href="https://petewarden.com/2015/04/20/why-gemm-is-at-the-heart-of-deep-learning/" target="_blank">https://petewarden.com/2015/04/20/why-gemm-is-at-the-heart-of-deep-learning/</a></p>
+                                <h1 id="fully-connected-layer-&#xB780;">Fully Connected Layer &#xB780;?</h1>
+<p>&#xC774;&#xC804; Layer&#xC758; &#xBAA8;&#xB4E0; &#xB178;&#xB4DC;&#xAC00; &#xB2E4;&#xC74C; Layer&#xC758; &#xBAA8;&#xB4E0; &#xB178;&#xB4DC;&#xC5D0; &#xAC01;&#xAC01; &#xD558;&#xB098;&#xC529; &#xC5F0;&#xACB0;&#xB418;&#xC5B4;&#xC788;&#xB294; Layer &#xC785;&#xB2C8;&#xB2E4;.</p>
 <ul>
-<li><code>General Matrix to Matrix Multiplication</code></li>
-<li>1979&#xB144;&#xC5D0; &#xB9CC;&#xB4E4;&#xC5B4;&#xC9C4; BLAS &#xB77C;&#xC774;&#xBE0C;&#xB7EC;&#xB9AC;&#xC758; &#xC77C;&#xBD80; &#xC785;&#xB2C8;&#xB2E4;.</li>
-<li>&#xB450;&#xAC1C;&#xC758; &#xC785;&#xB825; &#xD589;&#xB82C;&#xC744; &#xACF1;&#xD574;&#xC11C; &#xCD9C;&#xB825;&#xC744; &#xC5BB;&#xB294; &#xBC29;&#xBC95; &#xC785;&#xB2C8;&#xB2E4;.</li>
+<li>&#xAC00;&#xC7A5; &#xAE30;&#xBCF8;&#xC801;&#xC778; Layer</li>
+<li>1&#xCC28;&#xC6D0; &#xBC30;&#xC5F4;&#xB85C;&#xB9CC; &#xC774;&#xB8E8;&#xC5B4;&#xC838; &#xC788;&#xC2B5;&#xB2C8;&#xB2E4;.</li>
 </ul>
-<p>&#xB525;&#xB7EC;&#xB2DD;&#xC5D0;&#xC11C; &#xB300;&#xBD80;&#xBD84;&#xC758; &#xC5F0;&#xC0B0;&#xC740; <code>output = input * weight + bias</code>&#xB85C; &#xD45C;&#xD604;&#xC774; &#xB429;&#xB2C8;&#xB2E4;. &#xC5EC;&#xAE30;&#xC11C; <code>input</code>, <code>output</code>, <code>weight</code>&#xB97C; &#xD589;&#xB82C;&#xB85C; &#xD45C;&#xD604;&#xD574;&#xC11C; GEMM&#xC744; &#xC0AC;&#xC6A9;&#xD574; &#xC5F0;&#xC0B0;&#xD560; &#xC218; &#xC788;&#xC2B5;&#xB2C8;&#xB2E4;.</p>
-<p><img src="../figure/gemm1.PNG" alt="gemm1"></p>
-<h2 id="fully-connected-layer">Fully Connected Layer</h2>
-<p><img src="../figure/gemm2.PNG" alt="gemm2"></p>
-<p><code>fully connected layer</code>&#xB294; &#xC704;&#xC640; &#xAC19;&#xC774; &#xD45C;&#xD604;&#xD560; &#xC218; &#xC788;&#xC2B5;&#xB2C8;&#xB2E4;.</p>
-<h2 id="convolutional-layer">Convolutional Layer</h2>
-<p><img src="../figure/gemm3.PNG" alt="gemm3"></p>
-<ul>
-<li><code>im2col</code> : 3&#xCC28;&#xC6D0; &#xC774;&#xBBF8;&#xC9C0; &#xBC30;&#xC5F4;&#xC744; 2&#xCC28;&#xC6D0; &#xBC30;&#xC5F4;&#xB85C; &#xBCC0;&#xD658;&#xD569;&#xB2C8;&#xB2E4;.</li>
-</ul>
-<p><code>convolutional layer</code>&#xB294; &#xC704;&#xC640; &#xAC19;&#xC774; &#xD45C;&#xD604;&#xD560; &#xC218; &#xC788;&#xC2B5;&#xB2C8;&#xB2E4;.
-&#xC704; &#xADF8;&#xB9BC;&#xC758; &#xACBD;&#xC6B0;&#xB294; <code>stride</code>&#xAC00; <code>kernel size</code>&#xC640; &#xAC19;&#xC740; &#xACBD;&#xC6B0;&#xB97C; &#xC758;&#xBBF8;&#xD569;&#xB2C8;&#xB2E4;.</p>
+<p>&#xC774;&#xD574;&#xB97C; &#xB3D5;&#xAE30;&#xC704;&#xD574; &#xADF8;&#xB9BC;&#xC73C;&#xB85C; &#xC0B4;&#xD3B4;&#xBCF4;&#xACA0;&#xC2B5;&#xB2C8;&#xB2E4;.</p>
+<p><img src="../figure/fc1.PNG" alt="fc1"></p>
+<p>&#xD06C;&#xAC8C; &#xBCF5;&#xC7A1;&#xD558;&#xC9C0; &#xC54A;&#xACE0; &#xB2E8;&#xC21C;&#xD55C; &#xC5F0;&#xC0B0;&#xC73C;&#xB85C;&#xB9CC; &#xC774;&#xB8E8;&#xC5B4;&#xC838; &#xC788;&#xC2B5;&#xB2C8;&#xB2E4;.</p>
+<p>Fully Connected Layer &#xC5ED;&#xC804;&#xD30C;&#xB294; &#xC27D;&#xAC8C; &#xD45C;&#xD604;&#xD558;&#xB294; &#xACBD;&#xC6B0; &#xC544;&#xB798; &#xADF8;&#xB9BC;&#xACFC; &#xAC19;&#xC2B5;&#xB2C8;&#xB2E4;.</p>
+<p><img src="../figure/fc2.PNG" alt="fc2"></p>
+<p>output&#xC744; &#xACC4;&#xC0B0;&#xD558;&#xAE30; &#xC704;&#xD574;&#xC11C; &#xAC01;&#xC790;&#xC758; id&#xB97C; &#xAC00;&#xC9C0;&#xACE0; &#xC788;&#xB294; weight&#xAC00; &#xC0AC;&#xC6A9;&#xB41C; &#xACF3;&#xC744; &#xBCF4;&#xC2DC;&#xBA74; &#xC774;&#xD574;&#xD558;&#xAE30; &#xC27D;&#xC2B5;&#xB2C8;&#xB2E4;.
+&#xC608;&#xB97C; &#xB4E4;&#xC5B4;&#xC11C; <script type="math/tex; ">w_11$은 </script>$h_11$$&#xB97C; &#xC5F0;&#xC0B0;&#xD558;&#xB294;&#xB370;&#xB9CC; &#xC0AC;&#xC6A9;&#xB418;&#xC5C8;&#xAE30; &#xB54C;&#xBB38;&#xC5D0; &#xD574;&#xB2F9; &#xAC12;&#xB9CC; &#xC0AC;&#xC6A9;&#xD569;&#xB2C8;&#xB2E4;.</p>
 <hr>
-<h2 id="gemm">gemm</h2>
-<p>gemm(0,0,m,n,k,1,a,k,b,n,1,c,n);</p>
-<pre><code class="lang-c"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">gemm</span><span class="hljs-params">(<span class="hljs-keyword">int</span> TA, <span class="hljs-keyword">int</span> TB, <span class="hljs-keyword">int</span> M, <span class="hljs-keyword">int</span> N, <span class="hljs-keyword">int</span> K, <span class="hljs-keyword">float</span> ALPHA,
-        <span class="hljs-keyword">float</span> *A, <span class="hljs-keyword">int</span> lda,
-        <span class="hljs-keyword">float</span> *B, <span class="hljs-keyword">int</span> ldb,
-        <span class="hljs-keyword">float</span> BETA,
-        <span class="hljs-keyword">float</span> *C, <span class="hljs-keyword">int</span> ldc)</span>
-</span>{
-    gemm_cpu(TA,  TB,  M, N, K, ALPHA, A, lda, B, ldb, BETA, C, ldc);
+<h1 id="connectedlayerc">connected_layer.c</h1>
+<h2 id="forwardconnectedlayer">forward_connected_layer</h2>
+<pre><code>void forward_connected_layer(layer l, network net)
+{
+    fill_cpu(l.outputs*l.batch, 0, l.output, 1);
+    int m = l.batch;
+    int k = l.inputs;
+    int n = l.outputs;
+    float *a = net.input;
+    float *b = l.weights;
+    float *c = l.output;
+    gemm(0,1,m,n,k,1,a,k,b,k,1,c,n);
+    if(l.batch_normalize){
+        forward_batchnorm_layer(l, net);
+    } else {
+        add_bias(l.output, l.biases, l.batch, l.outputs, 1);
+    }
+    activate_array(l.output, l.outputs*l.batch, l.activation);
 }
-</code></pre>
+</code></pre><p><code>forward</code></p>
 <ul>
-<li><code>TA</code>    : A &#xD589;&#xB82C;&#xC758; &#xC804;&#xCE58; (0 : &#xC0AC;&#xC6A9;&#xC548;&#xD568; | 1 : &#xC0AC;&#xC6A9;)</li>
-<li><code>TB</code>    : B &#xD589;&#xB82C;&#xC758; &#xC804;&#xCE58; (0 : &#xC0AC;&#xC6A9;&#xC548;&#xD568; | 1 : &#xC0AC;&#xC6A9;)</li>
-<li><code>M</code>     : filter &#xAC1C;&#xC218;</li>
-<li><code>N</code>     : output feature map &#xD06C;&#xAE30;</li>
-<li><code>K</code>     : filter &#xD06C;&#xAE30;</li>
-<li><code>ALPHA</code> : scale factor</li>
-<li><code>A</code>     : filter</li>
-<li><code>lda</code>   : A&#xB97C; &#xC704;&#xD55C; &#xD3EC;&#xC778;&#xD130;</li>
-<li><code>B</code>     : input feature maps</li>
-<li><code>ldb</code>   : B&#xB97C; &#xC704;&#xD55C; &#xD3EC;&#xC778;&#xD130;</li>
-<li><code>BETA</code>  : initial value</li>
-<li><code>C</code>     : output feature maps</li>
-<li><code>ldc</code>   : C&#xB97C; &#xC704;&#xD55C; &#xD3EC;&#xC778;&#xD130;</li>
+<li>fully connected layer &#xC5F0;&#xC0B0;</li>
+<li>batch normalization(no bias) or bias</li>
+<li>activation function</li>
 </ul>
-<pre><code>void gemm_cpu(int TA, int TB, int M, int N, int K, float ALPHA,
-        float *A, int lda,
-        float *B, int ldb,
-        float BETA,
-        float *C, int ldc)
+<h2 id="backwardconnectedlayer">backward_connected_layer</h2>
+<pre><code>void backward_connected_layer(layer l, network net)
 {
-    //printf(&quot;cpu: %d %d %d %d %d %f %d %d %f %d\n&quot;,TA, TB, M, N, K, ALPHA, lda, ldb, BETA, ldc);
-    int i, j;
-    for(i = 0; i &lt; M; ++i){
-        for(j = 0; j &lt; N; ++j){
-            C[i*ldc + j] *= BETA;
-        }
+    gradient_array(l.output, l.outputs*l.batch, l.activation, l.delta);
+
+    if(l.batch_normalize){
+        backward_batchnorm_layer(l, net);
+    } else {
+        backward_bias(l.bias_updates, l.delta, l.batch, l.outputs, 1);
     }
-    if(!TA &amp;&amp; !TB)
-        gemm_nn(M, N, K, ALPHA, A,lda, B, ldb, C, ldc);
-    else if(TA &amp;&amp; !TB)
-        gemm_tn(M, N, K, ALPHA, A,lda, B, ldb, C, ldc);
-    else if(!TA &amp;&amp; TB)
-        gemm_nt(M, N, K, ALPHA, A,lda, B, ldb, C, ldc);
-    else
-        gemm_tt(M, N, K, ALPHA, A,lda, B, ldb, C, ldc);
+
+    int m = l.outputs;
+    int k = l.batch;
+    int n = l.inputs;
+    float *a = l.delta;
+    float *b = net.input;
+    float *c = l.weight_updates;
+    gemm(1,0,m,n,k,1,a,m,b,n,1,c,n);
+
+    m = l.batch;
+    k = l.outputs;
+    n = l.inputs;
+
+    a = l.delta;
+    b = l.weights;
+    c = net.delta;
+
+    if(c) gemm(0,0,m,n,k,1,a,k,b,n,1,c,n);
 }
-</code></pre><ul>
-<li><code>BETA</code>&#xB85C; <code>C(output feature maps)</code>&#xB97C; &#xCD08;&#xAE30;&#xD654; &#xD569;&#xB2C8;&#xB2E4;.</li>
-<li>GEMM &#xC5F0;&#xC0B0;&#xC744; &#xC9C4;&#xD589;&#xD569;&#xB2C8;&#xB2E4;.</li>
-</ul>
-<p><img src="../figure/gemm4.PNG" alt="gemm4"></p>
-<p>&#xCD5C;&#xC885;&#xC801;&#xC73C;&#xB85C; GEMM &#xC5F0;&#xC0B0;&#xC740; &#xC704;&#xC640; &#xAC19;&#xC774; &#xD45C;&#xD604;&#xC774; &#xB420; &#xC218; &#xC788;&#xC2B5;&#xB2C8;&#xB2E4;.</p>
-<pre><code>void gemm_nn(int M, int N, int K, float ALPHA,
-        float *A, int lda,
-        float *B, int ldb,
-        float *C, int ldc)
-{
-    int i,j,k;
-    #pragma omp parallel for
-    for(i = 0; i &lt; M; ++i){
-        for(k = 0; k &lt; K; ++k){
-            register float A_PART = ALPHA*A[i*lda+k];
-            for(j = 0; j &lt; N; ++j){
-                C[i*ldc+j] += A_PART*B[k*ldb+j];
-            }
-        }
-    }
-}
-</code></pre><ul>
-<li><code>A</code> : &#xC804;&#xCE58;&#xD589;&#xB82C; &#xC0AC;&#xC6A9; &#xC548;&#xD568;</li>
-<li><code>B</code> : &#xC804;&#xCE58;&#xD589;&#xB82C; &#xC0AC;&#xC6A9; &#xC548;&#xD568;</li>
-</ul>
-<pre><code>void gemm_nt(int M, int N, int K, float ALPHA,
-        float *A, int lda,
-        float *B, int ldb,
-        float *C, int ldc)
-{
-    int i,j,k;
-    #pragma omp parallel for
-    for(i = 0; i &lt; M; ++i){
-        for(j = 0; j &lt; N; ++j){
-            register float sum = 0;
-            for(k = 0; k &lt; K; ++k){
-                sum += ALPHA*A[i*lda+k]*B[j*ldb + k];
-            }
-            C[i*ldc+j] += sum;
-        }
-    }
-}
-</code></pre><ul>
-<li><code>A</code> : &#xC804;&#xCE58;&#xD589;&#xB82C; &#xC0AC;&#xC6A9; &#xC548;&#xD568;</li>
-<li><code>B</code> : &#xC804;&#xCE58;&#xD589;&#xB82C; &#xC0AC;&#xC6A9;</li>
-</ul>
-<pre><code>void gemm_tn(int M, int N, int K, float ALPHA,
-        float *A, int lda,
-        float *B, int ldb,
-        float *C, int ldc)
-{
-    int i,j,k;
-    #pragma omp parallel for
-    for(i = 0; i &lt; M; ++i){
-        for(k = 0; k &lt; K; ++k){
-            register float A_PART = ALPHA*A[k*lda+i];
-            for(j = 0; j &lt; N; ++j){
-                C[i*ldc+j] += A_PART*B[k*ldb+j];
-            }
-        }
-    }
-}
-</code></pre><ul>
-<li><code>A</code> : &#xC804;&#xCE58;&#xD589;&#xB82C; &#xC0AC;&#xC6A9;</li>
-<li><code>B</code> : &#xC804;&#xCE58;&#xD589;&#xB82C; &#xC0AC;&#xC6A9; &#xC548;&#xD568;</li>
-</ul>
-<pre><code>void gemm_tt(int M, int N, int K, float ALPHA,
-        float *A, int lda,
-        float *B, int ldb,
-        float *C, int ldc)
-{
-    int i,j,k;
-    #pragma omp parallel for
-    for(i = 0; i &lt; M; ++i){
-        for(j = 0; j &lt; N; ++j){
-            register float sum = 0;
-            for(k = 0; k &lt; K; ++k){
-                sum += ALPHA*A[i+k*lda]*B[k+j*ldb];
-            }
-            C[i*ldc+j] += sum;
-        }
-    }
-}
-</code></pre><ul>
-<li><code>A</code> : &#xC804;&#xCE58;&#xD589;&#xB82C; &#xC0AC;&#xC6A9;</li>
-<li><code>B</code> : &#xC804;&#xCE58;&#xD589;&#xB82C; &#xC0AC;&#xC6A9;</li>
+</code></pre><p><code>backward</code></p>
+<ul>
+<li>activation function</li>
+<li>batch normalization(no bias) or bias</li>
+<li>fully connected layer &#xC5F0;&#xC0B0;</li>
 </ul>
 
                                 
@@ -2119,6 +2039,10 @@
             
                 
                 
+                <a href="convolutional_layer.html" class="navigation navigation-next navigation-unique" aria-label="Next page: convolutional_layer.c">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
             
         
     </div>
@@ -2126,7 +2050,7 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"gemm.c","level":"5.19","depth":1,"next":{"title":"gru_layer.c","level":"5.20","depth":1,"ref":"","articles":[]},"previous":{"title":"dropout_layer.c","level":"5.18","depth":1,"ref":"","articles":[]},"dir":"ltr"},"config":{"plugins":["advanced-emoji","theme-gestalt","-theme-default","styles-sass-fix","theme-api","mathjax"],"root":"./","styles":{"website":"website-1593690510504.css"},"pluginsConfig":{"styles-sass-fix":{},"theme-gestalt":{"showLevel":false,"styles":{"website":"styles/website.css"},"logo":"/darknet_book/assets/darknet.png","baseUrl":null,"excludeDefaultStyles":true,"doNotHideChildrenChapters":false},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"theme-api":{"languages":[],"split":true,"theme":"light"},"mathjax":{"forceSVG":false,"version":"2.6-latest"},"advanced-emoji":{"embedEmojis":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]}},"theme":"default","author":"JJM","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"DarkNet Book","output.name":"site","gitbook":"*"},"file":{"path":"part3_src/gemm.md","mtime":"2020-07-01T04:19:22.040Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-07-02T11:48:22.815Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"connected_layer.c","level":"5.9","depth":1,"next":{"title":"convolutional_layer.c","level":"5.10","depth":1,"path":"part3_src/convolutional_layer.md","ref":"part3_src/convolutional_layer.md","articles":[]},"previous":{"title":"compare.c","level":"5.8","depth":1,"ref":"","articles":[]},"dir":"ltr"},"config":{"plugins":["advanced-emoji","theme-gestalt","-theme-default","styles-sass-fix","theme-api","mathjax"],"root":"./","styles":{"website":"website-1593690510504.css"},"pluginsConfig":{"styles-sass-fix":{},"theme-gestalt":{"showLevel":false,"styles":{"website":"styles/website.css"},"logo":"/darknet_book/assets/darknet.png","baseUrl":null,"excludeDefaultStyles":true,"doNotHideChildrenChapters":false},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"theme-api":{"languages":[],"split":true,"theme":"light"},"mathjax":{"forceSVG":false,"version":"2.6-latest"},"advanced-emoji":{"embedEmojis":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]}},"theme":"default","author":"JJM","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"DarkNet Book","output.name":"site","gitbook":"*"},"file":{"path":"part3_src/connected_layer.md","mtime":"2020-07-02T08:58:05.336Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-07-02T11:48:22.815Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>
