@@ -79,7 +79,7 @@ void forward_maxpool_layer(const maxpool_layer l, network net)
 
 
 
-![avgpool](/figure/avgpool.PNG)
+![maxpool](/figure/maxpool.PNG)
 
 
 - kernel size : 2
@@ -101,6 +101,14 @@ void backward_maxpool_layer(const maxpool_layer l, network net)
 }
 
 `backward`
+
+
+
+![maxpool_grad](/figure/maxpool_grad.PNG)
+
+
+
+- 순전파에 사용 된 최댓값의 위치를 기억하여 해당 위치에만 역전파 연산 값을 보냅니다.
 
 ## get_maxpool_image
 

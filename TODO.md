@@ -1,1 +1,1 @@
-fix backpropagation(fc, conv, avgpool, maxpool)
+http://solarisailab.com/archives/2112

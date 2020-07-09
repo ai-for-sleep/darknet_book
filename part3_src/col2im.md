@@ -45,3 +45,11 @@ void col2im_cpu(float* data_col,
     }
 }
 ```
+
+
+
+![col2im](/figure/col2im.PNG)
+
+
+
+식은 복잡해 보이지만 위에 그림처럼 간단하게 표현 될 수 있습니다.

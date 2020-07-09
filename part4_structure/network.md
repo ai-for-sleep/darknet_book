@@ -71,3 +71,10 @@ typedef struct network{
 
 } network;
 ```
+
+- `n` : layer의 수
+- `t` :
+- `seen` :
+- `batch` : batch의 수
+- `epoch` : epoch의 수
+- `learning_rate` : 학습률
