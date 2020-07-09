@@ -4,7 +4,7 @@
     <head>
         <meta charset="UTF-8">
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
-        <title>connected_layer.c · DarkNet Book</title>
+        <title>parser.c · DarkNet Book</title>
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="description" content="">
         <meta name="generator" content="GitBook 3.2.3">
@@ -61,8 +61,8 @@
     
 
     
-    <link rel="next" href="convolutional_layer.html" />
     
+    <link rel="prev" href="option_list.html" />
     
 
     </head>
@@ -554,7 +554,7 @@
     
         
         <li class="chapter 
-            active  selected  "
+              "
             data-level="5.9" 
             data-path="connected_layer.html">
 
@@ -1022,7 +1022,7 @@
     
         
         <li class="chapter 
-              "
+            active  selected  "
             data-level="5.35" 
             data-path="parser_1.html">
 
@@ -1922,7 +1922,7 @@
     <!-- Title -->
     <h1>
         <i class="fa fa-circle-o-notch fa-spin"></i>
-        <a href=".." >connected_layer.c</a>
+        <a href=".." >parser.c</a>
     </h1>
 </div>
 
@@ -1937,80 +1937,203 @@
     
                                 <section class="normal markdown-section">
                                 
-                                <h1 id="fully-connected-layer-&#xB780;">Fully Connected Layer &#xB780;?</h1>
-<p>&#xC774;&#xC804; Layer&#xC758; &#xBAA8;&#xB4E0; &#xB178;&#xB4DC;&#xAC00; &#xB2E4;&#xC74C; Layer&#xC758; &#xBAA8;&#xB4E0; &#xB178;&#xB4DC;&#xC5D0; &#xAC01;&#xAC01; &#xD558;&#xB098;&#xC529; &#xC5F0;&#xACB0;&#xB418;&#xC5B4;&#xC788;&#xB294; Layer &#xC785;&#xB2C8;&#xB2E4;.</p>
+                                <h1 id="parserc">parser.c</h1>
+<p><code>parser</code>&#xB294; compiler, interpreter&#xC758; &#xAD6C;&#xC131; &#xC694;&#xC18C; &#xC911; &#xD558;&#xB098;&#xB85C; &#xC785;&#xB825; token&#xC5D0; &#xD3EC;&#xD568; &#xB41C; &#xC790;&#xB8CC; &#xAD6C;&#xC870;&#xB97C; &#xAD6C;&#xC131;&#xD558;&#xACE0; &#xBB38;&#xBC95;&#xC744; &#xAC80;&#xC0AC;&#xD569;&#xB2C8;&#xB2E4;. <code>darknet</code>&#xC5D0;&#xC11C;&#xB294; <code>cfg</code>&#xB85C; &#xB124;&#xD2B8;&#xC6CC;&#xD06C;&#xC758; &#xAD6C;&#xC870;&#xB97C; &#xAD6C;&#xC131;&#xD558;&#xACE0; &#xBB38;&#xBC95;&#xC744; &#xAC80;&#xC0AC;&#xD558;&#xB294;&#xB370; &#xC0AC;&#xC6A9; &#xB429;&#xB2C8;&#xB2E4;. &#xB9E4;&#xC6B0; &#xC911;&#xC694;&#xD558;&#xACE0; &#xC798; &#xC9DC;&#xC5EC;&#xC9C4; &#xC54C;&#xACE0;&#xB9AC;&#xC998; &#xC785;&#xB2C8;&#xB2E4;.</p>
+<p>&#xC5EC;&#xAE30;&#xC11C; <code>cfg</code>&#xD30C;&#xC77C;&#xC740; &#xBAA8;&#xB378;&#xC758; &#xAD6C;&#xC870;&#xB97C; &#xB2F4;&#xACE0; &#xC788;&#xB294; &#xD30C;&#xC77C;&#xC785;&#xB2C8;&#xB2E4;. &#xD30C;&#xC77C;&#xC758; &#xAD6C;&#xC870;&#xB97C; &#xBCF4;&#xBA74; &#xB300;&#xB7B5; &#xC544;&#xB798;&#xC640; &#xAC19;&#xC2B5;&#xB2C8;&#xB2E4;.</p>
+<pre><code>[net]
+param1=value1
+param2=value2
+param3=value3
+
+[layer type]
+param1=value1
+param2=value2
+
+[layer type]
+param1=value1
+param2=value2
+</code></pre><p>&#xAD04;&#xD638;&#xC548;&#xC5D0;&#xB294; layer&#xC758; &#xD0C0;&#xC785;&#xC774; &#xC124;&#xC815;&#xB418;&#xC5B4; &#xC788;&#xACE0; &#xADF8; &#xBC11;&#xC5D0;&#xB294; &#xD574;&#xB2F9; layer&#xC5D0; &#xD544;&#xC694;&#xD55C; &#xD30C;&#xB77C;&#xBBF8;&#xD130; &#xAC12;&#xC744; &#xC124;&#xC815;&#xD558;&#xB3C4;&#xB85D; &#xB418;&#xC5B4;&#xC788;&#xC2B5;&#xB2C8;&#xB2E4;.</p>
+<p>&#xC774;&#xB807;&#xAC8C; &#xBAA8;&#xB378;&#xC758; &#xAD6C;&#xC870;&#xB97C; &#xC124;&#xC815;&#xD558;&#xBA74; &#xD558;&#xB098;&#xC758; &#xB124;&#xD2B8;&#xC6CC;&#xD06C;&#xC758; &#xC790;&#xB8CC;&#xAD6C;&#xC870;&#xB97C; &#xB9CC;&#xB4E4;&#xAC8C; &#xB429;&#xB2C8;&#xB2E4;.</p>
 <ul>
-<li>&#xAC00;&#xC7A5; &#xAE30;&#xBCF8;&#xC801;&#xC778; Layer</li>
-<li>1&#xCC28;&#xC6D0; &#xBC30;&#xC5F4;&#xB85C;&#xB9CC; &#xC774;&#xB8E8;&#xC5B4;&#xC838; &#xC788;&#xC2B5;&#xB2C8;&#xB2E4;.</li>
+<li>network list&#xB294; root</li>
+<li>section list&#xB294; layer</li>
+<li>option list&#xB294; layer&#xC758; &#xB9E4;&#xAC1C;&#xBCC0;&#xC218;</li>
 </ul>
-<p>&#xC774;&#xD574;&#xB97C; &#xB3D5;&#xAE30;&#xC704;&#xD574; &#xADF8;&#xB9BC;&#xC73C;&#xB85C; &#xC0B4;&#xD3B4;&#xBCF4;&#xACA0;&#xC2B5;&#xB2C8;&#xB2E4;.</p>
-<p><img src="../figure/fc1.PNG" alt="fc1"></p>
-<p>&#xD06C;&#xAC8C; &#xBCF5;&#xC7A1;&#xD558;&#xC9C0; &#xC54A;&#xACE0; &#xB2E8;&#xC21C;&#xD55C; &#xC5F0;&#xC0B0;&#xC73C;&#xB85C;&#xB9CC; &#xC774;&#xB8E8;&#xC5B4;&#xC838; &#xC788;&#xC2B5;&#xB2C8;&#xB2E4;.</p>
-<p>Fully Connected Layer &#xC5ED;&#xC804;&#xD30C;&#xB294; &#xC27D;&#xAC8C; &#xD45C;&#xD604;&#xD558;&#xB294; &#xACBD;&#xC6B0; &#xC544;&#xB798; &#xADF8;&#xB9BC;&#xACFC; &#xAC19;&#xC2B5;&#xB2C8;&#xB2E4;.</p>
-<p><img src="../figure/fc2.PNG" alt="fc2"></p>
-<p>output&#xC744; &#xACC4;&#xC0B0;&#xD558;&#xAE30; &#xC704;&#xD574;&#xC11C; &#xAC01;&#xC790;&#xC758; id&#xB97C; &#xAC00;&#xC9C0;&#xACE0; &#xC788;&#xB294; weight&#xAC00; &#xC0AC;&#xC6A9;&#xB41C; &#xACF3;&#xC744; &#xBCF4;&#xC2DC;&#xBA74; &#xC774;&#xD574;&#xD558;&#xAE30; &#xC27D;&#xC2B5;&#xB2C8;&#xB2E4;.
-&#xC608;&#xB97C; &#xB4E4;&#xC5B4;&#xC11C; <script type="math/tex; ">w_11$은 </script>$h_11$$&#xB97C; &#xC5F0;&#xC0B0;&#xD558;&#xB294;&#xB370;&#xB9CC; &#xC0AC;&#xC6A9;&#xB418;&#xC5C8;&#xAE30; &#xB54C;&#xBB38;&#xC5D0; &#xD574;&#xB2F9; &#xAC12;&#xB9CC; &#xC0AC;&#xC6A9;&#xD569;&#xB2C8;&#xB2E4;.</p>
-<hr>
-<h1 id="connectedlayerc">connected_layer.c</h1>
-<h2 id="forwardconnectedlayer">forward_connected_layer</h2>
-<pre><code>void forward_connected_layer(layer l, network net)
+<h2 id="parsenetworkcfg">parse_network_cfg</h2>
+<pre><code>network *parse_network_cfg(char *filename)
 {
-    fill_cpu(l.outputs*l.batch, 0, l.output, 1);
-    int m = l.batch;
-    int k = l.inputs;
-    int n = l.outputs;
-    float *a = net.input;
-    float *b = l.weights;
-    float *c = l.output;
-    gemm(0,1,m,n,k,1,a,k,b,k,1,c,n);
-    if(l.batch_normalize){
-        forward_batchnorm_layer(l, net);
-    } else {
-        add_bias(l.output, l.biases, l.batch, l.outputs, 1);
+    list *sections = read_cfg(filename);                    /// cfg &#xD30C;&#xC77C; &#xAD6C;&#xC870; &#xB9AC;&#xC2A4;&#xD2B8;
+    node *n = sections-&gt;front;                             
+    if(!n) error(&quot;Config file has no sections&quot;);
+    network *net = make_network(sections-&gt;size - 1);        /// network &#xAD6C;&#xC870;&#xCCB4;
+    net-&gt;gpu_index = gpu_index;                             
+    size_params params;                                     /// parameter size &#xAD6C;&#xC870;&#xCCB4;
+
+    section *s = (section *)n-&gt;val;                         /// network&#xC758; &#xC815;&#xBCF4; section
+    list *options = s-&gt;options;                             /// section&#xC758; option
+    if(!is_network(s)) error(&quot;First section must be [net] or [network]&quot;);
+    parse_net_options(options, net);                        /// network &#xAD6C;&#xC870;&#xCCB4;&#xC5D0; option&#xC744; &#xB9E4;&#xD551;
+
+    params.h = net-&gt;h;
+    params.w = net-&gt;w;
+    params.c = net-&gt;c;
+    params.inputs = net-&gt;inputs;
+    params.batch = net-&gt;batch;
+    params.time_steps = net-&gt;time_steps;
+    params.net = net;
+
+    size_t workspace_size = 0;
+    n = n-&gt;next;                                             /// layer &#xBD80;&#xBD84; &#xD574;&#xC11D;&#xC2DC;&#xC791;
+    int count = 0;
+    free_section(s);                                         /// section &#xD560;&#xB2F9; &#xD574;&#xC81C;
+    fprintf(stderr, &quot;layer     filters    size              input                output\n&quot;);
+    while(n){
+        params.index = count;
+        fprintf(stderr, &quot;%5d &quot;, count);
+        s = (section *)n-&gt;val;                               /// section&#xC758; &#xAC12;
+        options = s-&gt;options;                                /// option &#xBD88;&#xB7EC;&#xC624;&#xAE30;
+        layer l = {0};   
+        LAYER_TYPE lt = string_to_layer_type(s-&gt;type);       /// LAYER_TYPE &#xCC3E;&#xAE30;
+        if(lt == CONVOLUTIONAL){
+            l = parse_convolutional(options, params);
+        }else if(lt == DECONVOLUTIONAL){
+            l = parse_deconvolutional(options, params);
+        }else if(lt == LOCAL){
+            l = parse_local(options, params);
+        }else if(lt == ACTIVE){
+            l = parse_activation(options, params);
+        }else if(lt == LOGXENT){
+            l = parse_logistic(options, params);
+        }else if(lt == L2NORM){
+            l = parse_l2norm(options, params);
+        }else if(lt == RNN){
+            l = parse_rnn(options, params);
+        }else if(lt == GRU){
+            l = parse_gru(options, params);
+        }else if (lt == LSTM) {
+            l = parse_lstm(options, params);
+        }else if(lt == CRNN){
+            l = parse_crnn(options, params);
+        }else if(lt == CONNECTED){
+            l = parse_connected(options, params);
+        }else if(lt == CROP){
+            l = parse_crop(options, params);
+        }else if(lt == COST){
+            l = parse_cost(options, params);
+        }else if(lt == REGION){
+            l = parse_region(options, params);
+        }else if(lt == YOLO){
+            l = parse_yolo(options, params);
+        }else if(lt == ISEG){
+            l = parse_iseg(options, params);
+        }else if(lt == DETECTION){
+            l = parse_detection(options, params);
+        }else if(lt == SOFTMAX){
+            l = parse_softmax(options, params);
+            net-&gt;hierarchy = l.softmax_tree;
+        }else if(lt == NORMALIZATION){
+            l = parse_normalization(options, params);
+        }else if(lt == BATCHNORM){
+            l = parse_batchnorm(options, params);
+        }else if(lt == MAXPOOL){
+            l = parse_maxpool(options, params);
+        }else if(lt == REORG){
+            l = parse_reorg(options, params);
+        }else if(lt == AVGPOOL){
+            l = parse_avgpool(options, params);
+        }else if(lt == ROUTE){
+            l = parse_route(options, params, net);
+        }else if(lt == UPSAMPLE){
+            l = parse_upsample(options, params, net);
+        }else if(lt == SHORTCUT){
+            l = parse_shortcut(options, params, net);
+        }else if(lt == DROPOUT){
+            l = parse_dropout(options, params);
+            l.output = net-&gt;layers[count-1].output;
+            l.delta = net-&gt;layers[count-1].delta;
+        }else{
+            fprintf(stderr, &quot;Type not recognized: %s\n&quot;, s-&gt;type);
+        }
+        l.clip = net-&gt;clip;
+        l.truth = option_find_int_quiet(options, &quot;truth&quot;, 0);
+        l.onlyforward = option_find_int_quiet(options, &quot;onlyforward&quot;, 0);
+        l.stopbackward = option_find_int_quiet(options, &quot;stopbackward&quot;, 0);
+        l.dontsave = option_find_int_quiet(options, &quot;dontsave&quot;, 0);
+        l.dontload = option_find_int_quiet(options, &quot;dontload&quot;, 0);
+        l.numload = option_find_int_quiet(options, &quot;numload&quot;, 0);
+        l.dontloadscales = option_find_int_quiet(options, &quot;dontloadscales&quot;, 0);
+        l.learning_rate_scale = option_find_float_quiet(options, &quot;learning_rate&quot;, 1);
+        l.smooth = option_find_float_quiet(options, &quot;smooth&quot;, 0);
+        option_unused(options);
+        net-&gt;layers[count] = l;
+        if (l.workspace_size &gt; workspace_size) workspace_size = l.workspace_size;
+        free_section(s);
+        n = n-&gt;next;
+        ++count;
+        if(n){
+            params.h = l.out_h;
+            params.w = l.out_w;
+            params.c = l.out_c;
+            params.inputs = l.outputs;
+        }
     }
-    activate_array(l.output, l.outputs*l.batch, l.activation);
+    free_list(sections);
+    layer out = get_network_output_layer(net);
+    net-&gt;outputs = out.outputs;
+    net-&gt;truths = out.outputs;
+    if(net-&gt;layers[net-&gt;n-1].truths) net-&gt;truths = net-&gt;layers[net-&gt;n-1].truths;
+    net-&gt;output = out.output;
+    net-&gt;input = calloc(net-&gt;inputs*net-&gt;batch, sizeof(float));
+    net-&gt;truth = calloc(net-&gt;truths*net-&gt;batch, sizeof(float));
+
+    if(workspace_size){
+        //printf(&quot;%ld\n&quot;, workspace_size);
+
+        net-&gt;workspace = calloc(1, workspace_size);
+    }
+    return net;
 }
-</code></pre><p><code>forward</code></p>
-<ul>
-<li>fully connected layer &#xC5F0;&#xC0B0;</li>
-<li>batch normalization(no bias) or bias</li>
-<li>activation function</li>
-</ul>
-<h2 id="backwardconnectedlayer">backward_connected_layer</h2>
-<pre><code>void backward_connected_layer(layer l, network net)
+</code></pre><h2 id="readcfg">read_cfg</h2>
+<pre><code>list *read_cfg(char *filename)
 {
-    gradient_array(l.output, l.outputs*l.batch, l.activation, l.delta);
-
-    if(l.batch_normalize){
-        backward_batchnorm_layer(l, net);
-    } else {
-        backward_bias(l.bias_updates, l.delta, l.batch, l.outputs, 1);
+    FILE *file = fopen(filename, &quot;r&quot;);             
+    if(file == 0) file_error(filename);             
+    char *line;                                     
+    int nu = 0;
+    list *options = make_list();                    
+    section *current = 0;                           
+    while((line=fgetl(file)) != 0){                
+        ++ nu;
+        strip(line);                                
+        switch(line[0]){                            
+            case &apos;[&apos;:                               
+                current = malloc(sizeof(section));  
+                list_insert(options, current);      
+                current-&gt;options = make_list();     
+                current-&gt;type = line;                           
+                break;                              
+            case &apos;\0&apos;:                              
+            case &apos;#&apos;:                               
+            case &apos;;&apos;:                               
+                free(line);                         
+                break;
+            default:                               
+                if(!read_option(line, current-&gt;options)){
+                    fprintf(stderr, &quot;Config file error line %d, could parse: %s\n&quot;, nu, line);
+                    free(line);
+                }
+                break;
+        }
     }
-
-    int m = l.outputs;
-    int k = l.batch;
-    int n = l.inputs;
-    float *a = l.delta;
-    float *b = net.input;
-    float *c = l.weight_updates;
-    gemm(1,0,m,n,k,1,a,m,b,n,1,c,n);
-
-    m = l.batch;
-    k = l.outputs;
-    n = l.inputs;
-
-    a = l.delta;
-    b = l.weights;
-    c = net.delta;
-
-    if(c) gemm(0,0,m,n,k,1,a,k,b,n,1,c,n);
+    fclose(file);
+    return options;
 }
-</code></pre><p><code>backward</code></p>
-<ul>
-<li>activation function</li>
-<li>batch normalization(no bias) or bias</li>
-<li>fully connected layer &#xC5F0;&#xC0B0;</li>
+</code></pre><ul>
+<li><code>fgetl</code> : &#xD30C;&#xC77C;&#xC5D0;&#xC11C; &#xB77C;&#xC778; &#xC77D;&#xAE30;</li>
+<li><code>strip</code> : &#xACF5;&#xBC31;&#xC81C;&#xAC70;</li>
 </ul>
+<p><code>cfg</code>&#xD30C;&#xC77C;&#xC758; &#xBB38;&#xC790;&#xC5F4;&#xC744; list&#xC5D0; &#xB123;&#xC5B4;&#xC90D;&#xB2C8;&#xB2E4;. &#xC804;&#xCCB4; &#xC790;&#xB8CC; &#xAD6C;&#xC870;&#xB294; &#xC544;&#xB798;&#xC640; &#xAC19;&#xC2B5;&#xB2C8;&#xB2E4;.</p>
+<p><img src="../figure/read_cfg.PNG" alt="read_cfg"></p>
 
                                 
                                 </section>
@@ -2038,10 +2161,10 @@
 
             
                 
-                
-                <a href="convolutional_layer.html" class="navigation navigation-next navigation-unique" aria-label="Next page: convolutional_layer.c">
-                    <i class="fa fa-angle-right"></i>
+                <a href="option_list.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page: option_list.c">
+                    <i class="fa fa-angle-left"></i>
                 </a>
+                
                 
             
         
@@ -2050,7 +2173,7 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"connected_layer.c","level":"5.9","depth":1,"next":{"title":"convolutional_layer.c","level":"5.10","depth":1,"path":"part3_src/convolutional_layer.md","ref":"part3_src/convolutional_layer.md","articles":[]},"previous":{"title":"compare.c","level":"5.8","depth":1,"ref":"","articles":[]},"dir":"ltr"},"config":{"plugins":["advanced-emoji","theme-gestalt","-theme-default","styles-sass-fix","theme-api","mathjax"],"root":"./","styles":{"website":"website-1594288002299.css"},"pluginsConfig":{"styles-sass-fix":{},"theme-gestalt":{"showLevel":false,"styles":{"website":"styles/website.css"},"logo":"/darknet_book/assets/darknet.png","baseUrl":null,"excludeDefaultStyles":true,"doNotHideChildrenChapters":false},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"theme-api":{"languages":[],"split":true,"theme":"light"},"mathjax":{"forceSVG":false,"version":"2.6-latest"},"advanced-emoji":{"embedEmojis":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]}},"theme":"default","author":"JJM","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"DarkNet Book","output.name":"site","gitbook":"*"},"file":{"path":"part3_src/connected_layer.md","mtime":"2020-07-02T08:58:05.336Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-07-09T09:46:32.495Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"parser.c","level":"5.35","depth":1,"next":{"title":"region_layer.c","level":"5.36","depth":1,"ref":"","articles":[]},"previous":{"title":"option_list.c","level":"5.34","depth":1,"path":"part3_src/option_list.md","ref":"part3_src/option_list.md","articles":[]},"dir":"ltr"},"config":{"plugins":["advanced-emoji","theme-gestalt","-theme-default","styles-sass-fix","theme-api","mathjax"],"root":"./","styles":{"website":"website-1594288002299.css"},"pluginsConfig":{"styles-sass-fix":{},"theme-gestalt":{"showLevel":false,"styles":{"website":"styles/website.css"},"logo":"/darknet_book/assets/darknet.png","baseUrl":null,"excludeDefaultStyles":true,"doNotHideChildrenChapters":false},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"theme-api":{"languages":[],"split":true,"theme":"light"},"mathjax":{"forceSVG":false,"version":"2.6-latest"},"advanced-emoji":{"embedEmojis":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]}},"theme":"default","author":"JJM","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"DarkNet Book","output.name":"site","gitbook":"*"},"file":{"path":"part3_src/parser_1.md","mtime":"2020-07-09T09:43:06.656Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-07-09T09:46:32.495Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>
