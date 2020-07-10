@@ -124,11 +124,15 @@ void forward_batchnorm_layer(layer l, network net)
 `forward`
 
 - mean = 각 channel에 대한 평균
+
 - variance = 각 channel에 대한 분산
 
 - rolling mean = rolling mean * 0.99
+
 - rolling mean = 0.01 * mean + rolling mean
+
 - rolling variance = rolling variance * 0.99
+
 - rolling variance = 0.01 * variance + rolling variance
 
 - 정규화를 합니다.

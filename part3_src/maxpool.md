@@ -7,6 +7,7 @@ Feature Map의 최댓값을 전파시키는 Layer 입니다.
 
 ## make_maxpool_layer
 
+```c
 maxpool_layer make_maxpool_layer(int batch, int h, int w, int c, int size, int stride, int padding)
 {
     maxpool_layer l = {0};
@@ -33,7 +34,7 @@ maxpool_layer make_maxpool_layer(int batch, int h, int w, int c, int size, int s
     fprintf(stderr, "max          %d x %d / %d  %4d x%4d x%4d   ->  %4d x%4d x%4d\n", size, size, stride, w, h, c, l.out_w, l.out_h, l.out_c);
     return l;
 }
-
+```
 - `Max Pooling Layer`를 만드는 함수입니다.
 
 ## forward_maxpool_layer

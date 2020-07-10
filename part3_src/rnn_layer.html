@@ -42,7 +42,7 @@
 
     
         
-        <link rel="stylesheet" href="../website-1594288002299.css">
+        <link rel="stylesheet" href="../website-1594393089001.css">
         
     
 
@@ -1936,8 +1936,117 @@
                                 <section class="normal markdown-section">
                                 
                                 <h1 id="rnn-layer&#xB780;">RNN Layer&#xB780;?</h1>
+<p>RNN&#xC774;&#xB780; Recurrent Neural Networks&#xC758; &#xC57D;&#xC790;&#xC785;&#xB2C8;&#xB2E4;. RNN&#xC740; &#xC790;&#xC5F0;&#xC5B4;&#xCC98;&#xB9AC;, &#xC74C;&#xC131;&#xCC98;&#xB9AC; &#xB4F1; Sequential &#xB370;&#xC774;&#xD130;&#xB97C; &#xCC98;&#xB9AC;&#xD558;&#xAE30; &#xC704;&#xD574; &#xB9CE;&#xC774; &#xC0AC;&#xC6A9;&#xB418;&#xB294; &#xBAA8;&#xB378;&#xC785;&#xB2C8;&#xB2E4;.</p>
+<p><img src="../figure/rnn1.PNG" alt="rnn1"></p>
+<p>&#xC704;&#xC5D0; &#xADF8;&#xB9BC;&#xACFC; &#xAC19;&#xC774; &#xD604;&#xC7AC; &#xC0C1;&#xD0DC;&#xC5D0; &#xC774;&#xC804; &#xC0C1;&#xD0DC; &#xC601;&#xD5A5;&#xC744; &#xAC00;&#xC9C0;&#xAE30; &#xB54C;&#xBB38;&#xC5D0; <code>Recurrent</code>&#xB77C;&#xB294; &#xB2E8;&#xC5B4;&#xB85C; &#xD45C;&#xD604;&#xB429;&#xB2C8;&#xB2E4;.</p>
+<p><img src="../figure/rnn2.PNG" alt="rnn2"></p>
+<p>&#xC5EC;&#xAE30;&#xC11C; &#xD765;&#xBBF8;&#xB85C;&#xC6B4; &#xBD80;&#xBD84;&#xC740; weights&#xAC00; &#xACF5;&#xC720; &#xD55C;&#xB2E4;&#xB294; &#xAC83;&#xC785;&#xB2C8;&#xB2E4;.</p>
+<p><img src="../figure/rnn2.PNG" alt="rnn2"></p>
+<p>RNN &#xC5ED;&#xC804;&#xD30C;&#xB294; &#xC704;&#xC640; &#xAC19;&#xC2B5;&#xB2C8;&#xB2E4;. weights&#xAC00; &#xACF5;&#xC720;&#xB418;&#xAE30; &#xB54C;&#xBB38;&#xC5D0; &#xD559;&#xC2B5;&#xC744; &#xACC4;&#xC18D; &#xC9C4;&#xD589;&#xD558;&#xBA74;&#xC11C; &#xCC98;&#xC74C;&#xC5D0; &#xD559;&#xC2B5;&#xB41C; &#xB370;&#xC774;&#xD130;&#xB294; &#xC810;&#xC810; &#xC78A;&#xD600;&#xC9C8; &#xAC83;(Gradient Vanishing) &#xC785;&#xB2C8;&#xB2E4;. &#xC774;&#xB85C; &#xC778;&#xD55C; &#xBB38;&#xC81C;&#xB97C; &#xD574;&#xACB0;&#xD558;&#xAE30; &#xC704;&#xD574; &#xCD94;&#xD6C4;&#xC5D0; <code>LSTM</code>&#xC774; &#xB098;&#xC635;&#xB2C8;&#xB2E4;.</p>
 <hr>
 <h1 id="rnnlayerc">rnn_layer.c</h1>
+<h2 id="incrementlayer">increment_layer</h2>
+<pre><code>static void increment_layer(layer *l, int steps)
+{
+    int num = l-&gt;outputs*l-&gt;batch*steps;
+    l-&gt;output += num;
+    l-&gt;delta += num;
+    l-&gt;x += num;
+    l-&gt;x_norm += num;
+}
+</code></pre><h2 id="forwardrnnlayer">forward_rnn_layer</h2>
+<pre><code>void forward_rnn_layer(layer l, network net)
+{
+    network s = net;
+    s.train = net.train;
+    int i;
+    layer input_layer = *(l.input_layer);
+    layer self_layer = *(l.self_layer);
+    layer output_layer = *(l.output_layer);
+
+    fill_cpu(l.outputs * l.batch * l.steps, 0, output_layer.delta, 1);
+    fill_cpu(l.outputs * l.batch * l.steps, 0, self_layer.delta, 1);
+    fill_cpu(l.outputs * l.batch * l.steps, 0, input_layer.delta, 1);
+    if(net.train) fill_cpu(l.outputs * l.batch, 0, l.state, 1);
+
+    for (i = 0; i &lt; l.steps; ++i) {
+        s.input = net.input;
+        forward_connected_layer(input_layer, s);
+
+        s.input = l.state;
+        forward_connected_layer(self_layer, s);
+
+        float *old_state = l.state;
+        if(net.train) l.state += l.outputs*l.batch;
+        if(l.shortcut){
+            copy_cpu(l.outputs * l.batch, old_state, 1, l.state, 1);
+        }else{
+            fill_cpu(l.outputs * l.batch, 0, l.state, 1);
+        }
+        axpy_cpu(l.outputs * l.batch, 1, input_layer.output, 1, l.state, 1);
+        axpy_cpu(l.outputs * l.batch, 1, self_layer.output, 1, l.state, 1);
+
+        s.input = l.state;
+        forward_connected_layer(output_layer, s);
+
+        net.input += l.inputs*l.batch;
+        increment_layer(&amp;input_layer, 1);
+        increment_layer(&amp;self_layer, 1);
+        increment_layer(&amp;output_layer, 1);
+    }
+}
+</code></pre><p><code>forward</code></p>
+<h2 id="backwardrnnlayer">backward_rnn_layer</h2>
+<pre><code>void backward_rnn_layer(layer l, network net)
+{
+    network s = net;
+    s.train = net.train;
+    int i;
+    layer input_layer = *(l.input_layer);
+    layer self_layer = *(l.self_layer);
+    layer output_layer = *(l.output_layer);
+
+    increment_layer(&amp;input_layer, l.steps-1);
+    increment_layer(&amp;self_layer, l.steps-1);
+    increment_layer(&amp;output_layer, l.steps-1);
+
+    l.state += l.outputs*l.batch*l.steps;
+    for (i = l.steps-1; i &gt;= 0; --i) {
+        copy_cpu(l.outputs * l.batch, input_layer.output, 1, l.state, 1);
+        axpy_cpu(l.outputs * l.batch, 1, self_layer.output, 1, l.state, 1);
+
+        s.input = l.state;
+        s.delta = self_layer.delta;
+        backward_connected_layer(output_layer, s);
+
+        l.state -= l.outputs*l.batch;
+        /*
+           if(i &gt; 0){
+           copy_cpu(l.outputs * l.batch, input_layer.output - l.outputs*l.batch, 1, l.state, 1);
+           axpy_cpu(l.outputs * l.batch, 1, self_layer.output - l.outputs*l.batch, 1, l.state, 1);
+           }else{
+           fill_cpu(l.outputs * l.batch, 0, l.state, 1);
+           }
+         */
+
+        s.input = l.state;
+        s.delta = self_layer.delta - l.outputs*l.batch;
+        if (i == 0) s.delta = 0;
+        backward_connected_layer(self_layer, s);
+
+        copy_cpu(l.outputs*l.batch, self_layer.delta, 1, input_layer.delta, 1);
+        if (i &gt; 0 &amp;&amp; l.shortcut) axpy_cpu(l.outputs*l.batch, 1, self_layer.delta, 1, self_layer.delta - l.outputs*l.batch, 1);
+        s.input = net.input + i*l.inputs*l.batch;
+        if(net.delta) s.delta = net.delta + i*l.inputs*l.batch;
+        else s.delta = 0;
+        backward_connected_layer(input_layer, s);
+
+        increment_layer(&amp;input_layer, -1);
+        increment_layer(&amp;self_layer, -1);
+        increment_layer(&amp;output_layer, -1);
+    }
+}
+</code></pre><p><code>backward</code></p>
 
                                 
                                 </section>
@@ -1973,7 +2082,7 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"rnn_layer.c","level":"5.38","depth":1,"next":{"title":"route_layer.c","level":"5.39","depth":1,"ref":"","articles":[]},"previous":{"title":"reorg_layer.c","level":"5.37","depth":1,"ref":"","articles":[]},"dir":"ltr"},"config":{"plugins":["advanced-emoji","theme-gestalt","-theme-default","styles-sass-fix","theme-api","mathjax"],"root":"./","styles":{"website":"website-1594288002299.css"},"pluginsConfig":{"styles-sass-fix":{},"theme-gestalt":{"showLevel":false,"styles":{"website":"styles/website.css"},"logo":"/darknet_book/assets/darknet.png","baseUrl":null,"excludeDefaultStyles":true,"doNotHideChildrenChapters":false},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"theme-api":{"languages":[],"split":true,"theme":"light"},"mathjax":{"forceSVG":false,"version":"2.6-latest"},"advanced-emoji":{"embedEmojis":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]}},"theme":"default","author":"JJM","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"DarkNet Book","output.name":"site","gitbook":"*"},"file":{"path":"part3_src/rnn_layer.md","mtime":"2020-07-09T02:54:03.760Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-07-09T09:46:32.495Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"rnn_layer.c","level":"5.38","depth":1,"next":{"title":"route_layer.c","level":"5.39","depth":1,"ref":"","articles":[]},"previous":{"title":"reorg_layer.c","level":"5.37","depth":1,"ref":"","articles":[]},"dir":"ltr"},"config":{"plugins":["advanced-emoji","theme-gestalt","-theme-default","styles-sass-fix","theme-api","mathjax"],"root":"./","styles":{"website":"website-1594393089001.css"},"pluginsConfig":{"styles-sass-fix":{},"theme-gestalt":{"showLevel":false,"styles":{"website":"styles/website.css"},"logo":"/darknet_book/assets/darknet.png","baseUrl":null,"excludeDefaultStyles":true,"doNotHideChildrenChapters":false},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"theme-api":{"languages":[],"split":true,"theme":"light"},"mathjax":{"forceSVG":false,"version":"2.6-latest"},"advanced-emoji":{"embedEmojis":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]}},"theme":"default","author":"JJM","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"DarkNet Book","output.name":"site","gitbook":"*"},"file":{"path":"part3_src/rnn_layer.md","mtime":"2020-07-10T13:02:06.220Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-07-10T14:57:58.848Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>

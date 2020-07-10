@@ -176,9 +176,9 @@ struct layer{
 
     float * binary_input;
 
-    struct layer *input_layer;
-    struct layer *self_layer;
-    struct layer *output_layer;
+    struct layer *input_layer;                      /// rnn input layer
+    struct layer *self_layer;                       /// rnn self layer
+    struct layer *output_layer;                     /// rnn output layer
 
     struct layer *reset_layer;
     struct layer *update_layer;

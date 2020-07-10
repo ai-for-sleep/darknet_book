@@ -2574,7 +2574,7 @@ body {
   left: 0px;
   bottom: 0px;
   overflow-y: auto;
-  color: #00ffff;
+  color: white;
   background: black; }
   @media (max-width: 1240px) {
     .book-body .body-inner {
@@ -2603,7 +2603,7 @@ body {
   height: 50px;
   z-index: 2;
   padding: 0px 5px;
-  color: #00ffff;
+  color: white;
   background: transparent; }
 
 .book-header .btn {
@@ -2745,7 +2745,7 @@ body {
   white-space: nowrap;
   padding: 10px 0;
   border-bottom: none;
-  color: #00ffff;
+  color: white;
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; }
 
 .book-summary ul.summary li.selected > a,

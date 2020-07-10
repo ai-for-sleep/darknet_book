@@ -42,7 +42,7 @@
 
     
         
-        <link rel="stylesheet" href="../website-1594288002299.css">
+        <link rel="stylesheet" href="../website-1594393089001.css">
         
     
 
@@ -1939,31 +1939,33 @@
 <p>Feature Map&#xC758; &#xCD5C;&#xB313;&#xAC12;&#xC744; &#xC804;&#xD30C;&#xC2DC;&#xD0A4;&#xB294; Layer &#xC785;&#xB2C8;&#xB2E4;.</p>
 <h1 id="maxpoollayerc">maxpool_layer.c</h1>
 <h2 id="makemaxpoollayer">make_maxpool_layer</h2>
-<p>maxpool_layer make_maxpool_layer(int batch, int h, int w, int c, int size, int stride, int padding)
-{
-    maxpool_layer l = {0};
+<pre><code class="lang-c"><span class="hljs-function">maxpool_layer <span class="hljs-title">make_maxpool_layer</span><span class="hljs-params">(<span class="hljs-keyword">int</span> batch, <span class="hljs-keyword">int</span> h, <span class="hljs-keyword">int</span> w, <span class="hljs-keyword">int</span> c, <span class="hljs-keyword">int</span> size, <span class="hljs-keyword">int</span> stride, <span class="hljs-keyword">int</span> padding)</span>
+</span>{
+    maxpool_layer l = {<span class="hljs-number">0</span>};
     l.type = MAXPOOL;
     l.batch = batch;
     l.h = h;
     l.w = w;
     l.c = c;
     l.pad = padding;
-    l.out_w = (w + padding - size)/stride + 1;
-    l.out_h = (h + padding - size)/stride + 1;
+    l.out_w = (w + padding - size)/stride + <span class="hljs-number">1</span>;
+    l.out_h = (h + padding - size)/stride + <span class="hljs-number">1</span>;
     l.out_c = c;
-    l.outputs = l.out_h <em> l.out_w </em> l.out_c;
-    l.inputs = h<em>w</em>c;
+    l.outputs = l.out_h * l.out_w * l.out_c;
+    l.inputs = h*w*c;
     l.size = size;
     l.stride = stride;
-    int output_size = l.out_h <em> l.out_w </em> l.out_c * batch;
-    l.indexes = calloc(output_size, sizeof(int));
-    l.output =  calloc(output_size, sizeof(float));
-    l.delta =   calloc(output_size, sizeof(float));
+    <span class="hljs-keyword">int</span> output_size = l.out_h * l.out_w * l.out_c * batch;
+    l.indexes = <span class="hljs-built_in">calloc</span>(output_size, <span class="hljs-keyword">sizeof</span>(<span class="hljs-keyword">int</span>));
+    l.output =  <span class="hljs-built_in">calloc</span>(output_size, <span class="hljs-keyword">sizeof</span>(<span class="hljs-keyword">float</span>));
+    l.delta =   <span class="hljs-built_in">calloc</span>(output_size, <span class="hljs-keyword">sizeof</span>(<span class="hljs-keyword">float</span>));
     l.forward = forward_maxpool_layer;
-    l.backward = backward_maxpool_layer;</p>
-<pre><code>fprintf(stderr, &quot;max          %d x %d / %d  %4d x%4d x%4d   -&gt;  %4d x%4d x%4d\n&quot;, size, size, stride, w, h, c, l.out_w, l.out_h, l.out_c);
-return l;
-</code></pre><p>}</p>
+    l.backward = backward_maxpool_layer;
+
+    <span class="hljs-built_in">fprintf</span>(<span class="hljs-built_in">stderr</span>, <span class="hljs-string">&quot;max          %d x %d / %d  %4d x%4d x%4d   -&gt;  %4d x%4d x%4d\n&quot;</span>, size, size, stride, w, h, c, l.out_w, l.out_h, l.out_c);
+    <span class="hljs-keyword">return</span> l;
+}
+</code></pre>
 <ul>
 <li><code>Max Pooling Layer</code>&#xB97C; &#xB9CC;&#xB4DC;&#xB294; &#xD568;&#xC218;&#xC785;&#xB2C8;&#xB2E4;.</li>
 </ul>
@@ -2102,7 +2104,7 @@ l-&gt;delta_gpu   = cuda_make_array(l-&gt;delta,  output_size);
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"maxpool_layer.c","level":"5.31","depth":1,"next":{"title":"network.c","level":"5.32","depth":1,"ref":"","articles":[]},"previous":{"title":"matrix.c","level":"5.30","depth":1,"ref":"","articles":[]},"dir":"ltr"},"config":{"plugins":["advanced-emoji","theme-gestalt","-theme-default","styles-sass-fix","theme-api","mathjax"],"root":"./","styles":{"website":"website-1594288002299.css"},"pluginsConfig":{"styles-sass-fix":{},"theme-gestalt":{"showLevel":false,"styles":{"website":"styles/website.css"},"logo":"/darknet_book/assets/darknet.png","baseUrl":null,"excludeDefaultStyles":true,"doNotHideChildrenChapters":false},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"theme-api":{"languages":[],"split":true,"theme":"light"},"mathjax":{"forceSVG":false,"version":"2.6-latest"},"advanced-emoji":{"embedEmojis":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]}},"theme":"default","author":"JJM","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"DarkNet Book","output.name":"site","gitbook":"*"},"file":{"path":"part3_src/maxpool.md","mtime":"2020-07-08T13:25:05.636Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-07-09T09:46:32.495Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"maxpool_layer.c","level":"5.31","depth":1,"next":{"title":"network.c","level":"5.32","depth":1,"ref":"","articles":[]},"previous":{"title":"matrix.c","level":"5.30","depth":1,"ref":"","articles":[]},"dir":"ltr"},"config":{"plugins":["advanced-emoji","theme-gestalt","-theme-default","styles-sass-fix","theme-api","mathjax"],"root":"./","styles":{"website":"website-1594393089001.css"},"pluginsConfig":{"styles-sass-fix":{},"theme-gestalt":{"showLevel":false,"styles":{"website":"styles/website.css"},"logo":"/darknet_book/assets/darknet.png","baseUrl":null,"excludeDefaultStyles":true,"doNotHideChildrenChapters":false},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"theme-api":{"languages":[],"split":true,"theme":"light"},"mathjax":{"forceSVG":false,"version":"2.6-latest"},"advanced-emoji":{"embedEmojis":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]}},"theme":"default","author":"JJM","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"DarkNet Book","output.name":"site","gitbook":"*"},"file":{"path":"part3_src/maxpool.md","mtime":"2020-07-09T09:55:48.967Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-07-10T14:57:58.848Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>
