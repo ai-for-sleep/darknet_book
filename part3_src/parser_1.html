@@ -42,7 +42,7 @@
 
     
         
-        <link rel="stylesheet" href="../website-1594393089001.css">
+        <link rel="stylesheet" href="../website-1594744469088.css">
         
     
 
@@ -1959,20 +1959,21 @@ param2=value2
 <li>section list&#xB294; layer</li>
 <li>option list&#xB294; layer&#xC758; &#xB9E4;&#xAC1C;&#xBCC0;&#xC218;</li>
 </ul>
+<p>&#xB77C;&#xACE0; &#xC774;&#xD574;&#xD558;&#xACE0; &#xC77D;&#xC5B4;&#xBD05;&#xC2DC;&#xB2E4;.</p>
 <h2 id="parsenetworkcfg">parse_network_cfg</h2>
 <pre><code>network *parse_network_cfg(char *filename)
 {
-    list *sections = read_cfg(filename);                    /// cfg &#xD30C;&#xC77C; &#xAD6C;&#xC870; &#xB9AC;&#xC2A4;&#xD2B8;
-    node *n = sections-&gt;front;                             
+    list *sections = read_cfg(filename);                    /// sections = cfg &#xD30C;&#xC77C; &#xAD6C;&#xC870; &#xB9AC;&#xC2A4;&#xD2B8;
+    node *n = sections-&gt;front;                              /// n = sections&#xC758; &#xB9E8; &#xC55E; &#xB178;&#xB4DC;
     if(!n) error(&quot;Config file has no sections&quot;);
-    network *net = make_network(sections-&gt;size - 1);        /// network &#xAD6C;&#xC870;&#xCCB4;
-    net-&gt;gpu_index = gpu_index;                             
-    size_params params;                                     /// parameter size &#xAD6C;&#xC870;&#xCCB4;
+    network *net = make_network(sections-&gt;size - 1);        
+    net-&gt;gpu_index = gpu_index;                                      
+    size_params params;                                     
 
-    section *s = (section *)n-&gt;val;                         /// network&#xC758; &#xC815;&#xBCF4; section
-    list *options = s-&gt;options;                             /// section&#xC758; option
+    section *s = (section *)n-&gt;val;                         
+    list *options = s-&gt;options;                            
     if(!is_network(s)) error(&quot;First section must be [net] or [network]&quot;);
-    parse_net_options(options, net);                        /// network &#xAD6C;&#xC870;&#xCCB4;&#xC5D0; option&#xC744; &#xB9E4;&#xD551;
+    parse_net_options(options, net);                        
 
     params.h = net-&gt;h;
     params.w = net-&gt;w;
@@ -2093,7 +2094,10 @@ param2=value2
     }
     return net;
 }
-</code></pre><h2 id="readcfg">read_cfg</h2>
+</code></pre><ul>
+<li>cfg&#xD30C;&#xC77C;&#xC744; parsing&#xD558;&#xC5EC; network&#xB97C; &#xB9CC;&#xB4E4;&#xC5B4;&#xC8FC;&#xB294; &#xD568;&#xC218;&#xC785;&#xB2C8;&#xB2E4;.</li>
+</ul>
+<h2 id="readcfg">read_cfg</h2>
 <pre><code>list *read_cfg(char *filename)
 {
     FILE *file = fopen(filename, &quot;r&quot;);             
@@ -2173,7 +2177,7 @@ param2=value2
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"parser.c","level":"5.35","depth":1,"next":{"title":"region_layer.c","level":"5.36","depth":1,"ref":"","articles":[]},"previous":{"title":"option_list.c","level":"5.34","depth":1,"path":"part3_src/option_list.md","ref":"part3_src/option_list.md","articles":[]},"dir":"ltr"},"config":{"plugins":["advanced-emoji","theme-gestalt","-theme-default","styles-sass-fix","theme-api","mathjax"],"root":"./","styles":{"website":"website-1594393089001.css"},"pluginsConfig":{"styles-sass-fix":{},"theme-gestalt":{"showLevel":false,"styles":{"website":"styles/website.css"},"logo":"/darknet_book/assets/darknet.png","baseUrl":null,"excludeDefaultStyles":true,"doNotHideChildrenChapters":false},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"theme-api":{"languages":[],"split":true,"theme":"light"},"mathjax":{"forceSVG":false,"version":"2.6-latest"},"advanced-emoji":{"embedEmojis":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]}},"theme":"default","author":"JJM","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"DarkNet Book","output.name":"site","gitbook":"*"},"file":{"path":"part3_src/parser_1.md","mtime":"2020-07-09T09:43:06.656Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-07-10T14:57:58.848Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"parser.c","level":"5.35","depth":1,"next":{"title":"region_layer.c","level":"5.36","depth":1,"ref":"","articles":[]},"previous":{"title":"option_list.c","level":"5.34","depth":1,"path":"part3_src/option_list.md","ref":"part3_src/option_list.md","articles":[]},"dir":"ltr"},"config":{"plugins":["advanced-emoji","theme-gestalt","-theme-default","styles-sass-fix","theme-api","mathjax"],"root":"./","styles":{"website":"website-1594744469088.css"},"pluginsConfig":{"styles-sass-fix":{},"theme-gestalt":{"showLevel":false,"styles":{"website":"styles/website.css"},"logo":"/darknet_book/assets/darknet.png","baseUrl":null,"excludeDefaultStyles":true,"doNotHideChildrenChapters":false},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"theme-api":{"languages":[],"split":true,"theme":"light"},"mathjax":{"forceSVG":false,"version":"2.6-latest"},"advanced-emoji":{"embedEmojis":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]}},"theme":"default","author":"JJM","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"DarkNet Book","output.name":"site","gitbook":"*"},"file":{"path":"part3_src/parser_1.md","mtime":"2020-07-14T16:24:25.399Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-07-14T16:34:17.969Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>

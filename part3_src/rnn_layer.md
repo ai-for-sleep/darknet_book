@@ -20,7 +20,7 @@ RNN이란 Recurrent Neural Networks의 약자입니다. RNN은 자연어처리, 
 
 
 
-![rnn2](/figure/rnn2.PNG)
+![rnn3](/figure/rnn3.PNG)
 
 
 

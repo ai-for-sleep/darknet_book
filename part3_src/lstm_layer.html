@@ -42,7 +42,7 @@
 
     
         
-        <link rel="stylesheet" href="../website-1594393089001.css">
+        <link rel="stylesheet" href="../website-1594744469088.css">
         
     
 
@@ -1935,9 +1935,264 @@
     
                                 <section class="normal markdown-section">
                                 
-                                <h1 id="lstm-layer-&#xB780;">LSTM Layer &#xB780;?</h1>
+                                <h1 id="lstm-layer&#xB780;">LSTM Layer&#xB780;?</h1>
+<p>LSTM&#xC740; Long Short Term Memory networks&#xC758; &#xC57D;&#xC790;&#xC785;&#xB2C8;&#xB2E4;. RNN&#xACFC; &#xAC19;&#xC774; &#xC790;&#xC5F0;&#xC5B4;&#xCC98;&#xB9AC;, &#xC74C;&#xC131;&#xCC98;&#xB9AC; &#xB4F1; Sequential &#xB370;&#xC774;&#xD130;&#xB97C; &#xCC98;&#xB9AC;&#xD558;&#xAE30; &#xC704;&#xD574; &#xB9CE;&#xC774; &#xC0AC;&#xC6A9;&#xB418;&#xB294; layer&#xC785;&#xB2C8;&#xB2E4;.</p>
+<p>&#xAE30;&#xC874;&#xC758; RNN&#xC740; &#xD559;&#xC2B5;&#xD558;&#xBA74;&#xC11C; &#xC810;&#xC810; &#xACFC;&#xAC70; &#xC815;&#xBCF4;&#xB97C; &#xC78A;&#xC5B4;&#xBC84;&#xB9AC;&#xB294;(Gradient Vanishing) &#xBB38;&#xC81C;&#xAC00; &#xBC1C;&#xC0DD;&#xD558;&#xACE0; &#xC774;&#xB7EC;&#xD55C; &#xC7A5;&#xAE30;&#xC801;&#xC778; &#xC758;&#xC874;&#xC131; &#xBB38;&#xC81C;&#xB97C; &#xD574;&#xACB0;&#xD558;&#xAE30; &#xC704;&#xD574;&#xC11C; &#xC124;&#xACC4;&#xB41C; layer&#xC785;&#xB2C8;&#xB2E4;.</p>
+<p><img src="../figure/lstm.PNG" alt="lstm"></p>
+<p>LSTM&#xC758; &#xD575;&#xC2EC;&#xC801;&#xC778; &#xC694;&#xC18C;&#xB294; <code>cell state</code> &#xC785;&#xB2C8;&#xB2E4;.
+LSTM&#xC758; <code>cell state</code>&#xB294; &#xACF5;&#xC7A5;&#xC758; &#xCEE8;&#xBCA0;&#xC774;&#xC5B4; &#xBCA8;&#xD2B8;&#xC640; &#xAC19;&#xC73C;&#xBA70; &#xC774;&#xB7EC;&#xD55C; &#xCEE8;&#xBCA0;&#xC774;&#xC5B4; &#xBCA8;&#xD2B8;&#xC5D0; <code>gate</code>&#xB97C; &#xC774;&#xC6A9;&#xD558;&#xC5EC; &#xAC12;&#xC744; &#xACF5;&#xAE09;&#xD558;&#xC5EC; &#xC815;&#xBCF4;&#xB97C; &#xCD94;&#xAC00;&#xD558;&#xAC70;&#xB098; &#xC81C;&#xAC70;&#xD574; &#xAC11;&#xB2C8;&#xB2E4;.<br><code>gate</code>&#xB294; &#xCD1D; 3&#xAC00;&#xC9C0;&#xB85C; &#xC774;&#xB8E8;&#xC5B4;&#xC838; &#xC788;&#xC2B5;&#xB2C8;&#xB2E4;.</p>
+<ul>
+<li><p>forget gate&#xB294; &#xC815;&#xBCF4;&#xB97C; &#xC5BC;&#xB9C8;&#xB098; &#xC78A;&#xC744; &#xAC83;&#xC778;&#xC9C0;&#xC5D0; &#xB300;&#xD574;&#xC11C; &#xC5F0;&#xC0B0;&#xD558;&#xB294; gate&#xC785;&#xB2C8;&#xB2E4;. sigmoid&#xB97C; &#xD1B5;&#xD574; 0 ~ 1 &#xC0AC;&#xC774;&#xC758; &#xAC12;&#xC774; &#xCD9C;&#xB825;&#xB418;&#xB294;&#xB370; 1&#xC5D0; &#xAC00;&#xAE4C;&#xC6B0;&#xBA74; &#xAE30;&#xC5B5;&#xD558;&#xB77C;&#xB294; &#xC758;&#xBBF8;&#xB97C; &#xD3EC;&#xD568;&#xD558;&#xACE0; 0&#xC5D0; &#xAC00;&#xAE4C;&#xC6B0;&#xBA74; &#xC78A;&#xC73C;&#xB77C;&#xB294; &#xC758;&#xBBF8;&#xB97C; &#xD3EC;&#xD568;&#xD569;&#xB2C8;&#xB2E4;.</p>
+</li>
+<li><p>input gate&#xB294; &#xC0C8;&#xB85C;&#xC6B4; &#xC815;&#xBCF4;&#xB97C; &#xACF5;&#xAE09;&#xD558;&#xB294; &#xC5F0;&#xC0B0;&#xC744; &#xD558;&#xB294; gate&#xC785;&#xB2C8;&#xB2E4;. sigmoid&#xB97C; &#xD1B5;&#xD574; &#xC5B4;&#xB5A4; &#xC785;&#xB825;&#xAC12;&#xC744; &#xC5C5;&#xB370;&#xC774;&#xD2B8;&#xD574;&#xC57C; &#xD560;&#xC9C0; &#xACB0;&#xC815;&#xD558;&#xACE0; tanh&#xB294; &#xC0C8;&#xB85C;&#xC6B4; &#xC785;&#xB825;&#xAC12;&#xC744; &#xB9CC;&#xB4ED;&#xB2C8;&#xB2E4;. &#xB450; &#xAC1C;&#xC758; &#xAC12;&#xC744; &#xD569;&#xCCD0;&#xC11C; &#xC0C8;&#xB85C;&#xC6B4; &#xAC12;&#xC774; &#xAE30;&#xC874; &#xAC12;&#xC5D0; &#xC601;&#xD5A5;&#xC744; &#xC8FC;&#xB294; &#xAC12;&#xC744; &#xB9CC;&#xB4E4;&#xC5B4; &#xB0C5;&#xB2C8;&#xB2E4;.</p>
+</li>
+<li><p>output gate&#xB294; &#xC5B4;&#xB5A4; &#xCD9C;&#xB825;&#xAC12;&#xC744; &#xB2E4;&#xC74C; state&#xC5D0; &#xBCF4;&#xB0B4;&#xC904;&#xC9C0; &#xACB0;&#xC815;&#xD558;&#xB294; gate&#xC785;&#xB2C8;&#xB2E4;. sigmoid&#xB97C; &#xD1B5;&#xD574; &#xC5B4;&#xB5A4; &#xAC12;&#xC744; &#xCD9C;&#xB825;&#xD574;&#xC57C; &#xD560;&#xC9C0; &#xACB0;&#xC815;&#xD558;&#xACE0; tanh&#xB294; &#xC5C5;&#xB370;&#xC774;&#xD2B8; &#xB41C; cell state&#xC758; &#xC601;&#xD5A5;&#xC744; &#xB9D0;&#xD574;&#xC90D;&#xB2C8;&#xB2E4;.</p>
+</li>
+</ul>
+<p>&#xACB0;&#xB860;&#xC801;&#xC73C;&#xB85C; &#xC21C;&#xC11C;&#xB294; forget gate&#xB85C; &#xC78A;&#xC5B4;&#xC57C;&#xD560; &#xBD80;&#xBD84;&#xC744; &#xC78A;&#xACE0; input gate&#xB85C; &#xC0C8;&#xB85C;&#xC6B4; &#xAC12;&#xC744; &#xCD94;&#xAC00;&#xD558;&#xBA70; cell state&#xB97C; &#xC5C5;&#xB370;&#xC774;&#xD2B8; &#xD558;&#xACE0; output gate&#xB97C; &#xD1B5;&#xD574; &#xCD5C;&#xC885;&#xC801;&#xC73C;&#xB85C; &#xCD9C;&#xB825;&#xD569;&#xB2C8;&#xB2E4;.</p>
 <hr>
 <h1 id="lstmlayerc">lstm_layer.c</h1>
+<h2 id="incrementlayer">increment_layer</h2>
+<pre><code>
+static void increment_layer(layer *l, int steps)
+{
+    int num = l-&gt;outputs*l-&gt;batch*steps;
+    l-&gt;output += num;
+    l-&gt;delta += num;
+    l-&gt;x += num;
+    l-&gt;x_norm += num;
+}
+</code></pre><h2 id="forwardlstmlayer">forward_lstm_layer</h2>
+<pre><code>void forward_lstm_layer(layer l, network state)
+{
+    network s = { 0 };
+    s.train = state.train;
+    int i;
+    layer wf = *(l.wf);
+    layer wi = *(l.wi);
+    layer wg = *(l.wg);
+    layer wo = *(l.wo);
+
+    layer uf = *(l.uf);
+    layer ui = *(l.ui);
+    layer ug = *(l.ug);
+    layer uo = *(l.uo);
+
+    fill_cpu(l.outputs * l.batch * l.steps, 0, wf.delta, 1);
+    fill_cpu(l.outputs * l.batch * l.steps, 0, wi.delta, 1);
+    fill_cpu(l.outputs * l.batch * l.steps, 0, wg.delta, 1);
+    fill_cpu(l.outputs * l.batch * l.steps, 0, wo.delta, 1);
+
+    fill_cpu(l.outputs * l.batch * l.steps, 0, uf.delta, 1);
+    fill_cpu(l.outputs * l.batch * l.steps, 0, ui.delta, 1);
+    fill_cpu(l.outputs * l.batch * l.steps, 0, ug.delta, 1);
+    fill_cpu(l.outputs * l.batch * l.steps, 0, uo.delta, 1);
+    if (state.train) {
+        fill_cpu(l.outputs * l.batch * l.steps, 0, l.delta, 1);
+    }
+
+    for (i = 0; i &lt; l.steps; ++i) {
+        s.input = l.h_cpu;
+        forward_connected_layer(wf, s);                            
+        forward_connected_layer(wi, s);                            
+        forward_connected_layer(wg, s);                            
+        forward_connected_layer(wo, s);                            
+
+        s.input = state.input;
+        forward_connected_layer(uf, s);                            
+        forward_connected_layer(ui, s);                            
+        forward_connected_layer(ug, s);                            
+        forward_connected_layer(uo, s);                            
+
+        copy_cpu(l.outputs*l.batch, wf.output, 1, l.f_cpu, 1);
+        axpy_cpu(l.outputs*l.batch, 1, uf.output, 1, l.f_cpu, 1);
+
+        copy_cpu(l.outputs*l.batch, wi.output, 1, l.i_cpu, 1);
+        axpy_cpu(l.outputs*l.batch, 1, ui.output, 1, l.i_cpu, 1);
+
+        copy_cpu(l.outputs*l.batch, wg.output, 1, l.g_cpu, 1);
+        axpy_cpu(l.outputs*l.batch, 1, ug.output, 1, l.g_cpu, 1);
+
+        copy_cpu(l.outputs*l.batch, wo.output, 1, l.o_cpu, 1);
+        axpy_cpu(l.outputs*l.batch, 1, uo.output, 1, l.o_cpu, 1);
+
+        activate_array(l.f_cpu, l.outputs*l.batch, LOGISTIC);        
+        activate_array(l.i_cpu, l.outputs*l.batch, LOGISTIC);        
+        activate_array(l.g_cpu, l.outputs*l.batch, TANH);            
+        activate_array(l.o_cpu, l.outputs*l.batch, LOGISTIC);        
+
+        copy_cpu(l.outputs*l.batch, l.i_cpu, 1, l.temp_cpu, 1);        
+        mul_cpu(l.outputs*l.batch, l.g_cpu, 1, l.temp_cpu, 1);        
+        mul_cpu(l.outputs*l.batch, l.f_cpu, 1, l.c_cpu, 1);            
+        axpy_cpu(l.outputs*l.batch, 1, l.temp_cpu, 1, l.c_cpu, 1);
+
+        copy_cpu(l.outputs*l.batch, l.c_cpu, 1, l.h_cpu, 1);            
+        activate_array(l.h_cpu, l.outputs*l.batch, TANH);        
+        mul_cpu(l.outputs*l.batch, l.o_cpu, 1, l.h_cpu, 1);
+
+        copy_cpu(l.outputs*l.batch, l.c_cpu, 1, l.cell_cpu, 1);        
+        copy_cpu(l.outputs*l.batch, l.h_cpu, 1, l.output, 1);
+
+        state.input += l.inputs*l.batch;
+        l.output    += l.outputs*l.batch;
+        l.cell_cpu      += l.outputs*l.batch;
+
+        increment_layer(&amp;wf, 1);
+        increment_layer(&amp;wi, 1);
+        increment_layer(&amp;wg, 1);
+        increment_layer(&amp;wo, 1);
+
+        increment_layer(&amp;uf, 1);
+        increment_layer(&amp;ui, 1);
+        increment_layer(&amp;ug, 1);
+        increment_layer(&amp;uo, 1);
+    }
+}
+</code></pre><p><code>forward</code></p>
+<h2 id="backwardlstmlayer">backward_lstm_layer</h2>
+<pre><code>void backward_lstm_layer(layer l, network state)
+{
+    network s = { 0 };
+    s.train = state.train;
+    int i;
+    layer wf = *(l.wf);
+    layer wi = *(l.wi);
+    layer wg = *(l.wg);
+    layer wo = *(l.wo);
+
+    layer uf = *(l.uf);
+    layer ui = *(l.ui);
+    layer ug = *(l.ug);
+    layer uo = *(l.uo);
+
+    increment_layer(&amp;wf, l.steps - 1);
+    increment_layer(&amp;wi, l.steps - 1);
+    increment_layer(&amp;wg, l.steps - 1);
+    increment_layer(&amp;wo, l.steps - 1);
+
+    increment_layer(&amp;uf, l.steps - 1);
+    increment_layer(&amp;ui, l.steps - 1);
+    increment_layer(&amp;ug, l.steps - 1);
+    increment_layer(&amp;uo, l.steps - 1);
+
+    state.input += l.inputs*l.batch*(l.steps - 1);
+    if (state.delta) state.delta += l.inputs*l.batch*(l.steps - 1);
+
+    l.output += l.outputs*l.batch*(l.steps - 1);
+    l.cell_cpu += l.outputs*l.batch*(l.steps - 1);
+    l.delta += l.outputs*l.batch*(l.steps - 1);
+
+    for (i = l.steps - 1; i &gt;= 0; --i) {
+        if (i != 0) copy_cpu(l.outputs*l.batch, l.cell_cpu - l.outputs*l.batch, 1, l.prev_cell_cpu, 1);
+        copy_cpu(l.outputs*l.batch, l.cell_cpu, 1, l.c_cpu, 1);
+        if (i != 0) copy_cpu(l.outputs*l.batch, l.output - l.outputs*l.batch, 1, l.prev_state_cpu, 1);
+        copy_cpu(l.outputs*l.batch, l.output, 1, l.h_cpu, 1);
+
+        l.dh_cpu = (i == 0) ? 0 : l.delta - l.outputs*l.batch;
+
+        copy_cpu(l.outputs*l.batch, wf.output, 1, l.f_cpu, 1);            
+        axpy_cpu(l.outputs*l.batch, 1, uf.output, 1, l.f_cpu, 1);            
+
+        copy_cpu(l.outputs*l.batch, wi.output, 1, l.i_cpu, 1);            
+        axpy_cpu(l.outputs*l.batch, 1, ui.output, 1, l.i_cpu, 1);            
+
+        copy_cpu(l.outputs*l.batch, wg.output, 1, l.g_cpu, 1);            
+        axpy_cpu(l.outputs*l.batch, 1, ug.output, 1, l.g_cpu, 1);            
+
+        copy_cpu(l.outputs*l.batch, wo.output, 1, l.o_cpu, 1);            
+        axpy_cpu(l.outputs*l.batch, 1, uo.output, 1, l.o_cpu, 1);            
+
+        activate_array(l.f_cpu, l.outputs*l.batch, LOGISTIC);            
+        activate_array(l.i_cpu, l.outputs*l.batch, LOGISTIC);        
+        activate_array(l.g_cpu, l.outputs*l.batch, TANH);            
+        activate_array(l.o_cpu, l.outputs*l.batch, LOGISTIC);        
+
+        copy_cpu(l.outputs*l.batch, l.delta, 1, l.temp3_cpu, 1);        
+
+        copy_cpu(l.outputs*l.batch, l.c_cpu, 1, l.temp_cpu, 1);            
+        activate_array(l.temp_cpu, l.outputs*l.batch, TANH);            
+
+        copy_cpu(l.outputs*l.batch, l.temp3_cpu, 1, l.temp2_cpu, 1);        
+        mul_cpu(l.outputs*l.batch, l.o_cpu, 1, l.temp2_cpu, 1);            
+
+        gradient_array(l.temp_cpu, l.outputs*l.batch, TANH, l.temp2_cpu);
+        axpy_cpu(l.outputs*l.batch, 1, l.dc_cpu, 1, l.temp2_cpu, 1);        
+
+        copy_cpu(l.outputs*l.batch, l.c_cpu, 1, l.temp_cpu, 1);            
+        activate_array(l.temp_cpu, l.outputs*l.batch, TANH);            
+        mul_cpu(l.outputs*l.batch, l.temp3_cpu, 1, l.temp_cpu, 1);        
+        gradient_array(l.o_cpu, l.outputs*l.batch, LOGISTIC, l.temp_cpu);
+        copy_cpu(l.outputs*l.batch, l.temp_cpu, 1, wo.delta, 1);
+        s.input = l.prev_state_cpu;
+        s.delta = l.dh_cpu;                                                            
+        backward_connected_layer(wo, s);
+
+        copy_cpu(l.outputs*l.batch, l.temp_cpu, 1, uo.delta, 1);
+        s.input = state.input;
+        s.delta = state.delta;
+        backward_connected_layer(uo, s);                                    
+
+        copy_cpu(l.outputs*l.batch, l.temp2_cpu, 1, l.temp_cpu, 1);            
+        mul_cpu(l.outputs*l.batch, l.i_cpu, 1, l.temp_cpu, 1);                
+        gradient_array(l.g_cpu, l.outputs*l.batch, TANH, l.temp_cpu);        
+        copy_cpu(l.outputs*l.batch, l.temp_cpu, 1, wg.delta, 1);
+        s.input = l.prev_state_cpu;
+        s.delta = l.dh_cpu;                                                        
+        backward_connected_layer(wg, s);
+
+        copy_cpu(l.outputs*l.batch, l.temp_cpu, 1, ug.delta, 1);
+        s.input = state.input;
+        s.delta = state.delta;
+        backward_connected_layer(ug, s);                                                                
+
+        copy_cpu(l.outputs*l.batch, l.temp2_cpu, 1, l.temp_cpu, 1);            
+        mul_cpu(l.outputs*l.batch, l.g_cpu, 1, l.temp_cpu, 1);                
+        gradient_array(l.i_cpu, l.outputs*l.batch, LOGISTIC, l.temp_cpu);
+        copy_cpu(l.outputs*l.batch, l.temp_cpu, 1, wi.delta, 1);
+        s.input = l.prev_state_cpu;
+        s.delta = l.dh_cpu;
+        backward_connected_layer(wi, s);                        
+
+        copy_cpu(l.outputs*l.batch, l.temp_cpu, 1, ui.delta, 1);
+        s.input = state.input;
+        s.delta = state.delta;
+        backward_connected_layer(ui, s);                                    
+
+        copy_cpu(l.outputs*l.batch, l.temp2_cpu, 1, l.temp_cpu, 1);        
+        mul_cpu(l.outputs*l.batch, l.prev_cell_cpu, 1, l.temp_cpu, 1);
+        gradient_array(l.f_cpu, l.outputs*l.batch, LOGISTIC, l.temp_cpu);
+        copy_cpu(l.outputs*l.batch, l.temp_cpu, 1, wf.delta, 1);
+        s.input = l.prev_state_cpu;
+        s.delta = l.dh_cpu;
+        backward_connected_layer(wf, s);                        
+
+        copy_cpu(l.outputs*l.batch, l.temp_cpu, 1, uf.delta, 1);
+        s.input = state.input;
+        s.delta = state.delta;
+        backward_connected_layer(uf, s);                                    
+
+        copy_cpu(l.outputs*l.batch, l.temp2_cpu, 1, l.temp_cpu, 1);            
+        mul_cpu(l.outputs*l.batch, l.f_cpu, 1, l.temp_cpu, 1);                
+        copy_cpu(l.outputs*l.batch, l.temp_cpu, 1, l.dc_cpu, 1);                
+
+        state.input -= l.inputs*l.batch;
+        if (state.delta) state.delta -= l.inputs*l.batch;
+        l.output -= l.outputs*l.batch;
+        l.cell_cpu -= l.outputs*l.batch;
+        l.delta -= l.outputs*l.batch;
+
+        increment_layer(&amp;wf, -1);
+        increment_layer(&amp;wi, -1);
+        increment_layer(&amp;wg, -1);
+        increment_layer(&amp;wo, -1);
+
+        increment_layer(&amp;uf, -1);
+        increment_layer(&amp;ui, -1);
+        increment_layer(&amp;ug, -1);
+        increment_layer(&amp;uo, -1);
+    }
+}
+</code></pre><p><code>backward</code></p>
 
                                 
                                 </section>
@@ -1973,7 +2228,7 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"lstm_layer.c","level":"5.29","depth":1,"next":{"title":"matrix.c","level":"5.30","depth":1,"ref":"","articles":[]},"previous":{"title":"logistic_layer.c","level":"5.28","depth":1,"ref":"","articles":[]},"dir":"ltr"},"config":{"plugins":["advanced-emoji","theme-gestalt","-theme-default","styles-sass-fix","theme-api","mathjax"],"root":"./","styles":{"website":"website-1594393089001.css"},"pluginsConfig":{"styles-sass-fix":{},"theme-gestalt":{"showLevel":false,"styles":{"website":"styles/website.css"},"logo":"/darknet_book/assets/darknet.png","baseUrl":null,"excludeDefaultStyles":true,"doNotHideChildrenChapters":false},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"theme-api":{"languages":[],"split":true,"theme":"light"},"mathjax":{"forceSVG":false,"version":"2.6-latest"},"advanced-emoji":{"embedEmojis":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]}},"theme":"default","author":"JJM","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"DarkNet Book","output.name":"site","gitbook":"*"},"file":{"path":"part3_src/lstm_layer.md","mtime":"2020-07-09T02:53:55.440Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-07-10T14:57:58.848Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"lstm_layer.c","level":"5.29","depth":1,"next":{"title":"matrix.c","level":"5.30","depth":1,"ref":"","articles":[]},"previous":{"title":"logistic_layer.c","level":"5.28","depth":1,"ref":"","articles":[]},"dir":"ltr"},"config":{"plugins":["advanced-emoji","theme-gestalt","-theme-default","styles-sass-fix","theme-api","mathjax"],"root":"./","styles":{"website":"website-1594744469088.css"},"pluginsConfig":{"styles-sass-fix":{},"theme-gestalt":{"showLevel":false,"styles":{"website":"styles/website.css"},"logo":"/darknet_book/assets/darknet.png","baseUrl":null,"excludeDefaultStyles":true,"doNotHideChildrenChapters":false},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"theme-api":{"languages":[],"split":true,"theme":"light"},"mathjax":{"forceSVG":false,"version":"2.6-latest"},"advanced-emoji":{"embedEmojis":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]}},"theme":"default","author":"JJM","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"DarkNet Book","output.name":"site","gitbook":"*"},"file":{"path":"part3_src/lstm_layer.md","mtime":"2020-07-14T16:03:41.341Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-07-14T16:34:17.969Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>

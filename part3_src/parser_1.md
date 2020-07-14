@@ -23,28 +23,28 @@ param2=value2
 
 이렇게 모델의 구조를 설정하면 하나의 네트워크의 자료구조를 만들게 됩니다.
 
-
-
 - network list는 root
 - section list는 layer
 - option list는 layer의 매개변수
+
+라고 이해하고 읽어봅시다.
 
 ## parse_network_cfg
 
 ```
 network *parse_network_cfg(char *filename)
 {
-    list *sections = read_cfg(filename);                    /// cfg 파일 구조 리스트
-    node *n = sections->front;                             
+    list *sections = read_cfg(filename);                    /// sections = cfg 파일 구조 리스트
+    node *n = sections->front;                              /// n = sections의 맨 앞 노드
     if(!n) error("Config file has no sections");
-    network *net = make_network(sections->size - 1);        /// network 구조체
-    net->gpu_index = gpu_index;                             
-    size_params params;                                     /// parameter size 구조체
+    network *net = make_network(sections->size - 1);        
+    net->gpu_index = gpu_index;                                      
+    size_params params;                                     
 
-    section *s = (section *)n->val;                         /// network의 정보 section
-    list *options = s->options;                             /// section의 option
+    section *s = (section *)n->val;                         
+    list *options = s->options;                            
     if(!is_network(s)) error("First section must be [net] or [network]");
-    parse_net_options(options, net);                        /// network 구조체에 option을 매핑
+    parse_net_options(options, net);                        
 
     params.h = net->h;
     params.w = net->w;
@@ -166,6 +166,8 @@ network *parse_network_cfg(char *filename)
     return net;
 }
 ```
+
+- cfg파일을 parsing하여 network를 만들어주는 함수입니다.
 
 ## read_cfg
 
