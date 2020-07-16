@@ -42,7 +42,7 @@
 
     
         
-        <link rel="stylesheet" href="../website-1594744469088.css">
+        <link rel="stylesheet" href="../website-1594858963577.css">
         
     
 
@@ -1939,7 +1939,118 @@
     
                                 <section class="normal markdown-section">
                                 
-                                
+                                <h1 id="yolov2">YOLOv2</h1>
+<ul>
+<li>Paper : <a href="https://arxiv.org/abs/1612.08242" target="_blank">https://arxiv.org/abs/1612.08242</a></li>
+</ul>
+<p>&#xAE30;&#xC874; YOLO&#xC758; &#xB0AE;&#xC740; &#xAC80;&#xCD9C;&#xC728;&#xACFC; &#xC0C1;&#xB2F9; &#xC218;&#xC758; localization error&#xB97C; &#xD574;&#xACB0;&#xD558;&#xAE30; &#xC704;&#xD574; &#xC5EC;&#xB7EC;&#xAC00;&#xC9C0; &#xC2E4;&#xD5D8;&#xC744; &#xC9C4;&#xD589;&#xD55C; &#xB17C;&#xBB38;&#xC785;&#xB2C8;&#xB2E4;.</p>
+<p><img src="../figure/paper/yolov2/exp.PNG" alt="yolov2"></p>
+<h1 id="better">Better</h1>
+<h2 id="batch-normalization">Batch Normalization</h2>
+<p>&#xBAA8;&#xB4E0; Convolution Layer&#xC5D0; &#xAE30;&#xC874;&#xC5D0; &#xC0AC;&#xC6A9;&#xD55C; Dropout&#xC744; &#xC81C;&#xAC70;&#xD558;&#xACE0; Batch Normalization&#xC744; &#xCD94;&#xAC00;&#xD568;&#xC73C;&#xB85C; mAP&#xAC00; 2% &#xD5A5;&#xC0C1;&#xB429;&#xB2C8;&#xB2E4;.</p>
+<h2 id="high-resolution-classifier">High Resolution Classifier</h2>
+<p>&#xBA3C;&#xC800; Classifier Network&#xB97C; 448x448 &#xD574;&#xC0C1;&#xB3C4;&#xB85C; 10 epoch&#xB3D9;&#xC548; fine-tuning &#xC2DC;&#xD0B5;&#xB2C8;&#xB2E4;. &#xADF8;&#xB9AC;&#xACE0; &#xB9C8;&#xC9C0;&#xB9C9; Convolutional Layer&#xC640; Avgpooling Layer, Softmax Layer&#xB97C; &#xC5C6;&#xC560;&#xACE0; Detection&#x3147;&#xC744; &#xC704;&#xD55C; Layer 4&#xAC1C;&#xB97C; &#xCD94;&#xAC00;&#xD568;&#xC73C;&#xB85C; mAP&#xAC00; 4% &#xD5A5;&#xC0C1;&#xB429;&#xB2C8;&#xB2E4;.</p>
+<h2 id="convolutional">Convolutional</h2>
+<p>&#xAE30;&#xC874;&#xC758; Yolo&#xB294; &#xB9C8;&#xC9C0;&#xB9C9; Layer&#xB85C; Fully Connected Layer&#xB97C; &#xC0AC;&#xC6A9;&#xD558;&#xC5EC; Bounding Box&#xB97C; &#xC608;&#xCE21;&#xD569;&#xB2C8;&#xB2E4;. &#xC774;&#xAC83;&#xC744; Convolutional Layer&#xB85C; &#xBC14;&#xAFB8;&#xC5C8;&#xC2B5;&#xB2C8;&#xB2E4;.</p>
+<p>&#xCD5C;&#xC885; Feature Map&#xC744; &#xD640;&#xC218;&#xB85C; &#xB9CC;&#xB4E4;&#xAE30; &#xC704;&#xD574;&#xC11C; 448x448 &#xC785;&#xB825; &#xC774;&#xBBF8;&#xC9C0;&#xB97C; 416x416&#xC73C;&#xB85C; &#xB9CC;&#xB4ED;&#xB2C8;&#xB2E4;. &#xC774;&#xB807;&#xAC8C; &#xD640;&#xC218;&#xB85C; &#xB9CC;&#xB4E6;&#xC73C;&#xB85C; &#xC778;&#xD574;&#xC11C; &#xC911;&#xC2EC;&#xC810;&#xC740; &#xD558;&#xB098;&#xB9CC; &#xC874;&#xC7AC;&#xD569;&#xB2C8;&#xB2E4;.(&#xC9DD;&#xC218;&#xC778; &#xACBD;&#xC6B0; &#xC911;&#xC2EC;&#xC810;&#xC774; 4&#xAC1C; &#xC785;&#xB2C8;&#xB2E4;.) &#xC911;&#xC2EC;&#xC810;&#xC774; &#xC5EC;&#xB7EC;&#xAC1C;&#xB77C;&#xBA74; &#xC791;&#xC740; Object&#xC758; &#xAC80;&#xCD9C;&#xC774; &#xC5B4;&#xB824;&#xC6B8; &#xC218; &#xC788;&#xC2B5;&#xB2C8;&#xB2E4;. &#xCD5C;&#xC885;&#xC801;&#xC73C;&#xB85C; 13x13&#xC758; &#xD06C;&#xAE30;&#xB97C; &#xAC16;&#xB294; Feature Map&#xC744; &#xC5BB;&#xC2B5;&#xB2C8;&#xB2E4;.</p>
+<h2 id="anchor-boxes">Anchor Boxes</h2>
+<p>&#xAE30;&#xC874; YOLO&#xC640; &#xB2E4;&#xB974;&#xAC8C;(objectness, x, y, w, h, c, x, y, w, h, c) YOLOv2&#xC5D0;&#xC11C;&#xB294; Anchor Box&#xC758; &#xAC1C;&#xC218;&#xB9CC;&#xD07C;(objectness, x, y, w, h, c, objectness, x, y, w, h, c, ...) &#xD074;&#xB798;&#xC2A4;, &#xAC1D;&#xCCB4;&#xC758; &#xC720;&#xBB34;&#xB97C; &#xC608;&#xCE21;&#xD569;&#xB2C8;&#xB2E4;.</p>
+<p>Anchor box&#xB97C; &#xC0AC;&#xC6A9;&#xD568;&#xC73C;&#xB85C;&#xC368; mAP&#xB294; &#xC0B4;&#xC9DD; &#xAC10;&#xC18C;&#xD558;&#xC9C0;&#xB9CC; recall&#xC774; &#xB192;&#xC544;&#xC838;&#xC11C; &#xC608;&#xCE21;&#xC744; &#xB354; &#xB9CE;&#xC774; &#xD560; &#xC218; &#xC788;&#xC2B5;&#xB2C8;&#xB2E4;.</p>
+<ul>
+<li>no anchor box = mAP : 69.5 | recall : 81%</li>
+<li>anchor box = mAP : 69.2 | recall : 88%</li>
+</ul>
+<h2 id="new-network">New Network</h2>
+<p>DarkNet 19&#xB97C; &#xC0C8;&#xB86D;&#xAC8C; &#xC81C;&#xC548;&#xD569;&#xB2C8;&#xB2E4;.</p>
+<p><img src="../figure/paper/yolov2/darknet.PNG" alt="darknet"></p>
+<h2 id="dimension-clusters">Dimension Clusters</h2>
+<p><img src="../figure/paper/yolov2/cluster.PNG" alt="cluster"></p>
+<p>&#xC790;&#xB3D9;&#xC801;&#xC73C;&#xB85C; Anchor Box&#xB97C; &#xC120;&#xD0DD;&#xD558;&#xAE30; &#xC704;&#xD574;&#xC11C; K-means Clustering &#xC54C;&#xACE0;&#xB9AC;&#xC998;&#xC744; &#xC0AC;&#xC6A9;&#xD569;&#xB2C8;&#xB2E4;. &#xADF8;&#xB9AC;&#xACE0; K-means Clustering&#xC5D0;&#xC11C; &#xC720;&#xD074;&#xB9AC;&#xB514;&#xC548; &#xAC70;&#xB9AC;&#xB97C; &#xC0AC;&#xC6A9;&#xD558;&#xC9C0; &#xC54A;&#xACE0; &#xC544;&#xB798;&#xC640; &#xAC19;&#xC740; &#xAC70;&#xB9AC;&#xB97C; &#xC0AC;&#xC6A9;&#xD569;&#xB2C8;&#xB2E4;.</p>
+<p><code>d(box, centroid) = 1 - IOU(box, centroid)</code></p>
+<p>k&#xAC00; &#xCEE4;&#xC9C0;&#xBA74; clustering&#xC758; &#xACB0;&#xACFC;&#xC640; label&#xC0AC;&#xC774;&#xC758; IOU&#xAC00; &#xCEE4;&#xC9C0;&#xAE30; &#xB54C;&#xBB38;&#xC5D0; recall&#xC774; &#xC0C1;&#xC2B9;&#xD558;&#xC9C0;&#xB9CC; &#xBAA8;&#xB378;&#xC758; &#xBCF5;&#xC7A1;&#xB3C4;&#xAC00; &#xC0C1;&#xC2B9;&#xD558;&#xB294; trade-off &#xAD00;&#xACC4;&#xB97C; &#xAC00;&#xC9C0;&#xAE30; &#xB54C;&#xBB38;&#xC5D0; k&#xB97C; 5&#xB85C; &#xC120;&#xD0DD;&#xD569;&#xB2C8;&#xB2E4;.</p>
+<p><img src="../figure/paper/yolov2/exp.PNG" alt="exp"></p>
+<h2 id="direct-location-prediction">Direct location prediction</h2>
+<p>Anchor Box&#xB97C; &#xC0AC;&#xC6A9;&#xD558;&#xBA74; &#xD559;&#xC2B5; &#xCD08;&#xAE30;&#xC5D0; &#xBAA8;&#xB378;&#xC774; &#xBD88;&#xC548;&#xC815;&#xD574;&#xC9C0;&#xB294; &#xBB38;&#xC81C;&#xB97C; &#xD574;&#xACB0;&#xD560; &#xC218; &#xC788;&#xC5C8;&#xB294;&#xB370; &#xADF8; &#xC6D0;&#xC778;&#xC740; Box&#xC758; &#xC88C;&#xD45C;&#xAC00; &#xB79C;&#xB364;&#xD558;&#xAC8C; &#xC608;&#xCE21;&#xB418;&#xAE30; &#xB54C;&#xBB38;&#xC785;&#xB2C8;&#xB2E4;. &#xADF8;&#xB798;&#xC11C; RPN&#xC885;&#xB958;&#xC758; &#xBAA8;&#xB378;&#xC740; <script type="math/tex; ">t_x, t_y</script>&#xB97C; &#xC608;&#xCE21;&#xD558;&#xACE0; &#xC911;&#xC2EC; &#xC88C;&#xD45C;&#xB97C; &#xC544;&#xB798;&#xC640; &#xAC19;&#xC774; &#xACC4;&#xC0B0;&#xD569;&#xB2C8;&#xB2E4;.</p>
+<p><script type="math/tex; ">x = (t_x * w_a) - x_a</script></p>
+<p><script type="math/tex; ">y = (t_y * h_a) - y_a</script></p>
+<p>&#xC608;&#xB97C; &#xB4E4;&#xC5B4;&#xC11C; <script type="math/tex; ">t_x = 1</script>&#xC778; &#xACBD;&#xC6B0; box&#xB97C; &#xC624;&#xB978;&#xCABD;&#xC73C;&#xB85C; &#xC774;&#xB3D9;&#xC2DC;&#xD0AC; &#xAC83;&#xC774;&#xACE0; <script type="math/tex; ">tx=-1</script>&#xC778; &#xACBD;&#xC6B0; box&#xB97C; &#xC67C;&#xCABD;&#xC73C;&#xB85C; &#xC774;&#xB3D9;&#xC2DC;&#xD0AC; &#xAC83; &#xC785;&#xB2C8;&#xB2E4;. &#xC774; &#xACF5;&#xC2DD;&#xC740; &#xC81C;&#xC57D;&#xC774; &#xC5C6;&#xAE30; &#xB54C;&#xBB38;&#xC5D0; box&#xB97C; &#xC608;&#xCE21;&#xD55C; &#xC704;&#xCE58;&#xC5D0; &#xAD00;&#xACC4; &#xC5C6;&#xC774; Anchor Box&#xC758; &#xC704;&#xCE58;&#xAC00; &#xC5B4;&#xB514;&#xC5D0;&#xB3C4; &#xB098;&#xC62C; &#xC218; &#xC788;&#xB2E4;&#xB294; <strong>&#xBB38;&#xC81C;&#xC810;</strong> &#xC744; &#xAC00;&#xC9C0;&#xACE0; &#xC788;&#xC2B5;&#xB2C8;&#xB2E4;.</p>
+<p>YOLOv2&#xB294; &#xC704;&#xC5D0; &#xBB38;&#xC81C;&#xC810;&#xC744; &#xD574;&#xACB0;&#xD558;&#xAE30; &#xC704;&#xD574;&#xC11C; &#xC81C;&#xC57D;&#xC870;&#xAC74;&#xC744; &#xC90D;&#xB2C8;&#xB2E4;. YOLOv2&#xC5D0;&#xC11C;&#xB294; grid cell&#xC5D0; &#xC0C1;&#xB300;&#xC801;&#xC778; &#xC88C;&#xD45C;&#xB97C; &#xC720;&#xCD94;&#xD558;&#xB3C4;&#xB85D; &#xD558;&#xC600;&#xC2B5;&#xB2C8;&#xB2E4;. x, y&#xC758; &#xC704;&#xCE58;&#xAC00; grid cell &#xB0B4;&#xBD80;&#xC5D0;&#xB9CC; &#xC874;&#xC7AC;&#xD558;&#xB3C4;&#xB85D; &#xC81C;&#xC57D;&#xC744; &#xC8FC;&#xAE30; &#xB54C;&#xBB38;&#xC5D0; 0 ~ 1&#xC0AC;&#xC774;&#xC758; &#xAC12;&#xC744; &#xAC16;&#xAC8C; &#xB429;&#xB2C8;&#xB2E4;.</p>
+<p><img src="../figure/paper/yolov2/kmean.PNG" alt="kmean"></p>
+<p><script type="math/tex; ">P_r(object) * IOU(b, objcet) = \sigma(t_o)</script></p>
+<ul>
+<li><script type="math/tex; ">c_x, c_y</script> : &#xAC01; grid cell&#xC758; &#xC88C;&#xC0C1;&#xB2E8; &#xB05D;&#xC5D0; offset</li>
+<li><script type="math/tex; ">p_x, p_y, p_w, p_h</script> : &#xC6B0;&#xC120; &#xC21C;&#xC704; anchor box&#xC758; x, y, w, h</li>
+<li><script type="math/tex; ">t_x, t_y, t_w, t_h</script> : &#xC608;&#xCE21;&#xD55C; bounding box&#xC758; x, y, w, h</li>
+<li><script type="math/tex; ">b_x, b_y, b_w, b_h</script> : &#xC608;&#xCE21;&#xD55C; bounding box&#xC758; &#xAC12;&#xC744; &#xC870;&#xC815;&#xD574; Ground Truth&#xC640; IOU&#xB97C; &#xACC4;&#xC0B0;&#xD558;&#xAE30; &#xC704;&#xD55C; bounding box</li>
+<li><script type="math/tex; ">t_o</script> : object&#xC778;&#xC9C0; &#xC544;&#xB2CC;&#xC9C0;</li>
+</ul>
+<p><script type="math/tex; ">t_x, t_y</script>&#xB294; 0&#xC758; &#xAC12;&#xC744; &#xAC00;&#xC838; <script type="math/tex; ">b_x, b_y</script>&#xAC00; &#xC911;&#xC2EC; &#xC88C;&#xD45C;(0.5)&#xAC00; &#xB418;&#xAE30;&#xB97C; &#xC6D0;&#xD558;&#xACE0; <script type="math/tex; ">t_w, t_h</script>&#xB3C4; 0&#xC758; &#xAC12;&#xC744; &#xAC00;&#xC838; <script type="math/tex; ">p_w, p_h</script>&#xAC00; <script type="math/tex; ">b_w, b_h</script>&#xC640; &#xAC19;&#xC544;&#xC9C0;&#xAE30;&#xB97C; &#xC6D0;&#xD569;&#xB2C8;&#xB2E4;. exp &#xD568;&#xC218;&#xC758; &#xD2B9;&#xC131;&#xC0C1; &#xC74C;&#xC218;&#xAC00; &#xB098;&#xC624;&#xBA74; &#xC591;&#xC218;&#xAC00; &#xB418;&#xACE0; &#xC591;&#xC218;&#xBA74; &#xB354; &#xD070; &#xAC12;&#xC774; &#xB098;&#xC624;&#xAC8C; &#xD558;&#xAE30; &#xB584;&#xBB38;&#xC5D0; &#xD559;&#xC2B5;&#xC5D0; &#xC870;&#xAE08; &#xB354; &#xAE0D;&#xC815;&#xC801;&#xC778; &#xC601;&#xD5A5;&#xC744; &#xBBF8;&#xCE60; &#xC218; &#xC788;&#xC2B5;&#xB2C8;&#xB2E4;.</p>
+<p>Dimension Cluster, Direct location prediction&#xC744; &#xC801;&#xC6A9;&#xD558;&#xB294; &#xACBD;&#xC6B0; mAP&#xAC00; 5% &#xC0C1;&#xC2B9;&#xD569;&#xB2C8;&#xB2E4;.</p>
+<h2 id="fine-grained-feature">Fine-Grained Feature</h2>
+<p>Yolov2&#xB294; 13x13 feature map&#xC744; &#xC608;&#xCE21;&#xD558;&#xB294;&#xB370; 13x13&#xC740; &#xD070; object&#xB97C; &#xAC80;&#xCD9C;&#xD558;&#xB294;&#xB370; &#xCDA9;&#xBD84;&#xD558;&#xC9C0;&#xB9CC; &#xC791;&#xC740; object&#xB97C; &#xAC80;&#xCD9C;&#xD558;&#xB294;&#xB370; &#xC880; &#xB354; &#xC138;&#xBC00;&#xD55C; &#xD2B9;&#xC9D5;&#xC744; &#xC6D0;&#xD569;&#xB2C8;&#xB2E4;. &#xC774;&#xB7EC;&#xD55C; &#xBB38;&#xC81C;&#xB97C; &#xD574;&#xACB0;&#xD558;&#xAE30; &#xC704;&#xD574;&#xC11C; SSD&#xAC19;&#xC740; &#xACBD;&#xC6B0;&#xB294; &#xC5EC;&#xB7EC; level&#xC758; &#xD2B9;&#xC9D5; &#xB9F5;&#xC5D0;&#xC11C; &#xAC80;&#xCD9C;&#xC744; &#xD569;&#xB2C8;&#xB2E4;. YOLOv2&#xC758; &#xACBD;&#xC6B0; 26x26 feature map&#xC744; &#xADF8;&#xB300;&#xB85C; &#xAC00;&#xC838;&#xC624;&#xB294; &#xBC29;&#xBC95;&#xC744; &#xC0AC;&#xC6A9;&#xD569;&#xB2C8;&#xB2E4;.</p>
+<pre><code>26 x 26 x 512 --&gt; 13 x 13 x 2048
+</code></pre><p>&#xC774;&#xB97C; &#xD1B5;&#xD574;&#xC11C; mAP&#xAC00; 1% &#xC0C1;&#xC2B9;&#xD569;&#xB2C8;&#xB2E4;.</p>
+<p><img src="../figure/paper/yolov2/pass.PNG" alt="pass"></p>
+<h2 id="multi-scale-training">Multi-Scale Training</h2>
+<ul>
+<li><p>416x416 &#xC785;&#xB825; &#xC774;&#xBBF8;&#xC9C0;&#xB97C; &#xC0AC;&#xC6A9;&#xD569;&#xB2C8;&#xB2E4;. fully connected layer&#xB97C; &#xC81C;&#xAC70;&#xD588;&#xAE30; &#xB54C;&#xBB38;&#xC5D0; &#xC785;&#xB825; &#xD06C;&#xAE30;&#xB294; &#xC5B4;&#xB5A4; &#xAC83;&#xC774; &#xB4E4;&#xC5B4;&#xC640;&#xB3C4; &#xBB38;&#xC81C;&#xAC00; &#xC5C6;&#xC2B5;&#xB2C8;&#xB2E4;.</p>
+</li>
+<li><p>&#xB2E4;&#xC591;&#xD55C; &#xD574;&#xC0C1;&#xB3C4;&#xB97C; &#xAC00;&#xC9C0;&#xB294; &#xC774;&#xBBF8;&#xC9C0;&#xC5D0;&#xC11C; &#xB3D9;&#xC791;&#xD558;&#xAE30; &#xC6D0;&#xD558;&#xAE30; &#xB54C;&#xBB38;&#xC5D0; &#xB2E4;&#xC591;&#xD55C; &#xD574;&#xC0C1;&#xB3C4;&#xB97C; &#xD559;&#xC2B5;&#xC2DC;&#xD0B5;&#xB2C8;&#xB2E4;. 10&#xBC88; &#xBC30;&#xCE58;&#xB9C8;&#xB2E4; 32&#xBC30;&#xC218;&#xB85C; resize &#xB429;&#xB2C8;&#xB2E4;.(320, 352, 608) &#xAC00;&#xC7A5; &#xC791;&#xC740; &#xB54C;&#xB294; 320x320&#xC774;&#xACE0; &#xAC00;&#xC7A5; &#xD074; &#xB54C;&#xB294; 608x608&#xC785;&#xB2C8;&#xB2E4;.</p>
+</li>
+<li><p>&#xB0AE;&#xC740; &#xD574;&#xC0C1;&#xB3C4;&#xC758; &#xACBD;&#xC6B0; &#xC131;&#xB2A5;&#xC774; &#xAF64; &#xC88B;&#xC2B5;&#xB2C8;&#xB2E4;. 228x228 &#xC785;&#xB825; &#xC774;&#xBBF8;&#xC9C0;&#xC758; &#xACBD;&#xC6B0; &#xCD08;&#xB2F9; 90 &#xD504;&#xB808;&#xC784;&#xC774; &#xB098;&#xC624;&#xBA70; mAP&#xB294; Fast R-CNN&#xACFC; &#xBE44;&#xC2B7;&#xD569;&#xB2C8;&#xB2E4;.</p>
+</li>
+</ul>
+<h1 id="faster">Faster</h1>
+<h2 id="darknet">Darknet</h2>
+<ul>
+<li><p>3x3 filter&#xB97C; &#xC0AC;&#xC6A9;&#xD558;&#xACE0; &#xBAA8;&#xB4E0; pooling &#xC774;&#xD6C4; channel &#xC218;&#xB97C; 2&#xBC30;&#xB85C; &#xD569;&#xB2C8;&#xB2E4;.</p>
+</li>
+<li><p>19&#xAC1C;&#xC758; convolutional layer</p>
+</li>
+<li><p>5&#xAC1C;&#xC758; maxpooling layer</p>
+</li>
+<li><p>batch normalization</p>
+</li>
+<li><p>Imagenet Top-1 : 72.9% Top-5 : 91.2%</p>
+</li>
+</ul>
+<h2 id="training-for-classification">Training for classification</h2>
+<ul>
+<li><p>160 epoch</p>
+</li>
+<li><p>SGD(learning rate = 0.1)</p>
+</li>
+<li><p>polynomial rate decay : a power of 4</p>
+</li>
+<li><p>weight decay : 0.00005</p>
+</li>
+<li><p>momentum : 0.9</p>
+</li>
+<li><p>&#xCC98;&#xC74C;&#xC5D0; 224x224&#xB85C; finetuning&#xD558;&#xACE0; 448x448 fine tuning</p>
+</li>
+</ul>
+<h2 id="training-for-detection">Training for detection</h2>
+<ul>
+<li><p>&#xB9C8;&#xC9C0;&#xB9C9; convolutional layer&#xB97C; &#xC81C;&#xAC70;&#xD558;&#xACE0; 3x3x1024 convolutional layer &#xCD94;&#xAC00;</p>
+</li>
+<li><p>&#xADF8; &#xB4A4;&#xC5D0; 1x1 convolutional layer &#xCD94;&#xAC00;</p>
+</li>
+<li><p>5&#xAC1C;&#xC758; bounding box&#xB97C; &#xC608;&#xCE21;</p>
+</li>
+<li><p>125&#xAC1C;&#xC758; &#xC608;&#xCE21;&#xAC12; = 5 x (5(objectness, x, y, w, h) + 20(class))</p>
+</li>
+<li><p>160 epoch</p>
+</li>
+<li><p>weight decay : 0.00005</p>
+</li>
+<li><p>momentum : 0.9</p>
+</li>
+</ul>
+<p><img src="../figure/paper/yolov2/bench.PNG" alt="bench"></p>
+<p><img src="../figure/paper/yolov2/bench2.PNG" alt="bench2"></p>
+<h1 id="stronger">Stronger</h1>
+<p>&#xCD94;&#xD6C4;&#xC608;&#xC815;</p>
+
                                 
                                 </section>
                             
@@ -1982,7 +2093,7 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"YOLOv2","level":"2.2","depth":1,"next":{"title":"YOLOv3","level":"2.3","depth":1,"path":"part1_paper/yolov3.md","ref":"part1_paper/yolov3.md","articles":[]},"previous":{"title":"YOLOv1","level":"2.1","depth":1,"path":"part1_paper/yolov1.md","ref":"part1_paper/yolov1.md","articles":[]},"dir":"neutral"},"config":{"plugins":["advanced-emoji","theme-gestalt","-theme-default","styles-sass-fix","theme-api","mathjax"],"root":"./","styles":{"website":"website-1594744469088.css"},"pluginsConfig":{"styles-sass-fix":{},"theme-gestalt":{"showLevel":false,"styles":{"website":"styles/website.css"},"logo":"/darknet_book/assets/darknet.png","baseUrl":null,"excludeDefaultStyles":true,"doNotHideChildrenChapters":false},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"theme-api":{"languages":[],"split":true,"theme":"light"},"mathjax":{"forceSVG":false,"version":"2.6-latest"},"advanced-emoji":{"embedEmojis":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]}},"theme":"default","author":"JJM","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"DarkNet Book","output.name":"site","gitbook":"*"},"file":{"path":"part1_paper/yolov2.md","mtime":"2020-06-13T18:21:53.279Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-07-14T16:34:17.969Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"YOLOv2","level":"2.2","depth":1,"next":{"title":"YOLOv3","level":"2.3","depth":1,"path":"part1_paper/yolov3.md","ref":"part1_paper/yolov3.md","articles":[]},"previous":{"title":"YOLOv1","level":"2.1","depth":1,"path":"part1_paper/yolov1.md","ref":"part1_paper/yolov1.md","articles":[]},"dir":"ltr"},"config":{"plugins":["advanced-emoji","theme-gestalt","-theme-default","styles-sass-fix","theme-api","mathjax"],"root":"./","styles":{"website":"website-1594858963577.css"},"pluginsConfig":{"styles-sass-fix":{},"theme-gestalt":{"showLevel":false,"styles":{"website":"styles/website.css"},"logo":"/darknet_book/assets/darknet.png","baseUrl":null,"excludeDefaultStyles":true,"doNotHideChildrenChapters":false},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"theme-api":{"languages":[],"split":true,"theme":"light"},"mathjax":{"forceSVG":false,"version":"2.6-latest"},"advanced-emoji":{"embedEmojis":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]}},"theme":"default","author":"JJM","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"DarkNet Book","output.name":"site","gitbook":"*"},"file":{"path":"part1_paper/yolov2.md","mtime":"2020-07-16T00:22:23.248Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-07-16T00:22:37.559Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>

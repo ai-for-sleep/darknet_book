@@ -89,6 +89,7 @@ void forward_maxpool_layer(const maxpool_layer l, network net)
 
 ## backward_maxpool_layer
 
+```
 void backward_maxpool_layer(const maxpool_layer l, network net)
 {
     int i;
@@ -100,7 +101,7 @@ void backward_maxpool_layer(const maxpool_layer l, network net)
         net.delta[index] += l.delta[i];
     }
 }
-
+```
 `backward`
 
 
@@ -113,6 +114,7 @@ void backward_maxpool_layer(const maxpool_layer l, network net)
 
 ## get_maxpool_image
 
+```
 image get_maxpool_image(maxpool_layer l)
 {
     int h = l.out_h;
@@ -120,9 +122,11 @@ image get_maxpool_image(maxpool_layer l)
     int c = l.c;
     return float_to_image(w,h,c,l.output);
 }
+```
 
 ## get_maxpool_delta
 
+```
 image get_maxpool_delta(maxpool_layer l)
 {
     int h = l.out_h;
@@ -130,9 +134,11 @@ image get_maxpool_delta(maxpool_layer l)
     int c = l.c;
     return float_to_image(w,h,c,l.delta);
 }
+```
 
 ## resize_maxpool_layer
 
+```
 void resize_maxpool_layer(maxpool_layer *l, int w, int h)
 {
     l->h = h;
@@ -157,3 +163,4 @@ void resize_maxpool_layer(maxpool_layer *l, int w, int h)
     l->delta_gpu   = cuda_make_array(l->delta,  output_size);
     #endif
 }
+```
