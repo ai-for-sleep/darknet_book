@@ -12,6 +12,8 @@
 
 # Better
 
+`YOLOv2`
+
 ## Batch Normalization
 
 모든 Convolution Layer에 기존에 사용한 Dropout을 제거하고 Batch Normalization을 추가함으로 mAP가 2% 향상됩니다.
@@ -179,4 +181,77 @@ Yolov2는 13x13 feature map을 예측하는데 13x13은 큰 object를 검출하�
 
 # Stronger
 
-추후예정
+`YOLO9000`
+
+- Detection과 Classification 데이터 셋을 섞어서 학습 합니다.
+- Detection문제를 다루는 Pascal VOC, COCO 데이터 셋은 개, 고양이, 자동차와 같이 포괄적인 라벨링을 합니다.
+- Classification문제를 다루는 ImageNet 데이터 셋은 개(Norfolk terrier, Yorkshire terrier, ...)과 같이 세밀한 라벨링을 합니다.
+
+위와 같이 Detection, Classification 데이터 셋을 합치기 위해서는 일관적인 라벨링이 필요합니다.
+
+보통 Classification을 하는 경우에는 Softmax를 사용하는데 Softmax는 각 클래스가 상호 배타적이라고 가정합니다. 하지만 Norfolk terrier, Yorkshire terrier는 개로 분류되야 합니다. 그래서 YOLO9000을 만들기 위해서 라벨이 상호 배타적이지 않다는 가정을 한 Multi-label model을 사용합니다.
+
+## Hierachical classification
+
+ImageNet의 라벨은 WordNet기반으로 구성됩니다. WordNet은 Language Dataset로 개념과 단어 사이의 관계를 표현합니다. 예를 들어 Yorkshire terrier는 terrier의 하의어고 terrier는 hunting dog 타입이며 hunting dog는 dog 타입입니다.
+YOLO9000은 ImageNet이 가지는 개념으로부터 계층적 트리(WordTree)를 만들어서 문제를 단순화 시킵니다.
+
+
+
+![eq1](/figure/paper/yolov2/eq1.PNG)
+
+
+
+terrier노드에서는 위와 같이 계산됩니다. 만약 Norfolk terrior라는 것을 알고 싶다면 아래와 같이 계산됩니다.
+
+
+
+![eq2](/figure/paper/yolov2/eq2.PNG)
+
+
+
+분류 문제로 모든 이미지에는 obejct가 존재한다고 가정합니다. 즉, $$Pr(physical object) = 1$$
+
+WordTree를 만들기 위해서 1000개의 클래스를 가지고 있는 ImageNet을 사용해 DarkNet-19 모델을 학습시킵니다. WordTree를 만들기 위해서는 중간 중간 노드를 추가 해야하기 때문에 1369개가 되고 실제 label을 역추적해서 Norfolk terrier는 개, 포유류라는 라벨도 같이 얻게 됩니다. 결국 조건부 확률을 계산하기 위해서 1369개의 class확률을 예측해야합니다.
+
+
+
+![tree](/figure/paper/yolov2/tree.PNG)
+
+
+
+하의어에 대해서 Softmax를 계산합니다.
+
+- top-1 : 71.9%
+- top-5 : 90.4%
+
+Classification의 경우 개의 종류가 불분명하다면 개에 대해서는 높은 신뢰도를 전파하지만 하의어에는 낮은 신뢰도를 전파합니다.
+Detection의 경우 bounding box에 있는 object가 무엇인지 높은 신뢰도를 갖는 경로를 따라가고 threshold가 나오기 전까지 계속 내려갑니다.
+
+## Dataset combination with WordTree
+
+
+
+![tree2](/figure/paper/yolov2/tree2.PNG)
+
+
+
+COCO와 ImageNet을 합쳐서 WordTree를 만듭니다.
+
+## Joint classification and detection
+
+- COCO와 ImageNet의 상위 9000개의 클래스 데이터 셋을 조합해 매우 큰 Detector를 학습시켰습니다.
+
+- WordTree는 총 9418개의 클래스를 갖고 ImageNet의 데이터 수가 COCO보다 많기 때문에 COCO를 4배 over sampling합니다.
+
+- 학습할 떄 classification과 detection을 섞어서 사용 합니다.
+
+- Detection image의 경우 기존 loss를 역전파를 합니다.
+
+- Classification loss는 label이 dog라면 WordTree의 상위 노드는 알 수 있지만 하위 노드는 알 수 없기 때문에 하위 노드에 에러를 할당하고 상위 노드에만 역전파를 진행합니다.
+
+- Classification image의 경우 classification loss만 역전파를 합니다. 이렇게 하면 bounding box를 검출시 classification 확률이 높아집니다. bounding box도 ground truth와 0.3 IOU 이상인 경우만 objectness loss를 역전파 합니다.
+
+- Detection 성능(mAP) : 19.7%, 전혀 본적없는 label 추가 성능(mAP) : 16.0%
+
+- 동물 데이터는 학습을 잘하지만 의류 데이터는 학습을 잘 못합니다.

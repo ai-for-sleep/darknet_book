@@ -42,7 +42,7 @@
 
     
         
-        <link rel="stylesheet" href="../website-1594858963577.css">
+        <link rel="stylesheet" href="../website-1595085786732.css">
         
     
 
@@ -1946,6 +1946,7 @@
 <p>&#xAE30;&#xC874; YOLO&#xC758; &#xB0AE;&#xC740; &#xAC80;&#xCD9C;&#xC728;&#xACFC; &#xC0C1;&#xB2F9; &#xC218;&#xC758; localization error&#xB97C; &#xD574;&#xACB0;&#xD558;&#xAE30; &#xC704;&#xD574; &#xC5EC;&#xB7EC;&#xAC00;&#xC9C0; &#xC2E4;&#xD5D8;&#xC744; &#xC9C4;&#xD589;&#xD55C; &#xB17C;&#xBB38;&#xC785;&#xB2C8;&#xB2E4;.</p>
 <p><img src="../figure/paper/yolov2/exp.PNG" alt="yolov2"></p>
 <h1 id="better">Better</h1>
+<p><code>YOLOv2</code></p>
 <h2 id="batch-normalization">Batch Normalization</h2>
 <p>&#xBAA8;&#xB4E0; Convolution Layer&#xC5D0; &#xAE30;&#xC874;&#xC5D0; &#xC0AC;&#xC6A9;&#xD55C; Dropout&#xC744; &#xC81C;&#xAC70;&#xD558;&#xACE0; Batch Normalization&#xC744; &#xCD94;&#xAC00;&#xD568;&#xC73C;&#xB85C; mAP&#xAC00; 2% &#xD5A5;&#xC0C1;&#xB429;&#xB2C8;&#xB2E4;.</p>
 <h2 id="high-resolution-classifier">High Resolution Classifier</h2>
@@ -2049,7 +2050,52 @@
 <p><img src="../figure/paper/yolov2/bench.PNG" alt="bench"></p>
 <p><img src="../figure/paper/yolov2/bench2.PNG" alt="bench2"></p>
 <h1 id="stronger">Stronger</h1>
-<p>&#xCD94;&#xD6C4;&#xC608;&#xC815;</p>
+<p><code>YOLO9000</code></p>
+<ul>
+<li>Detection&#xACFC; Classification &#xB370;&#xC774;&#xD130; &#xC14B;&#xC744; &#xC11E;&#xC5B4;&#xC11C; &#xD559;&#xC2B5; &#xD569;&#xB2C8;&#xB2E4;.</li>
+<li>Detection&#xBB38;&#xC81C;&#xB97C; &#xB2E4;&#xB8E8;&#xB294; Pascal VOC, COCO &#xB370;&#xC774;&#xD130; &#xC14B;&#xC740; &#xAC1C;, &#xACE0;&#xC591;&#xC774;, &#xC790;&#xB3D9;&#xCC28;&#xC640; &#xAC19;&#xC774; &#xD3EC;&#xAD04;&#xC801;&#xC778; &#xB77C;&#xBCA8;&#xB9C1;&#xC744; &#xD569;&#xB2C8;&#xB2E4;.</li>
+<li>Classification&#xBB38;&#xC81C;&#xB97C; &#xB2E4;&#xB8E8;&#xB294; ImageNet &#xB370;&#xC774;&#xD130; &#xC14B;&#xC740; &#xAC1C;(Norfolk terrier, Yorkshire terrier, ...)&#xACFC; &#xAC19;&#xC774; &#xC138;&#xBC00;&#xD55C; &#xB77C;&#xBCA8;&#xB9C1;&#xC744; &#xD569;&#xB2C8;&#xB2E4;.</li>
+</ul>
+<p>&#xC704;&#xC640; &#xAC19;&#xC774; Detection, Classification &#xB370;&#xC774;&#xD130; &#xC14B;&#xC744; &#xD569;&#xCE58;&#xAE30; &#xC704;&#xD574;&#xC11C;&#xB294; &#xC77C;&#xAD00;&#xC801;&#xC778; &#xB77C;&#xBCA8;&#xB9C1;&#xC774; &#xD544;&#xC694;&#xD569;&#xB2C8;&#xB2E4;.</p>
+<p>&#xBCF4;&#xD1B5; Classification&#xC744; &#xD558;&#xB294; &#xACBD;&#xC6B0;&#xC5D0;&#xB294; Softmax&#xB97C; &#xC0AC;&#xC6A9;&#xD558;&#xB294;&#xB370; Softmax&#xB294; &#xAC01; &#xD074;&#xB798;&#xC2A4;&#xAC00; &#xC0C1;&#xD638; &#xBC30;&#xD0C0;&#xC801;&#xC774;&#xB77C;&#xACE0; &#xAC00;&#xC815;&#xD569;&#xB2C8;&#xB2E4;. &#xD558;&#xC9C0;&#xB9CC; Norfolk terrier, Yorkshire terrier&#xB294; &#xAC1C;&#xB85C; &#xBD84;&#xB958;&#xB418;&#xC57C; &#xD569;&#xB2C8;&#xB2E4;. &#xADF8;&#xB798;&#xC11C; YOLO9000&#xC744; &#xB9CC;&#xB4E4;&#xAE30; &#xC704;&#xD574;&#xC11C; &#xB77C;&#xBCA8;&#xC774; &#xC0C1;&#xD638; &#xBC30;&#xD0C0;&#xC801;&#xC774;&#xC9C0; &#xC54A;&#xB2E4;&#xB294; &#xAC00;&#xC815;&#xC744; &#xD55C; Multi-label model&#xC744; &#xC0AC;&#xC6A9;&#xD569;&#xB2C8;&#xB2E4;.</p>
+<h2 id="hierachical-classification">Hierachical classification</h2>
+<p>ImageNet&#xC758; &#xB77C;&#xBCA8;&#xC740; WordNet&#xAE30;&#xBC18;&#xC73C;&#xB85C; &#xAD6C;&#xC131;&#xB429;&#xB2C8;&#xB2E4;. WordNet&#xC740; Language Dataset&#xB85C; &#xAC1C;&#xB150;&#xACFC; &#xB2E8;&#xC5B4; &#xC0AC;&#xC774;&#xC758; &#xAD00;&#xACC4;&#xB97C; &#xD45C;&#xD604;&#xD569;&#xB2C8;&#xB2E4;. &#xC608;&#xB97C; &#xB4E4;&#xC5B4; Yorkshire terrier&#xB294; terrier&#xC758; &#xD558;&#xC758;&#xC5B4;&#xACE0; terrier&#xB294; hunting dog &#xD0C0;&#xC785;&#xC774;&#xBA70; hunting dog&#xB294; dog &#xD0C0;&#xC785;&#xC785;&#xB2C8;&#xB2E4;.
+YOLO9000&#xC740; ImageNet&#xC774; &#xAC00;&#xC9C0;&#xB294; &#xAC1C;&#xB150;&#xC73C;&#xB85C;&#xBD80;&#xD130; &#xACC4;&#xCE35;&#xC801; &#xD2B8;&#xB9AC;(WordTree)&#xB97C; &#xB9CC;&#xB4E4;&#xC5B4;&#xC11C; &#xBB38;&#xC81C;&#xB97C; &#xB2E8;&#xC21C;&#xD654; &#xC2DC;&#xD0B5;&#xB2C8;&#xB2E4;.</p>
+<p><img src="../figure/paper/yolov2/eq1.PNG" alt="eq1"></p>
+<p>terrier&#xB178;&#xB4DC;&#xC5D0;&#xC11C;&#xB294; &#xC704;&#xC640; &#xAC19;&#xC774; &#xACC4;&#xC0B0;&#xB429;&#xB2C8;&#xB2E4;. &#xB9CC;&#xC57D; Norfolk terrior&#xB77C;&#xB294; &#xAC83;&#xC744; &#xC54C;&#xACE0; &#xC2F6;&#xB2E4;&#xBA74; &#xC544;&#xB798;&#xC640; &#xAC19;&#xC774; &#xACC4;&#xC0B0;&#xB429;&#xB2C8;&#xB2E4;.</p>
+<p><img src="../figure/paper/yolov2/eq2.PNG" alt="eq2"></p>
+<p>&#xBD84;&#xB958; &#xBB38;&#xC81C;&#xB85C; &#xBAA8;&#xB4E0; &#xC774;&#xBBF8;&#xC9C0;&#xC5D0;&#xB294; obejct&#xAC00; &#xC874;&#xC7AC;&#xD55C;&#xB2E4;&#xACE0; &#xAC00;&#xC815;&#xD569;&#xB2C8;&#xB2E4;. &#xC989;, <script type="math/tex; ">Pr(physical object) = 1</script></p>
+<p>WordTree&#xB97C; &#xB9CC;&#xB4E4;&#xAE30; &#xC704;&#xD574;&#xC11C; 1000&#xAC1C;&#xC758; &#xD074;&#xB798;&#xC2A4;&#xB97C; &#xAC00;&#xC9C0;&#xACE0; &#xC788;&#xB294; ImageNet&#xC744; &#xC0AC;&#xC6A9;&#xD574; DarkNet-19 &#xBAA8;&#xB378;&#xC744; &#xD559;&#xC2B5;&#xC2DC;&#xD0B5;&#xB2C8;&#xB2E4;. WordTree&#xB97C; &#xB9CC;&#xB4E4;&#xAE30; &#xC704;&#xD574;&#xC11C;&#xB294; &#xC911;&#xAC04; &#xC911;&#xAC04; &#xB178;&#xB4DC;&#xB97C; &#xCD94;&#xAC00; &#xD574;&#xC57C;&#xD558;&#xAE30; &#xB54C;&#xBB38;&#xC5D0; 1369&#xAC1C;&#xAC00; &#xB418;&#xACE0; &#xC2E4;&#xC81C; label&#xC744; &#xC5ED;&#xCD94;&#xC801;&#xD574;&#xC11C; Norfolk terrier&#xB294; &#xAC1C;, &#xD3EC;&#xC720;&#xB958;&#xB77C;&#xB294; &#xB77C;&#xBCA8;&#xB3C4; &#xAC19;&#xC774; &#xC5BB;&#xAC8C; &#xB429;&#xB2C8;&#xB2E4;. &#xACB0;&#xAD6D; &#xC870;&#xAC74;&#xBD80; &#xD655;&#xB960;&#xC744; &#xACC4;&#xC0B0;&#xD558;&#xAE30; &#xC704;&#xD574;&#xC11C; 1369&#xAC1C;&#xC758; class&#xD655;&#xB960;&#xC744; &#xC608;&#xCE21;&#xD574;&#xC57C;&#xD569;&#xB2C8;&#xB2E4;.</p>
+<p><img src="../figure/paper/yolov2/tree.PNG" alt="tree"></p>
+<p>&#xD558;&#xC758;&#xC5B4;&#xC5D0; &#xB300;&#xD574;&#xC11C; Softmax&#xB97C; &#xACC4;&#xC0B0;&#xD569;&#xB2C8;&#xB2E4;.</p>
+<ul>
+<li>top-1 : 71.9%</li>
+<li>top-5 : 90.4%</li>
+</ul>
+<p>Classification&#xC758; &#xACBD;&#xC6B0; &#xAC1C;&#xC758; &#xC885;&#xB958;&#xAC00; &#xBD88;&#xBD84;&#xBA85;&#xD558;&#xB2E4;&#xBA74; &#xAC1C;&#xC5D0; &#xB300;&#xD574;&#xC11C;&#xB294; &#xB192;&#xC740; &#xC2E0;&#xB8B0;&#xB3C4;&#xB97C; &#xC804;&#xD30C;&#xD558;&#xC9C0;&#xB9CC; &#xD558;&#xC758;&#xC5B4;&#xC5D0;&#xB294; &#xB0AE;&#xC740; &#xC2E0;&#xB8B0;&#xB3C4;&#xB97C; &#xC804;&#xD30C;&#xD569;&#xB2C8;&#xB2E4;.
+Detection&#xC758; &#xACBD;&#xC6B0; bounding box&#xC5D0; &#xC788;&#xB294; object&#xAC00; &#xBB34;&#xC5C7;&#xC778;&#xC9C0; &#xB192;&#xC740; &#xC2E0;&#xB8B0;&#xB3C4;&#xB97C; &#xAC16;&#xB294; &#xACBD;&#xB85C;&#xB97C; &#xB530;&#xB77C;&#xAC00;&#xACE0; threshold&#xAC00; &#xB098;&#xC624;&#xAE30; &#xC804;&#xAE4C;&#xC9C0; &#xACC4;&#xC18D; &#xB0B4;&#xB824;&#xAC11;&#xB2C8;&#xB2E4;.</p>
+<h2 id="dataset-combination-with-wordtree">Dataset combination with WordTree</h2>
+<p><img src="../figure/paper/yolov2/tree2.PNG" alt="tree2"></p>
+<p>COCO&#xC640; ImageNet&#xC744; &#xD569;&#xCCD0;&#xC11C; WordTree&#xB97C; &#xB9CC;&#xB4ED;&#xB2C8;&#xB2E4;.</p>
+<h2 id="joint-classification-and-detection">Joint classification and detection</h2>
+<ul>
+<li><p>COCO&#xC640; ImageNet&#xC758; &#xC0C1;&#xC704; 9000&#xAC1C;&#xC758; &#xD074;&#xB798;&#xC2A4; &#xB370;&#xC774;&#xD130; &#xC14B;&#xC744; &#xC870;&#xD569;&#xD574; &#xB9E4;&#xC6B0; &#xD070; Detector&#xB97C; &#xD559;&#xC2B5;&#xC2DC;&#xCF30;&#xC2B5;&#xB2C8;&#xB2E4;.</p>
+</li>
+<li><p>WordTree&#xB294; &#xCD1D; 9418&#xAC1C;&#xC758; &#xD074;&#xB798;&#xC2A4;&#xB97C; &#xAC16;&#xACE0; ImageNet&#xC758; &#xB370;&#xC774;&#xD130; &#xC218;&#xAC00; COCO&#xBCF4;&#xB2E4; &#xB9CE;&#xAE30; &#xB54C;&#xBB38;&#xC5D0; COCO&#xB97C; 4&#xBC30; over sampling&#xD569;&#xB2C8;&#xB2E4;.</p>
+</li>
+<li><p>&#xD559;&#xC2B5;&#xD560; &#xB584; classification&#xACFC; detection&#xC744; &#xC11E;&#xC5B4;&#xC11C; &#xC0AC;&#xC6A9; &#xD569;&#xB2C8;&#xB2E4;.</p>
+</li>
+<li><p>Detection image&#xC758; &#xACBD;&#xC6B0; &#xAE30;&#xC874; loss&#xB97C; &#xC5ED;&#xC804;&#xD30C;&#xB97C; &#xD569;&#xB2C8;&#xB2E4;.</p>
+</li>
+<li><p>Classification loss&#xB294; label&#xC774; dog&#xB77C;&#xBA74; WordTree&#xC758; &#xC0C1;&#xC704; &#xB178;&#xB4DC;&#xB294; &#xC54C; &#xC218; &#xC788;&#xC9C0;&#xB9CC; &#xD558;&#xC704; &#xB178;&#xB4DC;&#xB294; &#xC54C; &#xC218; &#xC5C6;&#xAE30; &#xB54C;&#xBB38;&#xC5D0; &#xD558;&#xC704; &#xB178;&#xB4DC;&#xC5D0; &#xC5D0;&#xB7EC;&#xB97C; &#xD560;&#xB2F9;&#xD558;&#xACE0; &#xC0C1;&#xC704; &#xB178;&#xB4DC;&#xC5D0;&#xB9CC; &#xC5ED;&#xC804;&#xD30C;&#xB97C; &#xC9C4;&#xD589;&#xD569;&#xB2C8;&#xB2E4;.</p>
+</li>
+<li><p>Classification image&#xC758; &#xACBD;&#xC6B0; classification loss&#xB9CC; &#xC5ED;&#xC804;&#xD30C;&#xB97C; &#xD569;&#xB2C8;&#xB2E4;. &#xC774;&#xB807;&#xAC8C; &#xD558;&#xBA74; bounding box&#xB97C; &#xAC80;&#xCD9C;&#xC2DC; classification &#xD655;&#xB960;&#xC774; &#xB192;&#xC544;&#xC9D1;&#xB2C8;&#xB2E4;. bounding box&#xB3C4; ground truth&#xC640; 0.3 IOU &#xC774;&#xC0C1;&#xC778; &#xACBD;&#xC6B0;&#xB9CC; objectness loss&#xB97C; &#xC5ED;&#xC804;&#xD30C; &#xD569;&#xB2C8;&#xB2E4;.</p>
+</li>
+<li><p>Detection &#xC131;&#xB2A5;(mAP) : 19.7%, &#xC804;&#xD600; &#xBCF8;&#xC801;&#xC5C6;&#xB294; label &#xCD94;&#xAC00; &#xC131;&#xB2A5;(mAP) : 16.0%</p>
+</li>
+<li><p>&#xB3D9;&#xBB3C; &#xB370;&#xC774;&#xD130;&#xB294; &#xD559;&#xC2B5;&#xC744; &#xC798;&#xD558;&#xC9C0;&#xB9CC; &#xC758;&#xB958; &#xB370;&#xC774;&#xD130;&#xB294; &#xD559;&#xC2B5;&#xC744; &#xC798; &#xBABB;&#xD569;&#xB2C8;&#xB2E4;.</p>
+</li>
+</ul>
 
                                 
                                 </section>
@@ -2093,7 +2139,7 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"YOLOv2","level":"2.2","depth":1,"next":{"title":"YOLOv3","level":"2.3","depth":1,"path":"part1_paper/yolov3.md","ref":"part1_paper/yolov3.md","articles":[]},"previous":{"title":"YOLOv1","level":"2.1","depth":1,"path":"part1_paper/yolov1.md","ref":"part1_paper/yolov1.md","articles":[]},"dir":"ltr"},"config":{"plugins":["advanced-emoji","theme-gestalt","-theme-default","styles-sass-fix","theme-api","mathjax"],"root":"./","styles":{"website":"website-1594858963577.css"},"pluginsConfig":{"styles-sass-fix":{},"theme-gestalt":{"showLevel":false,"styles":{"website":"styles/website.css"},"logo":"/darknet_book/assets/darknet.png","baseUrl":null,"excludeDefaultStyles":true,"doNotHideChildrenChapters":false},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"theme-api":{"languages":[],"split":true,"theme":"light"},"mathjax":{"forceSVG":false,"version":"2.6-latest"},"advanced-emoji":{"embedEmojis":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]}},"theme":"default","author":"JJM","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"DarkNet Book","output.name":"site","gitbook":"*"},"file":{"path":"part1_paper/yolov2.md","mtime":"2020-07-16T00:22:23.248Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-07-16T00:22:37.559Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"YOLOv2","level":"2.2","depth":1,"next":{"title":"YOLOv3","level":"2.3","depth":1,"path":"part1_paper/yolov3.md","ref":"part1_paper/yolov3.md","articles":[]},"previous":{"title":"YOLOv1","level":"2.1","depth":1,"path":"part1_paper/yolov1.md","ref":"part1_paper/yolov1.md","articles":[]},"dir":"ltr"},"config":{"plugins":["advanced-emoji","theme-gestalt","-theme-default","styles-sass-fix","theme-api","mathjax"],"root":"./","styles":{"website":"website-1595085786732.css"},"pluginsConfig":{"styles-sass-fix":{},"theme-gestalt":{"showLevel":false,"styles":{"website":"styles/website.css"},"logo":"/darknet_book/assets/darknet.png","baseUrl":null,"excludeDefaultStyles":true,"doNotHideChildrenChapters":false},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"theme-api":{"languages":[],"split":true,"theme":"light"},"mathjax":{"forceSVG":false,"version":"2.6-latest"},"advanced-emoji":{"embedEmojis":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]}},"theme":"default","author":"JJM","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"DarkNet Book","output.name":"site","gitbook":"*"},"file":{"path":"part1_paper/yolov2.md","mtime":"2020-07-18T15:22:16.115Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-07-18T15:22:53.631Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>
