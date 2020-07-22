@@ -42,7 +42,7 @@
 
     
         
-        <link rel="stylesheet" href="../website-1595085786732.css">
+        <link rel="stylesheet" href="../website-1595390716199.css">
         
     
 
@@ -1939,7 +1939,104 @@
     
                                 <section class="normal markdown-section">
                                 
-                                
+                                <h1 id="yolov3">YOLOv3</h1>
+<ul>
+<li>Paper : <a href="https://pjreddie.com/media/files/papers/YOLOv3.pdf" target="_blank">https://pjreddie.com/media/files/papers/YOLOv3.pdf</a></li>
+</ul>
+<p>YOLOv2 &#xC774;&#xD6C4; &#xB098;&#xC628; &#xB17C;&#xBB38;&#xC744; &#xC801;&#xC6A9;&#xD574; Object Detection&#xC758; &#xC57D;&#xC810;&#xB4E4;&#xC744; &#xD574;&#xACB0;&#xD558;&#xB824;&#xB294; &#xC2E4;&#xD5D8;&#xC744; &#xD569;&#xB2C8;&#xB2E4;.</p>
+<p>&#xC815;&#xD655;&#xC131;&#xC740; &#xB192;&#xC9C0;&#xB9CC; &#xC5EC;&#xC804;&#xD788; &#xBE60;&#xB985;&#xB2C8;&#xB2E4;!</p>
+<ul>
+<li>SSD&#xBCF4;&#xB2E4; 3&#xBC30; &#xBE60;&#xB974;&#xC9C0;&#xB9CC; &#xC815;&#xD655;&#xB3C4;&#xB294; &#xB192;&#xC2B5;&#xB2C8;&#xB2E4;.</li>
+<li>RetinaNet&#xACFC; &#xC815;&#xD655;&#xB3C4;&#xAC00; &#xC720;&#xC0AC;&#xD558;&#xC9C0;&#xB9CC; &#xBE60;&#xB985;&#xB2C8;&#xB2E4;.</li>
+</ul>
+<p><img src="../figure/paper/yolov3/bench.PNG" alt="yolov3"></p>
+<h2 id="bounding-box-prediction">Bounding Box Prediction</h2>
+<ul>
+<li><p>YOLOv2&#xB294; Anchor Box&#xB85C; Dimension cluster&#xB97C; &#xC0AC;&#xC6A9;&#xD574;&#xC11C; Bounding Box&#xB97C; &#xC608;&#xCE21;&#xD569;&#xB2C8;&#xB2E4;.</p>
+</li>
+<li><p><script type="math/tex; ">t_x, t_y, t_w, t_h</script>&#xB97C; &#xC5D0;&#xCE21;&#xD558;&#xACE0; &#xC88C;&#xC0C1;&#xB2E8; &#xBD80;&#xD130; &#xC2DC;&#xC791;&#xD574; <script type="math/tex; ">c_x, c_y</script> &#xB9CC;&#xD07C; offset&#xB418;&#xACE0; bounding box&#xC758; width, height&#xAC00; <script type="math/tex; ">p_w, p_h</script>&#xC778; &#xACBD;&#xC6B0; &#xCD5C;&#xC885; bounding box&#xB294; <script type="math/tex; ">b_x, b_y, b_w, b_h</script>&#xC785;&#xB2C8;&#xB2E4;.</p>
+</li>
+</ul>
+<p> <img src="../figure/paper/yolov2/cluster.PNG" alt="cluster"></p>
+<ul>
+<li><p>L2 loss&#xB97C; &#xC0AC;&#xC6A9;&#xD574; &#xD559;&#xC2B5;&#xD588;&#xACE0; YOLOv3&#xB294; &#xC774; &#xC2DD;&#xC744; &#xB4A4;&#xC9D1;&#xC5B4;&#xC11C; &#xBC14;&#xB85C; <script type="math/tex; ">\hat{t}_* - t_*</script>&#xC744; &#xACC4;&#xC0B0;&#xD558;&#xB3C4;&#xB85D; &#xD569;&#xB2C8;&#xB2E4;. &#xC989;, ground truth&#xB97C; <script type="math/tex; ">t_x, t_y, t_w, t_h</script>&#xB85C; &#xB9CC;&#xB4E0;&#xB2E4;&#xB294; &#xC758;&#xBBF8; &#xC785;&#xB2C8;&#xB2E4;.</p>
+</li>
+<li><p>&#xB9CC;&#xC57D; bounding box&#xAC00; &#xB2E4;&#xB978; box&#xBCF4;&#xB2E4; ground truth&#xC640; &#xB9CE;&#xC774; &#xACB9;&#xCE58;&#xB294; &#xACBD;&#xC6B0; IOU&#xB294; 1&#xC774;&#xC5B4;&#xC57C; &#xD569;&#xB2C8;&#xB2E4;. &#xB9CC;&#xC57D; IOU&#xAC00; &#xC81C;&#xC77C; &#xC88B;&#xC740; &#xAC83;&#xC774; &#xC544;&#xB2C8;&#xBA74;&#xC11C; &#xC784;&#xACC4;&#xAC12; &#xC774;&#xC0C1;&#xC758; IOU&#xB97C; &#xAC00;&#xC9C4;&#xB2E4;&#xBA74; &#xC608;&#xCE21;&#xC744; &#xBB34;&#xC2DC;&#xD569;&#xB2C8;&#xB2E4;. &#xAC01; ground truth&#xC5D0; 1&#xAC1C;&#xC758; bounding box&#xB9CC; &#xD560;&#xB2F9;&#xD569;&#xB2C8;&#xB2E4;.</p>
+</li>
+<li><p>IOU &#xC784;&#xACC4;&#xAC12;&#xC740; 0.5&#xC785;&#xB2C8;&#xB2E4;.</p>
+</li>
+<li><p>bounding box&#xAC00; ground truth&#xC5D0; &#xD3EC;&#xD568;&#xB418;&#xC9C0; &#xC54A;&#xB294; &#xACBD;&#xC6B0; classification loss&#xB294; &#xC5C6;&#xACE0; objectness loss&#xB9CC; &#xAC00;&#xC9D1;&#xB2C8;&#xB2E4;.</p>
+</li>
+</ul>
+<h2 id="class-prediction">Class Prediction</h2>
+<ul>
+<li><p>&#xAC01; bounding box&#xB294; multi-label classification&#xC744; &#xC0AC;&#xC6A9;&#xD569;&#xB2C8;&#xB2E4;.</p>
+</li>
+<li><p>multi-label classification&#xC740; softmax&#xAC00; &#xC88B;&#xC9C0; &#xC54A;&#xAE30; &#xB54C;&#xBB38;&#xC5D0; binary cross-entropy loss&#xB97C; &#xC0AC;&#xC6A9;&#xD569;&#xB2C8;&#xB2E4;.</p>
+</li>
+</ul>
+<h2 id="predictions-across-scales">Predictions Across Scales</h2>
+<ul>
+<li><p>YOLOv3&#xB294; &#xC11C;&#xB85C; &#xB2E4;&#xB978; &#xC2A4;&#xCF00;&#xC77C;&#xC744; &#xAC00;&#xC9C0;&#xB294; 3&#xAC00;&#xC9C0; box&#xB97C; &#xC608;&#xCE21;&#xD569;&#xB2C8;&#xB2E4;.</p>
+</li>
+<li><p>feature pyramid networks&#xC640; &#xC720;&#xC0AC;&#xD55C; &#xBC29;&#xC2DD;&#xC73C;&#xB85C; &#xD2B9;&#xC9D5;&#xC744; &#xCD94;&#xCD9C;&#xD569;&#xB2C8;&#xB2E4;.</p>
+</li>
+<li><p>&#xBA87;&#xAC1C;&#xC758; convolutional layer&#xAC00; &#xCD94;&#xAC00;&#xB418;&#xACE0; &#xCD9C;&#xB825;&#xC740; 3-d tensor &#xC785;&#xB2C8;&#xB2E4;.</p>
+</li>
+<li><p><code>N x N x [3 * (4(bounding box offsets) + 1(objectness) + 80(class))]</code></p>
+</li>
+<li><p>&#xC774;&#xC804;&#xC758; 2&#xBC88;&#xC9F8; layer&#xC5D0;&#xC11C; feature map&#xC744; 2&#xBC30; Upsampling &#xD569;&#xB2C8;&#xB2E4;.</p>
+</li>
+<li><p>&#xCD08;&#xAE30;&#xBD80;&#xD130; feature map&#xC744; &#xAC00;&#xC838;&#xC640; Upsampling&#xB41C; feature map&#xACFC; concat&#xD569;&#xB2C8;&#xB2E4;. &#xC774; &#xBC29;&#xBC95;&#xC744; &#xC0AC;&#xC6A9;&#xD558;&#xBA74; &#xC758;&#xBBF8;&#xC788;&#xB294; &#xC815;&#xBCF4;(&#xC774;&#xC804; layer)&#xC640; &#xC138;&#xBD84;&#xD654; &#xB41C; &#xC815;&#xBCF4;(&#xCD08;&#xAE30; layer)&#xB97C; &#xC5BB;&#xC744; &#xC218; &#xC788;&#xC2B5;&#xB2C8;&#xB2E4;.</p>
+</li>
+<li><p>&#xACB0;&#xD569; &#xB41C; feature map&#xC744; &#xCC98;&#xB9AC;&#xD558;&#xAE30; &#xC704;&#xD574;&#xC11C; convolutional layer&#xB97C; &#xCD94;&#xAC00;&#xD569;&#xB2C8;&#xB2E4;.</p>
+</li>
+<li><p>&#xCD5C;&#xC885; scale&#xC758; box&#xB97C; &#xC608;&#xCE21;&#xD558;&#xAE30; &#xC704;&#xD574;&#xC11C; &#xAC19;&#xC740; &#xB514;&#xC790;&#xC778;&#xC744; &#xD55C;&#xBC88;&#xB354; &#xC218;&#xD589;&#xD569;&#xB2C8;&#xB2E4;. &#xB530;&#xB77C;&#xC11C; 3&#xBC88;&#xC9F8; scale&#xC758; &#xC608;&#xCE21;&#xC740; &#xBAA8;&#xB4E0; &#xC774;&#xC804; layer&#xC640; &#xCD08;&#xAE30;&#xC758; &#xC138;&#xBD84;&#xD654;&#xB418;&#xACE0; &#xC758;&#xBBF8;&#xC788;&#xB294; &#xC815;&#xBCF4;&#xB97C; &#xD65C;&#xC6A9;&#xD569;&#xB2C8;&#xB2E4;.</p>
+</li>
+<li><p>k-means&#xB97C; &#xD1B5;&#xD574; anchor box&#xB97C; clustering&#xD558;&#xACE0; 9&#xAC1C;&#xC758; cluster&#xC640; 3&#xAC1C;&#xC758; scale&#xB97C; &#xC784;&#xC758;&#xB85C; &#xC120;&#xD0DD;&#xD574; cluster&#xB97C; &#xADE0;&#xB4F1;&#xD558;&#xAC8C; &#xB098;&#xB215;&#xB2C8;&#xB2E4;.</p>
+</li>
+<li><p>COCO&#xC758; &#xACBD;&#xC6B0; <code>(10 &#xD7; 13), (16 &#xD7; 30), (33 &#xD7; 23), (30 &#xD7; 61), (62 &#xD7; 45), (59 &#xD7; 119), (116 &#xD7; 90) , (156 &#xD7; 198), (373 &#xD7; 326)</code> &#xC785;&#xB2C8;&#xB2E4;.</p>
+</li>
+</ul>
+<h2 id="feature-extractor">Feature Extractor</h2>
+<p>&#xD2B9;&#xC9D5; &#xCD94;&#xCD9C;&#xC744; &#xC704;&#xD55C; DarkNet53&#xC744; &#xC81C;&#xC548;&#xD569;&#xB2C8;&#xB2E4;.</p>
+<p><img src="../figure/paper/yolov3/darknet53.PNG" alt="darknet53"></p>
+<p>DarkNet53&#xC744; &#xB2E4;&#xB978; &#xBAA8;&#xB378;&#xACFC; &#xBE44;&#xAD50;&#xD569;&#xB2C8;&#xB2E4;. &#xB370;&#xC774;&#xD130;&#xC14B;&#xC740; ImageNet&#xC744; &#xC0AC;&#xC6A9;&#xD569;&#xB2C8;&#xB2E4;.</p>
+<p><img src="../figure/paper/yolov3/bench2.PNG" alt="bench2"></p>
+<h2 id="training">Training</h2>
+<ul>
+<li><p>mining&#xAC19;&#xC740; &#xBC29;&#xBC95;&#xC744; &#xC0AC;&#xC6A9;&#xD558;&#xC9C0; &#xC54A;&#xC2B5;&#xB2C8;&#xB2E4;.</p>
+</li>
+<li><p>multi-scale training, data augmentation, batch normalization &#xB4F1; &#xB9CE;&#xC740; &#xBC29;&#xBC95;&#xC744; &#xC0AC;&#xC6A9;&#xD569;&#xB2C8;&#xB2E4;.</p>
+</li>
+</ul>
+<h2 id="how-we-do">How We Do</h2>
+<p><img src="../figure/paper/yolov3/bench3.PNG" alt="bench3"></p>
+<ul>
+<li><p>COCO&#xC758; &#xC774;&#xC0C1;&#xD55C; mAP&#xB97C; &#xC0AC;&#xC6A9;&#xD558;&#xBA74; SSD &#xBCC0;&#xD615;&#xACFC; &#xB3D9;&#xC77C;&#xD558;&#xC9C0;&#xB9CC; 3&#xBC30;&#xB294; &#xBE60;&#xB985;&#xB2C8;&#xB2E4;. &#xD558;&#xC9C0;&#xB9CC; &#xC774;&#xB7EC;&#xD55C; &#xCE21;&#xC815;&#xBC95;&#xC73C;&#xB85C; RetinaNet&#xACFC; &#xAC19;&#xC740; &#xBAA8;&#xB378;&#xBCF4;&#xB2E4; &#xC57D;&#xAC04; &#xC131;&#xB2A5;&#xC774; &#xC88B;&#xC9C0; &#xC54A;&#xC2B5;&#xB2C8;&#xB2E4;.</p>
+</li>
+<li><p><code>IOU = 0.5</code>&#xC5D0;&#xC11C; AP50&#xB97C; &#xBCFC;&#xB54C; YOLOv3&#xB294; &#xAC15;&#xB825;&#xD569;&#xB2C8;&#xB2E4;.</p>
+</li>
+<li><p>IOU&#xC758; threshold&#xAC00; &#xC99D;&#xAC00;&#xD558;&#xBA74; Object&#xC640; Box&#xB97C; &#xC644;&#xBCBD;&#xD788; &#xC815;&#xB82C;&#xD558;&#xB294;&#xB370; &#xC5B4;&#xB824;&#xC6C0;&#xC744; &#xACAA;&#xC5B4; &#xC131;&#xB2A5;&#xC774; &#xAE09;&#xACA9;&#xD788; &#xB5A8;&#xC5B4;&#xC9D1;&#xB2C8;&#xB2E4;.</p>
+</li>
+<li><p>&#xC774;&#xC804;&#xC5D0; YOLO&#xC758; &#xC57D;&#xC810;&#xC778; &#xC791;&#xC740; &#xBB3C;&#xCCB4;&#xB97C; &#xAC80;&#xCD9C;&#xD558;&#xB294; &#xAC83;&#xC774; &#xD6E8;&#xC52C; &#xC88B;&#xC544;&#xC84C;&#xC2B5;&#xB2C8;&#xB2E4;.</p>
+</li>
+</ul>
+<h2 id="things-we-tried-that-didnt-work">Things We Tried That Didn&apos;t Work</h2>
+<ul>
+<li><p>anchor box&#xC758; x, y offset&#xC744; &#xC608;&#xCE21; : linear activation&#xC744; &#xC0AC;&#xC6A9;&#xD574;&#xC11C; box&#xC758; width, height&#xC758; &#xBC30;&#xC218;&#xB85C;&#xC368; anchor box&#xC758; x, y&#xB97C; &#xC608;&#xCE21;&#xC744; &#xC2DC;&#xB3C4;&#xD588;&#xC9C0;&#xB9CC; &#xC88B;&#xC9C0; &#xC54A;&#xC558;&#xC2B5;&#xB2C8;&#xB2E4;.</p>
+</li>
+<li><p>Linear x, yt predictions instead of logistic : logistic activation&#xB300;&#xC2E0; linear activation&#xC744; &#xC0AC;&#xC6A9;&#xD574; x, y&#xC758; offset&#xC744; &#xC608;&#xCE21;&#xD558;&#xB824; &#xD588;&#xC9C0;&#xB9CC; &#xBA87; &#xD3EC;&#xC778;&#xD2B8; &#xC815;&#xB3C4;&#xC758; mAP &#xC131;&#xB2A5;&#xC744; &#xB0AE;&#xCDA5;&#xB2C8;&#xB2E4;.</p>
+</li>
+<li><p>Focal Loss : mAP&#xAC00; 2% &#xB5A8;&#xC5B4;&#xC9D1;&#xB2C8;&#xB2E4;. &#xC774;&#xBBF8; objectness, classification&#xC774; &#xC798;&#xB418;&#xC5C8;&#xAE30; &#xB54C;&#xBB38;&#xC774;&#xB77C;&#xACE0; &#xD558;&#xC9C0;&#xB9CC; &#xD655;&#xC2E0;&#xD560; &#xC218; &#xC5C6;&#xB2E4;&#xACE0; &#xD569;&#xB2C8;&#xB2E4;.</p>
+</li>
+<li><p>Dual IOU thresholds and truth assignment : Faster RCNN&#xC5D0;&#xC11C; &#xACE0;&#xC548;&#xB41C; &#xBC29;&#xBC95;&#xC73C;&#xB85C; &#xB450;&#xAC1C;&#xC758; IOU&#xAC12;&#xC744; &#xC0AC;&#xC6A9;&#xD569;&#xB2C8;&#xB2E4;. &#xC608;&#xCE21; IOU&#xAC00; 0.7&#xC774;&#xC0C1;&#xC774;&#xBA74; &#xAE0D;&#xC815;&#xC801;&#xC778; sample&#xC774;&#xACE0; 0.3&#xC774;&#xD558;&#xBA74; &#xBD80;&#xC815;&#xC801;&#xC778; sample&#xC785;&#xB2C8;&#xB2E4;. &#xACB0;&#xACFC;&#xB294; &#xC88B;&#xC9C0; &#xC54A;&#xC558;&#xC2B5;&#xB2C8;&#xB2E4;.</p>
+</li>
+</ul>
+<h2 id="what-this-all-means">What This All Means</h2>
+<p>YOLOv3&#xB294; &#xC815;&#xD655;&#xD558;&#xACE0; &#xBE60;&#xB985;&#xB2C8;&#xB2E4;. &#xD558;&#xC9C0;&#xB9CC; COCO metric(0.5 ~ 0.95&#xAE4C;&#xC9C0; &#xC870;&#xAE08;&#xC529; &#xB298;&#xB9AC;&#xBA74;&#xC11C; &#xD3C9;&#xAC00;&#xD558;&#xB294; &#xBC29;&#xBC95;)&#xC73C;&#xB85C;&#xB294; &#xC88B;&#xC9C0; &#xC54A;&#xC9C0;&#xB9CC; AP50 metric&#xC740; &#xC88B;&#xC2B5;&#xB2C8;&#xB2E4;. <a href="http://ai.stanford.edu/~olga/papers/RussakovskyCVPR15.pdf" target="_blank">Russakovsky et al.</a>&#xC740; &#xC0AC;&#xB78C;&#xB4E4;&#xC5D0;&#xAC8C; IOU&#xAC00; 0.3, 0.5&#xC778; bounding box&#xB97C; &#xAD6C;&#xBD84;&#xD558;&#xB3C4;&#xB85D; &#xD558;&#xAC8C; &#xD588;&#xC9C0;&#xB9CC; &#xAD6C;&#xBD84;&#xC744; &#xC798; &#xBABB;&#xD588;&#xB2E4;&#xACE0; &#xD569;&#xB2C8;&#xB2E4;. &#xADF8; &#xB9D0;&#xC740; &#xC989;&#xC2A8; COCO metric&#xCC98;&#xB7FC; &#xC138;&#xBC00;&#xD55C; &#xD3C9;&#xAC00; &#xBC29;&#xBC95;&#xC774; &#xC815;&#xB9D0; &#xC88B;&#xC740;&#xC9C0;&#xC5D0; &#xB300;&#xD55C; &#xC758;&#xACAC;&#xC744; &#xB9D0;&#xD569;&#xB2C8;&#xB2E4;.</p>
+<p>Rebutter&#xB294; YOLO benchmarking&#xC758; &#xC704;&#xCE58;, COCO metric&#xC774; &#xC57D;&#xD55C; &#xC774;&#xC720;&#xB97C; &#xB354; &#xC138;&#xBC00;&#xD558;&#xAC8C; &#xD480;&#xC5B4;&#xB0B4;&#xC9C0;&#xB9CC; &#xC9C1;&#xC811;&#xC801;&#xC73C;&#xB85C; &#xB2E4;&#xB8E8;&#xC9C0; &#xC54A;&#xACA0;&#xC2B5;&#xB2C8;&#xB2E4;.</p>
+
                                 
                                 </section>
                             
@@ -1982,7 +2079,7 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"YOLOv3","level":"2.3","depth":1,"next":{"title":"YOLOv4","level":"2.4","depth":1,"path":"part1_paper/yolov4.md","ref":"part1_paper/yolov4.md","articles":[]},"previous":{"title":"YOLOv2","level":"2.2","depth":1,"path":"part1_paper/yolov2.md","ref":"part1_paper/yolov2.md","articles":[]},"dir":"neutral"},"config":{"plugins":["advanced-emoji","theme-gestalt","-theme-default","styles-sass-fix","theme-api","mathjax"],"root":"./","styles":{"website":"website-1595085786732.css"},"pluginsConfig":{"styles-sass-fix":{},"theme-gestalt":{"showLevel":false,"styles":{"website":"styles/website.css"},"logo":"/darknet_book/assets/darknet.png","baseUrl":null,"excludeDefaultStyles":true,"doNotHideChildrenChapters":false},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"theme-api":{"languages":[],"split":true,"theme":"light"},"mathjax":{"forceSVG":false,"version":"2.6-latest"},"advanced-emoji":{"embedEmojis":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]}},"theme":"default","author":"JJM","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"DarkNet Book","output.name":"site","gitbook":"*"},"file":{"path":"part1_paper/yolov3.md","mtime":"2020-06-13T18:21:58.896Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-07-18T15:22:53.631Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"YOLOv3","level":"2.3","depth":1,"next":{"title":"YOLOv4","level":"2.4","depth":1,"path":"part1_paper/yolov4.md","ref":"part1_paper/yolov4.md","articles":[]},"previous":{"title":"YOLOv2","level":"2.2","depth":1,"path":"part1_paper/yolov2.md","ref":"part1_paper/yolov2.md","articles":[]},"dir":"ltr"},"config":{"plugins":["advanced-emoji","theme-gestalt","-theme-default","styles-sass-fix","theme-api","mathjax"],"root":"./","styles":{"website":"website-1595390716199.css"},"pluginsConfig":{"styles-sass-fix":{},"theme-gestalt":{"showLevel":false,"styles":{"website":"styles/website.css"},"logo":"/darknet_book/assets/darknet.png","baseUrl":null,"excludeDefaultStyles":true,"doNotHideChildrenChapters":false},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"theme-api":{"languages":[],"split":true,"theme":"light"},"mathjax":{"forceSVG":false,"version":"2.6-latest"},"advanced-emoji":{"embedEmojis":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]}},"theme":"default","author":"JJM","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"DarkNet Book","output.name":"site","gitbook":"*"},"file":{"path":"part1_paper/yolov3.md","mtime":"2020-07-22T04:03:40.007Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-07-22T04:04:57.980Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>
