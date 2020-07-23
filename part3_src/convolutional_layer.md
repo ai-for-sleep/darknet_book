@@ -162,3 +162,56 @@ void backward_convolutional_layer(convolutional_layer l, network net)
 - activation function
 - batch normalization(no bias) or bias
 - convolution 연산
+
+## add_bias
+
+```
+void add_bias(float *output, float *biases, int batch, int n, int size)
+{
+    int i,j,b;
+    for(b = 0; b < batch; ++b){
+        for(i = 0; i < n; ++i){
+            for(j = 0; j < size; ++j){
+                output[(b*n + i)*size + j] += biases[i];
+            }
+        }
+    }
+}
+```
+
+- bias를 더합니다.
+
+## scale_bias
+
+```
+void scale_bias(float *output, float *scales, int batch, int n, int size)
+{
+    int i,j,b;
+    for(b = 0; b < batch; ++b){
+        for(i = 0; i < n; ++i){
+            for(j = 0; j < size; ++j){
+                output[(b*n + i)*size + j] *= scales[i];
+            }
+        }
+    }
+}
+```
+
+- bias의 scale을 조절합니다.
+
+## backward_bias
+
+```
+void backward_bias(float *bias_updates, float *delta, int batch, int n, int size)
+{
+    int i,b;
+    for(b = 0; b < batch; ++b){
+        for(i = 0; i < n; ++i){
+            bias_updates[i] += sum_array(delta+size*(i+b*n), size);
+        }
+    }
+}
+```
+
+- bias를 업데이트할 기울기 값을 구합니다.
+- bias는 딥러닝 연산에서 더해지는 항이기 때문에 미분을 하는 경우 1이되고 흘러들어온 그래디언트를 업데이트 값으로 사용합니다.

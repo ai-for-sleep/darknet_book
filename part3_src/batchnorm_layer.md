@@ -135,7 +135,9 @@ void forward_batchnorm_layer(layer l, network net)
 
 - rolling variance = 0.01 * variance + rolling variance
 
-- 정규화를 합니다.
+- 정규화를 하고 x_norm에 값을 넣어줍니다.
+
+- x_norm의 scale($$\gamma$$)하고 shift($$\beta$$) 합니다. 즉, $$\gamma x_norm + \beta$$
 
 ```c
 void backward_batchnorm_layer(layer l, network net)
@@ -158,6 +160,13 @@ void backward_batchnorm_layer(layer l, network net)
 
 `backward`
 
+- $$\beta$$에 대해 업데이트 할 값을 구합니다.
+
+- $$\gamma$$에 대해 업데이트 할 값을 구합니다.
+
+- 정규화를 역전파 합니다.
+
+
 ```c
 void backward_scale_cpu(float *x_norm, float *delta, int batch, int n, int size, float *scale_updates)
 {
@@ -174,6 +183,8 @@ void backward_scale_cpu(float *x_norm, float *delta, int batch, int n, int size,
     }
 }
 ```
+
+- $$\gamma$$에 대해서 업데이트 해야할 값을 저장합니다.
 
 ```c
 void mean_delta_cpu(float *delta, float *variance, int batch, int filters, int spatial, float *mean_delta)
@@ -193,6 +204,8 @@ void mean_delta_cpu(float *delta, float *variance, int batch, int filters, int s
 }
 ```
 
+- 정규화에 대해서 평균 식을 미분합니다.
+
 ```c
 void  variance_delta_cpu(float *x, float *delta, float *mean, float *variance, int batch, int filters, int spatial, float *variance_delta)
 {
@@ -211,6 +224,8 @@ void  variance_delta_cpu(float *x, float *delta, float *mean, float *variance, i
 }
 ```
 
+- 정규화에 대해서 분산 식을 미분합니다.
+
 ```c
 void normalize_delta_cpu(float *x, float *mean, float *variance, float *mean_delta, float *variance_delta, int batch, int filters, int spatial, float *delta)
 {
@@ -225,3 +240,5 @@ void normalize_delta_cpu(float *x, float *mean, float *variance, float *mean_del
     }
 }
 ```
+
+- 정규화를 미분합니다.

@@ -130,3 +130,378 @@ void fill_cpu(int N, float ALPHA, float *X, int INCX)
 ```
 
 - X에 alpha로 값을 초기화 합니다.
+
+## mul_cpu
+
+```
+void mul_cpu(int N, float *X, int INCX, float *Y, int INCY)
+{
+    int i;
+    for(i = 0; i < N; ++i) Y[i*INCY] *= X[i*INCX];
+}
+```
+
+- $$Y = Y * X$$
+
+## pow_cpu
+
+```
+void pow_cpu(int N, float ALPHA, float *X, int INCX, float *Y, int INCY)
+{
+    int i;
+    for(i = 0; i < N; ++i) Y[i*INCY] = pow(X[i*INCX], ALPHA);
+}
+```
+
+- $$Y = X^{\alpha}$$
+
+## deinter_cpu
+
+```
+void deinter_cpu(int NX, float *X, int NY, float *Y, int B, float *OUT)
+{
+    int i, j;
+    int index = 0;
+    for(j = 0; j < B; ++j) {
+        for(i = 0; i < NX; ++i){
+            if(X) X[j*NX + i] += OUT[index];
+            ++index;
+        }
+        for(i = 0; i < NY; ++i){
+            if(Y) Y[j*NY + i] += OUT[index];
+            ++index;
+        }
+    }
+}
+```
+
+- 연결된 배열 X와 Y를 분리합니다.
+
+## inter_cpu
+
+```
+void inter_cpu(int NX, float *X, int NY, float *Y, int B, float *OUT)
+{
+    int i, j;
+    int index = 0;
+    for(j = 0; j < B; ++j) {
+        for(i = 0; i < NX; ++i){
+            OUT[index++] = X[j*NX + i];
+        }
+        for(i = 0; i < NY; ++i){
+            OUT[index++] = Y[j*NY + i];
+        }
+    }
+}
+```
+
+- 배열 X와 Y를 연결합니다.
+
+## mult_add_into_cpu
+
+```
+void mult_add_into_cpu(int N, float *X, float *Y, float *Z)
+{
+    int i;
+    for(i = 0; i < N; ++i) Z[i] += X[i]*Y[i];
+}
+```
+
+$$Z = Z + X*Y$$
+
+## smooth_l1_cpu
+
+```
+void smooth_l1_cpu(int n, float *pred, float *truth, float *delta, float *error)
+{
+    int i;
+    for(i = 0; i < n; ++i){
+        float diff = truth[i] - pred[i];
+        float abs_val = fabs(diff);
+        if(abs_val < 1) {
+            error[i] = diff * diff;
+            delta[i] = diff;
+        }
+        else {
+            error[i] = 2*abs_val - 1;
+            delta[i] = (diff < 0) ? 1 : -1;
+        }
+    }
+}
+```
+
+- `fabs(double num)` : 인자값으로 들어온 double 타입의 num의 절대값을 반환 합니다.
+
+- 실측값과 예측값의 차이가 1보다 작은 경우
+  + error : $$(truth - pred)^2$$
+  + delta : $$truth - pred$$
+
+- 실측값과 예측값의 차이가 1보다 큰 경우
+  + error : $$2*|truth - pred| - 1$$
+  + delta : diff가 0보다 작은 경우 1 큰 경우 -1
+
+## l1_cpu
+
+```
+void l1_cpu(int n, float *pred, float *truth, float *delta, float *error)
+{
+    int i;
+    for(i = 0; i < n; ++i){
+        float diff = truth[i] - pred[i];
+        error[i] = fabs(diff);
+        delta[i] = diff > 0 ? 1 : -1;
+    }
+}
+```
+
+- error : $$|truth - pred|$$
+- delta :  diff가 0보다 큰 경우 1 작은 경우 -1
+
+## softmax_x_ent_cpu
+
+```
+void softmax_x_ent_cpu(int n, float *pred, float *truth, float *delta, float *error)
+{
+    int i;
+    for(i = 0; i < n; ++i){
+        float t = truth[i];
+        float p = pred[i];
+        error[i] = (t) ? -log(p) : 0;
+        delta[i] = t-p;
+    }
+}
+```
+
+- error : $$log(pred)$$ 만약 0이면 0
+- delta : $$truth - pred$$
+
+## logistic_x_ent_cpu
+
+```
+void logistic_x_ent_cpu(int n, float *pred, float *truth, float *delta, float *error)
+{
+    int i;
+    for(i = 0; i < n; ++i){
+        float t = truth[i];
+        float p = pred[i];
+        error[i] = -t*log(p) - (1-t)*log(1-p);
+        delta[i] = t-p;
+    }
+}
+```
+
+- error : $$-truth * \log(pred) - (1 - truth) * \log(1 - pred)$$
+- delta : $$truth - pred$$
+
+## l2_cpu
+
+```
+void l2_cpu(int n, float *pred, float *truth, float *delta, float *error)
+{
+    int i;
+    for(i = 0; i < n; ++i){
+        float diff = truth[i] - pred[i];
+        error[i] = diff * diff;
+        delta[i] = diff;
+    }
+}
+```
+
+- error = $$(truth - pred)^2$$
+- delta = $$truth - pred$$
+
+## dot_cpu
+
+```
+float dot_cpu(int N, float *X, int INCX, float *Y, int INCY)
+{
+    int i;
+    float dot = 0;
+    for(i = 0; i < N; ++i) dot += X[i*INCX] * Y[i*INCY];
+    return dot;
+}
+```
+
+- dot product
+- $$dot = dot + X * Y$$
+
+## softmax
+
+```
+void softmax(float *input, int n, float temp, int stride, float *output)
+{
+    int i;
+    float sum = 0;
+    float largest = -FLT_MAX;
+    for(i = 0; i < n; ++i){
+        if(input[i*stride] > largest) largest = input[i*stride];
+    }
+    for(i = 0; i < n; ++i){
+        float e = exp(input[i*stride]/temp - largest/temp);
+        sum += e;
+        output[i*stride] = e;
+    }
+    for(i = 0; i < n; ++i){
+        output[i*stride] /= sum;
+    }
+}
+```
+
+- softmax 연산함수
+- $$\frac{e(x_i - max(x))}{\sum e(x_i - max(x))}$$
+
+## softmax_cpu
+
+```
+void softmax_cpu(float *input, int n, int batch, int batch_offset, int groups, int group_offset, int stride, float temp, float *output)
+{
+    int g, b;
+    for(b = 0; b < batch; ++b){
+        for(g = 0; g < groups; ++g){
+            softmax(input + b*batch_offset + g*group_offset, n, temp, stride, output + b*batch_offset + g*group_offset);
+        }
+    }
+}
+```
+
+- softmax 실행함수
+
+## upsample_cpu
+
+```
+void upsample_cpu(float *in, int w, int h, int c, int batch, int stride, int forward, float scale, float *out)
+{
+    int i, j, k, b;
+    for(b = 0; b < batch; ++b){
+        for(k = 0; k < c; ++k){
+            for(j = 0; j < h*stride; ++j){
+                for(i = 0; i < w*stride; ++i){
+                    int in_index = b*w*h*c + k*w*h + (j/stride)*w + i/stride;
+                    int out_index = b*w*h*c*stride*stride + k*w*h*stride*stride + j*w*stride + i;
+                    if(forward) out[out_index] = scale*in[in_index];
+                    else in[in_index] += scale*out[out_index];
+                }
+            }
+        }
+    }
+}
+```
+
+- upsampling layer
+
+## reorg_cpu
+
+```
+void reorg_cpu(float *x, int w, int h, int c, int batch, int stride, int forward, float *out)
+{
+    int b,i,j,k;
+    int out_c = c/(stride*stride);
+
+    for(b = 0; b < batch; ++b){
+        for(k = 0; k < c; ++k){
+            for(j = 0; j < h; ++j){
+                for(i = 0; i < w; ++i){
+                    int in_index  = i + w*(j + h*(k + c*b));
+                    int c2 = k % out_c;
+                    int offset = k / out_c;
+                    int w2 = i*stride + offset % stride;
+                    int h2 = j*stride + offset / stride;
+                    int out_index = w2 + w*stride*(h2 + h*stride*(c2 + out_c*b));
+                    if(forward) out[out_index] = x[in_index];
+                    else out[in_index] = x[out_index];
+                }
+            }
+        }
+    }
+}
+```
+
+- reorg layer
+
+## flatten
+
+```
+void flatten(float *x, int size, int layers, int batch, int forward)
+{
+    float *swap = calloc(size*layers*batch, sizeof(float));
+    int i,c,b;
+    for(b = 0; b < batch; ++b){
+        for(c = 0; c < layers; ++c){
+            for(i = 0; i < size; ++i){
+                int i1 = b*layers*size + c*size + i;
+                int i2 = b*layers*size + i*layers + c;
+                if (forward) swap[i2] = x[i1];
+                else swap[i1] = x[i2];
+            }
+        }
+    }
+    memcpy(x, swap, size*layers*batch*sizeof(float));
+    free(swap);
+}
+```
+
+- reorg
+
+## weighted_sum_cpu
+
+```
+void weighted_sum_cpu(float *a, float *b, float *s, int n, float *c)
+{
+    int i;
+    for(i = 0; i < n; ++i){
+        c[i] = s[i]*a[i] + (1-s[i])*(b ? b[i] : 0);
+    }
+}
+```
+
+- $$c = s * a + (1 - s) * b$$
+
+## weighted_delta_cpu
+
+```
+void weighted_delta_cpu(float *a, float *b, float *s, float *da, float *db, float *ds, int n, float *dc)
+{
+    int i;
+    for(i = 0; i < n; ++i){
+        if(da) da[i] += dc[i] * s[i];
+        if(db) db[i] += dc[i] * (1-s[i]);
+        ds[i] += dc[i] * (a[i] - b[i]);
+    }
+}
+```
+
+- $$\delta a = \delta a + \delta c * s $$
+- $$\delta b = \delta b + \delta c * (1 - s)$$
+- $$\delta s = \delta s + \delta c * (a - b)$$
+
+## shortcut_cpu
+
+```
+void shortcut_cpu(int batch, int w1, int h1, int c1, float *add, int w2, int h2, int c2, float s1, float s2, float *out)
+{
+    int stride = w1/w2;
+    int sample = w2/w1;
+    assert(stride == h1/h2);
+    assert(sample == h2/h1);
+    if(stride < 1) stride = 1;
+    if(sample < 1) sample = 1;
+    int minw = (w1 < w2) ? w1 : w2;
+    int minh = (h1 < h2) ? h1 : h2;
+    int minc = (c1 < c2) ? c1 : c2;
+
+    int i,j,k,b;
+    for(b = 0; b < batch; ++b){
+        for(k = 0; k < minc; ++k){
+            for(j = 0; j < minh; ++j){
+                for(i = 0; i < minw; ++i){
+                    int out_index = i*sample + w2*(j*sample + h2*(k + c2*b));
+                    int add_index = i*stride + w1*(j*stride + h1*(k + c1*b));
+                    out[out_index] = s1*out[out_index] + s2*add[add_index];
+                }
+            }
+        }
+    }
+}
+```
+
+- shortcut layer

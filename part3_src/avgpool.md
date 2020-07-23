@@ -113,3 +113,5 @@ void resize_avgpool_layer(avgpool_layer *l, int w, int h)
     l->inputs = h*w*l->c;
 }
 ```
+
+- avgpooling layer의 크기를 resize합니다.

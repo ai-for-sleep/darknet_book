@@ -42,7 +42,7 @@
 
     
         
-        <link rel="stylesheet" href="../website-1595390716199.css">
+        <link rel="stylesheet" href="../website-1595490870458.css">
         
     
 
@@ -2074,6 +2074,50 @@
 <li>batch normalization(no bias) or bias</li>
 <li>convolution &#xC5F0;&#xC0B0;</li>
 </ul>
+<h2 id="addbias">add_bias</h2>
+<pre><code>void add_bias(float *output, float *biases, int batch, int n, int size)
+{
+    int i,j,b;
+    for(b = 0; b &lt; batch; ++b){
+        for(i = 0; i &lt; n; ++i){
+            for(j = 0; j &lt; size; ++j){
+                output[(b*n + i)*size + j] += biases[i];
+            }
+        }
+    }
+}
+</code></pre><ul>
+<li>bias&#xB97C; &#xB354;&#xD569;&#xB2C8;&#xB2E4;.</li>
+</ul>
+<h2 id="scalebias">scale_bias</h2>
+<pre><code>void scale_bias(float *output, float *scales, int batch, int n, int size)
+{
+    int i,j,b;
+    for(b = 0; b &lt; batch; ++b){
+        for(i = 0; i &lt; n; ++i){
+            for(j = 0; j &lt; size; ++j){
+                output[(b*n + i)*size + j] *= scales[i];
+            }
+        }
+    }
+}
+</code></pre><ul>
+<li>bias&#xC758; scale&#xC744; &#xC870;&#xC808;&#xD569;&#xB2C8;&#xB2E4;.</li>
+</ul>
+<h2 id="backwardbias">backward_bias</h2>
+<pre><code>void backward_bias(float *bias_updates, float *delta, int batch, int n, int size)
+{
+    int i,b;
+    for(b = 0; b &lt; batch; ++b){
+        for(i = 0; i &lt; n; ++i){
+            bias_updates[i] += sum_array(delta+size*(i+b*n), size);
+        }
+    }
+}
+</code></pre><ul>
+<li>bias&#xB97C; &#xC5C5;&#xB370;&#xC774;&#xD2B8;&#xD560; &#xAE30;&#xC6B8;&#xAE30; &#xAC12;&#xC744; &#xAD6C;&#xD569;&#xB2C8;&#xB2E4;.</li>
+<li>bias&#xB294; &#xB525;&#xB7EC;&#xB2DD; &#xC5F0;&#xC0B0;&#xC5D0;&#xC11C; &#xB354;&#xD574;&#xC9C0;&#xB294; &#xD56D;&#xC774;&#xAE30; &#xB54C;&#xBB38;&#xC5D0; &#xBBF8;&#xBD84;&#xC744; &#xD558;&#xB294; &#xACBD;&#xC6B0; 1&#xC774;&#xB418;&#xACE0; &#xD758;&#xB7EC;&#xB4E4;&#xC5B4;&#xC628; &#xADF8;&#xB798;&#xB514;&#xC5B8;&#xD2B8;&#xB97C; &#xC5C5;&#xB370;&#xC774;&#xD2B8; &#xAC12;&#xC73C;&#xB85C; &#xC0AC;&#xC6A9;&#xD569;&#xB2C8;&#xB2E4;.</li>
+</ul>
 
                                 
                                 </section>
@@ -2113,7 +2157,7 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"convolutional_layer.c","level":"5.10","depth":1,"next":{"title":"cost_layer.c","level":"5.11","depth":1,"ref":"","articles":[]},"previous":{"title":"connected_layer.c","level":"5.9","depth":1,"path":"part3_src/connected_layer.md","ref":"part3_src/connected_layer.md","articles":[]},"dir":"ltr"},"config":{"plugins":["advanced-emoji","theme-gestalt","-theme-default","styles-sass-fix","theme-api","mathjax"],"root":"./","styles":{"website":"website-1595390716199.css"},"pluginsConfig":{"styles-sass-fix":{},"theme-gestalt":{"showLevel":false,"styles":{"website":"styles/website.css"},"logo":"/darknet_book/assets/darknet.png","baseUrl":null,"excludeDefaultStyles":true,"doNotHideChildrenChapters":false},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"theme-api":{"languages":[],"split":true,"theme":"light"},"mathjax":{"forceSVG":false,"version":"2.6-latest"},"advanced-emoji":{"embedEmojis":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]}},"theme":"default","author":"JJM","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"DarkNet Book","output.name":"site","gitbook":"*"},"file":{"path":"part3_src/convolutional_layer.md","mtime":"2020-07-10T06:08:39.969Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-07-22T04:04:57.980Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"convolutional_layer.c","level":"5.10","depth":1,"next":{"title":"cost_layer.c","level":"5.11","depth":1,"ref":"","articles":[]},"previous":{"title":"connected_layer.c","level":"5.9","depth":1,"path":"part3_src/connected_layer.md","ref":"part3_src/connected_layer.md","articles":[]},"dir":"ltr"},"config":{"plugins":["advanced-emoji","theme-gestalt","-theme-default","styles-sass-fix","theme-api","mathjax"],"root":"./","styles":{"website":"website-1595490870458.css"},"pluginsConfig":{"styles-sass-fix":{},"theme-gestalt":{"showLevel":false,"styles":{"website":"styles/website.css"},"logo":"/darknet_book/assets/darknet.png","baseUrl":null,"excludeDefaultStyles":true,"doNotHideChildrenChapters":false},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"theme-api":{"languages":[],"split":true,"theme":"light"},"mathjax":{"forceSVG":false,"version":"2.6-latest"},"advanced-emoji":{"embedEmojis":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]}},"theme":"default","author":"JJM","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"DarkNet Book","output.name":"site","gitbook":"*"},"file":{"path":"part3_src/convolutional_layer.md","mtime":"2020-07-23T05:42:19.067Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-07-23T07:54:18.244Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>
