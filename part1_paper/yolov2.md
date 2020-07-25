@@ -63,7 +63,7 @@ k가 커지면 clustering의 결과와 label사이의 IOU가 커지기 때문에
 
 
 
-![exp](/figure/paper/yolov2/exp.PNG)
+![box](/figure/paper/yolov2/box.PNG)
 
 
 

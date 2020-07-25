@@ -42,7 +42,7 @@
 
     
         
-        <link rel="stylesheet" href="../website-1595490870458.css">
+        <link rel="stylesheet" href="../website-1595679675942.css">
         
     
 
@@ -504,15 +504,15 @@
         <li class="chapter 
               "
             data-level="5.6" 
-            >
+            data-path="../part3_src/box.html">
 
             
-                <span>
+                <a href="../part3_src/box.html">
             
                     
                     box.c
             
-                </span>
+                </a>
             
 
             
@@ -1991,6 +1991,16 @@
 <li>cols : &#xC774;&#xBBF8;&#xC9C0; &#xD55C;&#xC7A5;&#xC5D0;&#xC11C;&#xC758; box&#xC758; &#xAC1C;&#xC218;</li>
 <li>rows : &#xC774;&#xBBF8;&#xC9C0;&#xC758; &#xAC1C;&#xC218; batch size</li>
 </ul>
+<h2 id="detection">detection</h2>
+<pre><code>typedef struct detection{
+    box bbox;
+    int classes;
+    float *prob;
+    float *mask;
+    float objectness;
+    int sort_class;
+} detection;
+</code></pre><p>&#xAC80;&#xCD9C;&#xD55C; &#xB370;&#xC774;&#xD130;&#xC5D0; &#xB300;&#xD55C; &#xC815;&#xBCF4;&#xB97C; &#xB2F4;&#xACE0; &#xC788;&#xC2B5;&#xB2C8;&#xB2E4;.</p>
 <hr>
 <h1 id="srcoptionlisth">/src/option_list.h</h1>
 <h2 id="kvp-&#xAD6C;&#xC870;&#xCCB4;">kvp &#xAD6C;&#xC870;&#xCCB4;</h2>
@@ -2012,7 +2022,15 @@
     int time_steps;
     network *net;
 } size_params;
-</code></pre>
+</code></pre><h1 id="srcboxh">/src/box.h</h1>
+<h2 id="dbox-&#xAD6C;&#xC870;&#xCCB4;">dbox &#xAD6C;&#xC870;&#xCCB4;</h2>
+<pre><code>typedef struct{
+    float dx, dy, dw, dh;
+} dbox;
+</code></pre><ul>
+<li>box&#xC758; &#xBBF8;&#xBD84; &#xAC12;&#xC744; &#xC800;&#xC7A5;&#xD569;&#xB2C8;&#xB2E4;.</li>
+</ul>
+
                                 
                                 </section>
                             
@@ -2055,7 +2073,7 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"etc","level":"4.3","depth":1,"next":{"title":"activation_layer.c","level":"5.1","depth":1,"path":"part3_src/activation_layer.md","ref":"part3_src/activation_layer.md","articles":[]},"previous":{"title":"layer","level":"4.2","depth":1,"path":"part4_structure/layer.md","ref":"part4_structure/layer.md","articles":[]},"dir":"ltr"},"config":{"plugins":["advanced-emoji","theme-gestalt","-theme-default","styles-sass-fix","theme-api","mathjax"],"root":"./","styles":{"website":"website-1595490870458.css"},"pluginsConfig":{"styles-sass-fix":{},"theme-gestalt":{"showLevel":false,"styles":{"website":"styles/website.css"},"logo":"/darknet_book/assets/darknet.png","baseUrl":null,"excludeDefaultStyles":true,"doNotHideChildrenChapters":false},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"theme-api":{"languages":[],"split":true,"theme":"light"},"mathjax":{"forceSVG":false,"version":"2.6-latest"},"advanced-emoji":{"embedEmojis":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]}},"theme":"default","author":"JJM","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"DarkNet Book","output.name":"site","gitbook":"*"},"file":{"path":"part4_structure/etc.md","mtime":"2020-07-14T06:07:48.539Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-07-23T07:54:18.244Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"etc","level":"4.3","depth":1,"next":{"title":"activation_layer.c","level":"5.1","depth":1,"path":"part3_src/activation_layer.md","ref":"part3_src/activation_layer.md","articles":[]},"previous":{"title":"layer","level":"4.2","depth":1,"path":"part4_structure/layer.md","ref":"part4_structure/layer.md","articles":[]},"dir":"ltr"},"config":{"plugins":["advanced-emoji","theme-gestalt","-theme-default","styles-sass-fix","theme-api","mathjax"],"root":"./","styles":{"website":"website-1595679675942.css"},"pluginsConfig":{"styles-sass-fix":{},"theme-gestalt":{"showLevel":false,"styles":{"website":"styles/website.css"},"logo":"/darknet_book/assets/darknet.png","baseUrl":null,"excludeDefaultStyles":true,"doNotHideChildrenChapters":false},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"theme-api":{"languages":[],"split":true,"theme":"light"},"mathjax":{"forceSVG":false,"version":"2.6-latest"},"advanced-emoji":{"embedEmojis":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]}},"theme":"default","author":"JJM","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"DarkNet Book","output.name":"site","gitbook":"*"},"file":{"path":"part4_structure/etc.md","mtime":"2020-07-24T13:23:20.424Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-07-25T12:20:57.389Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>

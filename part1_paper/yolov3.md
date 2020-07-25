@@ -23,7 +23,7 @@ YOLOv2 이후 나온 논문을 적용해 Object Detection의 약점들을 해결
 
 
 
- ![cluster](/figure/paper/yolov2/cluster.PNG)
+ ![box](/figure/paper/yolov2/box.PNG)
 
 
 

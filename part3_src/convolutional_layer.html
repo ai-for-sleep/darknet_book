@@ -42,7 +42,7 @@
 
     
         
-        <link rel="stylesheet" href="../website-1595490870458.css">
+        <link rel="stylesheet" href="../website-1595679675942.css">
         
     
 
@@ -502,15 +502,15 @@
         <li class="chapter 
               "
             data-level="5.6" 
-            >
+            data-path="box.html">
 
             
-                <span>
+                <a href="box.html">
             
                     
                     box.c
             
-                </span>
+                </a>
             
 
             
@@ -2074,6 +2074,166 @@
 <li>batch normalization(no bias) or bias</li>
 <li>convolution &#xC5F0;&#xC0B0;</li>
 </ul>
+<h2 id="updateconvolutionallayer">update_convolutional_layer</h2>
+<pre><code>void update_convolutional_layer(convolutional_layer l, update_args a)
+{
+    float learning_rate = a.learning_rate*l.learning_rate_scale;
+    float momentum = a.momentum;
+    float decay = a.decay;
+    int batch = a.batch;
+
+    axpy_cpu(l.n, learning_rate/batch, l.bias_updates, 1, l.biases, 1);
+    scal_cpu(l.n, momentum, l.bias_updates, 1);
+
+    if(l.scales){
+        axpy_cpu(l.n, learning_rate/batch, l.scale_updates, 1, l.scales, 1);
+        scal_cpu(l.n, momentum, l.scale_updates, 1);
+    }
+
+    axpy_cpu(l.nweights, -decay*batch, l.weights, 1, l.weight_updates, 1);
+    axpy_cpu(l.nweights, learning_rate/batch, l.weight_updates, 1, l.weights, 1);
+    scal_cpu(l.nweights, momentum, l.weight_updates, 1);
+}
+</code></pre><h2 id="makeconvolutionallayer">make_convolutional_layer</h2>
+<pre><code>convolutional_layer make_convolutional_layer(int batch, int h, int w, int c, int n, int groups, int size, int stride, int padding, ACTIVATION activation, int batch_normalize, int binary, int xnor, int adam)
+{
+    int i;
+    convolutional_layer l = {0};
+    l.type = CONVOLUTIONAL;
+
+    l.groups = groups;
+    l.h = h;
+    l.w = w;
+    l.c = c;
+    l.n = n;
+    l.binary = binary;
+    l.xnor = xnor;
+    l.batch = batch;
+    l.stride = stride;
+    l.size = size;
+    l.pad = padding;
+    l.batch_normalize = batch_normalize;
+
+    l.weights = calloc(c/groups*n*size*size, sizeof(float));
+    l.weight_updates = calloc(c/groups*n*size*size, sizeof(float));
+
+    l.biases = calloc(n, sizeof(float));
+    l.bias_updates = calloc(n, sizeof(float));
+
+    l.nweights = c/groups*n*size*size;
+    l.nbiases = n;
+
+    // float scale = 1./sqrt(size*size*c);
+    float scale = sqrt(2./(size*size*c/l.groups));
+    //printf(&quot;convscale %f\n&quot;, scale);
+    //scale = .02;
+    //for(i = 0; i &lt; c*n*size*size; ++i) l.weights[i] = scale*rand_uniform(-1, 1);
+    for(i = 0; i &lt; l.nweights; ++i) l.weights[i] = scale*rand_normal();
+    int out_w = convolutional_out_width(l);
+    int out_h = convolutional_out_height(l);
+    l.out_h = out_h;
+    l.out_w = out_w;
+    l.out_c = n;
+    l.outputs = l.out_h * l.out_w * l.out_c;
+    l.inputs = l.w * l.h * l.c;
+
+    l.output = calloc(l.batch*l.outputs, sizeof(float));
+    l.delta  = calloc(l.batch*l.outputs, sizeof(float));
+
+    l.forward = forward_convolutional_layer;
+    l.backward = backward_convolutional_layer;
+    l.update = update_convolutional_layer;
+    if(binary){
+        l.binary_weights = calloc(l.nweights, sizeof(float));
+        l.cweights = calloc(l.nweights, sizeof(char));
+        l.scales = calloc(n, sizeof(float));
+    }
+    if(xnor){
+        l.binary_weights = calloc(l.nweights, sizeof(float));
+        l.binary_input = calloc(l.inputs*l.batch, sizeof(float));
+    }
+
+    if(batch_normalize){
+        l.scales = calloc(n, sizeof(float));
+        l.scale_updates = calloc(n, sizeof(float));
+        for(i = 0; i &lt; n; ++i){
+            l.scales[i] = 1;
+        }
+
+        l.mean = calloc(n, sizeof(float));
+        l.variance = calloc(n, sizeof(float));
+
+        l.mean_delta = calloc(n, sizeof(float));
+        l.variance_delta = calloc(n, sizeof(float));
+
+        l.rolling_mean = calloc(n, sizeof(float));
+        l.rolling_variance = calloc(n, sizeof(float));
+        l.x = calloc(l.batch*l.outputs, sizeof(float));
+        l.x_norm = calloc(l.batch*l.outputs, sizeof(float));
+    }
+    if(adam){
+        l.m = calloc(l.nweights, sizeof(float));
+        l.v = calloc(l.nweights, sizeof(float));
+        l.bias_m = calloc(n, sizeof(float));
+        l.scale_m = calloc(n, sizeof(float));
+        l.bias_v = calloc(n, sizeof(float));
+        l.scale_v = calloc(n, sizeof(float));
+    }
+
+    l.workspace_size = get_workspace_size(l);
+    l.activation = activation;
+
+    fprintf(stderr, &quot;conv  %5d %2d x%2d /%2d  %4d x%4d x%4d   -&gt;  %4d x%4d x%4d  %5.3f BFLOPs\n&quot;, n, size, size, stride, w, h, c, l.out_w, l.out_h, l.out_c, (2.0 * l.n * l.size*l.size*l.c/l.groups * l.out_h*l.out_w)/1000000000.);
+
+    return l;
+}
+</code></pre><ul>
+<li>convolution layer&#xB97C; &#xB9CC;&#xB4DC;&#xB294; &#xD568;&#xC218; &#xC785;&#xB2C8;&#xB2E4;.</li>
+</ul>
+<h2 id="denormalizeconvolutionallayer">denormalize_convolutional_layer</h2>
+<pre><code>void denormalize_convolutional_layer(convolutional_layer l)
+{
+    int i, j;
+    for(i = 0; i &lt; l.n; ++i){
+        float scale = l.scales[i]/sqrt(l.rolling_variance[i] + .00001);
+        for(j = 0; j &lt; l.c/l.groups*l.size*l.size; ++j){
+            l.weights[i*l.c/l.groups*l.size*l.size + j] *= scale;
+        }
+        l.biases[i] -= l.rolling_mean[i] * scale;
+        l.scales[i] = 1;
+        l.rolling_mean[i] = 0;
+        l.rolling_variance[i] = 1;
+    }
+}
+</code></pre><ul>
+<li>&#xC5ED;&#xC815;&#xADDC;&#xD654;&#xB97C; &#xD558;&#xB294; &#xD568;&#xC218;&#xC785;&#xB2C8;&#xB2E4;.</li>
+</ul>
+<h2 id="resizeconvolutionallayer">resize_convolutional_layer</h2>
+<pre><code>void resize_convolutional_layer(convolutional_layer *l, int w, int h)
+{
+    l-&gt;w = w;
+    l-&gt;h = h;
+    int out_w = convolutional_out_width(*l);
+    int out_h = convolutional_out_height(*l);
+
+    l-&gt;out_w = out_w;
+    l-&gt;out_h = out_h;
+
+    l-&gt;outputs = l-&gt;out_h * l-&gt;out_w * l-&gt;out_c;
+    l-&gt;inputs = l-&gt;w * l-&gt;h * l-&gt;c;
+
+    l-&gt;output = realloc(l-&gt;output, l-&gt;batch*l-&gt;outputs*sizeof(float));
+    l-&gt;delta  = realloc(l-&gt;delta,  l-&gt;batch*l-&gt;outputs*sizeof(float));
+    if(l-&gt;batch_normalize){
+        l-&gt;x = realloc(l-&gt;x, l-&gt;batch*l-&gt;outputs*sizeof(float));
+        l-&gt;x_norm  = realloc(l-&gt;x_norm, l-&gt;batch*l-&gt;outputs*sizeof(float));
+    }
+
+    l-&gt;workspace_size = get_workspace_size(*l);
+}
+</code></pre><ul>
+<li>convolutional layer&#xB97C; resize&#xC2DC;&#xD0B5;&#xB2C8;&#xB2E4;.</li>
+</ul>
 <h2 id="addbias">add_bias</h2>
 <pre><code>void add_bias(float *output, float *biases, int batch, int n, int size)
 {
@@ -2118,6 +2278,179 @@
 <li>bias&#xB97C; &#xC5C5;&#xB370;&#xC774;&#xD2B8;&#xD560; &#xAE30;&#xC6B8;&#xAE30; &#xAC12;&#xC744; &#xAD6C;&#xD569;&#xB2C8;&#xB2E4;.</li>
 <li>bias&#xB294; &#xB525;&#xB7EC;&#xB2DD; &#xC5F0;&#xC0B0;&#xC5D0;&#xC11C; &#xB354;&#xD574;&#xC9C0;&#xB294; &#xD56D;&#xC774;&#xAE30; &#xB54C;&#xBB38;&#xC5D0; &#xBBF8;&#xBD84;&#xC744; &#xD558;&#xB294; &#xACBD;&#xC6B0; 1&#xC774;&#xB418;&#xACE0; &#xD758;&#xB7EC;&#xB4E4;&#xC5B4;&#xC628; &#xADF8;&#xB798;&#xB514;&#xC5B8;&#xD2B8;&#xB97C; &#xC5C5;&#xB370;&#xC774;&#xD2B8; &#xAC12;&#xC73C;&#xB85C; &#xC0AC;&#xC6A9;&#xD569;&#xB2C8;&#xB2E4;.</li>
 </ul>
+<h2 id="swapbinary">swap_binary</h2>
+<pre><code>void swap_binary(convolutional_layer *l)
+{
+    float *swap = l-&gt;weights;
+    l-&gt;weights = l-&gt;binary_weights;
+    l-&gt;binary_weights = swap;
+}
+</code></pre><ul>
+<li>weights&#xB97C; binary_weights&#xB85C; &#xC62E;&#xAE40;&#xB2C8;&#xB2E4;.</li>
+</ul>
+<h2 id="binarizeweights">binarize_weights</h2>
+<pre><code>void binarize_weights(float *weights, int n, int size, float *binary)
+{
+    int i, f;
+    for(f = 0; f &lt; n; ++f){
+        float mean = 0;
+        for(i = 0; i &lt; size; ++i){
+            mean += fabs(weights[f*size + i]);
+        }
+        mean = mean / size;
+        for(i = 0; i &lt; size; ++i){
+            binary[f*size + i] = (weights[f*size + i] &gt; 0) ? mean : -mean;
+        }
+    }
+}
+</code></pre><ul>
+<li>&#xAC00;&#xC911;&#xCE58;&#xB97C; &#xC774;&#xC9C4;&#xD654; &#xD558;&#xB294; &#xD568;&#xC218; &#xC785;&#xB2C8;&#xB2E4;.</li>
+<li>&#xC591;&#xC218;&#xC77C;&#xB54C;&#xB294; &#xD3C9;&#xADE0;&#xAC12;</li>
+<li>&#xC74C;&#xC218;&#xC77C;&#xB54C;&#xB294; -&#xD3C9;&#xADE0;&#xAC12;</li>
+</ul>
+<h2 id="binarizecpu">binarize_cpu</h2>
+<pre><code>void binarize_cpu(float *input, int n, float *binary)
+{
+    int i;
+    for(i = 0; i &lt; n; ++i){
+        binary[i] = (input[i] &gt; 0) ? 1 : -1;
+    }
+}
+</code></pre><ul>
+<li>&#xC591;&#xC218;&#xC77C;&#xB54C;&#xB294; 1</li>
+<li>&#xC74C;&#xC218;&#xC77C;&#xB54C;&#xB294; -1</li>
+</ul>
+<h2 id="binarizeinput">binarize_input</h2>
+<pre><code>void binarize_input(float *input, int n, int size, float *binary)
+{
+    int i, s;
+    for(s = 0; s &lt; size; ++s){
+        float mean = 0;
+        for(i = 0; i &lt; n; ++i){
+            mean += fabs(input[i*size + s]);
+        }
+        mean = mean / n;
+        for(i = 0; i &lt; n; ++i){
+            binary[i*size + s] = (input[i*size + s] &gt; 0) ? mean : -mean;
+        }
+    }
+}
+</code></pre><ul>
+<li>&#xC785;&#xB825;&#xC744; &#xC774;&#xC9C4;&#xD654; &#xD558;&#xB294; &#xD568;&#xC218; &#xC785;&#xB2C8;&#xB2E4;.</li>
+<li>&#xC591;&#xC218;&#xC77C;&#xB54C;&#xB294; &#xD3C9;&#xADE0;&#xAC12;</li>
+<li>&#xC74C;&#xC218;&#xC77C;&#xB54C;&#xB294; -&#xD3C9;&#xADE0;&#xAC12;</li>
+</ul>
+<h2 id="convolutionaloutheight">convolutional_out_height</h2>
+<pre><code>int convolutional_out_height(convolutional_layer l)
+{
+    return (l.h + 2*l.pad - l.size) / l.stride + 1;
+}
+</code></pre><ul>
+<li><script type="math/tex; ">\frac{H + 2 * PAD - K}{S + 1}</script></li>
+</ul>
+<h2 id="convolutionaloutwidth">convolutional_out_width</h2>
+<pre><code>int convolutional_out_width(convolutional_layer l)
+{
+    return (l.w + 2*l.pad - l.size) / l.stride + 1;
+}
+</code></pre><ul>
+<li><script type="math/tex; ">\frac{W + 2 * PAD - K}{S + 1}</script></li>
+</ul>
+<h2 id="getconvolutionalimage">get_convolutional_image</h2>
+<pre><code>image get_convolutional_image(convolutional_layer l)
+{
+    return float_to_image(l.out_w,l.out_h,l.out_c,l.output);
+}
+</code></pre><ul>
+<li>convolution&#xC5D0; &#xCD9C;&#xB825; &#xC774;&#xBBF8;&#xC9C0;&#xB97C; &#xAC00;&#xC838;&#xC635;&#xB2C8;&#xB2E4;.</li>
+</ul>
+<h2 id="getconvolutionaldelta">get_convolutional_delta</h2>
+<pre><code>image get_convolutional_delta(convolutional_layer l)
+{
+    return float_to_image(l.out_w,l.out_h,l.out_c,l.delta);
+}
+</code></pre><ul>
+<li>convolution&#xC5D0; &#xCD9C;&#xB825; &#xAE30;&#xC6B8;&#xAE30;&#xB97C; &#xAC00;&#xC838;&#xC635;&#xB2C8;&#xB2E4;.</li>
+</ul>
+<h2 id="getconvolutionalweight">get_convolutional_weight</h2>
+<pre><code>image get_convolutional_weight(convolutional_layer l, int i)
+{
+    int h = l.size;
+    int w = l.size;
+    int c = l.c/l.groups;
+    return float_to_image(w,h,c,l.weights+i*h*w*c);
+}
+</code></pre><ul>
+<li>convolution&#xC5D0; i&#xBC88;&#xC9F8; filter&#xB97C; &#xAC00;&#xC838;&#xC635;&#xB2C8;&#xB2E4;.</li>
+</ul>
+<h2 id="rgbgrweights">rgbgr_weights</h2>
+<pre><code>void rgbgr_weights(convolutional_layer l)
+{
+    int i;
+    for(i = 0; i &lt; l.n; ++i){
+        image im = get_convolutional_weight(l, i);
+        if (im.c == 3) {
+            rgbgr_image(im);
+        }
+    }
+}
+</code></pre><ul>
+<li>RGB&#xB97C; BGR&#xB85C; BGR&#xC744; RGB&#xB85C; &#xBC14;&#xAFC9;&#xB2C8;&#xB2E4;.</li>
+</ul>
+<h2 id="rescaleweights">rescale_weights</h2>
+<pre><code>void rescale_weights(convolutional_layer l, float scale, float trans)
+{
+    int i;
+    for(i = 0; i &lt; l.n; ++i){
+        image im = get_convolutional_weight(l, i);
+        if (im.c == 3) {
+            scale_image(im, scale);
+            float sum = sum_array(im.data, im.w*im.h*im.c);
+            l.biases[i] += sum*trans;
+        }
+    }
+}
+</code></pre><ul>
+<li>convolution weights&#xB97C; scaling&#xD569;&#xB2C8;&#xB2E4;.</li>
+</ul>
+<h2 id="getweights">get_weights</h2>
+<pre><code>image *get_weights(convolutional_layer l)
+{
+    image *weights = calloc(l.n, sizeof(image));
+    int i;
+    for(i = 0; i &lt; l.n; ++i){
+        weights[i] = copy_image(get_convolutional_weight(l, i));
+        normalize_image(weights[i]);
+        /*
+           char buff[256];
+           sprintf(buff, &quot;filter%d&quot;, i);
+           save_image(weights[i], buff);
+         */
+    }
+    //error(&quot;hey&quot;);
+    return weights;
+}
+</code></pre><ul>
+<li>weights&#xB97C; &#xC815;&#xADDC;&#xD654; &#xD574;&#xC11C; &#xC5BB;&#xC2B5;&#xB2C8;&#xB2E4;.</li>
+</ul>
+<h2 id="visualizeconvolutionallayer">visualize_convolutional_layer</h2>
+<pre><code>image *visualize_convolutional_layer(convolutional_layer l, char *window, image *prev_weights)
+{
+    image *single_weights = get_weights(l);
+    show_images(single_weights, l.n, window);
+
+    image delta = get_convolutional_image(l);
+    image dc = collapse_image_layers(delta, 1);
+    char buff[256];
+    sprintf(buff, &quot;%s: Output&quot;, window);
+    //show_image(dc, buff);
+    //save_image(dc, buff);
+    free_image(dc);
+    return single_weights;
+}
+</code></pre><ul>
+<li>convolutional layer&#xB97C; &#xC2DC;&#xAC01;&#xD654; &#xD558;&#xAE30; &#xC704;&#xD55C; &#xD568;&#xC218; &#xC785;&#xB2C8;&#xB2E4;.</li>
+</ul>
 
                                 
                                 </section>
@@ -2157,7 +2490,7 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"convolutional_layer.c","level":"5.10","depth":1,"next":{"title":"cost_layer.c","level":"5.11","depth":1,"ref":"","articles":[]},"previous":{"title":"connected_layer.c","level":"5.9","depth":1,"path":"part3_src/connected_layer.md","ref":"part3_src/connected_layer.md","articles":[]},"dir":"ltr"},"config":{"plugins":["advanced-emoji","theme-gestalt","-theme-default","styles-sass-fix","theme-api","mathjax"],"root":"./","styles":{"website":"website-1595490870458.css"},"pluginsConfig":{"styles-sass-fix":{},"theme-gestalt":{"showLevel":false,"styles":{"website":"styles/website.css"},"logo":"/darknet_book/assets/darknet.png","baseUrl":null,"excludeDefaultStyles":true,"doNotHideChildrenChapters":false},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"theme-api":{"languages":[],"split":true,"theme":"light"},"mathjax":{"forceSVG":false,"version":"2.6-latest"},"advanced-emoji":{"embedEmojis":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]}},"theme":"default","author":"JJM","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"DarkNet Book","output.name":"site","gitbook":"*"},"file":{"path":"part3_src/convolutional_layer.md","mtime":"2020-07-23T05:42:19.067Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-07-23T07:54:18.244Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"convolutional_layer.c","level":"5.10","depth":1,"next":{"title":"cost_layer.c","level":"5.11","depth":1,"ref":"","articles":[]},"previous":{"title":"connected_layer.c","level":"5.9","depth":1,"path":"part3_src/connected_layer.md","ref":"part3_src/connected_layer.md","articles":[]},"dir":"ltr"},"config":{"plugins":["advanced-emoji","theme-gestalt","-theme-default","styles-sass-fix","theme-api","mathjax"],"root":"./","styles":{"website":"website-1595679675942.css"},"pluginsConfig":{"styles-sass-fix":{},"theme-gestalt":{"showLevel":false,"styles":{"website":"styles/website.css"},"logo":"/darknet_book/assets/darknet.png","baseUrl":null,"excludeDefaultStyles":true,"doNotHideChildrenChapters":false},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"theme-api":{"languages":[],"split":true,"theme":"light"},"mathjax":{"forceSVG":false,"version":"2.6-latest"},"advanced-emoji":{"embedEmojis":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]}},"theme":"default","author":"JJM","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"DarkNet Book","output.name":"site","gitbook":"*"},"file":{"path":"part3_src/convolutional_layer.md","mtime":"2020-07-25T12:19:57.680Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-07-25T12:20:57.389Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>

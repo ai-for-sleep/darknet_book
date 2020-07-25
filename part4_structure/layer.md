@@ -21,12 +21,12 @@ struct layer{
     int nbiases;
     int extra;
     int truths;
-    int h,w,c;
-    int out_h, out_w, out_c;
-    int n;
+    int h,w,c;                              /// input height, width, channel
+    int out_h, out_w, out_c;                /// output height, width, channel
+    int n;                                  /// number of filter(= output channel)
     int max_boxes;
     int groups;
-    int size;
+    int size;                               /// kernel size
     int side;
     int stride;
     int reverse;

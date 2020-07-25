@@ -74,6 +74,21 @@ Y : cols, rows
 - cols : 이미지 한장에서의 box의 개수
 - rows : 이미지의 개수 batch size
 
+## detection
+
+```
+typedef struct detection{
+    box bbox;
+    int classes;
+    float *prob;
+    float *mask;
+    float objectness;
+    int sort_class;
+} detection;
+```
+
+검출한 데이터에 대한 정보를 담고 있습니다.
+
 ---
 
 # /src/option_list.h
@@ -106,3 +121,15 @@ typedef struct size_params{
     network *net;
 } size_params;
 ```
+
+# /src/box.h
+
+## dbox 구조체
+
+```
+typedef struct{
+    float dx, dy, dw, dh;
+} dbox;
+```
+
+- box의 미분 값을 저장합니다.

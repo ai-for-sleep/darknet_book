@@ -163,6 +163,179 @@ void backward_convolutional_layer(convolutional_layer l, network net)
 - batch normalization(no bias) or bias
 - convolution 연산
 
+## update_convolutional_layer
+
+```
+void update_convolutional_layer(convolutional_layer l, update_args a)
+{
+    float learning_rate = a.learning_rate*l.learning_rate_scale;
+    float momentum = a.momentum;
+    float decay = a.decay;
+    int batch = a.batch;
+
+    axpy_cpu(l.n, learning_rate/batch, l.bias_updates, 1, l.biases, 1);
+    scal_cpu(l.n, momentum, l.bias_updates, 1);
+
+    if(l.scales){
+        axpy_cpu(l.n, learning_rate/batch, l.scale_updates, 1, l.scales, 1);
+        scal_cpu(l.n, momentum, l.scale_updates, 1);
+    }
+
+    axpy_cpu(l.nweights, -decay*batch, l.weights, 1, l.weight_updates, 1);
+    axpy_cpu(l.nweights, learning_rate/batch, l.weight_updates, 1, l.weights, 1);
+    scal_cpu(l.nweights, momentum, l.weight_updates, 1);
+}
+```
+
+## make_convolutional_layer
+
+```
+convolutional_layer make_convolutional_layer(int batch, int h, int w, int c, int n, int groups, int size, int stride, int padding, ACTIVATION activation, int batch_normalize, int binary, int xnor, int adam)
+{
+    int i;
+    convolutional_layer l = {0};
+    l.type = CONVOLUTIONAL;
+
+    l.groups = groups;
+    l.h = h;
+    l.w = w;
+    l.c = c;
+    l.n = n;
+    l.binary = binary;
+    l.xnor = xnor;
+    l.batch = batch;
+    l.stride = stride;
+    l.size = size;
+    l.pad = padding;
+    l.batch_normalize = batch_normalize;
+
+    l.weights = calloc(c/groups*n*size*size, sizeof(float));
+    l.weight_updates = calloc(c/groups*n*size*size, sizeof(float));
+
+    l.biases = calloc(n, sizeof(float));
+    l.bias_updates = calloc(n, sizeof(float));
+
+    l.nweights = c/groups*n*size*size;
+    l.nbiases = n;
+
+    // float scale = 1./sqrt(size*size*c);
+    float scale = sqrt(2./(size*size*c/l.groups));
+    //printf("convscale %f\n", scale);
+    //scale = .02;
+    //for(i = 0; i < c*n*size*size; ++i) l.weights[i] = scale*rand_uniform(-1, 1);
+    for(i = 0; i < l.nweights; ++i) l.weights[i] = scale*rand_normal();
+    int out_w = convolutional_out_width(l);
+    int out_h = convolutional_out_height(l);
+    l.out_h = out_h;
+    l.out_w = out_w;
+    l.out_c = n;
+    l.outputs = l.out_h * l.out_w * l.out_c;
+    l.inputs = l.w * l.h * l.c;
+
+    l.output = calloc(l.batch*l.outputs, sizeof(float));
+    l.delta  = calloc(l.batch*l.outputs, sizeof(float));
+
+    l.forward = forward_convolutional_layer;
+    l.backward = backward_convolutional_layer;
+    l.update = update_convolutional_layer;
+    if(binary){
+        l.binary_weights = calloc(l.nweights, sizeof(float));
+        l.cweights = calloc(l.nweights, sizeof(char));
+        l.scales = calloc(n, sizeof(float));
+    }
+    if(xnor){
+        l.binary_weights = calloc(l.nweights, sizeof(float));
+        l.binary_input = calloc(l.inputs*l.batch, sizeof(float));
+    }
+
+    if(batch_normalize){
+        l.scales = calloc(n, sizeof(float));
+        l.scale_updates = calloc(n, sizeof(float));
+        for(i = 0; i < n; ++i){
+            l.scales[i] = 1;
+        }
+
+        l.mean = calloc(n, sizeof(float));
+        l.variance = calloc(n, sizeof(float));
+
+        l.mean_delta = calloc(n, sizeof(float));
+        l.variance_delta = calloc(n, sizeof(float));
+
+        l.rolling_mean = calloc(n, sizeof(float));
+        l.rolling_variance = calloc(n, sizeof(float));
+        l.x = calloc(l.batch*l.outputs, sizeof(float));
+        l.x_norm = calloc(l.batch*l.outputs, sizeof(float));
+    }
+    if(adam){
+        l.m = calloc(l.nweights, sizeof(float));
+        l.v = calloc(l.nweights, sizeof(float));
+        l.bias_m = calloc(n, sizeof(float));
+        l.scale_m = calloc(n, sizeof(float));
+        l.bias_v = calloc(n, sizeof(float));
+        l.scale_v = calloc(n, sizeof(float));
+    }
+
+    l.workspace_size = get_workspace_size(l);
+    l.activation = activation;
+
+    fprintf(stderr, "conv  %5d %2d x%2d /%2d  %4d x%4d x%4d   ->  %4d x%4d x%4d  %5.3f BFLOPs\n", n, size, size, stride, w, h, c, l.out_w, l.out_h, l.out_c, (2.0 * l.n * l.size*l.size*l.c/l.groups * l.out_h*l.out_w)/1000000000.);
+
+    return l;
+}
+```
+
+- convolution layer를 만드는 함수 입니다.
+
+## denormalize_convolutional_layer
+
+```
+void denormalize_convolutional_layer(convolutional_layer l)
+{
+    int i, j;
+    for(i = 0; i < l.n; ++i){
+        float scale = l.scales[i]/sqrt(l.rolling_variance[i] + .00001);
+        for(j = 0; j < l.c/l.groups*l.size*l.size; ++j){
+            l.weights[i*l.c/l.groups*l.size*l.size + j] *= scale;
+        }
+        l.biases[i] -= l.rolling_mean[i] * scale;
+        l.scales[i] = 1;
+        l.rolling_mean[i] = 0;
+        l.rolling_variance[i] = 1;
+    }
+}
+```
+
+- 역정규화를 하는 함수입니다.
+
+## resize_convolutional_layer
+
+```
+void resize_convolutional_layer(convolutional_layer *l, int w, int h)
+{
+    l->w = w;
+    l->h = h;
+    int out_w = convolutional_out_width(*l);
+    int out_h = convolutional_out_height(*l);
+
+    l->out_w = out_w;
+    l->out_h = out_h;
+
+    l->outputs = l->out_h * l->out_w * l->out_c;
+    l->inputs = l->w * l->h * l->c;
+
+    l->output = realloc(l->output, l->batch*l->outputs*sizeof(float));
+    l->delta  = realloc(l->delta,  l->batch*l->outputs*sizeof(float));
+    if(l->batch_normalize){
+        l->x = realloc(l->x, l->batch*l->outputs*sizeof(float));
+        l->x_norm  = realloc(l->x_norm, l->batch*l->outputs*sizeof(float));
+    }
+
+    l->workspace_size = get_workspace_size(*l);
+}
+```
+
+- convolutional layer를 resize시킵니다.
+
 ## add_bias
 
 ```
@@ -215,3 +388,215 @@ void backward_bias(float *bias_updates, float *delta, int batch, int n, int size
 
 - bias를 업데이트할 기울기 값을 구합니다.
 - bias는 딥러닝 연산에서 더해지는 항이기 때문에 미분을 하는 경우 1이되고 흘러들어온 그래디언트를 업데이트 값으로 사용합니다.
+
+## swap_binary
+
+```
+void swap_binary(convolutional_layer *l)
+{
+    float *swap = l->weights;
+    l->weights = l->binary_weights;
+    l->binary_weights = swap;
+}
+```
+
+- weights를 binary_weights로 옮김니다.
+
+## binarize_weights
+
+```
+void binarize_weights(float *weights, int n, int size, float *binary)
+{
+    int i, f;
+    for(f = 0; f < n; ++f){
+        float mean = 0;
+        for(i = 0; i < size; ++i){
+            mean += fabs(weights[f*size + i]);
+        }
+        mean = mean / size;
+        for(i = 0; i < size; ++i){
+            binary[f*size + i] = (weights[f*size + i] > 0) ? mean : -mean;
+        }
+    }
+}
+```
+
+- 가중치를 이진화 하는 함수 입니다.
+- 양수일때는 평균값
+- 음수일때는 -평균값
+
+## binarize_cpu
+
+```
+void binarize_cpu(float *input, int n, float *binary)
+{
+    int i;
+    for(i = 0; i < n; ++i){
+        binary[i] = (input[i] > 0) ? 1 : -1;
+    }
+}
+```
+
+- 양수일때는 1
+- 음수일때는 -1
+
+## binarize_input
+
+```
+void binarize_input(float *input, int n, int size, float *binary)
+{
+    int i, s;
+    for(s = 0; s < size; ++s){
+        float mean = 0;
+        for(i = 0; i < n; ++i){
+            mean += fabs(input[i*size + s]);
+        }
+        mean = mean / n;
+        for(i = 0; i < n; ++i){
+            binary[i*size + s] = (input[i*size + s] > 0) ? mean : -mean;
+        }
+    }
+}
+```
+
+- 입력을 이진화 하는 함수 입니다.
+- 양수일때는 평균값
+- 음수일때는 -평균값
+
+## convolutional_out_height
+
+```
+int convolutional_out_height(convolutional_layer l)
+{
+    return (l.h + 2*l.pad - l.size) / l.stride + 1;
+}
+```
+
+- $$\frac{H + 2 * PAD - K}{S + 1}$$
+
+## convolutional_out_width
+
+```
+int convolutional_out_width(convolutional_layer l)
+{
+    return (l.w + 2*l.pad - l.size) / l.stride + 1;
+}
+```
+
+- $$\frac{W + 2 * PAD - K}{S + 1}$$
+
+## get_convolutional_image
+
+```
+image get_convolutional_image(convolutional_layer l)
+{
+    return float_to_image(l.out_w,l.out_h,l.out_c,l.output);
+}
+```
+
+- convolution에 출력 이미지를 가져옵니다.
+
+## get_convolutional_delta
+
+```
+image get_convolutional_delta(convolutional_layer l)
+{
+    return float_to_image(l.out_w,l.out_h,l.out_c,l.delta);
+}
+```
+
+- convolution에 출력 기울기를 가져옵니다.
+
+## get_convolutional_weight
+
+```
+image get_convolutional_weight(convolutional_layer l, int i)
+{
+    int h = l.size;
+    int w = l.size;
+    int c = l.c/l.groups;
+    return float_to_image(w,h,c,l.weights+i*h*w*c);
+}
+```
+
+- convolution에 i번째 filter를 가져옵니다.
+
+## rgbgr_weights
+
+```
+void rgbgr_weights(convolutional_layer l)
+{
+    int i;
+    for(i = 0; i < l.n; ++i){
+        image im = get_convolutional_weight(l, i);
+        if (im.c == 3) {
+            rgbgr_image(im);
+        }
+    }
+}
+```
+
+- RGB를 BGR로 BGR을 RGB로 바꿉니다.
+
+## rescale_weights
+
+```
+void rescale_weights(convolutional_layer l, float scale, float trans)
+{
+    int i;
+    for(i = 0; i < l.n; ++i){
+        image im = get_convolutional_weight(l, i);
+        if (im.c == 3) {
+            scale_image(im, scale);
+            float sum = sum_array(im.data, im.w*im.h*im.c);
+            l.biases[i] += sum*trans;
+        }
+    }
+}
+```
+
+- convolution weights를 scaling합니다.
+
+## get_weights
+
+```
+image *get_weights(convolutional_layer l)
+{
+    image *weights = calloc(l.n, sizeof(image));
+    int i;
+    for(i = 0; i < l.n; ++i){
+        weights[i] = copy_image(get_convolutional_weight(l, i));
+        normalize_image(weights[i]);
+        /*
+           char buff[256];
+           sprintf(buff, "filter%d", i);
+           save_image(weights[i], buff);
+         */
+    }
+    //error("hey");
+    return weights;
+}
+```
+
+- weights를 정규화 해서 얻습니다.
+
+## visualize_convolutional_layer
+
+```
+image *visualize_convolutional_layer(convolutional_layer l, char *window, image *prev_weights)
+{
+    image *single_weights = get_weights(l);
+    show_images(single_weights, l.n, window);
+
+    image delta = get_convolutional_image(l);
+    image dc = collapse_image_layers(delta, 1);
+    char buff[256];
+    sprintf(buff, "%s: Output", window);
+    //show_image(dc, buff);
+    //save_image(dc, buff);
+    free_image(dc);
+    return single_weights;
+}
+```
+
+- convolutional layer를 시각화 하기 위한 함수 입니다.
