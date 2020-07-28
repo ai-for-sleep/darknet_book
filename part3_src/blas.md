@@ -505,3 +505,24 @@ void shortcut_cpu(int batch, int w1, int h1, int c1, float *add, int w2, int h2,
 ```
 
 - shortcut layer
+
+- output feature map에 추가할 feature map을 더합니다.
+
+## softmax_x_ent_cpu
+
+```
+void softmax_x_ent_cpu(int n, float *pred, float *truth, float *delta, float *error)
+{
+    int i;
+    for(i = 0; i < n; ++i){
+        float t = truth[i];
+        float p = pred[i];
+        error[i] = (t) ? -log(p) : 0;
+        delta[i] = t-p;
+    }
+}
+```
+
+- softmax한 pred와 실제 truth의 delta와 error를 구합니다.
+
+- $$L = - \sum_i y_i log p_i $$ 입니다. 위에 error를 전부 더하면 최종 error가 됩니다. 이러한 error를 Cross Entropy라고 합니다.

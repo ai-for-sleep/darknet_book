@@ -282,3 +282,19 @@ void backward_lstm_layer(layer l, network state)
 ```
 
 `backward`
+
+## update_lstm_layer
+
+```
+void update_lstm_layer(layer l, update_args a)
+{
+    update_connected_layer(*(l.wf), a);
+    update_connected_layer(*(l.wi), a);
+    update_connected_layer(*(l.wg), a);
+    update_connected_layer(*(l.wo), a);
+    update_connected_layer(*(l.uf), a);
+    update_connected_layer(*(l.ui), a);
+    update_connected_layer(*(l.ug), a);
+    update_connected_layer(*(l.uo), a);
+}
+```

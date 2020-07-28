@@ -42,7 +42,7 @@
 
     
         
-        <link rel="stylesheet" href="../website-1595679675942.css">
+        <link rel="stylesheet" href="../website-1595941888110.css">
         
     
 
@@ -788,15 +788,15 @@
         <li class="chapter 
               "
             data-level="5.22" 
-            >
+            data-path="image.html">
 
             
-                <span>
+                <a href="image.html">
             
                     
                     image.c
             
-                </span>
+                </a>
             
 
             
@@ -1112,7 +1112,7 @@
         <li class="chapter 
               "
             data-level="5.40" 
-            >
+            data-path="shortcut.md">
 
             
                 <span>
@@ -1120,7 +1120,7 @@
                     
                     shortcut_layer.c
             
-                </span>
+                </a>
             
 
             
@@ -2193,7 +2193,19 @@ static void increment_layer(layer *l, int steps)
     }
 }
 </code></pre><p><code>backward</code></p>
-
+<h2 id="updatelstmlayer">update_lstm_layer</h2>
+<pre><code>void update_lstm_layer(layer l, update_args a)
+{
+    update_connected_layer(*(l.wf), a);
+    update_connected_layer(*(l.wi), a);
+    update_connected_layer(*(l.wg), a);
+    update_connected_layer(*(l.wo), a);
+    update_connected_layer(*(l.uf), a);
+    update_connected_layer(*(l.ui), a);
+    update_connected_layer(*(l.ug), a);
+    update_connected_layer(*(l.uo), a);
+}
+</code></pre>
                                 
                                 </section>
                             
@@ -2228,7 +2240,7 @@ static void increment_layer(layer *l, int steps)
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"lstm_layer.c","level":"5.29","depth":1,"next":{"title":"matrix.c","level":"5.30","depth":1,"ref":"","articles":[]},"previous":{"title":"logistic_layer.c","level":"5.28","depth":1,"ref":"","articles":[]},"dir":"ltr"},"config":{"plugins":["advanced-emoji","theme-gestalt","-theme-default","styles-sass-fix","theme-api","mathjax"],"root":"./","styles":{"website":"website-1595679675942.css"},"pluginsConfig":{"styles-sass-fix":{},"theme-gestalt":{"showLevel":false,"styles":{"website":"styles/website.css"},"logo":"/darknet_book/assets/darknet.png","baseUrl":null,"excludeDefaultStyles":true,"doNotHideChildrenChapters":false},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"theme-api":{"languages":[],"split":true,"theme":"light"},"mathjax":{"forceSVG":false,"version":"2.6-latest"},"advanced-emoji":{"embedEmojis":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]}},"theme":"default","author":"JJM","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"DarkNet Book","output.name":"site","gitbook":"*"},"file":{"path":"part3_src/lstm_layer.md","mtime":"2020-07-14T16:03:41.341Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-07-25T12:20:57.389Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"lstm_layer.c","level":"5.29","depth":1,"next":{"title":"matrix.c","level":"5.30","depth":1,"ref":"","articles":[]},"previous":{"title":"logistic_layer.c","level":"5.28","depth":1,"ref":"","articles":[]},"dir":"ltr"},"config":{"plugins":["advanced-emoji","theme-gestalt","-theme-default","styles-sass-fix","theme-api","mathjax"],"root":"./","styles":{"website":"website-1595941888110.css"},"pluginsConfig":{"styles-sass-fix":{},"theme-gestalt":{"showLevel":false,"styles":{"website":"styles/website.css"},"logo":"/darknet_book/assets/darknet.png","baseUrl":null,"excludeDefaultStyles":true,"doNotHideChildrenChapters":false},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"theme-api":{"languages":[],"split":true,"theme":"light"},"mathjax":{"forceSVG":false,"version":"2.6-latest"},"advanced-emoji":{"embedEmojis":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]}},"theme":"default","author":"JJM","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"DarkNet Book","output.name":"site","gitbook":"*"},"file":{"path":"part3_src/lstm_layer.md","mtime":"2020-07-26T09:20:53.950Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-07-28T13:11:03.449Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>
