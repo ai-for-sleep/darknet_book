@@ -2,6 +2,8 @@
 
 - 이미지를 columns으로 변환해주는 것을 말합니다.
 
+## im2col_get_pixel
+
 ```c
 float im2col_get_pixel(float *im, int height, int width, int channels,
                         int row, int col, int channel, int pad)
@@ -14,6 +16,8 @@ float im2col_get_pixel(float *im, int height, int width, int channels,
     return im[col + width*(row + height*channel)];
 }
 ```
+
+## im2col_cpu
 
 ```c
 //From Berkeley Vision's Caffe!

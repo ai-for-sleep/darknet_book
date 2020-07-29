@@ -58,44 +58,7 @@ CNN의 경우 bias의 역할을 $$\beta$$가 대신 하기 때문에 bias를 제
 
 # batchnorm_layer.c
 
-```c
-layer make_batchnorm_layer(int batch, int w, int h, int c)
-{
-    fprintf(stderr, "Batch Normalization Layer: %d x %d x %d image\n", w,h,c);
-    layer l = {0};
-    l.type = BATCHNORM;
-    l.batch = batch;
-    l.h = l.out_h = h;
-    l.w = l.out_w = w;
-    l.c = l.out_c = c;
-    l.output = calloc(h * w * c * batch, sizeof(float));
-    l.delta  = calloc(h * w * c * batch, sizeof(float));
-    l.inputs = w*h*c;
-    l.outputs = l.inputs;
-
-    l.scales = calloc(c, sizeof(float));
-    l.scale_updates = calloc(c, sizeof(float));
-    l.biases = calloc(c, sizeof(float));
-    l.bias_updates = calloc(c, sizeof(float));
-    int i;
-    for(i = 0; i < c; ++i){
-        l.scales[i] = 1;
-    }
-
-    l.mean = calloc(c, sizeof(float));
-    l.variance = calloc(c, sizeof(float));
-
-    l.rolling_mean = calloc(c, sizeof(float));
-    l.rolling_variance = calloc(c, sizeof(float));
-
-    l.forward = forward_batchnorm_layer;
-    l.backward = backward_batchnorm_layer;
-
-    return l;
-}
-```
-
-- batch normalization layer를 만드는 함수입니다.
+## forward_batchnorm_layer
 
 ```c
 void forward_batchnorm_layer(layer l, network net)
@@ -139,6 +102,8 @@ void forward_batchnorm_layer(layer l, network net)
 
 - x_norm의 scale($$\gamma$$)하고 shift($$\beta$$) 합니다. 즉, $$\gamma x_norm + \beta$$
 
+## backward_batchnorm_layer
+
 ```c
 void backward_batchnorm_layer(layer l, network net)
 {
@@ -166,6 +131,48 @@ void backward_batchnorm_layer(layer l, network net)
 
 - 정규화를 역전파 합니다.
 
+## make_batchnorm_layer
+
+```c
+layer make_batchnorm_layer(int batch, int w, int h, int c)
+{
+    fprintf(stderr, "Batch Normalization Layer: %d x %d x %d image\n", w,h,c);
+    layer l = {0};
+    l.type = BATCHNORM;
+    l.batch = batch;
+    l.h = l.out_h = h;
+    l.w = l.out_w = w;
+    l.c = l.out_c = c;
+    l.output = calloc(h * w * c * batch, sizeof(float));
+    l.delta  = calloc(h * w * c * batch, sizeof(float));
+    l.inputs = w*h*c;
+    l.outputs = l.inputs;
+
+    l.scales = calloc(c, sizeof(float));
+    l.scale_updates = calloc(c, sizeof(float));
+    l.biases = calloc(c, sizeof(float));
+    l.bias_updates = calloc(c, sizeof(float));
+    int i;
+    for(i = 0; i < c; ++i){
+        l.scales[i] = 1;
+    }
+
+    l.mean = calloc(c, sizeof(float));
+    l.variance = calloc(c, sizeof(float));
+
+    l.rolling_mean = calloc(c, sizeof(float));
+    l.rolling_variance = calloc(c, sizeof(float));
+
+    l.forward = forward_batchnorm_layer;
+    l.backward = backward_batchnorm_layer;
+
+    return l;
+}
+```
+
+- batch normalization layer를 만드는 함수입니다.
+
+## backward_batchnorm_layer
 
 ```c
 void backward_scale_cpu(float *x_norm, float *delta, int batch, int n, int size, float *scale_updates)
@@ -185,6 +192,8 @@ void backward_scale_cpu(float *x_norm, float *delta, int batch, int n, int size,
 ```
 
 - $$\gamma$$에 대해서 업데이트 해야할 값을 저장합니다.
+
+## mean_delta_cpu
 
 ```c
 void mean_delta_cpu(float *delta, float *variance, int batch, int filters, int spatial, float *mean_delta)
@@ -206,6 +215,8 @@ void mean_delta_cpu(float *delta, float *variance, int batch, int filters, int s
 
 - 정규화에 대해서 평균 식을 미분합니다.
 
+## variance_delta_cpu
+
 ```c
 void  variance_delta_cpu(float *x, float *delta, float *mean, float *variance, int batch, int filters, int spatial, float *variance_delta)
 {
@@ -225,6 +236,8 @@ void  variance_delta_cpu(float *x, float *delta, float *mean, float *variance, i
 ```
 
 - 정규화에 대해서 분산 식을 미분합니다.
+
+## normalize_delta_cpu
 
 ```c
 void normalize_delta_cpu(float *x, float *mean, float *variance, float *mean_delta, float *variance_delta, int batch, int filters, int spatial, float *delta)

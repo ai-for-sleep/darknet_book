@@ -1,4 +1,4 @@
-## shortcut layer 란?
+# shortcut layer 란?
 
 ResNet에서 제안된 skip connection과 유사합니다.
 

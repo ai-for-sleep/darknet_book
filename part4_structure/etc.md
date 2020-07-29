@@ -133,3 +133,14 @@ typedef struct{
 ```
 
 - box의 미분 값을 저장합니다.
+
+# 내장/time.h
+
+## timeval
+
+```
+struct timeval {
+  long tv_sec;       // 1초
+  long tv_usec;      // 1/1000000초
+};
+```

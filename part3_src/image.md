@@ -1,4 +1,6 @@
 
+# image.c
+
 ## get_color
 
 ```

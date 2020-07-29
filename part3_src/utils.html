@@ -1,0 +1,2791 @@
+
+<!DOCTYPE HTML>
+<html lang="" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>utils.c · DarkNet Book</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 3.2.3">
+        <meta name="author" content="JJM">
+        
+        
+    
+    
+
+    
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-advanced-emoji/emoji-website.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-search/search.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-fontsettings/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-theme-api/theme-api.css">
+                
+            
+        
+
+    
+
+    
+        
+        <link rel="stylesheet" href="../website-1596049586635.css">
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    
+    
+        <link rel="shortcut icon" href="../gitbook/images/favicon.ico" type="image/x-icon">
+    
+    
+    
+
+    
+    <link rel="next" href="yolo_layer.html" />
+    
+    
+    <link rel="prev" href="upsample_layer.html" />
+    
+
+    </head>
+    <body>
+        
+<div class="book">
+    <div class="book-summary">
+        
+            <div class="book-logo">   
+                
+                <img src="/darknet_book/assets/darknet.png"/>
+                
+            </div>
+            
+<div id="book-search-input" role="search">
+    <input type="text" placeholder="Type to search" />
+</div>
+
+            
+                <nav role="navigation">
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        
+        <li class="header ">DARKNET</li>
+        
+        
+    
+        
+        <li class="chapter 
+              "
+            data-level="1.1" 
+            data-path="../">
+
+            
+                <a href="../">
+            
+                    
+                    DarkNet
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="1.2" 
+            data-path="../INSTALL.html">
+
+            
+                <a href="../INSTALL.html">
+            
+                    
+                    설치하기
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+        
+        
+        <li class="header ">Paper</li>
+        
+        
+    
+        
+        <li class="chapter 
+              "
+            data-level="2.1" 
+            data-path="../part1_paper/yolov1.html">
+
+            
+                <a href="../part1_paper/yolov1.html">
+            
+                    
+                    YOLOv1
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="2.2" 
+            data-path="../part1_paper/yolov2.html">
+
+            
+                <a href="../part1_paper/yolov2.html">
+            
+                    
+                    YOLOv2
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="2.3" 
+            data-path="../part1_paper/yolov3.html">
+
+            
+                <a href="../part1_paper/yolov3.html">
+            
+                    
+                    YOLOv3
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="2.4" 
+            data-path="../part1_paper/yolov4.html">
+
+            
+                <a href="../part1_paper/yolov4.html">
+            
+                    
+                    YOLOv4
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+        
+        
+        <li class="header ">SOURCE</li>
+        
+        
+    
+        
+        <li class="chapter 
+              "
+            data-level="3.1" 
+            data-path="../part2_source/0_Project.html">
+
+            
+                <a href="../part2_source/0_Project.html">
+            
+                    
+                    project
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="3.2" 
+            data-path="../part2_source/1_DATA.html">
+
+            
+                <a href="../part2_source/1_DATA.html">
+            
+                    
+                    /data
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="3.3" 
+            data-path="../part2_source/2_CFG.html">
+
+            
+                <a href="../part2_source/2_CFG.html">
+            
+                    
+                    /cfg
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="3.4" 
+            data-path="../part2_source/3_EXAMPLE.html">
+
+            
+                <a href="../part2_source/3_EXAMPLE.html">
+            
+                    
+                    /example
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="3.5" 
+            data-path="../part2_source/4_SRC.html">
+
+            
+                <a href="../part2_source/4_SRC.html">
+            
+                    
+                    /src
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+        
+        
+        <li class="header ">Structure</li>
+        
+        
+    
+        
+        <li class="chapter 
+              "
+            data-level="4.1" 
+            data-path="../part4_structure/network.html">
+
+            
+                <a href="../part4_structure/network.html">
+            
+                    
+                    network
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="4.2" 
+            data-path="../part4_structure/layer.html">
+
+            
+                <a href="../part4_structure/layer.html">
+            
+                    
+                    layer
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="4.3" 
+            data-path="../part4_structure/etc.html">
+
+            
+                <a href="../part4_structure/etc.html">
+            
+                    
+                    etc
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+        
+        
+        <li class="header  selected ">/SRC</li>
+        
+        
+    
+        
+        <li class="chapter 
+              "
+            data-level="5.1" 
+            data-path="activation_layer.html">
+
+            
+                <a href="activation_layer.html">
+            
+                    
+                    activation_layer.c
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="5.2" 
+            data-path="activations_1.html">
+
+            
+                <a href="activations_1.html">
+            
+                    
+                    activations.c
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+                
+    
+        
+        <li class="chapter 
+               hide "
+            data-level="5.2.1" 
+            data-path="activations_2.html">
+
+            
+                <a href="activations_2.html">
+            
+                    
+                    activation.h
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="5.3" 
+            data-path="avgpool.html">
+
+            
+                <a href="avgpool.html">
+            
+                    
+                    avgpool_layer.c
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="5.4" 
+            data-path="batchnorm_layer.html">
+
+            
+                <a href="batchnorm_layer.html">
+            
+                    
+                    batchnorm_layer.c
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="5.5" 
+            data-path="blas.html">
+
+            
+                <a href="blas.html">
+            
+                    
+                    blas.c
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="5.6" 
+            data-path="box.html">
+
+            
+                <a href="box.html">
+            
+                    
+                    box.c
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="5.7" 
+            data-path="col2im.html">
+
+            
+                <a href="col2im.html">
+            
+                    
+                    col2im.c
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="5.8" 
+            data-path="compare.html">
+
+            
+                <a href="compare.html">
+            
+                    
+                    compare.c
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="5.9" 
+            data-path="connected_layer.html">
+
+            
+                <a href="connected_layer.html">
+            
+                    
+                    connected_layer.c
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="5.10" 
+            data-path="convolutional_layer.html">
+
+            
+                <a href="convolutional_layer.html">
+            
+                    
+                    convolutional_layer.c
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="5.11" 
+            data-path="cost_layer.html">
+
+            
+                <a href="cost_layer.html">
+            
+                    
+                    cost_layer.c
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="5.12" 
+            data-path="crnn_layer.html">
+
+            
+                <a href="crnn_layer.html">
+            
+                    
+                    crnn_layer.c
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="5.13" 
+            data-path="crop_layer.html">
+
+            
+                <a href="crop_layer.html">
+            
+                    
+                    crop_layer.c
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="5.14" 
+            data-path="data.html">
+
+            
+                <a href="data.html">
+            
+                    
+                    data.c
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="5.15" 
+            data-path="deconvolutional_layer.html">
+
+            
+                <a href="deconvolutional_layer.html">
+            
+                    
+                    deconvolutional_layer.c
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="5.16" 
+            data-path="demo.html">
+
+            
+                <a href="demo.html">
+            
+                    
+                    demo.c
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="5.17" 
+            data-path="detection_layer.html">
+
+            
+                <a href="detection_layer.html">
+            
+                    
+                    detection_layer.c
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="5.18" 
+            data-path="dropout_layer.html">
+
+            
+                <a href="dropout_layer.html">
+            
+                    
+                    dropout_layer.c
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="5.19" 
+            data-path="gemm.html">
+
+            
+                <a href="gemm.html">
+            
+                    
+                    gemm.c
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="5.20" 
+            data-path="gru_layer.html">
+
+            
+                <a href="gru_layer.html">
+            
+                    
+                    gru_layer.c
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="5.21" 
+            data-path="im2col.html">
+
+            
+                <a href="im2col.html">
+            
+                    
+                    im2col.c
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="5.22" 
+            data-path="image.html">
+
+            
+                <a href="image.html">
+            
+                    
+                    image.c
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="5.23" 
+            data-path="iseg_layer.html">
+
+            
+                <a href="iseg_layer.html">
+            
+                    
+                    iseg_layer.c
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="5.24" 
+            data-path="l2norm_layer.html">
+
+            
+                <a href="l2norm_layer.html">
+            
+                    
+                    l2norm_layer.c
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="5.25" 
+            data-path="layer.html">
+
+            
+                <a href="layer.html">
+            
+                    
+                    layer.c
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="5.26" 
+            data-path="list.html">
+
+            
+                <a href="list.html">
+            
+                    
+                    list.c
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="5.27" 
+            data-path="local_layer.html">
+
+            
+                <a href="local_layer.html">
+            
+                    
+                    local_layer.c
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="5.28" 
+            data-path="logistic_layer.html">
+
+            
+                <a href="logistic_layer.html">
+            
+                    
+                    logistic_layer.c
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="5.29" 
+            data-path="lstm_layer.html">
+
+            
+                <a href="lstm_layer.html">
+            
+                    
+                    lstm_layer.c
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="5.30" 
+            data-path="matrix.html">
+
+            
+                <a href="matrix.html">
+            
+                    
+                    matrix.c
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="5.31" 
+            data-path="maxpool.html">
+
+            
+                <a href="maxpool.html">
+            
+                    
+                    maxpool_layer.c
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="5.32" 
+            data-path="network.html">
+
+            
+                <a href="network.html">
+            
+                    
+                    network.c
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="5.33" 
+            data-path="normalization_layer.html">
+
+            
+                <a href="normalization_layer.html">
+            
+                    
+                    normalization_layer.c
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="5.34" 
+            data-path="option_list.html">
+
+            
+                <a href="option_list.html">
+            
+                    
+                    option_list.c
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="5.35" 
+            data-path="parser_1.html">
+
+            
+                <a href="parser_1.html">
+            
+                    
+                    parser.c
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="5.36" 
+            data-path="region_layer.html">
+
+            
+                <a href="region_layer.html">
+            
+                    
+                    region_layer.c
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="5.37" 
+            data-path="reorg_layer.html">
+
+            
+                <a href="reorg_layer.html">
+            
+                    
+                    reorg_layer.c
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="5.38" 
+            data-path="rnn_layer.html">
+
+            
+                <a href="rnn_layer.html">
+            
+                    
+                    rnn_layer.c
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="5.39" 
+            data-path="route_layer.html">
+
+            
+                <a href="route_layer.html">
+            
+                    
+                    route_layer.c
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="5.40" 
+            data-path="shortcut.md">
+
+            
+                <span>
+            
+                    
+                    shortcut_layer.c
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="5.41" 
+            data-path="softmax_layer.html">
+
+            
+                <a href="softmax_layer.html">
+            
+                    
+                    softmax_layer.c
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="5.42" 
+            data-path="tree.html">
+
+            
+                <a href="tree.html">
+            
+                    
+                    tree.c
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="5.43" 
+            data-path="upsample_layer.html">
+
+            
+                <a href="upsample_layer.html">
+            
+                    
+                    upsample_layer.c
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+            active  selected  "
+            data-level="5.44" 
+            data-path="utils.html">
+
+            
+                <a href="utils.html">
+            
+                    
+                    utils.c
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="5.45" 
+            data-path="yolo_layer.html">
+
+            
+                <a href="yolo_layer.html">
+            
+                    
+                    yolo_layer.c
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="5.46" 
+            data-path="image_opencv.html">
+
+            
+                <a href="image_opencv.html">
+            
+                    
+                    image_opencv.cpp
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+        
+        
+        <li class="header ">CUDA</li>
+        
+        
+    
+        
+        <li class="chapter 
+              "
+            data-level="6.1" 
+            >
+
+            
+                <span>
+            
+                    
+                    cuda.c
+            
+                </span>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="6.2" 
+            >
+
+            
+                <span>
+            
+                    
+                    avgpool_layer_kernels.cu
+            
+                </span>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="6.3" 
+            >
+
+            
+                <span>
+            
+                    
+                    maxpool_layer_kernels.cu
+            
+                </span>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="6.4" 
+            >
+
+            
+                <span>
+            
+                    
+                    im2col_kernels.cu
+            
+                </span>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="6.5" 
+            >
+
+            
+                <span>
+            
+                    
+                    blas_kernels.cu
+            
+                </span>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="6.6" 
+            >
+
+            
+                <span>
+            
+                    
+                    activation_kernels.cu
+            
+                </span>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="6.7" 
+            >
+
+            
+                <span>
+            
+                    
+                    col2im_kernels.cu
+            
+                </span>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="6.8" 
+            >
+
+            
+                <span>
+            
+                    
+                    convolutional_kernels.cu
+            
+                </span>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="6.9" 
+            >
+
+            
+                <span>
+            
+                    
+                    crop_layer_kernels.cu
+            
+                </span>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="6.10" 
+            >
+
+            
+                <span>
+            
+                    
+                    deconvolutional_kernels.cu
+            
+                </span>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="6.11" 
+            >
+
+            
+                <span>
+            
+                    
+                    dropout_layer_kernels.cu
+            
+                </span>
+            
+
+            
+        </li>
+    
+
+    
+        
+        
+        <li class="header ">/example</li>
+        
+        
+    
+        
+        <li class="chapter 
+              "
+            data-level="7.1" 
+            >
+
+            
+                <span>
+            
+                    
+                    art.c
+            
+                </span>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="7.2" 
+            >
+
+            
+                <span>
+            
+                    
+                    attention.c
+            
+                </span>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="7.3" 
+            >
+
+            
+                <span>
+            
+                    
+                    captcha.c
+            
+                </span>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="7.4" 
+            >
+
+            
+                <span>
+            
+                    
+                    cifar.c
+            
+                </span>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="7.5" 
+            >
+
+            
+                <span>
+            
+                    
+                    classifier.c
+            
+                </span>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="7.6" 
+            >
+
+            
+                <span>
+            
+                    
+                    coco.c
+            
+                </span>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="7.7" 
+            >
+
+            
+                <span>
+            
+                    
+                    darknet.c
+            
+                </span>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="7.8" 
+            >
+
+            
+                <span>
+            
+                    
+                    detector-scipy-opencv.py
+            
+                </span>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="7.9" 
+            >
+
+            
+                <span>
+            
+                    
+                    detector.c
+            
+                </span>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="7.10" 
+            >
+
+            
+                <span>
+            
+                    
+                    detector.py
+            
+                </span>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="7.11" 
+            >
+
+            
+                <span>
+            
+                    
+                    dice.c
+            
+                </span>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="7.12" 
+            >
+
+            
+                <span>
+            
+                    
+                    go.c
+            
+                </span>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="7.13" 
+            >
+
+            
+                <span>
+            
+                    
+                    instance-segmenter.c
+            
+                </span>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="7.14" 
+            >
+
+            
+                <span>
+            
+                    
+                    lsd.c
+            
+                </span>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="7.15" 
+            >
+
+            
+                <span>
+            
+                    
+                    nightmare.c
+            
+                </span>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="7.16" 
+            >
+
+            
+                <span>
+            
+                    
+                    regressor.c
+            
+                </span>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="7.17" 
+            >
+
+            
+                <span>
+            
+                    
+                    rnn.c
+            
+                </span>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="7.18" 
+            >
+
+            
+                <span>
+            
+                    
+                    rnn_vid.c
+            
+                </span>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="7.19" 
+            >
+
+            
+                <span>
+            
+                    
+                    segmenter.c
+            
+                </span>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="7.20" 
+            >
+
+            
+                <span>
+            
+                    
+                    super.c
+            
+                </span>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="7.21" 
+            >
+
+            
+                <span>
+            
+                    
+                    swag.c
+            
+                </span>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="7.22" 
+            >
+
+            
+                <span>
+            
+                    
+                    tag.c
+            
+                </span>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="7.23" 
+            >
+
+            
+                <span>
+            
+                    
+                    voxel.c
+            
+                </span>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="7.24" 
+            >
+
+            
+                <span>
+            
+                    
+                    writing.c
+            
+                </span>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="7.25" 
+            >
+
+            
+                <span>
+            
+                    
+                    yolo.c
+            
+                </span>
+            
+
+            
+        </li>
+    
+
+    
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href=".." >utils.c</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+<div id="book-search-results">
+    <div class="search-noresults">
+    
+                                <section class="normal markdown-section">
+                                
+                                <h1 id="utilsc">utils.c</h1>
+<h2 id="whattimeisitnow">what_time_is_it_now</h2>
+<pre><code>double what_time_is_it_now()
+{
+    struct timeval time;
+    if (gettimeofday(&amp;time,NULL)){
+        return 0;
+    }
+    return (double)time.tv_sec + (double)time.tv_usec * .000001;
+}
+</code></pre><ul>
+<li>&#xD604;&#xC7AC; &#xC2DC;&#xAC04;&#xC744; &#xCD08;&#xB2E8;&#xC704;&#xB85C; &#xAD6C;&#xD569;&#xB2C8;&#xB2E4;.</li>
+</ul>
+<h2 id="readintlist">read_intlist</h2>
+<pre><code>int *read_intlist(char *gpu_list, int *ngpus, int d)
+{
+    int *gpus = 0;
+    if(gpu_list){
+        int len = strlen(gpu_list);
+        *ngpus = 1;
+        int i;
+        for(i = 0; i &lt; len; ++i){
+            if (gpu_list[i] == &apos;,&apos;) ++*ngpus;
+        }
+        gpus = calloc(*ngpus, sizeof(int));
+        for(i = 0; i &lt; *ngpus; ++i){
+            gpus[i] = atoi(gpu_list);
+            gpu_list = strchr(gpu_list, &apos;,&apos;)+1;
+        }
+    } else {
+        gpus = calloc(1, sizeof(float));
+        *gpus = d;
+        *ngpus = 1;
+    }
+    return gpus;
+}
+</code></pre><h2 id="readmap">read_map</h2>
+<pre><code>int *read_map(char *filename)
+{
+    int n = 0;
+    int *map = 0;
+    char *str;
+    FILE *file = fopen(filename, &quot;r&quot;);
+    if(!file) file_error(filename);
+    while((str=fgetl(file))){
+        ++n;
+        map = realloc(map, n*sizeof(int));
+        map[n-1] = atoi(str);
+    }
+    return map;
+}
+</code></pre><h2 id="sortashuffle">sorta_shuffle</h2>
+<pre><code>void sorta_shuffle(void *arr, size_t n, size_t size, size_t sections)
+{
+    size_t i;
+    for(i = 0; i &lt; sections; ++i){
+        size_t start = n*i/sections;
+        size_t end = n*(i+1)/sections;
+        size_t num = end-start;
+        shuffle(arr+(start*size), num, size);
+    }
+}
+</code></pre><h2 id="shuffle">shuffle</h2>
+<pre><code>void shuffle(void *arr, size_t n, size_t size)
+{
+    size_t i;
+    void *swp = calloc(1, size);
+    for(i = 0; i &lt; n-1; ++i){
+        size_t j = i + rand()/(RAND_MAX / (n-i)+1);
+        memcpy(swp,          arr+(j*size), size);
+        memcpy(arr+(j*size), arr+(i*size), size);
+        memcpy(arr+(i*size), swp,          size);
+    }
+}
+</code></pre><ul>
+<li>array&#xB97C; shuffle &#xD569;&#xB2C8;&#xB2E4;.</li>
+</ul>
+<h2 id="randomindexorder">random_index_order</h2>
+<pre><code>int *random_index_order(int min, int max)
+{
+    int *inds = calloc(max-min, sizeof(int));
+    int i;
+    for(i = min; i &lt; max; ++i){
+        inds[i] = i;
+    }
+    for(i = min; i &lt; max-1; ++i){
+        int swap = inds[i];
+        int index = i + rand()%(max-i);
+        inds[i] = inds[index];
+        inds[index] = swap;
+    }
+    return inds;
+}
+</code></pre><ul>
+<li>min ~ max&#xC0AC;&#xC774;&#xC758; index&#xB97C; shuffle &#xD569;&#xB2C8;&#xB2E4;.</li>
+</ul>
+<h2 id="delarg">del_arg</h2>
+<pre><code>void del_arg(int argc, char **argv, int index)
+{
+    int i;
+    for(i = index; i &lt; argc-1; ++i) argv[i] = argv[i+1];
+    argv[i] = 0;
+}
+</code></pre><ul>
+<li>index&#xBC88;&#xC9F8; argument&#xB97C; &#xC81C;&#xAC70; &#xD569;&#xB2C8;&#xB2E4;.</li>
+</ul>
+<h2 id="findarg">find_arg</h2>
+<pre><code>int find_arg(int argc, char* argv[], char *arg)
+{
+    int i;
+    for(i = 0; i &lt; argc; ++i) {
+        if(!argv[i]) continue;
+        if(0==strcmp(argv[i], arg)) {
+            del_arg(argc, argv, i);
+            return 1;
+        }
+    }
+    return 0;
+}
+</code></pre><ul>
+<li>arguments&#xC5D0; &#xAC12;&#xC774; &#xC788;&#xB294; &#xACBD;&#xC6B0; 1 &#xC5C6;&#xB294; &#xACBD;&#xC6B0; 0&#xC744; &#xBC18;&#xD658;&#xD569;&#xB2C8;&#xB2E4;.</li>
+</ul>
+<h2 id="findintarg">find_int_arg</h2>
+<pre><code>int find_int_arg(int argc, char **argv, char *arg, int def)
+{
+    int i;
+    for(i = 0; i &lt; argc-1; ++i){
+        if(!argv[i]) continue;
+        if(0==strcmp(argv[i], arg)){
+            def = atoi(argv[i+1]);
+            del_arg(argc, argv, i);
+            del_arg(argc, argv, i);
+            break;
+        }
+    }
+    return def;
+}
+</code></pre><ul>
+<li>argument&#xC5D0; &#xD574;&#xB2F9;&#xD558;&#xB294; int&#xD615; &#xC778;&#xC790;&#xAC12;&#xC744; &#xBC18;&#xD658;&#xD569;&#xB2C8;&#xB2E4;.</li>
+</ul>
+<h2 id="findfloatarg">find_float_arg</h2>
+<pre><code>float find_float_arg(int argc, char **argv, char *arg, float def)
+{
+    int i;
+    for(i = 0; i &lt; argc-1; ++i){
+        if(!argv[i]) continue;
+        if(0==strcmp(argv[i], arg)){
+            def = atof(argv[i+1]);
+            del_arg(argc, argv, i);
+            del_arg(argc, argv, i);
+            break;
+        }
+    }
+    return def;
+}
+</code></pre><ul>
+<li>argument&#xC5D0; &#xD574;&#xB2F9;&#xD558;&#xB294; float&#xD615; &#xC778;&#xC790;&#xAC12;&#xC744; &#xBC18;&#xD658;&#xD569;&#xB2C8;&#xB2E4;.</li>
+</ul>
+<h2 id="findchararg">find_char_arg</h2>
+<pre><code>char *find_char_arg(int argc, char **argv, char *arg, char *def)
+{
+    int i;
+    for(i = 0; i &lt; argc-1; ++i){
+        if(!argv[i]) continue;
+        if(0==strcmp(argv[i], arg)){
+            def = argv[i+1];
+            del_arg(argc, argv, i);
+            del_arg(argc, argv, i);
+            break;
+        }
+    }
+    return def;
+}
+</code></pre><ul>
+<li>argument&#xC5D0; &#xD574;&#xB2F9;&#xD558;&#xB294; char&#xD615; &#xC778;&#xC790;&#xAC12;&#xC744; &#xBC18;&#xD658;&#xD569;&#xB2C8;&#xB2E4;.</li>
+</ul>
+<h2 id="basecfg">basecfg</h2>
+<pre><code>char *basecfg(char *cfgfile)
+{
+    char *c = cfgfile;
+    char *next;
+    while((next = strchr(c, &apos;/&apos;)))
+    {
+        c = next+1;
+    }
+    c = copy_string(c);
+    next = strchr(c, &apos;.&apos;);
+    if (next) *next = 0;
+    return c;
+}
+</code></pre><ul>
+<li><p>&#xD30C;&#xC77C; &#xACBD;&#xB85C;&#xC5D0;&#xC11C; cfg &#xD30C;&#xC77C;&#xC758; &#xC774;&#xB984;&#xC744; &#xBC18;&#xD658; &#xD569;&#xB2C8;&#xB2E4;.</p>
+</li>
+<li><p>&#xC608;&#xB97C; &#xB4E4;&#xC5B4; <code>../cfg/yolo.cfg</code>&#xC778; &#xACBD;&#xC6B0; <code>yolo</code>&#xB97C; &#xBC18;&#xD658;&#xD569;&#xB2C8;&#xB2E4;.</p>
+</li>
+</ul>
+<h2 id="alphanumtoint">alphanum_to_int</h2>
+<pre><code>int alphanum_to_int(char c)
+{
+    return (c &lt; 58) ? c - 48 : c-87;
+}
+</code></pre><ul>
+<li>&#xBB38;&#xC790;&#xB97C; &#xC22B;&#xC790;&#xB85C; &#xBC14;&#xAFC9;&#xB2C8;&#xB2E4;.</li>
+</ul>
+<h2 id="inttoalphanum">int_to_alphanum</h2>
+<pre><code>char int_to_alphanum(int i)
+{
+    if (i == 36) return &apos;.&apos;;
+    return (i &lt; 10) ? i + 48 : i + 87;
+}
+</code></pre><ul>
+<li>&#xC22B;&#xC790;&#xB97C; &#xBB38;&#xC790;&#xB85C; &#xBC14;&#xAFC9;&#xB2C8;&#xB2E4;.</li>
+</ul>
+<h2 id="pm">pm</h2>
+<pre><code>void pm(int M, int N, float *A)
+{
+    int i,j;
+    for(i =0 ; i &lt; M; ++i){
+        printf(&quot;%d &quot;, i+1);
+        for(j = 0; j &lt; N; ++j){
+            printf(&quot;%2.4f, &quot;, A[i*N+j]);
+        }
+        printf(&quot;\n&quot;);
+    }
+    printf(&quot;\n&quot;);
+}
+</code></pre><ul>
+<li>M x N &#xD06C;&#xAE30;&#xB97C; &#xAC00;&#xC9C0;&#xB294; A&#xD589;&#xB82C;&#xC744; &#xCD9C;&#xB825;&#xD569;&#xB2C8;&#xB2E4;.</li>
+</ul>
+<h2 id="findreplace">find_replace</h2>
+<pre><code>void find_replace(char *str, char *orig, char *rep, char *output)
+{
+    char buffer[4096] = {0};
+    char *p;
+
+    sprintf(buffer, &quot;%s&quot;, str);
+    if(!(p = strstr(buffer, orig))){  // Is &apos;orig&apos; even in &apos;str&apos;?
+        sprintf(output, &quot;%s&quot;, str);
+        return;
+    }
+
+    *p = &apos;\0&apos;;
+
+    sprintf(output, &quot;%s%s%s&quot;, buffer, rep, p+strlen(orig));
+}
+</code></pre><h2 id="sec">sec</h2>
+<pre><code>float sec(clock_t clocks)
+{
+    return (float)clocks/CLOCKS_PER_SEC;
+}
+</code></pre><ul>
+<li><p>&#xCF54;&#xB4DC; &#xC2E4;&#xD589;&#xC2DC;&#xAC04;&#xC744; &#xCE21;&#xC815;&#xD558;&#xAE30; &#xC704;&#xD55C; &#xD568;&#xC218; &#xC785;&#xB2C8;&#xB2E4;.</p>
+</li>
+<li><p>&#xC18C;&#xBE44;&#xB41C; &#xC2DC;&#xAC04; clock_t(clock ticks) &#xC790;&#xB8CC;&#xD615;&#xC744; &#xAC00;&#xC9C0;&#xB294; clocks&#xC5D0; CLOCKS_PER_SEC(&#xCD08;&#xB2F9; &#xD074;&#xB7ED;&#xC218;)&#xC744; &#xB098;&#xB204;&#xC5B4; &#xC8FC;&#xC5B4;&#xC57C; &#xD569;&#xB2C8;&#xB2E4;.</p>
+</li>
+</ul>
+<h2 id="topk">top_k</h2>
+<pre><code>void top_k(float *a, int n, int k, int *index)
+{
+    int i,j;
+    for(j = 0; j &lt; k; ++j) index[j] = -1;
+    for(i = 0; i &lt; n; ++i){
+        int curr = i;
+        for(j = 0; j &lt; k; ++j){
+            if((index[j] &lt; 0) || a[curr] &gt; a[index[j]]){
+                int swap = curr;
+                curr = index[j];
+                index[j] = swap;
+            }
+        }
+    }
+}
+</code></pre><p>-</p>
+<h2 id="error">error</h2>
+<pre><code>void error(const char *s)
+{
+    perror(s);
+    assert(0);
+    exit(-1);
+}
+</code></pre><ul>
+<li><code>perror</code> : &#xC624;&#xB958; &#xBA54;&#xC138;&#xC9C0;&#xB97C; &#xCD9C;&#xB825;&#xD569;&#xB2C8;&#xB2E4;.
+-</li>
+</ul>
+<h2 id="readfile">read_file</h2>
+<pre><code>unsigned char *read_file(char *filename)
+{
+    FILE *fp = fopen(filename, &quot;rb&quot;);
+    size_t size;
+
+    fseek(fp, 0, SEEK_END);
+    size = ftell(fp);
+    fseek(fp, 0, SEEK_SET);
+
+    unsigned char *text = calloc(size+1, sizeof(char));
+    fread(text, 1, size, fp);
+    fclose(fp);
+    return text;
+}
+</code></pre><h2 id="mallocerror">malloc_error</h2>
+<pre><code>void malloc_error()
+{
+    fprintf(stderr, &quot;Malloc error\n&quot;);
+    exit(-1);
+}
+</code></pre><h2 id="fileerror">file_error</h2>
+<pre><code>void file_error(char *s)
+{
+    fprintf(stderr, &quot;Couldn&apos;t open file: %s\n&quot;, s);
+    exit(0);
+}
+</code></pre><h2 id="splitstr">split_str</h2>
+<pre><code>list *split_str(char *s, char delim)
+{
+    size_t i;
+    size_t len = strlen(s);
+    list *l = make_list();
+    list_insert(l, s);
+    for(i = 0; i &lt; len; ++i){
+        if(s[i] == delim){
+            s[i] = &apos;\0&apos;;
+            list_insert(l, &amp;(s[i+1]));
+        }
+    }
+    return l;
+}
+</code></pre><h2 id="strip">strip</h2>
+<pre><code>void strip(char *s)
+{
+    size_t i;
+    size_t len = strlen(s);
+    size_t offset = 0;
+    for(i = 0; i &lt; len; ++i){
+        char c = s[i];
+        if(c==&apos; &apos;||c==&apos;\t&apos;||c==&apos;\n&apos;) ++offset;
+        else s[i-offset] = c;
+    }
+    s[len-offset] = &apos;\0&apos;;
+}
+</code></pre><h2 id="stripchar">strip_char</h2>
+<pre><code>void strip_char(char *s, char bad)
+{
+    size_t i;
+    size_t len = strlen(s);
+    size_t offset = 0;
+    for(i = 0; i &lt; len; ++i){
+        char c = s[i];
+        if(c==bad) ++offset;
+        else s[i-offset] = c;
+    }
+    s[len-offset] = &apos;\0&apos;;
+}
+</code></pre><h2 id="freeptrs">free_ptrs</h2>
+<pre><code>void free_ptrs(void **ptrs, int n)
+{
+    int i;
+    for(i = 0; i &lt; n; ++i) free(ptrs[i]);
+    free(ptrs);
+}
+</code></pre><h2 id="freeptrs">free_ptrs</h2>
+<pre><code>char *fgetl(FILE *fp)
+{
+    if(feof(fp)) return 0;
+    size_t size = 512;
+    char *line = malloc(size*sizeof(char));
+    if(!fgets(line, size, fp)){
+        free(line);
+        return 0;
+    }
+
+    size_t curr = strlen(line);
+
+    while((line[curr-1] != &apos;\n&apos;) &amp;&amp; !feof(fp)){
+        if(curr == size-1){
+            size *= 2;
+            line = realloc(line, size*sizeof(char));
+            if(!line) {
+                printf(&quot;%ld\n&quot;, size);
+                malloc_error();
+            }
+        }
+        size_t readsize = size-curr;
+        if(readsize &gt; INT_MAX) readsize = INT_MAX-1;
+        fgets(&amp;line[curr], readsize, fp);
+        curr = strlen(line);
+    }
+    if(line[curr-1] == &apos;\n&apos;) line[curr-1] = &apos;\0&apos;;
+
+    return line;
+}
+</code></pre><h2 id="readint">read_int</h2>
+<pre><code>int read_int(int fd)
+{
+    int n = 0;
+    int next = read(fd, &amp;n, sizeof(int));
+    if(next &lt;= 0) return -1;
+    return n;
+}
+</code></pre><h2 id="writeint">write_int</h2>
+<pre><code>void write_int(int fd, int n)
+{
+    int next = write(fd, &amp;n, sizeof(int));
+    if(next &lt;= 0) error(&quot;read failed&quot;);
+}
+</code></pre><h2 id="readallfail">read_all_fail</h2>
+<pre><code>int read_all_fail(int fd, char *buffer, size_t bytes)
+{
+    size_t n = 0;
+    while(n &lt; bytes){
+        int next = read(fd, buffer + n, bytes-n);
+        if(next &lt;= 0) return 1;
+        n += next;
+    }
+    return 0;
+}
+</code></pre><h2 id="writeallfail">write_all_fail</h2>
+<pre><code>int write_all_fail(int fd, char *buffer, size_t bytes)
+{
+    size_t n = 0;
+    while(n &lt; bytes){
+        size_t next = write(fd, buffer + n, bytes-n);
+        if(next &lt;= 0) return 1;
+        n += next;
+    }
+    return 0;
+}
+</code></pre><h2 id="readall">read_all</h2>
+<pre><code>void read_all(int fd, char *buffer, size_t bytes)
+{
+    size_t n = 0;
+    while(n &lt; bytes){
+        int next = read(fd, buffer + n, bytes-n);
+        if(next &lt;= 0) error(&quot;read failed&quot;);
+        n += next;
+    }
+}
+</code></pre><h2 id="readall">read_all</h2>
+<pre><code>void write_all(int fd, char *buffer, size_t bytes)
+{
+    size_t n = 0;
+    while(n &lt; bytes){
+        size_t next = write(fd, buffer + n, bytes-n);
+        if(next &lt;= 0) error(&quot;write failed&quot;);
+        n += next;
+    }
+}
+</code></pre><h2 id="copystring">copy_string</h2>
+<pre><code>char *copy_string(char *s)
+{
+    char *copy = malloc(strlen(s)+1);
+    strncpy(copy, s, strlen(s)+1);
+    return copy;
+}
+</code></pre><h2 id="parsecsvline">parse_csv_line</h2>
+<pre><code>list *parse_csv_line(char *line)
+{
+    list *l = make_list();
+    char *c, *p;
+    int in = 0;
+    for(c = line, p = line; *c != &apos;\0&apos;; ++c){
+        if(*c == &apos;&quot;&apos;) in = !in;
+        else if(*c == &apos;,&apos; &amp;&amp; !in){
+            *c = &apos;\0&apos;;
+            list_insert(l, copy_string(p));
+            p = c+1;
+        }
+    }
+    list_insert(l, copy_string(p));
+    return l;
+}
+</code></pre><h2 id="countfields">count_fields</h2>
+<pre><code>int count_fields(char *line)
+{
+    int count = 0;
+    int done = 0;
+    char *c;
+    for(c = line; !done; ++c){
+        done = (*c == &apos;\0&apos;);
+        if(*c == &apos;,&apos; || done) ++count;
+    }
+    return count;
+}
+</code></pre><h2 id="parsefields">parse_fields</h2>
+<pre><code>float *parse_fields(char *line, int n)
+{
+    float *field = calloc(n, sizeof(float));
+    char *c, *p, *end;
+    int count = 0;
+    int done = 0;
+    for(c = line, p = line; !done; ++c){
+        done = (*c == &apos;\0&apos;);
+        if(*c == &apos;,&apos; || done){
+            *c = &apos;\0&apos;;
+            field[count] = strtod(p, &amp;end);
+            if(p == c) field[count] = nan(&quot;&quot;);
+            if(end != c &amp;&amp; (end != c-1 || *end != &apos;\r&apos;)) field[count] = nan(&quot;&quot;); //DOS file formats!
+            p = c+1;
+            ++count;
+        }
+    }
+    return field;
+}
+</code></pre><h2 id="sumarray">sum_array</h2>
+<pre><code>float sum_array(float *a, int n)
+{
+    int i;
+    float sum = 0;
+    for(i = 0; i &lt; n; ++i) sum += a[i];
+    return sum;
+}
+</code></pre><h2 id="meanarray">mean_array</h2>
+<pre><code>float mean_array(float *a, int n)
+{
+    return sum_array(a,n)/n;
+}
+</code></pre><h2 id="meanarrays">mean_arrays</h2>
+<pre><code>void mean_arrays(float **a, int n, int els, float *avg)
+{
+    int i;
+    int j;
+    memset(avg, 0, els*sizeof(float));
+    for(j = 0; j &lt; n; ++j){
+        for(i = 0; i &lt; els; ++i){
+            avg[i] += a[j][i];
+        }
+    }
+    for(i = 0; i &lt; els; ++i){
+        avg[i] /= n;
+    }
+}
+</code></pre><h2 id="printstatistics">print_statistics</h2>
+<pre><code>void print_statistics(float *a, int n)
+{
+    float m = mean_array(a, n);
+    float v = variance_array(a, n);
+    printf(&quot;MSE: %.6f, Mean: %.6f, Variance: %.6f\n&quot;, mse_array(a, n), m, v);
+}
+</code></pre><h2 id="variancearray">variance_array</h2>
+<pre><code>float variance_array(float *a, int n)
+{
+    int i;
+    float sum = 0;
+    float mean = mean_array(a, n);
+    for(i = 0; i &lt; n; ++i) sum += (a[i] - mean)*(a[i]-mean);
+    float variance = sum/n;
+    return variance;
+}
+</code></pre><h2 id="constrainint">constrain_int</h2>
+<pre><code>int constrain_int(int a, int min, int max)
+{
+    if (a &lt; min) return min;
+    if (a &gt; max) return max;
+    return a;
+}
+</code></pre><h2 id="constrain">constrain</h2>
+<pre><code>float constrain(float min, float max, float a)
+{
+    if (a &lt; min) return min;
+    if (a &gt; max) return max;
+    return a;
+}
+</code></pre><h2 id="distarray">dist_array</h2>
+<pre><code>float dist_array(float *a, float *b, int n, int sub)
+{
+    int i;
+    float sum = 0;
+    for(i = 0; i &lt; n; i += sub) sum += pow(a[i]-b[i], 2);
+    return sqrt(sum);
+}
+</code></pre><h2 id="msearray">mse_array</h2>
+<pre><code>float mse_array(float *a, int n)
+{
+    int i;
+    float sum = 0;
+    for(i = 0; i &lt; n; ++i) sum += a[i]*a[i];
+    return sqrt(sum/n);
+}
+</code></pre><h2 id="normalizearray">normalize_array</h2>
+<pre><code>void normalize_array(float *a, int n)
+{
+    int i;
+    float mu = mean_array(a,n);
+    float sigma = sqrt(variance_array(a,n));
+    for(i = 0; i &lt; n; ++i){
+        a[i] = (a[i] - mu)/sigma;
+    }
+    mu = mean_array(a,n);
+    sigma = sqrt(variance_array(a,n));
+}
+</code></pre><h2 id="translatearray">translate_array</h2>
+<pre><code>void translate_array(float *a, int n, float s)
+{
+    int i;
+    for(i = 0; i &lt; n; ++i){
+        a[i] += s;
+    }
+}
+</code></pre><h2 id="magarray">mag_array</h2>
+<pre><code>float mag_array(float *a, int n)
+{
+    int i;
+    float sum = 0;
+    for(i = 0; i &lt; n; ++i){
+        sum += a[i]*a[i];   
+    }
+    return sqrt(sum);
+}
+</code></pre><h2 id="scalearray">scale_array</h2>
+<pre><code>void scale_array(float *a, int n, float s)
+{
+    int i;
+    for(i = 0; i &lt; n; ++i){
+        a[i] *= s;
+    }
+}
+</code></pre><h2 id="samplearray">sample_array</h2>
+<pre><code>int sample_array(float *a, int n)
+{
+    float sum = sum_array(a, n);
+    scale_array(a, n, 1./sum);
+    float r = rand_uniform(0, 1);
+    int i;
+    for(i = 0; i &lt; n; ++i){
+        r = r - a[i];
+        if (r &lt;= 0) return i;
+    }
+    return n-1;
+}
+</code></pre><h2 id="maxintindex">max_int_index</h2>
+<pre><code>int max_int_index(int *a, int n)
+{
+    if(n &lt;= 0) return -1;
+    int i, max_i = 0;
+    int max = a[0];
+    for(i = 1; i &lt; n; ++i){
+        if(a[i] &gt; max){
+            max = a[i];
+            max_i = i;
+        }
+    }
+    return max_i;
+}
+</code></pre><h2 id="maxindex">max_index</h2>
+<pre><code>int max_index(float *a, int n)
+{
+    if(n &lt;= 0) return -1;
+    int i, max_i = 0;
+    float max = a[0];
+    for(i = 1; i &lt; n; ++i){
+        if(a[i] &gt; max){
+            max = a[i];
+            max_i = i;
+        }
+    }
+    return max_i;
+}
+</code></pre><h2 id="intindex">int_index</h2>
+<pre><code>int int_index(int *a, int val, int n)
+{
+    int i;
+    for(i = 0; i &lt; n; ++i){
+        if(a[i] == val) return i;
+    }
+    return -1;
+}
+</code></pre><h2 id="randint">rand_int</h2>
+<pre><code>int rand_int(int min, int max)
+{
+    if (max &lt; min){
+        int s = min;
+        min = max;
+        max = s;
+    }
+    int r = (rand()%(max - min + 1)) + min;
+    return r;
+}
+</code></pre><h2 id="randnormal">rand_normal</h2>
+<pre><code>// From http://en.wikipedia.org/wiki/Box%E2%80%93Muller_transform
+float rand_normal()
+{
+    static int haveSpare = 0;
+    static double rand1, rand2;
+
+    if(haveSpare)
+    {
+        haveSpare = 0;
+        return sqrt(rand1) * sin(rand2);
+    }
+
+    haveSpare = 1;
+
+    rand1 = rand() / ((double) RAND_MAX);
+    if(rand1 &lt; 1e-100) rand1 = 1e-100;
+    rand1 = -2 * log(rand1);
+    rand2 = (rand() / ((double) RAND_MAX)) * TWO_PI;
+
+    return sqrt(rand1) * cos(rand2);
+}
+</code></pre><h2 id="randsizet">rand_size_t</h2>
+<pre><code>size_t rand_size_t()
+{
+    return  ((size_t)(rand()&amp;0xff) &lt;&lt; 56) |
+        ((size_t)(rand()&amp;0xff) &lt;&lt; 48) |
+        ((size_t)(rand()&amp;0xff) &lt;&lt; 40) |
+        ((size_t)(rand()&amp;0xff) &lt;&lt; 32) |
+        ((size_t)(rand()&amp;0xff) &lt;&lt; 24) |
+        ((size_t)(rand()&amp;0xff) &lt;&lt; 16) |
+        ((size_t)(rand()&amp;0xff) &lt;&lt; 8) |
+        ((size_t)(rand()&amp;0xff) &lt;&lt; 0);
+}
+</code></pre><h2 id="randuniform">rand_uniform</h2>
+<pre><code>float rand_uniform(float min, float max)
+{
+    if(max &lt; min){
+        float swap = min;
+        min = max;
+        max = swap;
+    }
+    return ((float)rand()/RAND_MAX * (max - min)) + min;
+}
+</code></pre><h2 id="randscale">rand_scale</h2>
+<pre><code>float rand_scale(float s)
+{
+    float scale = rand_uniform(1, s);
+    if(rand()%2) return scale;
+    return 1./scale;
+}
+</code></pre><h2 id="onehotencode">one_hot_encode</h2>
+<pre><code>float **one_hot_encode(float *a, int n, int k)
+{
+    int i;
+    float **t = calloc(n, sizeof(float*));
+    for(i = 0; i &lt; n; ++i){
+        t[i] = calloc(k, sizeof(float));
+        int index = (int)a[i];
+        t[i][index] = 1;
+    }
+    return t;
+}
+</code></pre><h2 id="sumarray">sum_array</h2>
+<pre><code>float sum_array(float *a, int n)
+{
+    int i;
+    float sum = 0;
+    for(i = 0; i &lt; n; ++i) sum += a[i];
+    return sum;
+}
+</code></pre><ul>
+<li>&#xBC30;&#xC5F4;&#xC758; &#xCD1D;&#xD569;&#xC744; &#xAD6C;&#xD569;&#xB2C8;&#xB2E4;.</li>
+</ul>
+<h2 id="meanarray">mean_array</h2>
+<pre><code>float mean_array(float *a, int n)
+{
+    return sum_array(a,n)/n;
+}
+</code></pre><ul>
+<li>&#xBC30;&#xC5F4;&#xC758; &#xD3C9;&#xADE0;&#xC744; &#xAD6C;&#xD569;&#xB2C8;&#xB2E4;.</li>
+</ul>
+
+                                
+                                </section>
+                            
+    </div>
+    <div class="search-results">
+        <div class="has-results">
+            
+            <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+            <ul class="search-results-list"></ul>
+            
+        </div>
+        <div class="no-results">
+            
+            <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+            
+        </div>
+    </div>
+</div>
+
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="upsample_layer.html" class="navigation navigation-prev " aria-label="Previous page: upsample_layer.c">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="yolo_layer.html" class="navigation navigation-next " aria-label="Next page: yolo_layer.c">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"utils.c","level":"5.44","depth":1,"next":{"title":"yolo_layer.c","level":"5.45","depth":1,"path":"part3_src/yolo_layer.md","ref":"part3_src/yolo_layer.md","articles":[]},"previous":{"title":"upsample_layer.c","level":"5.43","depth":1,"path":"part3_src/upsample_layer.md","ref":"part3_src/upsample_layer.md","articles":[]},"dir":"ltr"},"config":{"plugins":["advanced-emoji","theme-gestalt","-theme-default","styles-sass-fix","theme-api","mathjax"],"root":"./","styles":{"website":"website-1596049586635.css"},"pluginsConfig":{"styles-sass-fix":{},"theme-gestalt":{"showLevel":false,"styles":{"website":"styles/website.css"},"logo":"/darknet_book/assets/darknet.png","baseUrl":null,"excludeDefaultStyles":true,"doNotHideChildrenChapters":false},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"theme-api":{"languages":[],"split":true,"theme":"light"},"mathjax":{"forceSVG":false,"version":"2.6-latest"},"advanced-emoji":{"embedEmojis":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]}},"theme":"default","author":"JJM","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"DarkNet Book","output.name":"site","gitbook":"*"},"file":{"path":"part3_src/utils.md","mtime":"2020-07-29T17:34:58.937Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-07-29T19:06:03.401Z"},"basePath":"..","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <script src="../gitbook/gitbook.js"></script>
+    <script src="../gitbook/theme.js"></script>
+    
+        
+        <script src="https://cdn.mathjax.org/mathjax/2.6-latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-mathjax/plugin.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-search/search-engine.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-search/search.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lunr/lunr.min.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lunr/search-lunr.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-sharing/buttons.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-fontsettings/fontsettings.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-theme-api/theme-api.js"></script>
+        
+    
+
+    </body>
+</html>
+

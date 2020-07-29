@@ -39,6 +39,7 @@
 위 그림의 경우는 `stride`가 `kernel size`와 같은 경우를 의미합니다.
 
 ---
+# gemm.c
 
 ## gemm
 
@@ -68,6 +69,9 @@ void gemm(int TA, int TB, int M, int N, int K, float ALPHA,
 - `BETA`  : initial value
 - `C`     : output feature maps
 - `ldc`   : C를 위한 포인터
+
+
+## gemm_cpu
 
 ```
 void gemm_cpu(int TA, int TB, int M, int N, int K, float ALPHA,
@@ -106,6 +110,8 @@ void gemm_cpu(int TA, int TB, int M, int N, int K, float ALPHA,
 
 최종적으로 GEMM 연산은 위와 같이 표현이 될 수 있습니다.
 
+## gemm_nn
+
 ```
 void gemm_nn(int M, int N, int K, float ALPHA,
         float *A, int lda,
@@ -127,6 +133,8 @@ void gemm_nn(int M, int N, int K, float ALPHA,
 
 - `A` : 전치행렬 사용 안함
 - `B` : 전치행렬 사용 안함
+
+## gemm_nt
 
 ```
 void gemm_nt(int M, int N, int K, float ALPHA,
@@ -151,6 +159,8 @@ void gemm_nt(int M, int N, int K, float ALPHA,
 - `A` : 전치행렬 사용 안함
 - `B` : 전치행렬 사용
 
+## gemm_tn
+
 ```
 void gemm_tn(int M, int N, int K, float ALPHA,
         float *A, int lda,
@@ -172,6 +182,8 @@ void gemm_tn(int M, int N, int K, float ALPHA,
 
 - `A` : 전치행렬 사용
 - `B` : 전치행렬 사용 안함
+
+## gemm_tt
 
 ```
 void gemm_tt(int M, int N, int K, float ALPHA,

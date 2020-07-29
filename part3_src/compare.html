@@ -1,0 +1,2378 @@
+
+<!DOCTYPE HTML>
+<html lang="" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>compare.c · DarkNet Book</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 3.2.3">
+        <meta name="author" content="JJM">
+        
+        
+    
+    
+
+    
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-advanced-emoji/emoji-website.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-search/search.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-fontsettings/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-theme-api/theme-api.css">
+                
+            
+        
+
+    
+
+    
+        
+        <link rel="stylesheet" href="../website-1596049586635.css">
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    
+    
+        <link rel="shortcut icon" href="../gitbook/images/favicon.ico" type="image/x-icon">
+    
+    
+    
+
+    
+    <link rel="next" href="connected_layer.html" />
+    
+    
+    <link rel="prev" href="col2im.html" />
+    
+
+    </head>
+    <body>
+        
+<div class="book">
+    <div class="book-summary">
+        
+            <div class="book-logo">   
+                
+                <img src="/darknet_book/assets/darknet.png"/>
+                
+            </div>
+            
+<div id="book-search-input" role="search">
+    <input type="text" placeholder="Type to search" />
+</div>
+
+            
+                <nav role="navigation">
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        
+        <li class="header ">DARKNET</li>
+        
+        
+    
+        
+        <li class="chapter 
+              "
+            data-level="1.1" 
+            data-path="../">
+
+            
+                <a href="../">
+            
+                    
+                    DarkNet
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="1.2" 
+            data-path="../INSTALL.html">
+
+            
+                <a href="../INSTALL.html">
+            
+                    
+                    설치하기
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+        
+        
+        <li class="header ">Paper</li>
+        
+        
+    
+        
+        <li class="chapter 
+              "
+            data-level="2.1" 
+            data-path="../part1_paper/yolov1.html">
+
+            
+                <a href="../part1_paper/yolov1.html">
+            
+                    
+                    YOLOv1
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="2.2" 
+            data-path="../part1_paper/yolov2.html">
+
+            
+                <a href="../part1_paper/yolov2.html">
+            
+                    
+                    YOLOv2
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="2.3" 
+            data-path="../part1_paper/yolov3.html">
+
+            
+                <a href="../part1_paper/yolov3.html">
+            
+                    
+                    YOLOv3
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="2.4" 
+            data-path="../part1_paper/yolov4.html">
+
+            
+                <a href="../part1_paper/yolov4.html">
+            
+                    
+                    YOLOv4
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+        
+        
+        <li class="header ">SOURCE</li>
+        
+        
+    
+        
+        <li class="chapter 
+              "
+            data-level="3.1" 
+            data-path="../part2_source/0_Project.html">
+
+            
+                <a href="../part2_source/0_Project.html">
+            
+                    
+                    project
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="3.2" 
+            data-path="../part2_source/1_DATA.html">
+
+            
+                <a href="../part2_source/1_DATA.html">
+            
+                    
+                    /data
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="3.3" 
+            data-path="../part2_source/2_CFG.html">
+
+            
+                <a href="../part2_source/2_CFG.html">
+            
+                    
+                    /cfg
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="3.4" 
+            data-path="../part2_source/3_EXAMPLE.html">
+
+            
+                <a href="../part2_source/3_EXAMPLE.html">
+            
+                    
+                    /example
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="3.5" 
+            data-path="../part2_source/4_SRC.html">
+
+            
+                <a href="../part2_source/4_SRC.html">
+            
+                    
+                    /src
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+        
+        
+        <li class="header ">Structure</li>
+        
+        
+    
+        
+        <li class="chapter 
+              "
+            data-level="4.1" 
+            data-path="../part4_structure/network.html">
+
+            
+                <a href="../part4_structure/network.html">
+            
+                    
+                    network
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="4.2" 
+            data-path="../part4_structure/layer.html">
+
+            
+                <a href="../part4_structure/layer.html">
+            
+                    
+                    layer
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="4.3" 
+            data-path="../part4_structure/etc.html">
+
+            
+                <a href="../part4_structure/etc.html">
+            
+                    
+                    etc
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+        
+        
+        <li class="header  selected ">/SRC</li>
+        
+        
+    
+        
+        <li class="chapter 
+              "
+            data-level="5.1" 
+            data-path="activation_layer.html">
+
+            
+                <a href="activation_layer.html">
+            
+                    
+                    activation_layer.c
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="5.2" 
+            data-path="activations_1.html">
+
+            
+                <a href="activations_1.html">
+            
+                    
+                    activations.c
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+                
+    
+        
+        <li class="chapter 
+               hide "
+            data-level="5.2.1" 
+            data-path="activations_2.html">
+
+            
+                <a href="activations_2.html">
+            
+                    
+                    activation.h
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="5.3" 
+            data-path="avgpool.html">
+
+            
+                <a href="avgpool.html">
+            
+                    
+                    avgpool_layer.c
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="5.4" 
+            data-path="batchnorm_layer.html">
+
+            
+                <a href="batchnorm_layer.html">
+            
+                    
+                    batchnorm_layer.c
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="5.5" 
+            data-path="blas.html">
+
+            
+                <a href="blas.html">
+            
+                    
+                    blas.c
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="5.6" 
+            data-path="box.html">
+
+            
+                <a href="box.html">
+            
+                    
+                    box.c
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="5.7" 
+            data-path="col2im.html">
+
+            
+                <a href="col2im.html">
+            
+                    
+                    col2im.c
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+            active  selected  "
+            data-level="5.8" 
+            data-path="compare.html">
+
+            
+                <a href="compare.html">
+            
+                    
+                    compare.c
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="5.9" 
+            data-path="connected_layer.html">
+
+            
+                <a href="connected_layer.html">
+            
+                    
+                    connected_layer.c
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="5.10" 
+            data-path="convolutional_layer.html">
+
+            
+                <a href="convolutional_layer.html">
+            
+                    
+                    convolutional_layer.c
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="5.11" 
+            data-path="cost_layer.html">
+
+            
+                <a href="cost_layer.html">
+            
+                    
+                    cost_layer.c
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="5.12" 
+            data-path="crnn_layer.html">
+
+            
+                <a href="crnn_layer.html">
+            
+                    
+                    crnn_layer.c
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="5.13" 
+            data-path="crop_layer.html">
+
+            
+                <a href="crop_layer.html">
+            
+                    
+                    crop_layer.c
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="5.14" 
+            data-path="data.html">
+
+            
+                <a href="data.html">
+            
+                    
+                    data.c
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="5.15" 
+            data-path="deconvolutional_layer.html">
+
+            
+                <a href="deconvolutional_layer.html">
+            
+                    
+                    deconvolutional_layer.c
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="5.16" 
+            data-path="demo.html">
+
+            
+                <a href="demo.html">
+            
+                    
+                    demo.c
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="5.17" 
+            data-path="detection_layer.html">
+
+            
+                <a href="detection_layer.html">
+            
+                    
+                    detection_layer.c
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="5.18" 
+            data-path="dropout_layer.html">
+
+            
+                <a href="dropout_layer.html">
+            
+                    
+                    dropout_layer.c
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="5.19" 
+            data-path="gemm.html">
+
+            
+                <a href="gemm.html">
+            
+                    
+                    gemm.c
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="5.20" 
+            data-path="gru_layer.html">
+
+            
+                <a href="gru_layer.html">
+            
+                    
+                    gru_layer.c
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="5.21" 
+            data-path="im2col.html">
+
+            
+                <a href="im2col.html">
+            
+                    
+                    im2col.c
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="5.22" 
+            data-path="image.html">
+
+            
+                <a href="image.html">
+            
+                    
+                    image.c
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="5.23" 
+            data-path="iseg_layer.html">
+
+            
+                <a href="iseg_layer.html">
+            
+                    
+                    iseg_layer.c
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="5.24" 
+            data-path="l2norm_layer.html">
+
+            
+                <a href="l2norm_layer.html">
+            
+                    
+                    l2norm_layer.c
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="5.25" 
+            data-path="layer.html">
+
+            
+                <a href="layer.html">
+            
+                    
+                    layer.c
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="5.26" 
+            data-path="list.html">
+
+            
+                <a href="list.html">
+            
+                    
+                    list.c
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="5.27" 
+            data-path="local_layer.html">
+
+            
+                <a href="local_layer.html">
+            
+                    
+                    local_layer.c
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="5.28" 
+            data-path="logistic_layer.html">
+
+            
+                <a href="logistic_layer.html">
+            
+                    
+                    logistic_layer.c
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="5.29" 
+            data-path="lstm_layer.html">
+
+            
+                <a href="lstm_layer.html">
+            
+                    
+                    lstm_layer.c
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="5.30" 
+            data-path="matrix.html">
+
+            
+                <a href="matrix.html">
+            
+                    
+                    matrix.c
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="5.31" 
+            data-path="maxpool.html">
+
+            
+                <a href="maxpool.html">
+            
+                    
+                    maxpool_layer.c
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="5.32" 
+            data-path="network.html">
+
+            
+                <a href="network.html">
+            
+                    
+                    network.c
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="5.33" 
+            data-path="normalization_layer.html">
+
+            
+                <a href="normalization_layer.html">
+            
+                    
+                    normalization_layer.c
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="5.34" 
+            data-path="option_list.html">
+
+            
+                <a href="option_list.html">
+            
+                    
+                    option_list.c
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="5.35" 
+            data-path="parser_1.html">
+
+            
+                <a href="parser_1.html">
+            
+                    
+                    parser.c
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="5.36" 
+            data-path="region_layer.html">
+
+            
+                <a href="region_layer.html">
+            
+                    
+                    region_layer.c
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="5.37" 
+            data-path="reorg_layer.html">
+
+            
+                <a href="reorg_layer.html">
+            
+                    
+                    reorg_layer.c
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="5.38" 
+            data-path="rnn_layer.html">
+
+            
+                <a href="rnn_layer.html">
+            
+                    
+                    rnn_layer.c
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="5.39" 
+            data-path="route_layer.html">
+
+            
+                <a href="route_layer.html">
+            
+                    
+                    route_layer.c
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="5.40" 
+            data-path="shortcut.md">
+
+            
+                <span>
+            
+                    
+                    shortcut_layer.c
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="5.41" 
+            data-path="softmax_layer.html">
+
+            
+                <a href="softmax_layer.html">
+            
+                    
+                    softmax_layer.c
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="5.42" 
+            data-path="tree.html">
+
+            
+                <a href="tree.html">
+            
+                    
+                    tree.c
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="5.43" 
+            data-path="upsample_layer.html">
+
+            
+                <a href="upsample_layer.html">
+            
+                    
+                    upsample_layer.c
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="5.44" 
+            data-path="utils.html">
+
+            
+                <a href="utils.html">
+            
+                    
+                    utils.c
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="5.45" 
+            data-path="yolo_layer.html">
+
+            
+                <a href="yolo_layer.html">
+            
+                    
+                    yolo_layer.c
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="5.46" 
+            data-path="image_opencv.html">
+
+            
+                <a href="image_opencv.html">
+            
+                    
+                    image_opencv.cpp
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+        
+        
+        <li class="header ">CUDA</li>
+        
+        
+    
+        
+        <li class="chapter 
+              "
+            data-level="6.1" 
+            >
+
+            
+                <span>
+            
+                    
+                    cuda.c
+            
+                </span>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="6.2" 
+            >
+
+            
+                <span>
+            
+                    
+                    avgpool_layer_kernels.cu
+            
+                </span>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="6.3" 
+            >
+
+            
+                <span>
+            
+                    
+                    maxpool_layer_kernels.cu
+            
+                </span>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="6.4" 
+            >
+
+            
+                <span>
+            
+                    
+                    im2col_kernels.cu
+            
+                </span>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="6.5" 
+            >
+
+            
+                <span>
+            
+                    
+                    blas_kernels.cu
+            
+                </span>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="6.6" 
+            >
+
+            
+                <span>
+            
+                    
+                    activation_kernels.cu
+            
+                </span>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="6.7" 
+            >
+
+            
+                <span>
+            
+                    
+                    col2im_kernels.cu
+            
+                </span>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="6.8" 
+            >
+
+            
+                <span>
+            
+                    
+                    convolutional_kernels.cu
+            
+                </span>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="6.9" 
+            >
+
+            
+                <span>
+            
+                    
+                    crop_layer_kernels.cu
+            
+                </span>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="6.10" 
+            >
+
+            
+                <span>
+            
+                    
+                    deconvolutional_kernels.cu
+            
+                </span>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="6.11" 
+            >
+
+            
+                <span>
+            
+                    
+                    dropout_layer_kernels.cu
+            
+                </span>
+            
+
+            
+        </li>
+    
+
+    
+        
+        
+        <li class="header ">/example</li>
+        
+        
+    
+        
+        <li class="chapter 
+              "
+            data-level="7.1" 
+            >
+
+            
+                <span>
+            
+                    
+                    art.c
+            
+                </span>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="7.2" 
+            >
+
+            
+                <span>
+            
+                    
+                    attention.c
+            
+                </span>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="7.3" 
+            >
+
+            
+                <span>
+            
+                    
+                    captcha.c
+            
+                </span>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="7.4" 
+            >
+
+            
+                <span>
+            
+                    
+                    cifar.c
+            
+                </span>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="7.5" 
+            >
+
+            
+                <span>
+            
+                    
+                    classifier.c
+            
+                </span>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="7.6" 
+            >
+
+            
+                <span>
+            
+                    
+                    coco.c
+            
+                </span>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="7.7" 
+            >
+
+            
+                <span>
+            
+                    
+                    darknet.c
+            
+                </span>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="7.8" 
+            >
+
+            
+                <span>
+            
+                    
+                    detector-scipy-opencv.py
+            
+                </span>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="7.9" 
+            >
+
+            
+                <span>
+            
+                    
+                    detector.c
+            
+                </span>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="7.10" 
+            >
+
+            
+                <span>
+            
+                    
+                    detector.py
+            
+                </span>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="7.11" 
+            >
+
+            
+                <span>
+            
+                    
+                    dice.c
+            
+                </span>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="7.12" 
+            >
+
+            
+                <span>
+            
+                    
+                    go.c
+            
+                </span>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="7.13" 
+            >
+
+            
+                <span>
+            
+                    
+                    instance-segmenter.c
+            
+                </span>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="7.14" 
+            >
+
+            
+                <span>
+            
+                    
+                    lsd.c
+            
+                </span>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="7.15" 
+            >
+
+            
+                <span>
+            
+                    
+                    nightmare.c
+            
+                </span>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="7.16" 
+            >
+
+            
+                <span>
+            
+                    
+                    regressor.c
+            
+                </span>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="7.17" 
+            >
+
+            
+                <span>
+            
+                    
+                    rnn.c
+            
+                </span>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="7.18" 
+            >
+
+            
+                <span>
+            
+                    
+                    rnn_vid.c
+            
+                </span>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="7.19" 
+            >
+
+            
+                <span>
+            
+                    
+                    segmenter.c
+            
+                </span>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="7.20" 
+            >
+
+            
+                <span>
+            
+                    
+                    super.c
+            
+                </span>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="7.21" 
+            >
+
+            
+                <span>
+            
+                    
+                    swag.c
+            
+                </span>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="7.22" 
+            >
+
+            
+                <span>
+            
+                    
+                    tag.c
+            
+                </span>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="7.23" 
+            >
+
+            
+                <span>
+            
+                    
+                    voxel.c
+            
+                </span>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="7.24" 
+            >
+
+            
+                <span>
+            
+                    
+                    writing.c
+            
+                </span>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="7.25" 
+            >
+
+            
+                <span>
+            
+                    
+                    yolo.c
+            
+                </span>
+            
+
+            
+        </li>
+    
+
+    
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href=".." >compare.c</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+<div id="book-search-results">
+    <div class="search-noresults">
+    
+                                <section class="normal markdown-section">
+                                
+                                <h1 id="comparec">compare.c</h1>
+<h2 id="traincompare">train_compare</h2>
+<pre><code>void train_compare(char *cfgfile, char *weightfile)
+{
+    srand(time(0));
+    float avg_loss = -1;
+    char *base = basecfg(cfgfile);
+    char *backup_directory = &quot;/home/pjreddie/backup/&quot;;
+    printf(&quot;%s\n&quot;, base);
+    network net = parse_network_cfg(cfgfile);
+    if(weightfile){
+        load_weights(&amp;net, weightfile);
+    }
+    printf(&quot;Learning Rate: %g, Momentum: %g, Decay: %g\n&quot;, net.learning_rate, net.momentum, net.decay);
+    int imgs = 1024;
+    list *plist = get_paths(&quot;data/compare.train.list&quot;);
+    char **paths = (char **)list_to_array(plist);
+    int N = plist-&gt;size;
+    printf(&quot;%d\n&quot;, N);
+    clock_t time;
+    pthread_t load_thread;
+    data train;
+    data buffer;
+
+    load_args args = {0};
+    args.w = net.w;
+    args.h = net.h;
+    args.paths = paths;
+    args.classes = 20;
+    args.n = imgs;
+    args.m = N;
+    args.d = &amp;buffer;
+    args.type = COMPARE_DATA;
+
+    load_thread = load_data_in_thread(args);
+    int epoch = *net.seen/N;
+    int i = 0;
+    while(1){
+        ++i;
+        time=clock();
+        pthread_join(load_thread, 0);
+        train = buffer;
+
+        load_thread = load_data_in_thread(args);
+        printf(&quot;Loaded: %lf seconds\n&quot;, sec(clock()-time));
+        time=clock();
+        float loss = train_network(net, train);
+        if(avg_loss == -1) avg_loss = loss;
+        avg_loss = avg_loss*.9 + loss*.1;
+        printf(&quot;%.3f: %f, %f avg, %lf seconds, %ld images\n&quot;, (float)*net.seen/N, loss, avg_loss, sec(clock()-time), *net.seen);
+        free_data(train);
+        if(i%100 == 0){
+            char buff[256];
+            sprintf(buff, &quot;%s/%s_%d_minor_%d.weights&quot;,backup_directory,base, epoch, i);
+            save_weights(net, buff);
+        }
+        if(*net.seen/N &gt; epoch){
+            epoch = *net.seen/N;
+            i = 0;
+            char buff[256];
+            sprintf(buff, &quot;%s/%s_%d.weights&quot;,backup_directory,base, epoch);
+            save_weights(net, buff);
+            if(epoch%22 == 0) net.learning_rate *= .1;
+        }
+    }
+    pthread_join(load_thread, 0);
+    free_data(buffer);
+    free_network(net);
+    free_ptrs((void**)paths, plist-&gt;size);
+    free_list(plist);
+    free(base);
+}
+</code></pre><h2 id="validatecompare">validate_compare</h2>
+<pre><code>void validate_compare(char *filename, char *weightfile)
+{
+    int i = 0;
+    network net = parse_network_cfg(filename);
+    if(weightfile){
+        load_weights(&amp;net, weightfile);
+    }
+    srand(time(0));
+
+    list *plist = get_paths(&quot;data/compare.val.list&quot;);
+    //list *plist = get_paths(&quot;data/compare.val.old&quot;);
+    char **paths = (char **)list_to_array(plist);
+    int N = plist-&gt;size/2;
+    free_list(plist);
+
+    clock_t time;
+    int correct = 0;
+    int total = 0;
+    int splits = 10;
+    int num = (i+1)*N/splits - i*N/splits;
+
+    data val, buffer;
+
+    load_args args = {0};
+    args.w = net.w;
+    args.h = net.h;
+    args.paths = paths;
+    args.classes = 20;
+    args.n = num;
+    args.m = 0;
+    args.d = &amp;buffer;
+    args.type = COMPARE_DATA;
+
+    pthread_t load_thread = load_data_in_thread(args);
+    for(i = 1; i &lt;= splits; ++i){
+        time=clock();
+
+        pthread_join(load_thread, 0);
+        val = buffer;
+
+        num = (i+1)*N/splits - i*N/splits;
+        char **part = paths+(i*N/splits);
+        if(i != splits){
+            args.paths = part;
+            load_thread = load_data_in_thread(args);
+        }
+        printf(&quot;Loaded: %d images in %lf seconds\n&quot;, val.X.rows, sec(clock()-time));
+
+        time=clock();
+        matrix pred = network_predict_data(net, val);
+        int j,k;
+        for(j = 0; j &lt; val.y.rows; ++j){
+            for(k = 0; k &lt; 20; ++k){
+                if(val.y.vals[j][k*2] != val.y.vals[j][k*2+1]){
+                    ++total;
+                    if((val.y.vals[j][k*2] &lt; val.y.vals[j][k*2+1]) == (pred.vals[j][k*2] &lt; pred.vals[j][k*2+1])){
+                        ++correct;
+                    }
+                }
+            }
+        }
+        free_matrix(pred);
+        printf(&quot;%d: Acc: %f, %lf seconds, %d images\n&quot;, i, (float)correct/total, sec(clock()-time), val.X.rows);
+        free_data(val);
+    }
+}
+</code></pre><h2 id="sortablebbox">sortable_bbox</h2>
+<pre><code>typedef struct {
+    network net;
+    char *filename;
+    int class;
+    int classes;
+    float elo;
+    float *elos;
+} sortable_bbox;
+</code></pre><h2 id="elocomparator">elo_comparator</h2>
+<pre><code>int total_compares = 0;
+int current_class = 0;
+
+int elo_comparator(const void*a, const void *b)
+{
+    sortable_bbox box1 = *(sortable_bbox*)a;
+    sortable_bbox box2 = *(sortable_bbox*)b;
+    if(box1.elos[current_class] == box2.elos[current_class]) return 0;
+    if(box1.elos[current_class] &gt;  box2.elos[current_class]) return -1;
+    return 1;
+}
+</code></pre><h2 id="bboxcomparator">bbox_comparator</h2>
+<pre><code>int bbox_comparator(const void *a, const void *b)
+{
+    ++total_compares;
+    sortable_bbox box1 = *(sortable_bbox*)a;
+    sortable_bbox box2 = *(sortable_bbox*)b;
+    network net = box1.net;
+    int class   = box1.class;
+
+    image im1 = load_image_color(box1.filename, net.w, net.h);
+    image im2 = load_image_color(box2.filename, net.w, net.h);
+    float *X  = calloc(net.w*net.h*net.c, sizeof(float));
+    memcpy(X,                   im1.data, im1.w*im1.h*im1.c*sizeof(float));
+    memcpy(X+im1.w*im1.h*im1.c, im2.data, im2.w*im2.h*im2.c*sizeof(float));
+    float *predictions = network_predict(net, X);
+
+    free_image(im1);
+    free_image(im2);
+    free(X);
+    if (predictions[class*2] &gt; predictions[class*2+1]){
+        return 1;
+    }
+    return -1;
+}
+</code></pre><h2 id="bboxupdate">bbox_update</h2>
+<pre><code>void bbox_update(sortable_bbox *a, sortable_bbox *b, int class, int result)
+{
+    int k = 32;
+    float EA = 1./(1+pow(10, (b-&gt;elos[class] - a-&gt;elos[class])/400.));
+    float EB = 1./(1+pow(10, (a-&gt;elos[class] - b-&gt;elos[class])/400.));
+    float SA = result ? 1 : 0;
+    float SB = result ? 0 : 1;
+    a-&gt;elos[class] += k*(SA - EA);
+    b-&gt;elos[class] += k*(SB - EB);
+}
+</code></pre><h2 id="bboxfight">bbox_fight</h2>
+<pre><code>void bbox_fight(network net, sortable_bbox *a, sortable_bbox *b, int classes, int class)
+{
+    image im1 = load_image_color(a-&gt;filename, net.w, net.h);
+    image im2 = load_image_color(b-&gt;filename, net.w, net.h);
+    float *X  = calloc(net.w*net.h*net.c, sizeof(float));
+    memcpy(X,                   im1.data, im1.w*im1.h*im1.c*sizeof(float));
+    memcpy(X+im1.w*im1.h*im1.c, im2.data, im2.w*im2.h*im2.c*sizeof(float));
+    float *predictions = network_predict(net, X);
+    ++total_compares;
+
+    int i;
+    for(i = 0; i &lt; classes; ++i){
+        if(class &lt; 0 || class == i){
+            int result = predictions[i*2] &gt; predictions[i*2+1];
+            bbox_update(a, b, i, result);
+        }
+    }
+
+    free_image(im1);
+    free_image(im2);
+    free(X);
+}
+</code></pre><h2 id="sortmaster3000">SortMaster3000</h2>
+<pre><code>void SortMaster3000(char *filename, char *weightfile)
+{
+    int i = 0;
+    network net = parse_network_cfg(filename);
+    if(weightfile){
+        load_weights(&amp;net, weightfile);
+    }
+    srand(time(0));
+    set_batch_network(&amp;net, 1);
+
+    list *plist = get_paths(&quot;data/compare.sort.list&quot;);
+    //list *plist = get_paths(&quot;data/compare.val.old&quot;);
+    char **paths = (char **)list_to_array(plist);
+    int N = plist-&gt;size;
+    free_list(plist);
+    sortable_bbox *boxes = calloc(N, sizeof(sortable_bbox));
+    printf(&quot;Sorting %d boxes...\n&quot;, N);
+    for(i = 0; i &lt; N; ++i){
+        boxes[i].filename = paths[i];
+        boxes[i].net = net;
+        boxes[i].class = 7;
+        boxes[i].elo = 1500;
+    }
+    clock_t time=clock();
+    qsort(boxes, N, sizeof(sortable_bbox), bbox_comparator);
+    for(i = 0; i &lt; N; ++i){
+        printf(&quot;%s\n&quot;, boxes[i].filename);
+    }
+    printf(&quot;Sorted in %d compares, %f secs\n&quot;, total_compares, sec(clock()-time));
+}
+</code></pre><h2 id="battleroyalewithcheese">BattleRoyaleWithCheese</h2>
+<pre><code>void BattleRoyaleWithCheese(char *filename, char *weightfile)
+{
+    int classes = 20;
+    int i,j;
+    network net = parse_network_cfg(filename);
+    if(weightfile){
+        load_weights(&amp;net, weightfile);
+    }
+    srand(time(0));
+    set_batch_network(&amp;net, 1);
+
+    list *plist = get_paths(&quot;data/compare.sort.list&quot;);
+    //list *plist = get_paths(&quot;data/compare.small.list&quot;);
+    //list *plist = get_paths(&quot;data/compare.cat.list&quot;);
+    //list *plist = get_paths(&quot;data/compare.val.old&quot;);
+    char **paths = (char **)list_to_array(plist);
+    int N = plist-&gt;size;
+    int total = N;
+    free_list(plist);
+    sortable_bbox *boxes = calloc(N, sizeof(sortable_bbox));
+    printf(&quot;Battling %d boxes...\n&quot;, N);
+    for(i = 0; i &lt; N; ++i){
+        boxes[i].filename = paths[i];
+        boxes[i].net = net;
+        boxes[i].classes = classes;
+        boxes[i].elos = calloc(classes, sizeof(float));;
+        for(j = 0; j &lt; classes; ++j){
+            boxes[i].elos[j] = 1500;
+        }
+    }
+    int round;
+    clock_t time=clock();
+    for(round = 1; round &lt;= 4; ++round){
+        clock_t round_time=clock();
+        printf(&quot;Round: %d\n&quot;, round);
+        shuffle(boxes, N, sizeof(sortable_bbox));
+        for(i = 0; i &lt; N/2; ++i){
+            bbox_fight(net, boxes+i*2, boxes+i*2+1, classes, -1);
+        }
+        printf(&quot;Round: %f secs, %d remaining\n&quot;, sec(clock()-round_time), N);
+    }
+
+    int class;
+
+    for (class = 0; class &lt; classes; ++class){
+
+        N = total;
+        current_class = class;
+        qsort(boxes, N, sizeof(sortable_bbox), elo_comparator);
+        N /= 2;
+
+        for(round = 1; round &lt;= 100; ++round){
+            clock_t round_time=clock();
+            printf(&quot;Round: %d\n&quot;, round);
+
+            sorta_shuffle(boxes, N, sizeof(sortable_bbox), 10);
+            for(i = 0; i &lt; N/2; ++i){
+                bbox_fight(net, boxes+i*2, boxes+i*2+1, classes, class);
+            }
+            qsort(boxes, N, sizeof(sortable_bbox), elo_comparator);
+            if(round &lt;= 20) N = (N*9/10)/2*2;
+
+            printf(&quot;Round: %f secs, %d remaining\n&quot;, sec(clock()-round_time), N);
+        }
+        char buff[256];
+        sprintf(buff, &quot;results/battle_%d.log&quot;, class);
+        FILE *outfp = fopen(buff, &quot;w&quot;);
+        for(i = 0; i &lt; N; ++i){
+            fprintf(outfp, &quot;%s %f\n&quot;, boxes[i].filename, boxes[i].elos[class]);
+        }
+        fclose(outfp);
+    }
+    printf(&quot;Tournament in %d compares, %f secs\n&quot;, total_compares, sec(clock()-time));
+}
+</code></pre><h2 id="runcompare">run_compare</h2>
+<pre><code>void run_compare(int argc, char **argv)
+{
+    if(argc &lt; 4){
+        fprintf(stderr, &quot;usage: %s %s [train/test/valid] [cfg] [weights (optional)]\n&quot;, argv[0], argv[1]);
+        return;
+    }
+
+    char *cfg = argv[3];
+    char *weights = (argc &gt; 4) ? argv[4] : 0;
+    //char *filename = (argc &gt; 5) ? argv[5]: 0;
+    if(0==strcmp(argv[2], &quot;train&quot;)) train_compare(cfg, weights);
+    else if(0==strcmp(argv[2], &quot;valid&quot;)) validate_compare(cfg, weights);
+    else if(0==strcmp(argv[2], &quot;sort&quot;)) SortMaster3000(cfg, weights);
+    else if(0==strcmp(argv[2], &quot;battle&quot;)) BattleRoyaleWithCheese(cfg, weights);
+    /*
+       else if(0==strcmp(argv[2], &quot;train&quot;)) train_coco(cfg, weights);
+       else if(0==strcmp(argv[2], &quot;extract&quot;)) extract_boxes(cfg, weights);
+       else if(0==strcmp(argv[2], &quot;valid&quot;)) validate_recall(cfg, weights);
+     */
+}
+</code></pre>
+                                
+                                </section>
+                            
+    </div>
+    <div class="search-results">
+        <div class="has-results">
+            
+            <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+            <ul class="search-results-list"></ul>
+            
+        </div>
+        <div class="no-results">
+            
+            <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+            
+        </div>
+    </div>
+</div>
+
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="col2im.html" class="navigation navigation-prev " aria-label="Previous page: col2im.c">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="connected_layer.html" class="navigation navigation-next " aria-label="Next page: connected_layer.c">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"compare.c","level":"5.8","depth":1,"next":{"title":"connected_layer.c","level":"5.9","depth":1,"path":"part3_src/connected_layer.md","ref":"part3_src/connected_layer.md","articles":[]},"previous":{"title":"col2im.c","level":"5.7","depth":1,"path":"part3_src/col2im.md","ref":"part3_src/col2im.md","articles":[]},"dir":"ltr"},"config":{"plugins":["advanced-emoji","theme-gestalt","-theme-default","styles-sass-fix","theme-api","mathjax"],"root":"./","styles":{"website":"website-1596049586635.css"},"pluginsConfig":{"styles-sass-fix":{},"theme-gestalt":{"showLevel":false,"styles":{"website":"styles/website.css"},"logo":"/darknet_book/assets/darknet.png","baseUrl":null,"excludeDefaultStyles":true,"doNotHideChildrenChapters":false},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"theme-api":{"languages":[],"split":true,"theme":"light"},"mathjax":{"forceSVG":false,"version":"2.6-latest"},"advanced-emoji":{"embedEmojis":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]}},"theme":"default","author":"JJM","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"DarkNet Book","output.name":"site","gitbook":"*"},"file":{"path":"part3_src/compare.md","mtime":"2020-07-29T18:12:31.117Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-07-29T19:06:03.401Z"},"basePath":"..","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <script src="../gitbook/gitbook.js"></script>
+    <script src="../gitbook/theme.js"></script>
+    
+        
+        <script src="https://cdn.mathjax.org/mathjax/2.6-latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-mathjax/plugin.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-search/search-engine.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-search/search.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lunr/lunr.min.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lunr/search-lunr.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-sharing/buttons.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-fontsettings/fontsettings.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-theme-api/theme-api.js"></script>
+        
+    
+
+    </body>
+</html>
+

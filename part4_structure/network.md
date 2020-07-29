@@ -61,14 +61,6 @@ typedef struct network{
     int index;
     float *cost;
     float clip;
-
-#ifdef GPU
-    float *input_gpu;
-    float *truth_gpu;
-    float *delta_gpu;
-    float *output_gpu;
-#endif
-
 } network;
 ```
 

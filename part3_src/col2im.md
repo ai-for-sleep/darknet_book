@@ -2,6 +2,8 @@
 
 - columns을 이미지로 변환해주는 것을 말합니다.
 
+## col2im_add_pixel
+
 ```c
 void col2im_add_pixel(float *im, int height, int width, int channels,
                         int row, int col, int channel, int pad, float val)
@@ -15,7 +17,7 @@ void col2im_add_pixel(float *im, int height, int width, int channels,
 }
 ```
 
-
+## col2im_cpu
 
 ```c
 //This one might be too, can't remember.

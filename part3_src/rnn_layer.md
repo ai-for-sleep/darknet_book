@@ -144,3 +144,57 @@ void backward_rnn_layer(layer l, network net)
 ```
 
 `backward`
+
+## make_rnn_layer
+
+```
+layer make_rnn_layer(int batch, int inputs, int outputs, int steps, ACTIVATION activation, int batch_normalize, int adam)
+{
+    fprintf(stderr, "RNN Layer: %d inputs, %d outputs\n", inputs, outputs);
+    batch = batch / steps;
+    layer l = {0};
+    l.batch = batch;
+    l.type = RNN;
+    l.steps = steps;
+    l.inputs = inputs;
+
+    l.state = calloc(batch*outputs, sizeof(float));
+    l.prev_state = calloc(batch*outputs, sizeof(float));
+
+    l.input_layer = malloc(sizeof(layer));
+    fprintf(stderr, "\t\t");
+    *(l.input_layer) = make_connected_layer(batch*steps, inputs, outputs, activation, batch_normalize, adam);
+    l.input_layer->batch = batch;
+
+    l.self_layer = malloc(sizeof(layer));
+    fprintf(stderr, "\t\t");
+    *(l.self_layer) = make_connected_layer(batch*steps, outputs, outputs, activation, batch_normalize, adam);
+    l.self_layer->batch = batch;
+
+    l.output_layer = malloc(sizeof(layer));
+    fprintf(stderr, "\t\t");
+    *(l.output_layer) = make_connected_layer(batch*steps, outputs, outputs, activation, batch_normalize, adam);
+    l.output_layer->batch = batch;
+
+    l.outputs = outputs;
+    l.output = l.output_layer->output;
+    l.delta = l.output_layer->delta;
+
+    l.forward = forward_rnn_layer;
+    l.backward = backward_rnn_layer;
+    l.update = update_rnn_layer;
+
+    return l;
+}
+```
+
+## update_rnn_layer
+
+```
+void update_rnn_layer(layer l, update_args a)
+{
+    update_connected_layer(*(l.input_layer),  a);
+    update_connected_layer(*(l.self_layer),   a);
+    update_connected_layer(*(l.output_layer), a);
+}
+```

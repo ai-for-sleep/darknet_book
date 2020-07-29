@@ -1,0 +1,3708 @@
+
+<!DOCTYPE HTML>
+<html lang="" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>data.c · DarkNet Book</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 3.2.3">
+        <meta name="author" content="JJM">
+        
+        
+    
+    
+
+    
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-advanced-emoji/emoji-website.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-search/search.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-fontsettings/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-theme-api/theme-api.css">
+                
+            
+        
+
+    
+
+    
+        
+        <link rel="stylesheet" href="../website-1596049586635.css">
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    
+    
+        <link rel="shortcut icon" href="../gitbook/images/favicon.ico" type="image/x-icon">
+    
+    
+    
+
+    
+    <link rel="next" href="deconvolutional_layer.html" />
+    
+    
+    <link rel="prev" href="crop_layer.html" />
+    
+
+    </head>
+    <body>
+        
+<div class="book">
+    <div class="book-summary">
+        
+            <div class="book-logo">   
+                
+                <img src="/darknet_book/assets/darknet.png"/>
+                
+            </div>
+            
+<div id="book-search-input" role="search">
+    <input type="text" placeholder="Type to search" />
+</div>
+
+            
+                <nav role="navigation">
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        
+        <li class="header ">DARKNET</li>
+        
+        
+    
+        
+        <li class="chapter 
+              "
+            data-level="1.1" 
+            data-path="../">
+
+            
+                <a href="../">
+            
+                    
+                    DarkNet
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="1.2" 
+            data-path="../INSTALL.html">
+
+            
+                <a href="../INSTALL.html">
+            
+                    
+                    설치하기
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+        
+        
+        <li class="header ">Paper</li>
+        
+        
+    
+        
+        <li class="chapter 
+              "
+            data-level="2.1" 
+            data-path="../part1_paper/yolov1.html">
+
+            
+                <a href="../part1_paper/yolov1.html">
+            
+                    
+                    YOLOv1
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="2.2" 
+            data-path="../part1_paper/yolov2.html">
+
+            
+                <a href="../part1_paper/yolov2.html">
+            
+                    
+                    YOLOv2
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="2.3" 
+            data-path="../part1_paper/yolov3.html">
+
+            
+                <a href="../part1_paper/yolov3.html">
+            
+                    
+                    YOLOv3
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="2.4" 
+            data-path="../part1_paper/yolov4.html">
+
+            
+                <a href="../part1_paper/yolov4.html">
+            
+                    
+                    YOLOv4
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+        
+        
+        <li class="header ">SOURCE</li>
+        
+        
+    
+        
+        <li class="chapter 
+              "
+            data-level="3.1" 
+            data-path="../part2_source/0_Project.html">
+
+            
+                <a href="../part2_source/0_Project.html">
+            
+                    
+                    project
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="3.2" 
+            data-path="../part2_source/1_DATA.html">
+
+            
+                <a href="../part2_source/1_DATA.html">
+            
+                    
+                    /data
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="3.3" 
+            data-path="../part2_source/2_CFG.html">
+
+            
+                <a href="../part2_source/2_CFG.html">
+            
+                    
+                    /cfg
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="3.4" 
+            data-path="../part2_source/3_EXAMPLE.html">
+
+            
+                <a href="../part2_source/3_EXAMPLE.html">
+            
+                    
+                    /example
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="3.5" 
+            data-path="../part2_source/4_SRC.html">
+
+            
+                <a href="../part2_source/4_SRC.html">
+            
+                    
+                    /src
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+        
+        
+        <li class="header ">Structure</li>
+        
+        
+    
+        
+        <li class="chapter 
+              "
+            data-level="4.1" 
+            data-path="../part4_structure/network.html">
+
+            
+                <a href="../part4_structure/network.html">
+            
+                    
+                    network
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="4.2" 
+            data-path="../part4_structure/layer.html">
+
+            
+                <a href="../part4_structure/layer.html">
+            
+                    
+                    layer
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="4.3" 
+            data-path="../part4_structure/etc.html">
+
+            
+                <a href="../part4_structure/etc.html">
+            
+                    
+                    etc
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+        
+        
+        <li class="header  selected ">/SRC</li>
+        
+        
+    
+        
+        <li class="chapter 
+              "
+            data-level="5.1" 
+            data-path="activation_layer.html">
+
+            
+                <a href="activation_layer.html">
+            
+                    
+                    activation_layer.c
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="5.2" 
+            data-path="activations_1.html">
+
+            
+                <a href="activations_1.html">
+            
+                    
+                    activations.c
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+                
+    
+        
+        <li class="chapter 
+               hide "
+            data-level="5.2.1" 
+            data-path="activations_2.html">
+
+            
+                <a href="activations_2.html">
+            
+                    
+                    activation.h
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="5.3" 
+            data-path="avgpool.html">
+
+            
+                <a href="avgpool.html">
+            
+                    
+                    avgpool_layer.c
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="5.4" 
+            data-path="batchnorm_layer.html">
+
+            
+                <a href="batchnorm_layer.html">
+            
+                    
+                    batchnorm_layer.c
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="5.5" 
+            data-path="blas.html">
+
+            
+                <a href="blas.html">
+            
+                    
+                    blas.c
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="5.6" 
+            data-path="box.html">
+
+            
+                <a href="box.html">
+            
+                    
+                    box.c
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="5.7" 
+            data-path="col2im.html">
+
+            
+                <a href="col2im.html">
+            
+                    
+                    col2im.c
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="5.8" 
+            data-path="compare.html">
+
+            
+                <a href="compare.html">
+            
+                    
+                    compare.c
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="5.9" 
+            data-path="connected_layer.html">
+
+            
+                <a href="connected_layer.html">
+            
+                    
+                    connected_layer.c
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="5.10" 
+            data-path="convolutional_layer.html">
+
+            
+                <a href="convolutional_layer.html">
+            
+                    
+                    convolutional_layer.c
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="5.11" 
+            data-path="cost_layer.html">
+
+            
+                <a href="cost_layer.html">
+            
+                    
+                    cost_layer.c
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="5.12" 
+            data-path="crnn_layer.html">
+
+            
+                <a href="crnn_layer.html">
+            
+                    
+                    crnn_layer.c
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="5.13" 
+            data-path="crop_layer.html">
+
+            
+                <a href="crop_layer.html">
+            
+                    
+                    crop_layer.c
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+            active  selected  "
+            data-level="5.14" 
+            data-path="data.html">
+
+            
+                <a href="data.html">
+            
+                    
+                    data.c
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="5.15" 
+            data-path="deconvolutional_layer.html">
+
+            
+                <a href="deconvolutional_layer.html">
+            
+                    
+                    deconvolutional_layer.c
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="5.16" 
+            data-path="demo.html">
+
+            
+                <a href="demo.html">
+            
+                    
+                    demo.c
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="5.17" 
+            data-path="detection_layer.html">
+
+            
+                <a href="detection_layer.html">
+            
+                    
+                    detection_layer.c
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="5.18" 
+            data-path="dropout_layer.html">
+
+            
+                <a href="dropout_layer.html">
+            
+                    
+                    dropout_layer.c
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="5.19" 
+            data-path="gemm.html">
+
+            
+                <a href="gemm.html">
+            
+                    
+                    gemm.c
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="5.20" 
+            data-path="gru_layer.html">
+
+            
+                <a href="gru_layer.html">
+            
+                    
+                    gru_layer.c
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="5.21" 
+            data-path="im2col.html">
+
+            
+                <a href="im2col.html">
+            
+                    
+                    im2col.c
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="5.22" 
+            data-path="image.html">
+
+            
+                <a href="image.html">
+            
+                    
+                    image.c
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="5.23" 
+            data-path="iseg_layer.html">
+
+            
+                <a href="iseg_layer.html">
+            
+                    
+                    iseg_layer.c
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="5.24" 
+            data-path="l2norm_layer.html">
+
+            
+                <a href="l2norm_layer.html">
+            
+                    
+                    l2norm_layer.c
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="5.25" 
+            data-path="layer.html">
+
+            
+                <a href="layer.html">
+            
+                    
+                    layer.c
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="5.26" 
+            data-path="list.html">
+
+            
+                <a href="list.html">
+            
+                    
+                    list.c
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="5.27" 
+            data-path="local_layer.html">
+
+            
+                <a href="local_layer.html">
+            
+                    
+                    local_layer.c
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="5.28" 
+            data-path="logistic_layer.html">
+
+            
+                <a href="logistic_layer.html">
+            
+                    
+                    logistic_layer.c
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="5.29" 
+            data-path="lstm_layer.html">
+
+            
+                <a href="lstm_layer.html">
+            
+                    
+                    lstm_layer.c
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="5.30" 
+            data-path="matrix.html">
+
+            
+                <a href="matrix.html">
+            
+                    
+                    matrix.c
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="5.31" 
+            data-path="maxpool.html">
+
+            
+                <a href="maxpool.html">
+            
+                    
+                    maxpool_layer.c
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="5.32" 
+            data-path="network.html">
+
+            
+                <a href="network.html">
+            
+                    
+                    network.c
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="5.33" 
+            data-path="normalization_layer.html">
+
+            
+                <a href="normalization_layer.html">
+            
+                    
+                    normalization_layer.c
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="5.34" 
+            data-path="option_list.html">
+
+            
+                <a href="option_list.html">
+            
+                    
+                    option_list.c
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="5.35" 
+            data-path="parser_1.html">
+
+            
+                <a href="parser_1.html">
+            
+                    
+                    parser.c
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="5.36" 
+            data-path="region_layer.html">
+
+            
+                <a href="region_layer.html">
+            
+                    
+                    region_layer.c
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="5.37" 
+            data-path="reorg_layer.html">
+
+            
+                <a href="reorg_layer.html">
+            
+                    
+                    reorg_layer.c
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="5.38" 
+            data-path="rnn_layer.html">
+
+            
+                <a href="rnn_layer.html">
+            
+                    
+                    rnn_layer.c
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="5.39" 
+            data-path="route_layer.html">
+
+            
+                <a href="route_layer.html">
+            
+                    
+                    route_layer.c
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="5.40" 
+            data-path="shortcut.md">
+
+            
+                <span>
+            
+                    
+                    shortcut_layer.c
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="5.41" 
+            data-path="softmax_layer.html">
+
+            
+                <a href="softmax_layer.html">
+            
+                    
+                    softmax_layer.c
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="5.42" 
+            data-path="tree.html">
+
+            
+                <a href="tree.html">
+            
+                    
+                    tree.c
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="5.43" 
+            data-path="upsample_layer.html">
+
+            
+                <a href="upsample_layer.html">
+            
+                    
+                    upsample_layer.c
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="5.44" 
+            data-path="utils.html">
+
+            
+                <a href="utils.html">
+            
+                    
+                    utils.c
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="5.45" 
+            data-path="yolo_layer.html">
+
+            
+                <a href="yolo_layer.html">
+            
+                    
+                    yolo_layer.c
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="5.46" 
+            data-path="image_opencv.html">
+
+            
+                <a href="image_opencv.html">
+            
+                    
+                    image_opencv.cpp
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+        
+        
+        <li class="header ">CUDA</li>
+        
+        
+    
+        
+        <li class="chapter 
+              "
+            data-level="6.1" 
+            >
+
+            
+                <span>
+            
+                    
+                    cuda.c
+            
+                </span>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="6.2" 
+            >
+
+            
+                <span>
+            
+                    
+                    avgpool_layer_kernels.cu
+            
+                </span>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="6.3" 
+            >
+
+            
+                <span>
+            
+                    
+                    maxpool_layer_kernels.cu
+            
+                </span>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="6.4" 
+            >
+
+            
+                <span>
+            
+                    
+                    im2col_kernels.cu
+            
+                </span>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="6.5" 
+            >
+
+            
+                <span>
+            
+                    
+                    blas_kernels.cu
+            
+                </span>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="6.6" 
+            >
+
+            
+                <span>
+            
+                    
+                    activation_kernels.cu
+            
+                </span>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="6.7" 
+            >
+
+            
+                <span>
+            
+                    
+                    col2im_kernels.cu
+            
+                </span>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="6.8" 
+            >
+
+            
+                <span>
+            
+                    
+                    convolutional_kernels.cu
+            
+                </span>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="6.9" 
+            >
+
+            
+                <span>
+            
+                    
+                    crop_layer_kernels.cu
+            
+                </span>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="6.10" 
+            >
+
+            
+                <span>
+            
+                    
+                    deconvolutional_kernels.cu
+            
+                </span>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="6.11" 
+            >
+
+            
+                <span>
+            
+                    
+                    dropout_layer_kernels.cu
+            
+                </span>
+            
+
+            
+        </li>
+    
+
+    
+        
+        
+        <li class="header ">/example</li>
+        
+        
+    
+        
+        <li class="chapter 
+              "
+            data-level="7.1" 
+            >
+
+            
+                <span>
+            
+                    
+                    art.c
+            
+                </span>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="7.2" 
+            >
+
+            
+                <span>
+            
+                    
+                    attention.c
+            
+                </span>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="7.3" 
+            >
+
+            
+                <span>
+            
+                    
+                    captcha.c
+            
+                </span>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="7.4" 
+            >
+
+            
+                <span>
+            
+                    
+                    cifar.c
+            
+                </span>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="7.5" 
+            >
+
+            
+                <span>
+            
+                    
+                    classifier.c
+            
+                </span>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="7.6" 
+            >
+
+            
+                <span>
+            
+                    
+                    coco.c
+            
+                </span>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="7.7" 
+            >
+
+            
+                <span>
+            
+                    
+                    darknet.c
+            
+                </span>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="7.8" 
+            >
+
+            
+                <span>
+            
+                    
+                    detector-scipy-opencv.py
+            
+                </span>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="7.9" 
+            >
+
+            
+                <span>
+            
+                    
+                    detector.c
+            
+                </span>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="7.10" 
+            >
+
+            
+                <span>
+            
+                    
+                    detector.py
+            
+                </span>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="7.11" 
+            >
+
+            
+                <span>
+            
+                    
+                    dice.c
+            
+                </span>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="7.12" 
+            >
+
+            
+                <span>
+            
+                    
+                    go.c
+            
+                </span>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="7.13" 
+            >
+
+            
+                <span>
+            
+                    
+                    instance-segmenter.c
+            
+                </span>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="7.14" 
+            >
+
+            
+                <span>
+            
+                    
+                    lsd.c
+            
+                </span>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="7.15" 
+            >
+
+            
+                <span>
+            
+                    
+                    nightmare.c
+            
+                </span>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="7.16" 
+            >
+
+            
+                <span>
+            
+                    
+                    regressor.c
+            
+                </span>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="7.17" 
+            >
+
+            
+                <span>
+            
+                    
+                    rnn.c
+            
+                </span>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="7.18" 
+            >
+
+            
+                <span>
+            
+                    
+                    rnn_vid.c
+            
+                </span>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="7.19" 
+            >
+
+            
+                <span>
+            
+                    
+                    segmenter.c
+            
+                </span>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="7.20" 
+            >
+
+            
+                <span>
+            
+                    
+                    super.c
+            
+                </span>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="7.21" 
+            >
+
+            
+                <span>
+            
+                    
+                    swag.c
+            
+                </span>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="7.22" 
+            >
+
+            
+                <span>
+            
+                    
+                    tag.c
+            
+                </span>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="7.23" 
+            >
+
+            
+                <span>
+            
+                    
+                    voxel.c
+            
+                </span>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="7.24" 
+            >
+
+            
+                <span>
+            
+                    
+                    writing.c
+            
+                </span>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="7.25" 
+            >
+
+            
+                <span>
+            
+                    
+                    yolo.c
+            
+                </span>
+            
+
+            
+        </li>
+    
+
+    
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href=".." >data.c</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+<div id="book-search-results">
+    <div class="search-noresults">
+    
+                                <section class="normal markdown-section">
+                                
+                                <h1 id="datac">data.c</h1>
+<h2 id="getpaths">get_paths</h2>
+<pre><code>pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
+
+list *get_paths(char *filename)
+{
+    char *path;
+    FILE *file = fopen(filename, &quot;r&quot;);
+    if(!file) file_error(filename);
+    list *lines = make_list();
+    while((path=fgetl(file))){
+        list_insert(lines, path);
+    }
+    fclose(file);
+    return lines;
+}
+</code></pre><h2 id="getrandompathsindexes">get_random_paths_indexes</h2>
+<pre><code>/*
+char **get_random_paths_indexes(char **paths, int n, int m, int *indexes)
+{
+    char **random_paths = calloc(n, sizeof(char*));
+    int i;
+    pthread_mutex_lock(&amp;mutex);
+    for(i = 0; i &lt; n; ++i){
+        int index = rand()%m;
+        indexes[i] = index;
+        random_paths[i] = paths[index];
+        if(i == 0) printf(&quot;%s\n&quot;, paths[index]);
+    }
+    pthread_mutex_unlock(&amp;mutex);
+    return random_paths;
+}
+*/
+</code></pre><h2 id="getrandompaths">get_random_paths</h2>
+<pre><code>char **get_random_paths(char **paths, int n, int m)
+{
+    char **random_paths = calloc(n, sizeof(char*));
+    int i;
+    pthread_mutex_lock(&amp;mutex);
+    for(i = 0; i &lt; n; ++i){
+        int index = rand()%m;
+        random_paths[i] = paths[index];
+        //if(i == 0) printf(&quot;%s\n&quot;, paths[index]);
+    }
+    pthread_mutex_unlock(&amp;mutex);
+    return random_paths;
+}
+</code></pre><h2 id="findreplacepaths">find_replace_paths</h2>
+<pre><code>char **find_replace_paths(char **paths, int n, char *find, char *replace)
+{
+    char **replace_paths = calloc(n, sizeof(char*));
+    int i;
+    for(i = 0; i &lt; n; ++i){
+        char replaced[4096];
+        find_replace(paths[i], find, replace, replaced);
+        replace_paths[i] = copy_string(replaced);
+    }
+    return replace_paths;
+}
+</code></pre><h2 id="loadimagepathsgray">load_image_paths_gray</h2>
+<pre><code>matrix load_image_paths_gray(char **paths, int n, int w, int h)
+{
+    int i;
+    matrix X;
+    X.rows = n;
+    X.vals = calloc(X.rows, sizeof(float*));
+    X.cols = 0;
+
+    for(i = 0; i &lt; n; ++i){
+        image im = load_image(paths[i], w, h, 3);
+
+        image gray = grayscale_image(im);
+        free_image(im);
+        im = gray;
+
+        X.vals[i] = im.data;
+        X.cols = im.h*im.w*im.c;
+    }
+    return X;
+}
+</code></pre><h2 id="loadimagepaths">load_image_paths</h2>
+<pre><code>matrix load_image_paths(char **paths, int n, int w, int h)
+{
+    int i;
+    matrix X;
+    X.rows = n;
+    X.vals = calloc(X.rows, sizeof(float*));
+    X.cols = 0;
+
+    for(i = 0; i &lt; n; ++i){
+        image im = load_image_color(paths[i], w, h);
+        X.vals[i] = im.data;
+        X.cols = im.h*im.w*im.c;
+    }
+    return X;
+}
+</code></pre><h2 id="loadimageaugmentpaths">load_image_augment_paths</h2>
+<pre><code>matrix load_image_augment_paths(char **paths, int n, int min, int max, int size, float angle, float aspect, float hue, float saturation, float exposure, int center)
+{
+    int i;
+    matrix X;
+    X.rows = n;
+    X.vals = calloc(X.rows, sizeof(float*));
+    X.cols = 0;
+
+    for(i = 0; i &lt; n; ++i){
+        image im = load_image_color(paths[i], 0, 0);
+        image crop;
+        if(center){
+            crop = center_crop_image(im, size, size);
+        } else {
+            crop = random_augment_image(im, angle, aspect, min, max, size, size);
+        }
+        int flip = rand()%2;
+        if (flip) flip_image(crop);
+        random_distort_image(crop, hue, saturation, exposure);
+
+        /*
+        show_image(im, &quot;orig&quot;);
+        show_image(crop, &quot;crop&quot;);
+        cvWaitKey(0);
+        */
+        //grayscale_image_3c(crop);
+        free_image(im);
+        X.vals[i] = crop.data;
+        X.cols = crop.h*crop.w*crop.c;
+    }
+    return X;
+}
+</code></pre><h2 id="readboxes">read_boxes</h2>
+<pre><code>box_label *read_boxes(char *filename, int *n)
+{
+    FILE *file = fopen(filename, &quot;r&quot;);
+    if(!file) file_error(filename);
+    float x, y, h, w;
+    int id;
+    int count = 0;
+    int size = 64;
+    box_label *boxes = calloc(size, sizeof(box_label));
+    while(fscanf(file, &quot;%d %f %f %f %f&quot;, &amp;id, &amp;x, &amp;y, &amp;w, &amp;h) == 5){
+        if(count == size) {
+            size = size * 2;
+            boxes = realloc(boxes, size*sizeof(box_label));
+        }
+        boxes[count].id = id;
+        boxes[count].x = x;
+        boxes[count].y = y;
+        boxes[count].h = h;
+        boxes[count].w = w;
+        boxes[count].left   = x - w/2;
+        boxes[count].right  = x + w/2;
+        boxes[count].top    = y - h/2;
+        boxes[count].bottom = y + h/2;
+        ++count;
+    }
+    fclose(file);
+    *n = count;
+    return boxes;
+}
+</code></pre><h2 id="randomizeboxes">randomize_boxes</h2>
+<pre><code>void randomize_boxes(box_label *b, int n)
+{
+    int i;
+    for(i = 0; i &lt; n; ++i){
+        box_label swap = b[i];
+        int index = rand()%n;
+        b[i] = b[index];
+        b[index] = swap;
+    }
+}
+</code></pre><h2 id="correctboxes">correct_boxes</h2>
+<pre><code>void correct_boxes(box_label *boxes, int n, float dx, float dy, float sx, float sy, int flip)
+{
+    int i;
+    for(i = 0; i &lt; n; ++i){
+        if(boxes[i].x == 0 &amp;&amp; boxes[i].y == 0) {
+            boxes[i].x = 999999;
+            boxes[i].y = 999999;
+            boxes[i].w = 999999;
+            boxes[i].h = 999999;
+            continue;
+        }
+        boxes[i].left   = boxes[i].left  * sx - dx;
+        boxes[i].right  = boxes[i].right * sx - dx;
+        boxes[i].top    = boxes[i].top   * sy - dy;
+        boxes[i].bottom = boxes[i].bottom* sy - dy;
+
+        if(flip){
+            float swap = boxes[i].left;
+            boxes[i].left = 1. - boxes[i].right;
+            boxes[i].right = 1. - swap;
+        }
+
+        boxes[i].left =  constrain(0, 1, boxes[i].left);
+        boxes[i].right = constrain(0, 1, boxes[i].right);
+        boxes[i].top =   constrain(0, 1, boxes[i].top);
+        boxes[i].bottom =   constrain(0, 1, boxes[i].bottom);
+
+        boxes[i].x = (boxes[i].left+boxes[i].right)/2;
+        boxes[i].y = (boxes[i].top+boxes[i].bottom)/2;
+        boxes[i].w = (boxes[i].right - boxes[i].left);
+        boxes[i].h = (boxes[i].bottom - boxes[i].top);
+
+        boxes[i].w = constrain(0, 1, boxes[i].w);
+        boxes[i].h = constrain(0, 1, boxes[i].h);
+    }
+}
+</code></pre><h2 id="filltruthswag">fill_truth_swag</h2>
+<pre><code>void fill_truth_swag(char *path, float *truth, int classes, int flip, float dx, float dy, float sx, float sy)
+{
+    char labelpath[4096];
+    find_replace(path, &quot;images&quot;, &quot;labels&quot;, labelpath);
+    find_replace(labelpath, &quot;JPEGImages&quot;, &quot;labels&quot;, labelpath);
+    find_replace(labelpath, &quot;.jpg&quot;, &quot;.txt&quot;, labelpath);
+    find_replace(labelpath, &quot;.JPG&quot;, &quot;.txt&quot;, labelpath);
+    find_replace(labelpath, &quot;.JPEG&quot;, &quot;.txt&quot;, labelpath);
+
+    int count = 0;
+    box_label *boxes = read_boxes(labelpath, &amp;count);
+    randomize_boxes(boxes, count);
+    correct_boxes(boxes, count, dx, dy, sx, sy, flip);
+    float x,y,w,h;
+    int id;
+    int i;
+
+    for (i = 0; i &lt; count &amp;&amp; i &lt; 90; ++i) {
+        x =  boxes[i].x;
+        y =  boxes[i].y;
+        w =  boxes[i].w;
+        h =  boxes[i].h;
+        id = boxes[i].id;
+
+        if (w &lt; .0 || h &lt; .0) continue;
+
+        int index = (4+classes) * i;
+
+        truth[index++] = x;
+        truth[index++] = y;
+        truth[index++] = w;
+        truth[index++] = h;
+
+        if (id &lt; classes) truth[index+id] = 1;
+    }
+    free(boxes);
+}
+</code></pre><h2 id="filltruthregion">fill_truth_region</h2>
+<pre><code>void fill_truth_region(char *path, float *truth, int classes, int num_boxes, int flip, float dx, float dy, float sx, float sy)
+{
+    char labelpath[4096];
+    find_replace(path, &quot;images&quot;, &quot;labels&quot;, labelpath);
+    find_replace(labelpath, &quot;JPEGImages&quot;, &quot;labels&quot;, labelpath);
+
+    find_replace(labelpath, &quot;.jpg&quot;, &quot;.txt&quot;, labelpath);
+    find_replace(labelpath, &quot;.png&quot;, &quot;.txt&quot;, labelpath);
+    find_replace(labelpath, &quot;.JPG&quot;, &quot;.txt&quot;, labelpath);
+    find_replace(labelpath, &quot;.JPEG&quot;, &quot;.txt&quot;, labelpath);
+    int count = 0;
+    box_label *boxes = read_boxes(labelpath, &amp;count);
+    randomize_boxes(boxes, count);
+    correct_boxes(boxes, count, dx, dy, sx, sy, flip);
+    float x,y,w,h;
+    int id;
+    int i;
+
+    for (i = 0; i &lt; count; ++i) {
+        x =  boxes[i].x;
+        y =  boxes[i].y;
+        w =  boxes[i].w;
+        h =  boxes[i].h;
+        id = boxes[i].id;
+
+        if (w &lt; .005 || h &lt; .005) continue;
+
+        int col = (int)(x*num_boxes);
+        int row = (int)(y*num_boxes);
+
+        x = x*num_boxes - col;
+        y = y*num_boxes - row;
+
+        int index = (col+row*num_boxes)*(5+classes);
+        if (truth[index]) continue;
+        truth[index++] = 1;
+
+        if (id &lt; classes) truth[index+id] = 1;
+        index += classes;
+
+        truth[index++] = x;
+        truth[index++] = y;
+        truth[index++] = w;
+        truth[index++] = h;
+    }
+    free(boxes);
+}
+</code></pre><h2 id="loadrle">load_rle</h2>
+<pre><code>void load_rle(image im, int *rle, int n)
+{
+    int count = 0;
+    int curr = 0;
+    int i,j;
+    for(i = 0; i &lt; n; ++i){
+        for(j = 0; j &lt; rle[i]; ++j){
+            im.data[count++] = curr;
+        }
+        curr = 1 - curr;
+    }
+    for(; count &lt; im.h*im.w*im.c; ++count){
+        im.data[count] = curr;
+    }
+}
+</code></pre><h2 id="orimage">or_image</h2>
+<pre><code>void or_image(image src, image dest, int c)
+{
+    int i;
+    for(i = 0; i &lt; src.w*src.h; ++i){
+        if(src.data[i]) dest.data[dest.w*dest.h*c + i] = 1;
+    }
+}
+</code></pre><h2 id="exclusiveimage">exclusive_image</h2>
+<pre><code>void exclusive_image(image src)
+{
+    int k, j, i;
+    int s = src.w*src.h;
+    for(k = 0; k &lt; src.c-1; ++k){
+        for(i = 0; i &lt; s; ++i){
+            if (src.data[k*s + i]){
+                for(j = k+1; j &lt; src.c; ++j){
+                    src.data[j*s + i] = 0;
+                }
+            }
+        }
+    }
+}
+</code></pre><h2 id="boundimage">bound_image</h2>
+<pre><code>box bound_image(image im)
+{
+    int x,y;
+    int minx = im.w;
+    int miny = im.h;
+    int maxx = 0;
+    int maxy = 0;
+    for(y = 0; y &lt; im.h; ++y){
+        for(x = 0; x &lt; im.w; ++x){
+            if(im.data[y*im.w + x]){
+                minx = (x &lt; minx) ? x : minx;
+                miny = (y &lt; miny) ? y : miny;
+                maxx = (x &gt; maxx) ? x : maxx;
+                maxy = (y &gt; maxy) ? y : maxy;
+            }
+        }
+    }
+    box b = {minx, miny, maxx-minx + 1, maxy-miny + 1};
+    //printf(&quot;%f %f %f %f\n&quot;, b.x, b.y, b.w, b.h);
+    return b;
+}
+</code></pre><h2 id="filltruthiseg">fill_truth_iseg</h2>
+<pre><code>void fill_truth_iseg(char *path, int num_boxes, float *truth, int classes, int w, int h, augment_args aug, int flip, int mw, int mh)
+{
+    char labelpath[4096];
+    find_replace(path, &quot;images&quot;, &quot;mask&quot;, labelpath);
+    find_replace(labelpath, &quot;JPEGImages&quot;, &quot;mask&quot;, labelpath);
+    find_replace(labelpath, &quot;.jpg&quot;, &quot;.txt&quot;, labelpath);
+    find_replace(labelpath, &quot;.JPG&quot;, &quot;.txt&quot;, labelpath);
+    find_replace(labelpath, &quot;.JPEG&quot;, &quot;.txt&quot;, labelpath);
+    FILE *file = fopen(labelpath, &quot;r&quot;);
+    if(!file) file_error(labelpath);
+    char buff[32788];
+    int id;
+    int i = 0;
+    int j;
+    image part = make_image(w, h, 1);
+    while((fscanf(file, &quot;%d %s&quot;, &amp;id, buff) == 2) &amp;&amp; i &lt; num_boxes){
+        int n = 0;
+        int *rle = read_intlist(buff, &amp;n, 0);
+        load_rle(part, rle, n);
+        image sized = rotate_crop_image(part, aug.rad, aug.scale, aug.w, aug.h, aug.dx, aug.dy, aug.aspect);
+        if(flip) flip_image(sized);
+
+        image mask = resize_image(sized, mw, mh);
+        truth[i*(mw*mh+1)] = id;
+        for(j = 0; j &lt; mw*mh; ++j){
+            truth[i*(mw*mh + 1) + 1 + j] = mask.data[j];
+        }
+        ++i;
+
+        free_image(mask);
+        free_image(sized);
+        free(rle);
+    }
+    if(i &lt; num_boxes) truth[i*(mw*mh+1)] = -1;
+    fclose(file);
+    free_image(part);
+}
+</code></pre><h2 id="filltruthmask">fill_truth_mask</h2>
+<pre><code>void fill_truth_mask(char *path, int num_boxes, float *truth, int classes, int w, int h, augment_args aug, int flip, int mw, int mh)
+{
+    char labelpath[4096];
+    find_replace(path, &quot;images&quot;, &quot;mask&quot;, labelpath);
+    find_replace(labelpath, &quot;JPEGImages&quot;, &quot;mask&quot;, labelpath);
+    find_replace(labelpath, &quot;.jpg&quot;, &quot;.txt&quot;, labelpath);
+    find_replace(labelpath, &quot;.JPG&quot;, &quot;.txt&quot;, labelpath);
+    find_replace(labelpath, &quot;.JPEG&quot;, &quot;.txt&quot;, labelpath);
+    FILE *file = fopen(labelpath, &quot;r&quot;);
+    if(!file) file_error(labelpath);
+    char buff[32788];
+    int id;
+    int i = 0;
+    image part = make_image(w, h, 1);
+    while((fscanf(file, &quot;%d %s&quot;, &amp;id, buff) == 2) &amp;&amp; i &lt; num_boxes){
+        int n = 0;
+        int *rle = read_intlist(buff, &amp;n, 0);
+        load_rle(part, rle, n);
+        image sized = rotate_crop_image(part, aug.rad, aug.scale, aug.w, aug.h, aug.dx, aug.dy, aug.aspect);
+        if(flip) flip_image(sized);
+        box b = bound_image(sized);
+        if(b.w &gt; 0){
+            image crop = crop_image(sized, b.x, b.y, b.w, b.h);
+            image mask = resize_image(crop, mw, mh);
+            truth[i*(4 + mw*mh + 1) + 0] = (b.x + b.w/2.)/sized.w;
+            truth[i*(4 + mw*mh + 1) + 1] = (b.y + b.h/2.)/sized.h;
+            truth[i*(4 + mw*mh + 1) + 2] = b.w/sized.w;
+            truth[i*(4 + mw*mh + 1) + 3] = b.h/sized.h;
+            int j;
+            for(j = 0; j &lt; mw*mh; ++j){
+                truth[i*(4 + mw*mh + 1) + 4 + j] = mask.data[j];
+            }
+            truth[i*(4 + mw*mh + 1) + 4 + mw*mh] = id;
+            free_image(crop);
+            free_image(mask);
+            ++i;
+        }
+        free_image(sized);
+        free(rle);
+    }
+    fclose(file);
+    free_image(part);
+}
+</code></pre><h2 id="filltruthdetection">fill_truth_detection</h2>
+<pre><code>void fill_truth_detection(char *path, int num_boxes, float *truth, int classes, int flip, float dx, float dy, float sx, float sy)
+{
+    char labelpath[4096];
+    find_replace(path, &quot;images&quot;, &quot;labels&quot;, labelpath);
+    find_replace(labelpath, &quot;JPEGImages&quot;, &quot;labels&quot;, labelpath);
+
+    find_replace(labelpath, &quot;raw&quot;, &quot;labels&quot;, labelpath);
+    find_replace(labelpath, &quot;.jpg&quot;, &quot;.txt&quot;, labelpath);
+    find_replace(labelpath, &quot;.png&quot;, &quot;.txt&quot;, labelpath);
+    find_replace(labelpath, &quot;.JPG&quot;, &quot;.txt&quot;, labelpath);
+    find_replace(labelpath, &quot;.JPEG&quot;, &quot;.txt&quot;, labelpath);
+    int count = 0;
+    box_label *boxes = read_boxes(labelpath, &amp;count);
+    randomize_boxes(boxes, count);
+    correct_boxes(boxes, count, dx, dy, sx, sy, flip);
+    if(count &gt; num_boxes) count = num_boxes;
+    float x,y,w,h;
+    int id;
+    int i;
+    int sub = 0;
+
+    for (i = 0; i &lt; count; ++i) {
+        x =  boxes[i].x;
+        y =  boxes[i].y;
+        w =  boxes[i].w;
+        h =  boxes[i].h;
+        id = boxes[i].id;
+
+        if ((w &lt; .001 || h &lt; .001)) {
+            ++sub;
+            continue;
+        }
+
+        truth[(i-sub)*5+0] = x;
+        truth[(i-sub)*5+1] = y;
+        truth[(i-sub)*5+2] = w;
+        truth[(i-sub)*5+3] = h;
+        truth[(i-sub)*5+4] = id;
+    }
+    free(boxes);
+}
+</code></pre><h2 id="printletters">print_letters</h2>
+<pre><code>#define NUMCHARS 37
+
+void print_letters(float *pred, int n)
+{
+    int i;
+    for(i = 0; i &lt; n; ++i){
+        int index = max_index(pred+i*NUMCHARS, NUMCHARS);
+        printf(&quot;%c&quot;, int_to_alphanum(index));
+    }
+    printf(&quot;\n&quot;);
+}
+</code></pre><h2 id="filltruthcaptcha">fill_truth_captcha</h2>
+<pre><code>void fill_truth_captcha(char *path, int n, float *truth)
+{
+    char *begin = strrchr(path, &apos;/&apos;);
+    ++begin;
+    int i;
+    for(i = 0; i &lt; strlen(begin) &amp;&amp; i &lt; n &amp;&amp; begin[i] != &apos;.&apos;; ++i){
+        int index = alphanum_to_int(begin[i]);
+        if(index &gt; 35) printf(&quot;Bad %c\n&quot;, begin[i]);
+        truth[i*NUMCHARS+index] = 1;
+    }
+    for(;i &lt; n; ++i){
+        truth[i*NUMCHARS + NUMCHARS-1] = 1;
+    }
+}
+</code></pre><h2 id="loaddatacaptcha">load_data_captcha</h2>
+<pre><code>data load_data_captcha(char **paths, int n, int m, int k, int w, int h)
+{
+    if(m) paths = get_random_paths(paths, n, m);
+    data d = {0};
+    d.shallow = 0;
+    d.X = load_image_paths(paths, n, w, h);
+    d.y = make_matrix(n, k*NUMCHARS);
+    int i;
+    for(i = 0; i &lt; n; ++i){
+        fill_truth_captcha(paths[i], k, d.y.vals[i]);
+    }
+    if(m) free(paths);
+    return d;
+}
+</code></pre><h2 id="loaddatacaptchaencode">load_data_captcha_encode</h2>
+<pre><code>data load_data_captcha_encode(char **paths, int n, int m, int w, int h)
+{
+    if(m) paths = get_random_paths(paths, n, m);
+    data d = {0};
+    d.shallow = 0;
+    d.X = load_image_paths(paths, n, w, h);
+    d.X.cols = 17100;
+    d.y = d.X;
+    if(m) free(paths);
+    return d;
+}
+</code></pre><h2 id="filltruth">fill_truth</h2>
+<pre><code>void fill_truth(char *path, char **labels, int k, float *truth)
+{
+    int i;
+    memset(truth, 0, k*sizeof(float));
+    int count = 0;
+    for(i = 0; i &lt; k; ++i){
+        if(strstr(path, labels[i])){
+            truth[i] = 1;
+            ++count;
+            //printf(&quot;%s %s %d\n&quot;, path, labels[i], i);
+        }
+    }
+    if(count != 1 &amp;&amp; (k != 1 || count != 0)) printf(&quot;Too many or too few labels: %d, %s\n&quot;, count, path);
+}
+</code></pre><h2 id="fillhierarchy">fill_hierarchy</h2>
+<pre><code>void fill_hierarchy(float *truth, int k, tree *hierarchy)
+{
+    int j;
+    for(j = 0; j &lt; k; ++j){
+        if(truth[j]){
+            int parent = hierarchy-&gt;parent[j];
+            while(parent &gt;= 0){
+                truth[parent] = 1;
+                parent = hierarchy-&gt;parent[parent];
+            }
+        }
+    }
+    int i;
+    int count = 0;
+    for(j = 0; j &lt; hierarchy-&gt;groups; ++j){
+        //printf(&quot;%d\n&quot;, count);
+        int mask = 1;
+        for(i = 0; i &lt; hierarchy-&gt;group_size[j]; ++i){
+            if(truth[count + i]){
+                mask = 0;
+                break;
+            }
+        }
+        if (mask) {
+            for(i = 0; i &lt; hierarchy-&gt;group_size[j]; ++i){
+                truth[count + i] = SECRET_NUM;
+            }
+        }
+        count += hierarchy-&gt;group_size[j];
+    }
+}
+</code></pre><h2 id="loadregressionlabelspaths">load_regression_labels_paths</h2>
+<pre><code>matrix load_regression_labels_paths(char **paths, int n, int k)
+{
+    matrix y = make_matrix(n, k);
+    int i,j;
+    for(i = 0; i &lt; n; ++i){
+        char labelpath[4096];
+        find_replace(paths[i], &quot;images&quot;, &quot;labels&quot;, labelpath);
+        find_replace(labelpath, &quot;JPEGImages&quot;, &quot;labels&quot;, labelpath);
+        find_replace(labelpath, &quot;.BMP&quot;, &quot;.txt&quot;, labelpath);
+        find_replace(labelpath, &quot;.JPEG&quot;, &quot;.txt&quot;, labelpath);
+        find_replace(labelpath, &quot;.JPG&quot;, &quot;.txt&quot;, labelpath);
+        find_replace(labelpath, &quot;.JPeG&quot;, &quot;.txt&quot;, labelpath);
+        find_replace(labelpath, &quot;.Jpeg&quot;, &quot;.txt&quot;, labelpath);
+        find_replace(labelpath, &quot;.PNG&quot;, &quot;.txt&quot;, labelpath);
+        find_replace(labelpath, &quot;.TIF&quot;, &quot;.txt&quot;, labelpath);
+        find_replace(labelpath, &quot;.bmp&quot;, &quot;.txt&quot;, labelpath);
+        find_replace(labelpath, &quot;.jpeg&quot;, &quot;.txt&quot;, labelpath);
+        find_replace(labelpath, &quot;.jpg&quot;, &quot;.txt&quot;, labelpath);
+        find_replace(labelpath, &quot;.png&quot;, &quot;.txt&quot;, labelpath);
+        find_replace(labelpath, &quot;.tif&quot;, &quot;.txt&quot;, labelpath);
+
+        FILE *file = fopen(labelpath, &quot;r&quot;);
+        for(j = 0; j &lt; k; ++j){
+            fscanf(file, &quot;%f&quot;, &amp;(y.vals[i][j]));
+        }
+        fclose(file);
+    }
+    return y;
+}
+</code></pre><h2 id="loadlabelspaths">load_labels_paths</h2>
+<pre><code>matrix load_labels_paths(char **paths, int n, char **labels, int k, tree *hierarchy)
+{
+    matrix y = make_matrix(n, k);
+    int i;
+    for(i = 0; i &lt; n &amp;&amp; labels; ++i){
+        fill_truth(paths[i], labels, k, y.vals[i]);
+        if(hierarchy){
+            fill_hierarchy(y.vals[i], k, hierarchy);
+        }
+    }
+    return y;
+}
+</code></pre><h2 id="loadtagspaths">load_tags_paths</h2>
+<pre><code>matrix load_tags_paths(char **paths, int n, int k)
+{
+    matrix y = make_matrix(n, k);
+    int i;
+    //int count = 0;
+    for(i = 0; i &lt; n; ++i){
+        char label[4096];
+        find_replace(paths[i], &quot;images&quot;, &quot;labels&quot;, label);
+        find_replace(label, &quot;.jpg&quot;, &quot;.txt&quot;, label);
+        FILE *file = fopen(label, &quot;r&quot;);
+        if (!file) continue;
+        //++count;
+        int tag;
+        while(fscanf(file, &quot;%d&quot;, &amp;tag) == 1){
+            if(tag &lt; k){
+                y.vals[i][tag] = 1;
+            }
+        }
+        fclose(file);
+    }
+    //printf(&quot;%d/%d\n&quot;, count, n);
+    return y;
+}
+</code></pre><h2 id="getlabels">get_labels</h2>
+<pre><code>char **get_labels(char *filename)
+{
+    list *plist = get_paths(filename);
+    char **labels = (char **)list_to_array(plist);
+    free_list(plist);
+    return labels;
+}
+</code></pre><h2 id="freedata">free_data</h2>
+<pre><code>void free_data(data d)
+{
+    if(!d.shallow){
+        free_matrix(d.X);
+        free_matrix(d.y);
+    }else{
+        free(d.X.vals);
+        free(d.y.vals);
+    }
+}
+</code></pre><h2 id="getsegmentationimage">get_segmentation_image</h2>
+<pre><code>image get_segmentation_image(char *path, int w, int h, int classes)
+{
+    char labelpath[4096];
+    find_replace(path, &quot;images&quot;, &quot;mask&quot;, labelpath);
+    find_replace(labelpath, &quot;JPEGImages&quot;, &quot;mask&quot;, labelpath);
+    find_replace(labelpath, &quot;.jpg&quot;, &quot;.txt&quot;, labelpath);
+    find_replace(labelpath, &quot;.JPG&quot;, &quot;.txt&quot;, labelpath);
+    find_replace(labelpath, &quot;.JPEG&quot;, &quot;.txt&quot;, labelpath);
+    image mask = make_image(w, h, classes);
+    FILE *file = fopen(labelpath, &quot;r&quot;);
+    if(!file) file_error(labelpath);
+    char buff[32788];
+    int id;
+    image part = make_image(w, h, 1);
+    while(fscanf(file, &quot;%d %s&quot;, &amp;id, buff) == 2){
+        int n = 0;
+        int *rle = read_intlist(buff, &amp;n, 0);
+        load_rle(part, rle, n);
+        or_image(part, mask, id);
+        free(rle);
+    }
+    //exclusive_image(mask);
+    fclose(file);
+    free_image(part);
+    return mask;
+}
+</code></pre><h2 id="getsegmentationimage2">get_segmentation_image2</h2>
+<pre><code>image get_segmentation_image2(char *path, int w, int h, int classes)
+{
+    char labelpath[4096];
+    find_replace(path, &quot;images&quot;, &quot;mask&quot;, labelpath);
+    find_replace(labelpath, &quot;JPEGImages&quot;, &quot;mask&quot;, labelpath);
+    find_replace(labelpath, &quot;.jpg&quot;, &quot;.txt&quot;, labelpath);
+    find_replace(labelpath, &quot;.JPG&quot;, &quot;.txt&quot;, labelpath);
+    find_replace(labelpath, &quot;.JPEG&quot;, &quot;.txt&quot;, labelpath);
+    image mask = make_image(w, h, classes+1);
+    int i;
+    for(i = 0; i &lt; w*h; ++i){
+        mask.data[w*h*classes + i] = 1;
+    }
+    FILE *file = fopen(labelpath, &quot;r&quot;);
+    if(!file) file_error(labelpath);
+    char buff[32788];
+    int id;
+    image part = make_image(w, h, 1);
+    while(fscanf(file, &quot;%d %s&quot;, &amp;id, buff) == 2){
+        int n = 0;
+        int *rle = read_intlist(buff, &amp;n, 0);
+        load_rle(part, rle, n);
+        or_image(part, mask, id);
+        for(i = 0; i &lt; w*h; ++i){
+            if(part.data[i]) mask.data[w*h*classes + i] = 0;
+        }
+        free(rle);
+    }
+    //exclusive_image(mask);
+    fclose(file);
+    free_image(part);
+    return mask;
+}
+</code></pre><h2 id="loaddataseg">load_data_seg</h2>
+<pre><code>data load_data_seg(int n, char **paths, int m, int w, int h, int classes, int min, int max, float angle, float aspect, float hue, float saturation, float exposure, int div)
+{
+    char **random_paths = get_random_paths(paths, n, m);
+    int i;
+    data d = {0};
+    d.shallow = 0;
+
+    d.X.rows = n;
+    d.X.vals = calloc(d.X.rows, sizeof(float*));
+    d.X.cols = h*w*3;
+
+
+    d.y.rows = n;
+    d.y.cols = h*w*classes/div/div;
+    d.y.vals = calloc(d.X.rows, sizeof(float*));
+
+    for(i = 0; i &lt; n; ++i){
+        image orig = load_image_color(random_paths[i], 0, 0);
+        augment_args a = random_augment_args(orig, angle, aspect, min, max, w, h);
+        image sized = rotate_crop_image(orig, a.rad, a.scale, a.w, a.h, a.dx, a.dy, a.aspect);
+
+        int flip = rand()%2;
+        if(flip) flip_image(sized);
+        random_distort_image(sized, hue, saturation, exposure);
+        d.X.vals[i] = sized.data;
+
+        image mask = get_segmentation_image(random_paths[i], orig.w, orig.h, classes);
+        //image mask = make_image(orig.w, orig.h, classes+1);
+        image sized_m = rotate_crop_image(mask, a.rad, a.scale/div, a.w/div, a.h/div, a.dx/div, a.dy/div, a.aspect);
+
+        if(flip) flip_image(sized_m);
+        d.y.vals[i] = sized_m.data;
+
+        free_image(orig);
+        free_image(mask);
+
+        /*
+           image rgb = mask_to_rgb(sized_m, classes);
+           show_image(rgb, &quot;part&quot;);
+           show_image(sized, &quot;orig&quot;);
+           cvWaitKey(0);
+           free_image(rgb);
+         */
+    }
+    free(random_paths);
+    return d;
+}
+</code></pre><h2 id="loaddataiseg">load_data_iseg</h2>
+<pre><code>data load_data_iseg(int n, char **paths, int m, int w, int h, int classes, int boxes, int div, int min, int max, float angle, float aspect, float hue, float saturation, float exposure)
+{
+    char **random_paths = get_random_paths(paths, n, m);
+    int i;
+    data d = {0};
+    d.shallow = 0;
+
+    d.X.rows = n;
+    d.X.vals = calloc(d.X.rows, sizeof(float*));
+    d.X.cols = h*w*3;
+
+    d.y = make_matrix(n, (((w/div)*(h/div))+1)*boxes);
+
+    for(i = 0; i &lt; n; ++i){
+        image orig = load_image_color(random_paths[i], 0, 0);
+        augment_args a = random_augment_args(orig, angle, aspect, min, max, w, h);
+        image sized = rotate_crop_image(orig, a.rad, a.scale, a.w, a.h, a.dx, a.dy, a.aspect);
+
+        int flip = rand()%2;
+        if(flip) flip_image(sized);
+        random_distort_image(sized, hue, saturation, exposure);
+        d.X.vals[i] = sized.data;
+        //show_image(sized, &quot;image&quot;);
+
+        fill_truth_iseg(random_paths[i], boxes, d.y.vals[i], classes, orig.w, orig.h, a, flip, w/div, h/div);
+
+        free_image(orig);
+
+        /*
+           image rgb = mask_to_rgb(sized_m, classes);
+           show_image(rgb, &quot;part&quot;);
+           show_image(sized, &quot;orig&quot;);
+           cvWaitKey(0);
+           free_image(rgb);
+         */
+    }
+    free(random_paths);
+    return d;
+}
+</code></pre><h2 id="loaddatamask">load_data_mask</h2>
+<pre><code>data load_data_mask(int n, char **paths, int m, int w, int h, int classes, int boxes, int coords, int min, int max, float angle, float aspect, float hue, float saturation, float exposure)
+{
+    char **random_paths = get_random_paths(paths, n, m);
+    int i;
+    data d = {0};
+    d.shallow = 0;
+
+    d.X.rows = n;
+    d.X.vals = calloc(d.X.rows, sizeof(float*));
+    d.X.cols = h*w*3;
+
+    d.y = make_matrix(n, (coords+1)*boxes);
+
+    for(i = 0; i &lt; n; ++i){
+        image orig = load_image_color(random_paths[i], 0, 0);
+        augment_args a = random_augment_args(orig, angle, aspect, min, max, w, h);
+        image sized = rotate_crop_image(orig, a.rad, a.scale, a.w, a.h, a.dx, a.dy, a.aspect);
+
+        int flip = rand()%2;
+        if(flip) flip_image(sized);
+        random_distort_image(sized, hue, saturation, exposure);
+        d.X.vals[i] = sized.data;
+        //show_image(sized, &quot;image&quot;);
+
+        fill_truth_mask(random_paths[i], boxes, d.y.vals[i], classes, orig.w, orig.h, a, flip, 14, 14);
+
+        free_image(orig);
+
+        /*
+           image rgb = mask_to_rgb(sized_m, classes);
+           show_image(rgb, &quot;part&quot;);
+           show_image(sized, &quot;orig&quot;);
+           cvWaitKey(0);
+           free_image(rgb);
+         */
+    }
+    free(random_paths);
+    return d;
+}
+</code></pre><h2 id="loaddataregion">load_data_region</h2>
+<pre><code>data load_data_region(int n, char **paths, int m, int w, int h, int size, int classes, float jitter, float hue, float saturation, float exposure)
+{
+    char **random_paths = get_random_paths(paths, n, m);
+    int i;
+    data d = {0};
+    d.shallow = 0;
+
+    d.X.rows = n;
+    d.X.vals = calloc(d.X.rows, sizeof(float*));
+    d.X.cols = h*w*3;
+
+
+    int k = size*size*(5+classes);
+    d.y = make_matrix(n, k);
+    for(i = 0; i &lt; n; ++i){
+        image orig = load_image_color(random_paths[i], 0, 0);
+
+        int oh = orig.h;
+        int ow = orig.w;
+
+        int dw = (ow*jitter);
+        int dh = (oh*jitter);
+
+        int pleft  = rand_uniform(-dw, dw);
+        int pright = rand_uniform(-dw, dw);
+        int ptop   = rand_uniform(-dh, dh);
+        int pbot   = rand_uniform(-dh, dh);
+
+        int swidth =  ow - pleft - pright;
+        int sheight = oh - ptop - pbot;
+
+        float sx = (float)swidth  / ow;
+        float sy = (float)sheight / oh;
+
+        int flip = rand()%2;
+        image cropped = crop_image(orig, pleft, ptop, swidth, sheight);
+
+        float dx = ((float)pleft/ow)/sx;
+        float dy = ((float)ptop /oh)/sy;
+
+        image sized = resize_image(cropped, w, h);
+        if(flip) flip_image(sized);
+        random_distort_image(sized, hue, saturation, exposure);
+        d.X.vals[i] = sized.data;
+
+        fill_truth_region(random_paths[i], d.y.vals[i], classes, size, flip, dx, dy, 1./sx, 1./sy);
+
+        free_image(orig);
+        free_image(cropped);
+    }
+    free(random_paths);
+    return d;
+}
+</code></pre><h2 id="loaddatacompare">load_data_compare</h2>
+<pre><code>data load_data_compare(int n, char **paths, int m, int classes, int w, int h)
+{
+    if(m) paths = get_random_paths(paths, 2*n, m);
+    int i,j;
+    data d = {0};
+    d.shallow = 0;
+
+    d.X.rows = n;
+    d.X.vals = calloc(d.X.rows, sizeof(float*));
+    d.X.cols = h*w*6;
+
+    int k = 2*(classes);
+    d.y = make_matrix(n, k);
+    for(i = 0; i &lt; n; ++i){
+        image im1 = load_image_color(paths[i*2],   w, h);
+        image im2 = load_image_color(paths[i*2+1], w, h);
+
+        d.X.vals[i] = calloc(d.X.cols, sizeof(float));
+        memcpy(d.X.vals[i],         im1.data, h*w*3*sizeof(float));
+        memcpy(d.X.vals[i] + h*w*3, im2.data, h*w*3*sizeof(float));
+
+        int id;
+        float iou;
+
+        char imlabel1[4096];
+        char imlabel2[4096];
+        find_replace(paths[i*2],   &quot;imgs&quot;, &quot;labels&quot;, imlabel1);
+        find_replace(imlabel1, &quot;jpg&quot;, &quot;txt&quot;, imlabel1);
+        FILE *fp1 = fopen(imlabel1, &quot;r&quot;);
+
+        while(fscanf(fp1, &quot;%d %f&quot;, &amp;id, &amp;iou) == 2){
+            if (d.y.vals[i][2*id] &lt; iou) d.y.vals[i][2*id] = iou;
+        }
+
+        find_replace(paths[i*2+1], &quot;imgs&quot;, &quot;labels&quot;, imlabel2);
+        find_replace(imlabel2, &quot;jpg&quot;, &quot;txt&quot;, imlabel2);
+        FILE *fp2 = fopen(imlabel2, &quot;r&quot;);
+
+        while(fscanf(fp2, &quot;%d %f&quot;, &amp;id, &amp;iou) == 2){
+            if (d.y.vals[i][2*id + 1] &lt; iou) d.y.vals[i][2*id + 1] = iou;
+        }
+
+        for (j = 0; j &lt; classes; ++j){
+            if (d.y.vals[i][2*j] &gt; .5 &amp;&amp;  d.y.vals[i][2*j+1] &lt; .5){
+                d.y.vals[i][2*j] = 1;
+                d.y.vals[i][2*j+1] = 0;
+            } else if (d.y.vals[i][2*j] &lt; .5 &amp;&amp;  d.y.vals[i][2*j+1] &gt; .5){
+                d.y.vals[i][2*j] = 0;
+                d.y.vals[i][2*j+1] = 1;
+            } else {
+                d.y.vals[i][2*j]   = SECRET_NUM;
+                d.y.vals[i][2*j+1] = SECRET_NUM;
+            }
+        }
+        fclose(fp1);
+        fclose(fp2);
+
+        free_image(im1);
+        free_image(im2);
+    }
+    if(m) free(paths);
+    return d;
+}
+</code></pre><h2 id="loaddataswag">load_data_swag</h2>
+<pre><code>data load_data_swag(char **paths, int n, int classes, float jitter)
+{
+    int index = rand()%n;
+    char *random_path = paths[index];
+
+    image orig = load_image_color(random_path, 0, 0);
+    int h = orig.h;
+    int w = orig.w;
+
+    data d = {0};
+    d.shallow = 0;
+    d.w = w;
+    d.h = h;
+
+    d.X.rows = 1;
+    d.X.vals = calloc(d.X.rows, sizeof(float*));
+    d.X.cols = h*w*3;
+
+    int k = (4+classes)*90;
+    d.y = make_matrix(1, k);
+
+    int dw = w*jitter;
+    int dh = h*jitter;
+
+    int pleft  = rand_uniform(-dw, dw);
+    int pright = rand_uniform(-dw, dw);
+    int ptop   = rand_uniform(-dh, dh);
+    int pbot   = rand_uniform(-dh, dh);
+
+    int swidth =  w - pleft - pright;
+    int sheight = h - ptop - pbot;
+
+    float sx = (float)swidth  / w;
+    float sy = (float)sheight / h;
+
+    int flip = rand()%2;
+    image cropped = crop_image(orig, pleft, ptop, swidth, sheight);
+
+    float dx = ((float)pleft/w)/sx;
+    float dy = ((float)ptop /h)/sy;
+
+    image sized = resize_image(cropped, w, h);
+    if(flip) flip_image(sized);
+    d.X.vals[0] = sized.data;
+
+    fill_truth_swag(random_path, d.y.vals[0], classes, flip, dx, dy, 1./sx, 1./sy);
+
+    free_image(orig);
+    free_image(cropped);
+
+    return d;
+}
+</code></pre><h2 id="loaddatadetection">load_data_detection</h2>
+<pre><code>data load_data_detection(int n, char **paths, int m, int w, int h, int boxes, int classes, float jitter, float hue, float saturation, float exposure)
+{
+    char **random_paths = get_random_paths(paths, n, m);
+    int i;
+    data d = {0};
+    d.shallow = 0;
+
+    d.X.rows = n;
+    d.X.vals = calloc(d.X.rows, sizeof(float*));
+    d.X.cols = h*w*3;
+
+    d.y = make_matrix(n, 5*boxes);
+    for(i = 0; i &lt; n; ++i){
+        image orig = load_image_color(random_paths[i], 0, 0);
+        image sized = make_image(w, h, orig.c);
+        fill_image(sized, .5);
+
+        float dw = jitter * orig.w;
+        float dh = jitter * orig.h;
+
+        float new_ar = (orig.w + rand_uniform(-dw, dw)) / (orig.h + rand_uniform(-dh, dh));
+        //float scale = rand_uniform(.25, 2);
+        float scale = 1;
+
+        float nw, nh;
+
+        if(new_ar &lt; 1){
+            nh = scale * h;
+            nw = nh * new_ar;
+        } else {
+            nw = scale * w;
+            nh = nw / new_ar;
+        }
+
+        float dx = rand_uniform(0, w - nw);
+        float dy = rand_uniform(0, h - nh);
+
+        place_image(orig, nw, nh, dx, dy, sized);
+
+        random_distort_image(sized, hue, saturation, exposure);
+
+        int flip = rand()%2;
+        if(flip) flip_image(sized);
+        d.X.vals[i] = sized.data;
+
+
+        fill_truth_detection(random_paths[i], boxes, d.y.vals[i], classes, flip, -dx/w, -dy/h, nw/w, nh/h);
+
+        free_image(orig);
+    }
+    free(random_paths);
+    return d;
+}
+</code></pre><h2 id="loadthread">load_thread</h2>
+<pre><code>void *load_thread(void *ptr)
+{
+    //printf(&quot;Loading data: %d\n&quot;, rand());
+    load_args a = *(struct load_args*)ptr;
+    if(a.exposure == 0) a.exposure = 1;
+    if(a.saturation == 0) a.saturation = 1;
+    if(a.aspect == 0) a.aspect = 1;
+
+    if (a.type == OLD_CLASSIFICATION_DATA){
+        *a.d = load_data_old(a.paths, a.n, a.m, a.labels, a.classes, a.w, a.h);
+    } else if (a.type == REGRESSION_DATA){
+        *a.d = load_data_regression(a.paths, a.n, a.m, a.classes, a.min, a.max, a.size, a.angle, a.aspect, a.hue, a.saturation, a.exposure);
+    } else if (a.type == CLASSIFICATION_DATA){
+        *a.d = load_data_augment(a.paths, a.n, a.m, a.labels, a.classes, a.hierarchy, a.min, a.max, a.size, a.angle, a.aspect, a.hue, a.saturation, a.exposure, a.center);
+    } else if (a.type == SUPER_DATA){
+        *a.d = load_data_super(a.paths, a.n, a.m, a.w, a.h, a.scale);
+    } else if (a.type == WRITING_DATA){
+        *a.d = load_data_writing(a.paths, a.n, a.m, a.w, a.h, a.out_w, a.out_h);
+    } else if (a.type == ISEG_DATA){
+        *a.d = load_data_iseg(a.n, a.paths, a.m, a.w, a.h, a.classes, a.num_boxes, a.scale, a.min, a.max, a.angle, a.aspect, a.hue, a.saturation, a.exposure);
+    } else if (a.type == INSTANCE_DATA){
+        *a.d = load_data_mask(a.n, a.paths, a.m, a.w, a.h, a.classes, a.num_boxes, a.coords, a.min, a.max, a.angle, a.aspect, a.hue, a.saturation, a.exposure);
+    } else if (a.type == SEGMENTATION_DATA){
+        *a.d = load_data_seg(a.n, a.paths, a.m, a.w, a.h, a.classes, a.min, a.max, a.angle, a.aspect, a.hue, a.saturation, a.exposure, a.scale);
+    } else if (a.type == REGION_DATA){
+        *a.d = load_data_region(a.n, a.paths, a.m, a.w, a.h, a.num_boxes, a.classes, a.jitter, a.hue, a.saturation, a.exposure);
+    } else if (a.type == DETECTION_DATA){
+        *a.d = load_data_detection(a.n, a.paths, a.m, a.w, a.h, a.num_boxes, a.classes, a.jitter, a.hue, a.saturation, a.exposure);
+    } else if (a.type == SWAG_DATA){
+        *a.d = load_data_swag(a.paths, a.n, a.classes, a.jitter);
+    } else if (a.type == COMPARE_DATA){
+        *a.d = load_data_compare(a.n, a.paths, a.m, a.classes, a.w, a.h);
+    } else if (a.type == IMAGE_DATA){
+        *(a.im) = load_image_color(a.path, 0, 0);
+        *(a.resized) = resize_image(*(a.im), a.w, a.h);
+    } else if (a.type == LETTERBOX_DATA){
+        *(a.im) = load_image_color(a.path, 0, 0);
+        *(a.resized) = letterbox_image(*(a.im), a.w, a.h);
+    } else if (a.type == TAG_DATA){
+        *a.d = load_data_tag(a.paths, a.n, a.m, a.classes, a.min, a.max, a.size, a.angle, a.aspect, a.hue, a.saturation, a.exposure);
+    }
+    free(ptr);
+    return 0;
+}
+</code></pre><h2 id="loaddatainthread">load_data_in_thread</h2>
+<pre><code>pthread_t load_data_in_thread(load_args args)
+{
+    pthread_t thread;
+    struct load_args *ptr = calloc(1, sizeof(struct load_args));
+    *ptr = args;
+    if(pthread_create(&amp;thread, 0, load_thread, ptr)) error(&quot;Thread creation failed&quot;);
+    return thread;
+}
+</code></pre><h2 id="loadthreads">load_threads</h2>
+<pre><code>void *load_threads(void *ptr)
+{
+    int i;
+    load_args args = *(load_args *)ptr;
+    if (args.threads == 0) args.threads = 1;
+    data *out = args.d;
+    int total = args.n;
+    free(ptr);
+    data *buffers = calloc(args.threads, sizeof(data));
+    pthread_t *threads = calloc(args.threads, sizeof(pthread_t));
+    for(i = 0; i &lt; args.threads; ++i){
+        args.d = buffers + i;
+        args.n = (i+1) * total/args.threads - i * total/args.threads;
+        threads[i] = load_data_in_thread(args);
+    }
+    for(i = 0; i &lt; args.threads; ++i){
+        pthread_join(threads[i], 0);
+    }
+    *out = concat_datas(buffers, args.threads);
+    out-&gt;shallow = 0;
+    for(i = 0; i &lt; args.threads; ++i){
+        buffers[i].shallow = 1;
+        free_data(buffers[i]);
+    }
+    free(buffers);
+    free(threads);
+    return 0;
+}
+</code></pre><h2 id="loaddatablocking">load_data_blocking</h2>
+<pre><code>void load_data_blocking(load_args args)
+{
+    struct load_args *ptr = calloc(1, sizeof(struct load_args));
+    *ptr = args;
+    load_thread(ptr);
+}
+</code></pre><h2 id="loaddata">load_data</h2>
+<pre><code>pthread_t load_data(load_args args)
+{
+    pthread_t thread;
+    struct load_args *ptr = calloc(1, sizeof(struct load_args));
+    *ptr = args;
+    if(pthread_create(&amp;thread, 0, load_threads, ptr)) error(&quot;Thread creation failed&quot;);
+    return thread;
+}
+</code></pre><h2 id="loaddatawriting">load_data_writing</h2>
+<pre><code>data load_data_writing(char **paths, int n, int m, int w, int h, int out_w, int out_h)
+{
+    if(m) paths = get_random_paths(paths, n, m);
+    char **replace_paths = find_replace_paths(paths, n, &quot;.png&quot;, &quot;-label.png&quot;);
+    data d = {0};
+    d.shallow = 0;
+    d.X = load_image_paths(paths, n, w, h);
+    d.y = load_image_paths_gray(replace_paths, n, out_w, out_h);
+    if(m) free(paths);
+    int i;
+    for(i = 0; i &lt; n; ++i) free(replace_paths[i]);
+    free(replace_paths);
+    return d;
+}
+</code></pre><h2 id="loaddataold">load_data_old</h2>
+<pre><code>data load_data_old(char **paths, int n, int m, char **labels, int k, int w, int h)
+{
+    if(m) paths = get_random_paths(paths, n, m);
+    data d = {0};
+    d.shallow = 0;
+    d.X = load_image_paths(paths, n, w, h);
+    d.y = load_labels_paths(paths, n, labels, k, 0);
+    if(m) free(paths);
+    return d;
+}
+</code></pre><h2 id="loaddatastudy">load_data_study</h2>
+<pre><code>/*
+   data load_data_study(char **paths, int n, int m, char **labels, int k, int min, int max, int size, float angle, float aspect, float hue, float saturation, float exposure)
+   {
+   data d = {0};
+   d.indexes = calloc(n, sizeof(int));
+   if(m) paths = get_random_paths_indexes(paths, n, m, d.indexes);
+   d.shallow = 0;
+   d.X = load_image_augment_paths(paths, n, min, max, size, angle, aspect, hue, saturation, exposure);
+   d.y = load_labels_paths(paths, n, labels, k);
+   if(m) free(paths);
+   return d;
+   }
+ */
+</code></pre><h2 id="loaddatasuper">load_data_super</h2>
+<pre><code>data load_data_super(char **paths, int n, int m, int w, int h, int scale)
+{
+    if(m) paths = get_random_paths(paths, n, m);
+    data d = {0};
+    d.shallow = 0;
+
+    int i;
+    d.X.rows = n;
+    d.X.vals = calloc(n, sizeof(float*));
+    d.X.cols = w*h*3;
+
+    d.y.rows = n;
+    d.y.vals = calloc(n, sizeof(float*));
+    d.y.cols = w*scale * h*scale * 3;
+
+    for(i = 0; i &lt; n; ++i){
+        image im = load_image_color(paths[i], 0, 0);
+        image crop = random_crop_image(im, w*scale, h*scale);
+        int flip = rand()%2;
+        if (flip) flip_image(crop);
+        image resize = resize_image(crop, w, h);
+        d.X.vals[i] = resize.data;
+        d.y.vals[i] = crop.data;
+        free_image(im);
+    }
+
+    if(m) free(paths);
+    return d;
+}
+</code></pre><h2 id="loaddataregression">load_data_regression</h2>
+<pre><code>data load_data_regression(char **paths, int n, int m, int k, int min, int max, int size, float angle, float aspect, float hue, float saturation, float exposure)
+{
+    if(m) paths = get_random_paths(paths, n, m);
+    data d = {0};
+    d.shallow = 0;
+    d.X = load_image_augment_paths(paths, n, min, max, size, angle, aspect, hue, saturation, exposure, 0);
+    d.y = load_regression_labels_paths(paths, n, k);
+    if(m) free(paths);
+    return d;
+}
+</code></pre><h2 id="selectdata">select_data</h2>
+<pre><code>data select_data(data *orig, int *inds)
+{
+    data d = {0};
+    d.shallow = 1;
+    d.w = orig[0].w;
+    d.h = orig[0].h;
+
+    d.X.rows = orig[0].X.rows;
+    d.y.rows = orig[0].X.rows;
+
+    d.X.cols = orig[0].X.cols;
+    d.y.cols = orig[0].y.cols;
+
+    d.X.vals = calloc(orig[0].X.rows, sizeof(float *));
+    d.y.vals = calloc(orig[0].y.rows, sizeof(float *));
+    int i;
+    for(i = 0; i &lt; d.X.rows; ++i){
+        d.X.vals[i] = orig[inds[i]].X.vals[i];
+        d.y.vals[i] = orig[inds[i]].y.vals[i];
+    }
+    return d;
+}
+</code></pre><h2 id="tiledata">tile_data</h2>
+<pre><code>data *tile_data(data orig, int divs, int size)
+{
+    data *ds = calloc(divs*divs, sizeof(data));
+    int i, j;
+#pragma omp parallel for
+    for(i = 0; i &lt; divs*divs; ++i){
+        data d;
+        d.shallow = 0;
+        d.w = orig.w/divs * size;
+        d.h = orig.h/divs * size;
+        d.X.rows = orig.X.rows;
+        d.X.cols = d.w*d.h*3;
+        d.X.vals = calloc(d.X.rows, sizeof(float*));
+
+        d.y = copy_matrix(orig.y);
+#pragma omp parallel for
+        for(j = 0; j &lt; orig.X.rows; ++j){
+            int x = (i%divs) * orig.w / divs - (d.w - orig.w/divs)/2;
+            int y = (i/divs) * orig.h / divs - (d.h - orig.h/divs)/2;
+            image im = float_to_image(orig.w, orig.h, 3, orig.X.vals[j]);
+            d.X.vals[j] = crop_image(im, x, y, d.w, d.h).data;
+        }
+        ds[i] = d;
+    }
+    return ds;
+}
+</code></pre><h2 id="resizedata">resize_data</h2>
+<pre><code>data resize_data(data orig, int w, int h)
+{
+    data d = {0};
+    d.shallow = 0;
+    d.w = w;
+    d.h = h;
+    int i;
+    d.X.rows = orig.X.rows;
+    d.X.cols = w*h*3;
+    d.X.vals = calloc(d.X.rows, sizeof(float*));
+
+    d.y = copy_matrix(orig.y);
+#pragma omp parallel for
+    for(i = 0; i &lt; orig.X.rows; ++i){
+        image im = float_to_image(orig.w, orig.h, 3, orig.X.vals[i]);
+        d.X.vals[i] = resize_image(im, w, h).data;
+    }
+    return d;
+}
+</code></pre><h2 id="loaddataaugment">load_data_augment</h2>
+<pre><code>data load_data_augment(char **paths, int n, int m, char **labels, int k, tree *hierarchy, int min, int max, int size, float angle, float aspect, float hue, float saturation, float exposure, int center)
+{
+    if(m) paths = get_random_paths(paths, n, m);
+    data d = {0};
+    d.shallow = 0;
+    d.w=size;
+    d.h=size;
+    d.X = load_image_augment_paths(paths, n, min, max, size, angle, aspect, hue, saturation, exposure, center);
+    d.y = load_labels_paths(paths, n, labels, k, hierarchy);
+    if(m) free(paths);
+    return d;
+}
+</code></pre><h2 id="loaddatatag">load_data_tag</h2>
+<pre><code>data load_data_tag(char **paths, int n, int m, int k, int min, int max, int size, float angle, float aspect, float hue, float saturation, float exposure)
+{
+    if(m) paths = get_random_paths(paths, n, m);
+    data d = {0};
+    d.w = size;
+    d.h = size;
+    d.shallow = 0;
+    d.X = load_image_augment_paths(paths, n, min, max, size, angle, aspect, hue, saturation, exposure, 0);
+    d.y = load_tags_paths(paths, n, k);
+    if(m) free(paths);
+    return d;
+}
+</code></pre><h2 id="concatmatrix">concat_matrix</h2>
+<pre><code>matrix concat_matrix(matrix m1, matrix m2)
+{
+    int i, count = 0;
+    matrix m;
+    m.cols = m1.cols;
+    m.rows = m1.rows+m2.rows;
+    m.vals = calloc(m1.rows + m2.rows, sizeof(float*));
+    for(i = 0; i &lt; m1.rows; ++i){
+        m.vals[count++] = m1.vals[i];
+    }
+    for(i = 0; i &lt; m2.rows; ++i){
+        m.vals[count++] = m2.vals[i];
+    }
+    return m;
+}
+</code></pre><h2 id="concatdata">concat_data</h2>
+<pre><code>data concat_data(data d1, data d2)
+{
+    data d = {0};
+    d.shallow = 1;
+    d.X = concat_matrix(d1.X, d2.X);
+    d.y = concat_matrix(d1.y, d2.y);
+    d.w = d1.w;
+    d.h = d1.h;
+    return d;
+}
+</code></pre><h2 id="concatdatas">concat_datas</h2>
+<pre><code>data concat_datas(data *d, int n)
+{
+    int i;
+    data out = {0};
+    for(i = 0; i &lt; n; ++i){
+        data new = concat_data(d[i], out);
+        free_data(out);
+        out = new;
+    }
+    return out;
+}
+</code></pre><h2 id="loadcategoricaldatacsv">load_categorical_data_csv</h2>
+<pre><code>data load_categorical_data_csv(char *filename, int target, int k)
+{
+    data d = {0};
+    d.shallow = 0;
+    matrix X = csv_to_matrix(filename);
+    float *truth_1d = pop_column(&amp;X, target);
+    float **truth = one_hot_encode(truth_1d, X.rows, k);
+    matrix y;
+    y.rows = X.rows;
+    y.cols = k;
+    y.vals = truth;
+    d.X = X;
+    d.y = y;
+    free(truth_1d);
+    return d;
+}
+</code></pre><h2 id="loadcifar10data">load_cifar10_data</h2>
+<pre><code>data load_cifar10_data(char *filename)
+{
+    data d = {0};
+    d.shallow = 0;
+    long i,j;
+    matrix X = make_matrix(10000, 3072);
+    matrix y = make_matrix(10000, 10);
+    d.X = X;
+    d.y = y;
+
+    FILE *fp = fopen(filename, &quot;rb&quot;);
+    if(!fp) file_error(filename);
+    for(i = 0; i &lt; 10000; ++i){
+        unsigned char bytes[3073];
+        fread(bytes, 1, 3073, fp);
+        int class = bytes[0];
+        y.vals[i][class] = 1;
+        for(j = 0; j &lt; X.cols; ++j){
+            X.vals[i][j] = (double)bytes[j+1];
+        }
+    }
+    scale_data_rows(d, 1./255);
+    //normalize_data_rows(d);
+    fclose(fp);
+    return d;
+}
+</code></pre><h2 id="getrandombatch">get_random_batch</h2>
+<pre><code>void get_random_batch(data d, int n, float *X, float *y)
+{
+    int j;
+    for(j = 0; j &lt; n; ++j){
+        int index = rand()%d.X.rows;
+        memcpy(X+j*d.X.cols, d.X.vals[index], d.X.cols*sizeof(float));
+        memcpy(y+j*d.y.cols, d.y.vals[index], d.y.cols*sizeof(float));
+    }
+}
+</code></pre><h2 id="getnextbatch">get_next_batch</h2>
+<pre><code>void get_next_batch(data d, int n, int offset, float *X, float *y)
+{
+    int j;
+    for(j = 0; j &lt; n; ++j){
+        int index = offset + j;
+        memcpy(X+j*d.X.cols, d.X.vals[index], d.X.cols*sizeof(float));
+        if(y) memcpy(y+j*d.y.cols, d.y.vals[index], d.y.cols*sizeof(float));
+    }
+}
+</code></pre><h2 id="smoothdata">smooth_data</h2>
+<pre><code>void smooth_data(data d)
+{
+    int i, j;
+    float scale = 1. / d.y.cols;
+    float eps = .1;
+    for(i = 0; i &lt; d.y.rows; ++i){
+        for(j = 0; j &lt; d.y.cols; ++j){
+            d.y.vals[i][j] = eps * scale + (1-eps) * d.y.vals[i][j];
+        }
+    }
+}
+</code></pre><h2 id="loadallcifar10">load_all_cifar10</h2>
+<pre><code>data load_all_cifar10()
+{
+    data d = {0};
+    d.shallow = 0;
+    int i,j,b;
+    matrix X = make_matrix(50000, 3072);
+    matrix y = make_matrix(50000, 10);
+    d.X = X;
+    d.y = y;
+
+
+    for(b = 0; b &lt; 5; ++b){
+        char buff[256];
+        sprintf(buff, &quot;data/cifar/cifar-10-batches-bin/data_batch_%d.bin&quot;, b+1);
+        FILE *fp = fopen(buff, &quot;rb&quot;);
+        if(!fp) file_error(buff);
+        for(i = 0; i &lt; 10000; ++i){
+            unsigned char bytes[3073];
+            fread(bytes, 1, 3073, fp);
+            int class = bytes[0];
+            y.vals[i+b*10000][class] = 1;
+            for(j = 0; j &lt; X.cols; ++j){
+                X.vals[i+b*10000][j] = (double)bytes[j+1];
+            }
+        }
+        fclose(fp);
+    }
+    //normalize_data_rows(d);
+    scale_data_rows(d, 1./255);
+    smooth_data(d);
+    return d;
+}
+</code></pre><h2 id="loadgo">load_go</h2>
+<pre><code>data load_go(char *filename)
+{
+    FILE *fp = fopen(filename, &quot;rb&quot;);
+    matrix X = make_matrix(3363059, 361);
+    matrix y = make_matrix(3363059, 361);
+    int row, col;
+
+    if(!fp) file_error(filename);
+    char *label;
+    int count = 0;
+    while((label = fgetl(fp))){
+        int i;
+        if(count == X.rows){
+            X = resize_matrix(X, count*2);
+            y = resize_matrix(y, count*2);
+        }
+        sscanf(label, &quot;%d %d&quot;, &amp;row, &amp;col);
+        char *board = fgetl(fp);
+
+        int index = row*19 + col;
+        y.vals[count][index] = 1;
+
+        for(i = 0; i &lt; 19*19; ++i){
+            float val = 0;
+            if(board[i] == &apos;1&apos;) val = 1;
+            else if(board[i] == &apos;2&apos;) val = -1;
+            X.vals[count][i] = val;
+        }
+        ++count;
+        free(label);
+        free(board);
+    }
+    X = resize_matrix(X, count);
+    y = resize_matrix(y, count);
+
+    data d = {0};
+    d.shallow = 0;
+    d.X = X;
+    d.y = y;
+
+
+    fclose(fp);
+
+    return d;
+}
+</code></pre><h2 id="randomizedata">randomize_data</h2>
+<pre><code>
+void randomize_data(data d)
+{
+    int i;
+    for(i = d.X.rows-1; i &gt; 0; --i){
+        int index = rand()%i;
+        float *swap = d.X.vals[index];
+        d.X.vals[index] = d.X.vals[i];
+        d.X.vals[i] = swap;
+
+        swap = d.y.vals[index];
+        d.y.vals[index] = d.y.vals[i];
+        d.y.vals[i] = swap;
+    }
+}
+</code></pre><h2 id="scaledatarows">scale_data_rows</h2>
+<pre><code>void scale_data_rows(data d, float s)
+{
+    int i;
+    for(i = 0; i &lt; d.X.rows; ++i){
+        scale_array(d.X.vals[i], d.X.cols, s);
+    }
+}
+</code></pre><h2 id="translatedatarows">translate_data_rows</h2>
+<pre><code>void translate_data_rows(data d, float s)
+{
+    int i;
+    for(i = 0; i &lt; d.X.rows; ++i){
+        translate_array(d.X.vals[i], d.X.cols, s);
+    }
+}
+</code></pre><h2 id="copydata">copy_data</h2>
+<pre><code>data copy_data(data d)
+{
+    data c = {0};
+    c.w = d.w;
+    c.h = d.h;
+    c.shallow = 0;
+    c.num_boxes = d.num_boxes;
+    c.boxes = d.boxes;
+    c.X = copy_matrix(d.X);
+    c.y = copy_matrix(d.y);
+    return c;
+}
+</code></pre><h2 id="normalizedatarows">normalize_data_rows</h2>
+<pre><code>void normalize_data_rows(data d)
+{
+    int i;
+    for(i = 0; i &lt; d.X.rows; ++i){
+        normalize_array(d.X.vals[i], d.X.cols);
+    }
+}
+</code></pre><h2 id="getdatapart">get_data_part</h2>
+<pre><code>data get_data_part(data d, int part, int total)
+{
+    data p = {0};
+    p.shallow = 1;
+    p.X.rows = d.X.rows * (part + 1) / total - d.X.rows * part / total;
+    p.y.rows = d.y.rows * (part + 1) / total - d.y.rows * part / total;
+    p.X.cols = d.X.cols;
+    p.y.cols = d.y.cols;
+    p.X.vals = d.X.vals + d.X.rows * part / total;
+    p.y.vals = d.y.vals + d.y.rows * part / total;
+    return p;
+}
+</code></pre><h2 id="getrandomdata">get_random_data</h2>
+<pre><code>data get_random_data(data d, int num)
+{
+    data r = {0};
+    r.shallow = 1;
+
+    r.X.rows = num;
+    r.y.rows = num;
+
+    r.X.cols = d.X.cols;
+    r.y.cols = d.y.cols;
+
+    r.X.vals = calloc(num, sizeof(float *));
+    r.y.vals = calloc(num, sizeof(float *));
+
+    int i;
+    for(i = 0; i &lt; num; ++i){
+        int index = rand()%d.X.rows;
+        r.X.vals[i] = d.X.vals[index];
+        r.y.vals[i] = d.y.vals[index];
+    }
+    return r;
+}
+</code></pre><h2 id="splitdata">split_data</h2>
+<pre><code>data *split_data(data d, int part, int total)
+{
+    data *split = calloc(2, sizeof(data));
+    int i;
+    int start = part*d.X.rows/total;
+    int end = (part+1)*d.X.rows/total;
+    data train;
+    data test;
+    train.shallow = test.shallow = 1;
+
+    test.X.rows = test.y.rows = end-start;
+    train.X.rows = train.y.rows = d.X.rows - (end-start);
+    train.X.cols = test.X.cols = d.X.cols;
+    train.y.cols = test.y.cols = d.y.cols;
+
+    train.X.vals = calloc(train.X.rows, sizeof(float*));
+    test.X.vals = calloc(test.X.rows, sizeof(float*));
+    train.y.vals = calloc(train.y.rows, sizeof(float*));
+    test.y.vals = calloc(test.y.rows, sizeof(float*));
+
+    for(i = 0; i &lt; start; ++i){
+        train.X.vals[i] = d.X.vals[i];
+        train.y.vals[i] = d.y.vals[i];
+    }
+    for(i = start; i &lt; end; ++i){
+        test.X.vals[i-start] = d.X.vals[i];
+        test.y.vals[i-start] = d.y.vals[i];
+    }
+    for(i = end; i &lt; d.X.rows; ++i){
+        train.X.vals[i-(end-start)] = d.X.vals[i];
+        train.y.vals[i-(end-start)] = d.y.vals[i];
+    }
+    split[0] = train;
+    split[1] = test;
+    return split;
+}
+</code></pre>
+                                
+                                </section>
+                            
+    </div>
+    <div class="search-results">
+        <div class="has-results">
+            
+            <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+            <ul class="search-results-list"></ul>
+            
+        </div>
+        <div class="no-results">
+            
+            <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+            
+        </div>
+    </div>
+</div>
+
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="crop_layer.html" class="navigation navigation-prev " aria-label="Previous page: crop_layer.c">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="deconvolutional_layer.html" class="navigation navigation-next " aria-label="Next page: deconvolutional_layer.c">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"data.c","level":"5.14","depth":1,"next":{"title":"deconvolutional_layer.c","level":"5.15","depth":1,"path":"part3_src/deconvolutional_layer.md","ref":"part3_src/deconvolutional_layer.md","articles":[]},"previous":{"title":"crop_layer.c","level":"5.13","depth":1,"path":"part3_src/crop_layer.md","ref":"part3_src/crop_layer.md","articles":[]},"dir":"ltr"},"config":{"plugins":["advanced-emoji","theme-gestalt","-theme-default","styles-sass-fix","theme-api","mathjax"],"root":"./","styles":{"website":"website-1596049586635.css"},"pluginsConfig":{"styles-sass-fix":{},"theme-gestalt":{"showLevel":false,"styles":{"website":"styles/website.css"},"logo":"/darknet_book/assets/darknet.png","baseUrl":null,"excludeDefaultStyles":true,"doNotHideChildrenChapters":false},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"theme-api":{"languages":[],"split":true,"theme":"light"},"mathjax":{"forceSVG":false,"version":"2.6-latest"},"advanced-emoji":{"embedEmojis":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]}},"theme":"default","author":"JJM","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"DarkNet Book","output.name":"site","gitbook":"*"},"file":{"path":"part3_src/data.md","mtime":"2020-07-29T18:27:11.628Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-07-29T19:06:03.401Z"},"basePath":"..","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <script src="../gitbook/gitbook.js"></script>
+    <script src="../gitbook/theme.js"></script>
+    
+        
+        <script src="https://cdn.mathjax.org/mathjax/2.6-latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-mathjax/plugin.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-search/search-engine.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-search/search.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lunr/lunr.min.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lunr/search-lunr.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-sharing/buttons.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-fontsettings/fontsettings.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-theme-api/theme-api.js"></script>
+        
+    
+
+    </body>
+</html>
+

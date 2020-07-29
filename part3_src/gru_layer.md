@@ -17,7 +17,7 @@ LSTM과 유사하지만 2개의 gate로 이루어져 있고 더 간단한 구조
 
 ## increment_layer
 
-```
+```c
 static void increment_layer(layer *l, int steps)
 {
     int num = l->outputs*l->batch*steps;
@@ -119,7 +119,7 @@ void forward_gru_layer(layer l, network net)
 
 ## backward_gru_layer
 
-```
+```c
 void backward_gru_layer(layer l, network net)
 {
 }
@@ -129,7 +129,7 @@ void backward_gru_layer(layer l, network net)
 
 ## update_gru_layer
 
-```
+```c
 void update_gru_layer(layer l, update_args a)
 {
     update_connected_layer(*(l.ur), a);
