@@ -100,7 +100,7 @@ void backward_connected_layer(layer l, network net)
 
 ## update_connected_layer
 
-```
+```c
 void update_connected_layer(layer l, update_args a)
 {
     float learning_rate = a.learning_rate*l.learning_rate_scale;
@@ -120,6 +120,8 @@ void update_connected_layer(layer l, update_args a)
     scal_cpu(l.inputs*l.outputs, momentum, l.weight_updates, 1);
 }
 ```
+
+- connected layer의 학습 파라미터를 업데이트 하는 함수입니다.
 
 ## make_connected_layer
 

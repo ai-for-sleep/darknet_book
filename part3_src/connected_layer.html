@@ -42,7 +42,7 @@
 
     
         
-        <link rel="stylesheet" href="../website-1596049586635.css">
+        <link rel="stylesheet" href="../website-1596554398914.css">
         
     
 
@@ -2014,25 +2014,29 @@
 <li>fully connected layer &#xC5F0;&#xC0B0;</li>
 </ul>
 <h2 id="updateconnectedlayer">update_connected_layer</h2>
-<pre><code>void update_connected_layer(layer l, update_args a)
-{
-    float learning_rate = a.learning_rate*l.learning_rate_scale;
-    float momentum = a.momentum;
-    float decay = a.decay;
-    int batch = a.batch;
-    axpy_cpu(l.outputs, learning_rate/batch, l.bias_updates, 1, l.biases, 1);
-    scal_cpu(l.outputs, momentum, l.bias_updates, 1);
+<pre><code class="lang-c"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">update_connected_layer</span><span class="hljs-params">(layer l, update_args a)</span>
+</span>{
+    <span class="hljs-keyword">float</span> learning_rate = a.learning_rate*l.learning_rate_scale;
+    <span class="hljs-keyword">float</span> momentum = a.momentum;
+    <span class="hljs-keyword">float</span> decay = a.decay;
+    <span class="hljs-keyword">int</span> batch = a.batch;
+    axpy_cpu(l.outputs, learning_rate/batch, l.bias_updates, <span class="hljs-number">1</span>, l.biases, <span class="hljs-number">1</span>);
+    scal_cpu(l.outputs, momentum, l.bias_updates, <span class="hljs-number">1</span>);
 
-    if(l.batch_normalize){
-        axpy_cpu(l.outputs, learning_rate/batch, l.scale_updates, 1, l.scales, 1);
-        scal_cpu(l.outputs, momentum, l.scale_updates, 1);
+    <span class="hljs-keyword">if</span>(l.batch_normalize){
+        axpy_cpu(l.outputs, learning_rate/batch, l.scale_updates, <span class="hljs-number">1</span>, l.scales, <span class="hljs-number">1</span>);
+        scal_cpu(l.outputs, momentum, l.scale_updates, <span class="hljs-number">1</span>);
     }
 
-    axpy_cpu(l.inputs*l.outputs, -decay*batch, l.weights, 1, l.weight_updates, 1);
-    axpy_cpu(l.inputs*l.outputs, learning_rate/batch, l.weight_updates, 1, l.weights, 1);
-    scal_cpu(l.inputs*l.outputs, momentum, l.weight_updates, 1);
+    axpy_cpu(l.inputs*l.outputs, -decay*batch, l.weights, <span class="hljs-number">1</span>, l.weight_updates, <span class="hljs-number">1</span>);
+    axpy_cpu(l.inputs*l.outputs, learning_rate/batch, l.weight_updates, <span class="hljs-number">1</span>, l.weights, <span class="hljs-number">1</span>);
+    scal_cpu(l.inputs*l.outputs, momentum, l.weight_updates, <span class="hljs-number">1</span>);
 }
-</code></pre><h2 id="makeconnectedlayer">make_connected_layer</h2>
+</code></pre>
+<ul>
+<li>connected layer&#xC758; &#xD559;&#xC2B5; &#xD30C;&#xB77C;&#xBBF8;&#xD130;&#xB97C; &#xC5C5;&#xB370;&#xC774;&#xD2B8; &#xD558;&#xB294; &#xD568;&#xC218;&#xC785;&#xB2C8;&#xB2E4;.</li>
+</ul>
+<h2 id="makeconnectedlayer">make_connected_layer</h2>
 <pre><code class="lang-c"><span class="hljs-function">layer <span class="hljs-title">make_connected_layer</span><span class="hljs-params">(<span class="hljs-keyword">int</span> batch, <span class="hljs-keyword">int</span> inputs, <span class="hljs-keyword">int</span> outputs, ACTIVATION activation, <span class="hljs-keyword">int</span> batch_normalize, <span class="hljs-keyword">int</span> adam)</span>
 </span>{
     <span class="hljs-keyword">int</span> i;
@@ -2152,7 +2156,7 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"connected_layer.c","level":"5.9","depth":1,"next":{"title":"convolutional_layer.c","level":"5.10","depth":1,"path":"part3_src/convolutional_layer.md","ref":"part3_src/convolutional_layer.md","articles":[]},"previous":{"title":"compare.c","level":"5.8","depth":1,"path":"part3_src/compare.md","ref":"part3_src/compare.md","articles":[]},"dir":"ltr"},"config":{"plugins":["advanced-emoji","theme-gestalt","-theme-default","styles-sass-fix","theme-api","mathjax"],"root":"./","styles":{"website":"website-1596049586635.css"},"pluginsConfig":{"styles-sass-fix":{},"theme-gestalt":{"showLevel":false,"styles":{"website":"styles/website.css"},"logo":"/darknet_book/assets/darknet.png","baseUrl":null,"excludeDefaultStyles":true,"doNotHideChildrenChapters":false},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"theme-api":{"languages":[],"split":true,"theme":"light"},"mathjax":{"forceSVG":false,"version":"2.6-latest"},"advanced-emoji":{"embedEmojis":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]}},"theme":"default","author":"JJM","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"DarkNet Book","output.name":"site","gitbook":"*"},"file":{"path":"part3_src/connected_layer.md","mtime":"2020-07-29T06:17:15.939Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-07-29T19:06:03.401Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"connected_layer.c","level":"5.9","depth":1,"next":{"title":"convolutional_layer.c","level":"5.10","depth":1,"path":"part3_src/convolutional_layer.md","ref":"part3_src/convolutional_layer.md","articles":[]},"previous":{"title":"compare.c","level":"5.8","depth":1,"path":"part3_src/compare.md","ref":"part3_src/compare.md","articles":[]},"dir":"ltr"},"config":{"plugins":["advanced-emoji","theme-gestalt","-theme-default","styles-sass-fix","theme-api","mathjax"],"root":"./","styles":{"website":"website-1596554398914.css"},"pluginsConfig":{"styles-sass-fix":{},"theme-gestalt":{"showLevel":false,"styles":{"website":"styles/website.css"},"logo":"/darknet_book/assets/darknet.png","baseUrl":null,"excludeDefaultStyles":true,"doNotHideChildrenChapters":false},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"theme-api":{"languages":[],"split":true,"theme":"light"},"mathjax":{"forceSVG":false,"version":"2.6-latest"},"advanced-emoji":{"embedEmojis":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]}},"theme":"default","author":"JJM","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"DarkNet Book","output.name":"site","gitbook":"*"},"file":{"path":"part3_src/connected_layer.md","mtime":"2020-08-04T06:27:13.741Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-08-04T15:19:37.284Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>

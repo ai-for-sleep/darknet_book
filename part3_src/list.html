@@ -42,7 +42,7 @@
 
     
         
-        <link rel="stylesheet" href="../website-1596049586635.css">
+        <link rel="stylesheet" href="../website-1596554398914.css">
         
     
 
@@ -1939,50 +1939,120 @@
     
                                 <section class="normal markdown-section">
                                 
-                                <h1 id="list&#xB780;">list&#xB780;?</h1>
-<hr>
-<h1 id="listc">list.c</h1>
-<pre><code>// darknet.h
+                                <h1 id="listc">list.c</h1>
+<pre><code class="lang-c"><span class="hljs-comment">// darknet.h</span>
 
-typedef struct list{
-    int size;
+<span class="hljs-keyword">typedef</span> <span class="hljs-keyword">struct</span> <span class="hljs-built_in">list</span>{
+    <span class="hljs-keyword">int</span> size;
     node *front;
     node *back;
-} list;
-</code></pre><ul>
+} <span class="hljs-built_in">list</span>;
+</code></pre>
+<ul>
 <li>list &#xAD6C;&#xC870;&#xCCB4;&#xC785;&#xB2C8;&#xB2E4;.</li>
 </ul>
 <h2 id="makelist">make_list</h2>
-<pre><code>list *make_list()
-{
-    list *l = malloc(sizeof(list));
-    l-&gt;size = 0;
-    l-&gt;front = 0;
-    l-&gt;back = 0;
-    return l;
+<pre><code class="lang-c"><span class="hljs-function"><span class="hljs-built_in">list</span> *<span class="hljs-title">make_list</span><span class="hljs-params">()</span>
+</span>{
+    <span class="hljs-built_in">list</span> *l = <span class="hljs-built_in">malloc</span>(<span class="hljs-keyword">sizeof</span>(<span class="hljs-built_in">list</span>));
+    l-&gt;size = <span class="hljs-number">0</span>;
+    l-&gt;front = <span class="hljs-number">0</span>;
+    l-&gt;back = <span class="hljs-number">0</span>;
+    <span class="hljs-keyword">return</span> l;
 }
-</code></pre><ul>
+</code></pre>
+<ul>
 <li>list&#xB97C; &#xB3D9;&#xC801;&#xD560;&#xB2F9;&#xD558;&#xACE0; &#xAC12;&#xC744; 0&#xC73C;&#xB85C; &#xCD08;&#xAE30;&#xD654; &#xD569;&#xB2C8;&#xB2E4;.</li>
 </ul>
-<h2 id="listinsert">list_insert</h2>
-<pre><code>void list_insert(list *l, void *val)
-{
-    node *new = malloc(sizeof(node));
-    new-&gt;val = val;
-    new-&gt;next = 0;
+<h2 id="listpop">list_pop</h2>
+<pre><code class="lang-c"><span class="hljs-function"><span class="hljs-keyword">void</span> *<span class="hljs-title">list_pop</span><span class="hljs-params">(<span class="hljs-built_in">list</span> *l)</span></span>{
+    <span class="hljs-keyword">if</span>(!l-&gt;back) <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+    node *b = l-&gt;back;
+    <span class="hljs-keyword">void</span> *val = b-&gt;val;
+    l-&gt;back = b-&gt;prev;
+    <span class="hljs-keyword">if</span>(l-&gt;back) l-&gt;back-&gt;next = <span class="hljs-number">0</span>;
+    <span class="hljs-built_in">free</span>(b);
+    --l-&gt;size;
 
-    if(!l-&gt;back){
-        l-&gt;front = new;
-        new-&gt;prev = 0;
-    }else{
-        l-&gt;back-&gt;next = new;
-        new-&gt;prev = l-&gt;back;
+    <span class="hljs-keyword">return</span> val;
+}
+</code></pre>
+<ul>
+<li>list&#xC758; &#xB9E8; &#xB4A4;&#xC5D0; node&#xC758; &#xAC12;&#xC744; &#xBC18;&#xD658; &#xD6C4; &#xC81C;&#xAC70;&#xD569;&#xB2C8;&#xB2E4;.</li>
+</ul>
+<h2 id="listinsert">list_insert</h2>
+<pre><code class="lang-c"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">list_insert</span><span class="hljs-params">(<span class="hljs-built_in">list</span> *l, <span class="hljs-keyword">void</span> *val)</span>
+</span>{
+    node *<span class="hljs-keyword">new</span> = <span class="hljs-built_in">malloc</span>(<span class="hljs-keyword">sizeof</span>(node));
+    <span class="hljs-keyword">new</span>-&gt;val = val;
+    <span class="hljs-keyword">new</span>-&gt;next = <span class="hljs-number">0</span>;
+
+    <span class="hljs-keyword">if</span>(!l-&gt;back){
+        l-&gt;front = <span class="hljs-keyword">new</span>;
+        <span class="hljs-keyword">new</span>-&gt;prev = <span class="hljs-number">0</span>;
+    }<span class="hljs-keyword">else</span>{
+        l-&gt;back-&gt;next = <span class="hljs-keyword">new</span>;
+        <span class="hljs-keyword">new</span>-&gt;prev = l-&gt;back;
     }
-    l-&gt;back = new;
+    l-&gt;back = <span class="hljs-keyword">new</span>;
     ++l-&gt;size;
 }
-</code></pre><ul>
+</code></pre>
+<ul>
 <li>list&#xC5D0; val&#xC744; &#xAC00;&#xC9C0;&#xB294; node&#xB97C; &#xC785;&#xB825;&#xD569;&#xB2C8;&#xB2E4;.</li>
+</ul>
+<h2 id="freenode">free_node</h2>
+<pre><code class="lang-c"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">free_node</span><span class="hljs-params">(node *n)</span>
+</span>{
+    node *next;
+    <span class="hljs-keyword">while</span>(n) {
+        next = n-&gt;next;
+        <span class="hljs-built_in">free</span>(n);
+        n = next;
+    }
+}
+</code></pre>
+<ul>
+<li>node&#xC758; &#xBA54;&#xBAA8;&#xB9AC; &#xD560;&#xB2F9;&#xC744; &#xD574;&#xC81C;&#xD569;&#xB2C8;&#xB2E4;.</li>
+</ul>
+<h2 id="freelist">free_list</h2>
+<pre><code class="lang-c"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">free_list</span><span class="hljs-params">(<span class="hljs-built_in">list</span> *l)</span>
+</span>{
+    free_node(l-&gt;front);
+    <span class="hljs-built_in">free</span>(l);
+}
+</code></pre>
+<ul>
+<li>list&#xC758; &#xBA54;&#xBAA8;&#xB9AC; &#xD560;&#xB2F9;&#xC744; &#xD574;&#xC81C;&#xD569;&#xB2C8;&#xB2E4;.</li>
+</ul>
+<h2 id="freelistcontents">free_list_contents</h2>
+<pre><code class="lang-c"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">free_list_contents</span><span class="hljs-params">(<span class="hljs-built_in">list</span> *l)</span>
+</span>{
+    node *n = l-&gt;front;
+    <span class="hljs-keyword">while</span>(n){
+        <span class="hljs-built_in">free</span>(n-&gt;val);
+        n = n-&gt;next;
+    }
+}
+</code></pre>
+<ul>
+<li>list&#xB0B4;&#xC5D0; val&#xC758; &#xBA54;&#xBAA8;&#xB9AC; &#xD560;&#xB2F9;&#xC744; &#xD574;&#xC81C;&#xD569;&#xB2C8;&#xB2E4;.</li>
+</ul>
+<h2 id="listtoarray">list_to_array</h2>
+<pre><code class="lang-c"><span class="hljs-function"><span class="hljs-keyword">void</span> **<span class="hljs-title">list_to_array</span><span class="hljs-params">(<span class="hljs-built_in">list</span> *l)</span>
+</span>{
+    <span class="hljs-keyword">void</span> **a = <span class="hljs-built_in">calloc</span>(l-&gt;size, <span class="hljs-keyword">sizeof</span>(<span class="hljs-keyword">void</span>*));
+    <span class="hljs-keyword">int</span> count = <span class="hljs-number">0</span>;
+    node *n = l-&gt;front;
+    <span class="hljs-keyword">while</span>(n){
+        a[count++] = n-&gt;val;
+        n = n-&gt;next;
+    }
+    <span class="hljs-keyword">return</span> a;
+}
+</code></pre>
+<ul>
+<li>list&#xB97C; array&#xB85C; &#xBC14;&#xAFC9;&#xB2C8;&#xB2E4;.</li>
 </ul>
 
                                 
@@ -2027,7 +2097,7 @@ typedef struct list{
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"list.c","level":"5.26","depth":1,"next":{"title":"local_layer.c","level":"5.27","depth":1,"path":"part3_src/local_layer.md","ref":"part3_src/local_layer.md","articles":[]},"previous":{"title":"layer.c","level":"5.25","depth":1,"path":"part3_src/layer.md","ref":"part3_src/layer.md","articles":[]},"dir":"ltr"},"config":{"plugins":["advanced-emoji","theme-gestalt","-theme-default","styles-sass-fix","theme-api","mathjax"],"root":"./","styles":{"website":"website-1596049586635.css"},"pluginsConfig":{"styles-sass-fix":{},"theme-gestalt":{"showLevel":false,"styles":{"website":"styles/website.css"},"logo":"/darknet_book/assets/darknet.png","baseUrl":null,"excludeDefaultStyles":true,"doNotHideChildrenChapters":false},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"theme-api":{"languages":[],"split":true,"theme":"light"},"mathjax":{"forceSVG":false,"version":"2.6-latest"},"advanced-emoji":{"embedEmojis":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]}},"theme":"default","author":"JJM","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"DarkNet Book","output.name":"site","gitbook":"*"},"file":{"path":"part3_src/list.md","mtime":"2020-07-09T07:52:19.787Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-07-29T19:06:03.401Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"list.c","level":"5.26","depth":1,"next":{"title":"local_layer.c","level":"5.27","depth":1,"path":"part3_src/local_layer.md","ref":"part3_src/local_layer.md","articles":[]},"previous":{"title":"layer.c","level":"5.25","depth":1,"path":"part3_src/layer.md","ref":"part3_src/layer.md","articles":[]},"dir":"ltr"},"config":{"plugins":["advanced-emoji","theme-gestalt","-theme-default","styles-sass-fix","theme-api","mathjax"],"root":"./","styles":{"website":"website-1596554398914.css"},"pluginsConfig":{"styles-sass-fix":{},"theme-gestalt":{"showLevel":false,"styles":{"website":"styles/website.css"},"logo":"/darknet_book/assets/darknet.png","baseUrl":null,"excludeDefaultStyles":true,"doNotHideChildrenChapters":false},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"theme-api":{"languages":[],"split":true,"theme":"light"},"mathjax":{"forceSVG":false,"version":"2.6-latest"},"advanced-emoji":{"embedEmojis":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]}},"theme":"default","author":"JJM","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"DarkNet Book","output.name":"site","gitbook":"*"},"file":{"path":"part3_src/list.md","mtime":"2020-08-04T07:16:44.606Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-08-04T15:19:37.284Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>

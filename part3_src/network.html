@@ -42,7 +42,7 @@
 
     
         
-        <link rel="stylesheet" href="../website-1596049586635.css">
+        <link rel="stylesheet" href="../website-1596554398914.css">
         
     
 
@@ -1939,9 +1939,143 @@
     
                                 <section class="normal markdown-section">
                                 
-                                <h1 id="network-&#xB780;">Network &#xB780;?</h1>
-<hr>
-<h1 id="networkc">network.c</h1>
+                                <h1 id="networkc">network.c</h1>
+<h2 id="getbaseargs">get_base_args</h2>
+<pre><code>load_args get_base_args(network *net)
+{
+    load_args args = {0};
+    args.w = net-&gt;w;
+    args.h = net-&gt;h;
+    args.size = net-&gt;w;
+
+    args.min = net-&gt;min_crop;
+    args.max = net-&gt;max_crop;
+    args.angle = net-&gt;angle;
+    args.aspect = net-&gt;aspect;
+    args.exposure = net-&gt;exposure;
+    args.center = net-&gt;center;
+    args.saturation = net-&gt;saturation;
+    args.hue = net-&gt;hue;
+    return args;
+}
+</code></pre><ul>
+<li>network &#xAD6C;&#xC870;&#xCCB4;&#xC758; &#xC778;&#xC790;&#xAC12;&#xC744; &#xCD94;&#xCD9C;&#xD569;&#xB2C8;&#xB2E4;.</li>
+</ul>
+<h2 id="loadnetwork">load_network</h2>
+<pre><code>network *load_network(char *cfg, char *weights, int clear)
+{
+    network *net = parse_network_cfg(cfg);
+    if(weights &amp;&amp; weights[0] != 0){
+        load_weights(net, weights);
+    }
+    if(clear) (*net-&gt;seen) = 0;
+    return net;
+}
+</code></pre><ul>
+<li>network&#xC640; &#xC800;&#xC7A5; &#xB41C; weights&#xB97C; &#xBD88;&#xB7EC;&#xC635;&#xB2C8;&#xB2E4;.</li>
+</ul>
+<h2 id="getcurrentbatch">get_current_batch</h2>
+<pre><code>size_t get_current_batch(network *net)
+{
+    size_t batch_num = (*net-&gt;seen)/(net-&gt;batch*net-&gt;subdivisions);
+    return batch_num;
+}
+</code></pre><ul>
+<li>&#xD604;&#xC7AC; &#xBC30;&#xCE58;&#xB97C; &#xAC00;&#xC838;&#xC635;&#xB2C8;&#xB2E4;.</li>
+</ul>
+<h2 id="getcurrentrate">get_current_rate</h2>
+<pre><code>float get_current_rate(network *net)
+{
+    size_t batch_num = get_current_batch(net);
+    int i;
+    float rate;
+    if (batch_num &lt; net-&gt;burn_in) return net-&gt;learning_rate * pow((float)batch_num / net-&gt;burn_in, net-&gt;power);
+    switch (net-&gt;policy) {
+        case CONSTANT:
+            return net-&gt;learning_rate;
+        case STEP:
+            return net-&gt;learning_rate * pow(net-&gt;scale, batch_num/net-&gt;step);
+        case STEPS:
+            rate = net-&gt;learning_rate;
+            for(i = 0; i &lt; net-&gt;num_steps; ++i){
+                if(net-&gt;steps[i] &gt; batch_num) return rate;
+                rate *= net-&gt;scales[i];
+            }
+            return rate;
+        case EXP:
+            return net-&gt;learning_rate * pow(net-&gt;gamma, batch_num);
+        case POLY:
+            return net-&gt;learning_rate * pow(1 - (float)batch_num / net-&gt;max_batches, net-&gt;power);
+        case RANDOM:
+            return net-&gt;learning_rate * pow(rand_uniform(0,1), net-&gt;power);
+        case SIG:
+            return net-&gt;learning_rate * (1./(1.+exp(net-&gt;gamma*(batch_num - net-&gt;step))));
+        default:
+            fprintf(stderr, &quot;Policy is weird!\n&quot;);
+            return net-&gt;learning_rate;
+    }
+}
+</code></pre><ul>
+<li>&#xB2E4;&#xC591;&#xD55C; learning rate scheduler&#xB97C; &#xC774;&#xC6A9;&#xD574; learning rate&#xB97C; &#xBC18;&#xD658;&#xD569;&#xB2C8;&#xB2E4;.</li>
+</ul>
+<h2 id="getlayerstring">get_layer_string</h2>
+<pre><code>char *get_layer_string(LAYER_TYPE a)
+{
+    switch(a){
+        case CONVOLUTIONAL:
+            return &quot;convolutional&quot;;
+        case ACTIVE:
+            return &quot;activation&quot;;
+        case LOCAL:
+            return &quot;local&quot;;
+        case DECONVOLUTIONAL:
+            return &quot;deconvolutional&quot;;
+        case CONNECTED:
+            return &quot;connected&quot;;
+        case RNN:
+            return &quot;rnn&quot;;
+        case GRU:
+            return &quot;gru&quot;;
+        case LSTM:
+        return &quot;lstm&quot;;
+        case CRNN:
+            return &quot;crnn&quot;;
+        case MAXPOOL:
+            return &quot;maxpool&quot;;
+        case REORG:
+            return &quot;reorg&quot;;
+        case AVGPOOL:
+            return &quot;avgpool&quot;;
+        case SOFTMAX:
+            return &quot;softmax&quot;;
+        case DETECTION:
+            return &quot;detection&quot;;
+        case REGION:
+            return &quot;region&quot;;
+        case YOLO:
+            return &quot;yolo&quot;;
+        case DROPOUT:
+            return &quot;dropout&quot;;
+        case CROP:
+            return &quot;crop&quot;;
+        case COST:
+            return &quot;cost&quot;;
+        case ROUTE:
+            return &quot;route&quot;;
+        case SHORTCUT:
+            return &quot;shortcut&quot;;
+        case NORMALIZATION:
+            return &quot;normalization&quot;;
+        case BATCHNORM:
+            return &quot;batchnorm&quot;;
+        default:
+            break;
+    }
+    return &quot;none&quot;;
+}
+</code></pre><ul>
+<li><code>LAYER_TYPE</code>&#xC5D0; &#xB9DE;&#xB294; &#xBB38;&#xC790;&#xC5F4;&#xC744; &#xBC18;&#xD658;&#xD569;&#xB2C8;&#xB2E4;.</li>
+</ul>
 <h2 id="makenetwork">make_network</h2>
 <pre><code>network *make_network(int n)
 {
@@ -1953,7 +2087,589 @@
     net-&gt;cost = calloc(1, sizeof(float));
     return net;
 }
-</code></pre>
+</code></pre><ul>
+<li>network&#xB97C; &#xB9CC;&#xB4ED;&#xB2C8;&#xB2E4;.</li>
+</ul>
+<h2 id="forwardnetwork">forward_network</h2>
+<pre><code>void forward_network(network *netp)
+{
+    network net = *netp;
+    int i;
+    for(i = 0; i &lt; net.n; ++i){
+        net.index = i;
+        layer l = net.layers[i];
+        if(l.delta){
+            fill_cpu(l.outputs * l.batch, 0, l.delta, 1);
+        }
+        l.forward(l, net);
+        net.input = l.output;
+        if(l.truth) {
+            net.truth = l.output;
+        }
+    }
+    calc_network_cost(netp);
+}
+</code></pre><ul>
+<li>network&#xC758; &#xC21C;&#xC804;&#xD30C;&#xB97C; &#xC9C4;&#xD589;&#xD569;&#xB2C8;&#xB2E4;.</li>
+</ul>
+<h2 id="updatenetwork">update_network</h2>
+<pre><code>void update_network(network *netp)
+{
+    network net = *netp;
+    int i;
+    update_args a = {0};
+    a.batch = net.batch*net.subdivisions;
+    a.learning_rate = get_current_rate(netp);
+    a.momentum = net.momentum;
+    a.decay = net.decay;
+    a.adam = net.adam;
+    a.B1 = net.B1;
+    a.B2 = net.B2;
+    a.eps = net.eps;
+    ++*net.t;
+    a.t = *net.t;
+
+    for(i = 0; i &lt; net.n; ++i){
+        layer l = net.layers[i];
+        if(l.update){
+            l.update(l, a);
+        }
+    }
+}
+</code></pre><ul>
+<li>network&#xC758; &#xD559;&#xC2B5; &#xD30C;&#xB77C;&#xBBF8;&#xD130;&#xB97C; &#xC5C5;&#xB370;&#xC774;&#xD2B8; &#xD569;&#xB2C8;&#xB2E4;.</li>
+</ul>
+<h2 id="calcnetworkcost">calc_network_cost</h2>
+<pre><code>void calc_network_cost(network *netp)
+{
+    network net = *netp;
+    int i;
+    float sum = 0;
+    int count = 0;
+    for(i = 0; i &lt; net.n; ++i){
+        if(net.layers[i].cost){
+            sum += net.layers[i].cost[0];
+            ++count;
+        }
+    }
+    *net.cost = sum/count;
+}
+</code></pre><ul>
+<li>network&#xC758; cost&#xB97C; &#xACC4;&#xC0B0;&#xD569;&#xB2C8;&#xB2E4;.</li>
+</ul>
+<h2 id="getpredictedclassnetwork">get_predicted_class_network</h2>
+<pre><code>int get_predicted_class_network(network *net)
+{
+    return max_index(net-&gt;output, net-&gt;outputs);
+}
+</code></pre><ul>
+<li>network&#xC758; output&#xC5D0;&#xC11C; &#xCD5C;&#xB313;&#xAC12;&#xC744; &#xAC00;&#xC9C0;&#xB294; index&#xB97C; &#xBC18;&#xD658;&#xD569;&#xB2C8;&#xB2E4;. &#xC989;, &#xC608;&#xCE21;&#xD55C; &#xD074;&#xB798;&#xC2A4;&#xB97C; &#xBC18;&#xD658;&#xD569;&#xB2C8;&#xB2E4;.</li>
+</ul>
+<h2 id="backwardnetwork">backward_network</h2>
+<pre><code>void backward_network(network *netp)
+{
+    network net = *netp;
+    int i;
+    network orig = net;
+    for(i = net.n-1; i &gt;= 0; --i){
+        layer l = net.layers[i];
+        if(l.stopbackward) break;
+        if(i == 0){
+            net = orig;
+        }else{
+            layer prev = net.layers[i-1];
+            net.input = prev.output;
+            net.delta = prev.delta;
+        }
+        net.index = i;
+        l.backward(l, net);
+    }
+}
+</code></pre><ul>
+<li>network&#xC758; &#xC5ED;&#xC804;&#xD30C;&#xB97C; &#xC9C4;&#xD589;&#xD569;&#xB2C8;&#xB2E4;.</li>
+</ul>
+<h2 id="trainnetworkdatum">train_network_datum</h2>
+<pre><code>float train_network_datum(network *net)
+{
+    *net-&gt;seen += net-&gt;batch;
+    net-&gt;train = 1;
+    forward_network(net);
+    backward_network(net);
+    float error = *net-&gt;cost;
+    if(((*net-&gt;seen)/net-&gt;batch)%net-&gt;subdivisions == 0) update_network(net);
+    return error;
+}
+</code></pre><p>-
+-
+-</p>
+<h2 id="trainnetworksgd">train_network_sgd</h2>
+<pre><code>float train_network_sgd(network *net, data d, int n)
+{
+    int batch = net-&gt;batch;
+
+    int i;
+    float sum = 0;
+    for(i = 0; i &lt; n; ++i){
+        get_random_batch(d, batch, net-&gt;input, net-&gt;truth);
+        float err = train_network_datum(net);
+        sum += err;
+    }
+    return (float)sum/(n*batch);
+}
+</code></pre><h2 id="trainnetwork">train_network</h2>
+<pre><code>float train_network(network *net, data d)
+{
+    assert(d.X.rows % net-&gt;batch == 0);
+    int batch = net-&gt;batch;
+    int n = d.X.rows / batch;
+
+    int i;
+    float sum = 0;
+    for(i = 0; i &lt; n; ++i){
+        get_next_batch(d, batch, i*batch, net-&gt;input, net-&gt;truth);
+        float err = train_network_datum(net);
+        sum += err;
+    }
+    return (float)sum/(n*batch);
+}
+</code></pre><h2 id="settempnetwork">set_temp_network</h2>
+<pre><code>void set_temp_network(network *net, float t)
+{
+    int i;
+    for(i = 0; i &lt; net-&gt;n; ++i){
+        net-&gt;layers[i].temperature = t;
+    }
+}
+</code></pre><h2 id="setbatchnetwork">set_batch_network</h2>
+<pre><code>void set_batch_network(network *net, int b)
+{
+    net-&gt;batch = b;
+    int i;
+    for(i = 0; i &lt; net-&gt;n; ++i){
+        net-&gt;layers[i].batch = b;
+    }
+}
+</code></pre><h2 id="resizenetwork">resize_network</h2>
+<pre><code>int resize_network(network *net, int w, int h)
+{
+    int i;
+    //if(w == net-&gt;w &amp;&amp; h == net-&gt;h) return 0;
+    net-&gt;w = w;
+    net-&gt;h = h;
+    int inputs = 0;
+    size_t workspace_size = 0;
+    //fprintf(stderr, &quot;Resizing to %d x %d...\n&quot;, w, h);
+    //fflush(stderr);
+    for (i = 0; i &lt; net-&gt;n; ++i){
+        layer l = net-&gt;layers[i];
+        if(l.type == CONVOLUTIONAL){
+            resize_convolutional_layer(&amp;l, w, h);
+        }else if(l.type == CROP){
+            resize_crop_layer(&amp;l, w, h);
+        }else if(l.type == MAXPOOL){
+            resize_maxpool_layer(&amp;l, w, h);
+        }else if(l.type == REGION){
+            resize_region_layer(&amp;l, w, h);
+        }else if(l.type == YOLO){
+            resize_yolo_layer(&amp;l, w, h);
+        }else if(l.type == ROUTE){
+            resize_route_layer(&amp;l, net);
+        }else if(l.type == SHORTCUT){
+            resize_shortcut_layer(&amp;l, w, h);
+        }else if(l.type == UPSAMPLE){
+            resize_upsample_layer(&amp;l, w, h);
+        }else if(l.type == REORG){
+            resize_reorg_layer(&amp;l, w, h);
+        }else if(l.type == AVGPOOL){
+            resize_avgpool_layer(&amp;l, w, h);
+        }else if(l.type == NORMALIZATION){
+            resize_normalization_layer(&amp;l, w, h);
+        }else if(l.type == COST){
+            resize_cost_layer(&amp;l, inputs);
+        }else{
+            error(&quot;Cannot resize this type of layer&quot;);
+        }
+        if(l.workspace_size &gt; workspace_size) workspace_size = l.workspace_size;
+        if(l.workspace_size &gt; 2000000000) assert(0);
+        inputs = l.outputs;
+        net-&gt;layers[i] = l;
+        w = l.out_w;
+        h = l.out_h;
+        if(l.type == AVGPOOL) break;
+    }
+    layer out = get_network_output_layer(net);
+    net-&gt;inputs = net-&gt;layers[0].inputs;
+    net-&gt;outputs = out.outputs;
+    net-&gt;truths = out.outputs;
+    if(net-&gt;layers[net-&gt;n-1].truths) net-&gt;truths = net-&gt;layers[net-&gt;n-1].truths;
+    net-&gt;output = out.output;
+    free(net-&gt;input);
+    free(net-&gt;truth);
+    net-&gt;input = calloc(net-&gt;inputs*net-&gt;batch, sizeof(float));
+    net-&gt;truth = calloc(net-&gt;truths*net-&gt;batch, sizeof(float));
+
+    free(net-&gt;workspace);
+    net-&gt;workspace = calloc(1, workspace_size);
+
+    //fprintf(stderr, &quot; Done!\n&quot;);
+    return 0;
+}
+</code></pre><h2 id="getnetworkdetectionlayer">get_network_detection_layer</h2>
+<pre><code>layer get_network_detection_layer(network *net)
+{
+    int i;
+    for(i = 0; i &lt; net-&gt;n; ++i){
+        if(net-&gt;layers[i].type == DETECTION){
+            return net-&gt;layers[i];
+        }
+    }
+    fprintf(stderr, &quot;Detection layer not found!!\n&quot;);
+    layer l = {0};
+    return l;
+}
+</code></pre><h2 id="getnetworkimagelayer">get_network_image_layer</h2>
+<pre><code>image get_network_image_layer(network *net, int i)
+{
+    layer l = net-&gt;layers[i];
+
+    if (l.out_w &amp;&amp; l.out_h &amp;&amp; l.out_c){
+        return float_to_image(l.out_w, l.out_h, l.out_c, l.output);
+    }
+    image def = {0};
+    return def;
+}
+</code></pre><h2 id="getnetworkimage">get_network_image</h2>
+<pre><code>image get_network_image(network *net)
+{
+    int i;
+    for(i = net-&gt;n-1; i &gt;= 0; --i){
+        image m = get_network_image_layer(net, i);
+        if(m.h != 0) return m;
+    }
+    image def = {0};
+    return def;
+}
+</code></pre><h2 id="visualizenetwork">visualize_network</h2>
+<pre><code>void visualize_network(network *net)
+{
+    image *prev = 0;
+    int i;
+    char buff[256];
+    for(i = 0; i &lt; net-&gt;n; ++i){
+        sprintf(buff, &quot;Layer %d&quot;, i);
+        layer l = net-&gt;layers[i];
+        if(l.type == CONVOLUTIONAL){
+            prev = visualize_convolutional_layer(l, buff, prev);
+        }
+    }
+}
+</code></pre><h2 id="toppredictions">top_predictions</h2>
+<pre><code>void top_predictions(network *net, int k, int *index)
+{
+    top_k(net-&gt;output, net-&gt;outputs, k, index);
+}
+</code></pre><h2 id="networkpredict">network_predict</h2>
+<pre><code>float *network_predict(network *net, float *input)
+{
+    network orig = *net;
+    net-&gt;input = input;
+    net-&gt;truth = 0;
+    net-&gt;train = 0;
+    net-&gt;delta = 0;
+    forward_network(net);
+    float *out = net-&gt;output;
+    *net = orig;
+    return out;
+}
+</code></pre><h2 id="numdetections">num_detections</h2>
+<pre><code>int num_detections(network *net, float thresh)
+{
+    int i;
+    int s = 0;
+    for(i = 0; i &lt; net-&gt;n; ++i){
+        layer l = net-&gt;layers[i];
+        if(l.type == YOLO){
+            s += yolo_num_detections(l, thresh);
+        }
+        if(l.type == DETECTION || l.type == REGION){
+            s += l.w*l.h*l.n;
+        }
+    }
+    return s;
+}
+</code></pre><h2 id="makenetworkboxes">make_network_boxes</h2>
+<pre><code>detection *make_network_boxes(network *net, float thresh, int *num)
+{
+    layer l = net-&gt;layers[net-&gt;n - 1];
+    int i;
+    int nboxes = num_detections(net, thresh);
+    if(num) *num = nboxes;
+    detection *dets = calloc(nboxes, sizeof(detection));
+    for(i = 0; i &lt; nboxes; ++i){
+        dets[i].prob = calloc(l.classes, sizeof(float));
+        if(l.coords &gt; 4){
+            dets[i].mask = calloc(l.coords-4, sizeof(float));
+        }
+    }
+    return dets;
+}
+</code></pre><h2 id="fillnetworkboxes">fill_network_boxes</h2>
+<pre><code>void fill_network_boxes(network *net, int w, int h, float thresh, float hier, int *map, int relative, detection *dets)
+{
+    int j;
+    for(j = 0; j &lt; net-&gt;n; ++j){
+        layer l = net-&gt;layers[j];
+        if(l.type == YOLO){
+            int count = get_yolo_detections(l, w, h, net-&gt;w, net-&gt;h, thresh, map, relative, dets);
+            dets += count;
+        }
+        if(l.type == REGION){
+            get_region_detections(l, w, h, net-&gt;w, net-&gt;h, thresh, map, hier, relative, dets);
+            dets += l.w*l.h*l.n;
+        }
+        if(l.type == DETECTION){
+            get_detection_detections(l, w, h, thresh, dets);
+            dets += l.w*l.h*l.n;
+        }
+    }
+}
+</code></pre><h2 id="getnetworkboxes">get_network_boxes</h2>
+<pre><code>detection *get_network_boxes(network *net, int w, int h, float thresh, float hier, int *map, int relative, int *num)
+{
+    detection *dets = make_network_boxes(net, thresh, num);
+    fill_network_boxes(net, w, h, thresh, hier, map, relative, dets);
+    return dets;
+}
+</code></pre><p>-</p>
+<h2 id="freedetections">free_detections</h2>
+<pre><code>void free_detections(detection *dets, int n)
+{
+    int i;
+    for(i = 0; i &lt; n; ++i){
+        free(dets[i].prob);
+        if(dets[i].mask) free(dets[i].mask);
+    }
+    free(dets);
+}
+</code></pre><ul>
+<li>detection&#xC758; &#xBA54;&#xBAA8;&#xB9AC; &#xD560;&#xB2F9;&#xC744; &#xD574;&#xC81C;&#xD569;&#xB2C8;&#xB2E4;.</li>
+</ul>
+<h2 id="networkpredictimage">network_predict_image</h2>
+<pre><code>float *network_predict_image(network *net, image im)
+{
+    image imr = letterbox_image(im, net-&gt;w, net-&gt;h);
+    set_batch_network(net, 1);
+    float *p = network_predict(net, imr.data);
+    free_image(imr);
+    return p;
+}
+</code></pre><p>-</p>
+<h2 id="networkwidth-networkheight">network_width, network_height</h2>
+<pre><code>int network_width(network *net){return net-&gt;w;}
+int network_height(network *net){return net-&gt;h;}
+</code></pre><ul>
+<li>network input&#xC758; width, height&#xB97C; &#xBC18;&#xD658;&#xD569;&#xB2C8;&#xB2E4;.</li>
+</ul>
+<h2 id="networkpredictdatamulti">network_predict_data_multi</h2>
+<pre><code>matrix network_predict_data_multi(network *net, data test, int n)
+{
+    int i,j,b,m;
+    int k = net-&gt;outputs;
+    matrix pred = make_matrix(test.X.rows, k);
+    float *X = calloc(net-&gt;batch*test.X.rows, sizeof(float));
+    for(i = 0; i &lt; test.X.rows; i += net-&gt;batch){
+        for(b = 0; b &lt; net-&gt;batch; ++b){
+            if(i+b == test.X.rows) break;
+            memcpy(X+b*test.X.cols, test.X.vals[i+b], test.X.cols*sizeof(float));
+        }
+        for(m = 0; m &lt; n; ++m){
+            float *out = network_predict(net, X);
+            for(b = 0; b &lt; net-&gt;batch; ++b){
+                if(i+b == test.X.rows) break;
+                for(j = 0; j &lt; k; ++j){
+                    pred.vals[i+b][j] += out[j+b*k]/n;
+                }
+            }
+        }
+    }
+    free(X);
+    return pred;   
+}
+</code></pre><ul>
+<li>network&#xC5D0; data&#xB97C; &#xC785;&#xB825;&#xD558;&#xACE0; n&#xAC1C;&#xC758; &#xC608;&#xCE21;&#xAC12;&#xC744; &#xBC18;&#xD658;&#xD569;&#xB2C8;&#xB2E4;.</li>
+</ul>
+<h2 id="networkpredictdata">network_predict_data</h2>
+<pre><code>matrix network_predict_data(network *net, data test)
+{
+    int i,j,b;
+    int k = net-&gt;outputs;
+    matrix pred = make_matrix(test.X.rows, k);
+    float *X = calloc(net-&gt;batch*test.X.cols, sizeof(float));
+    for(i = 0; i &lt; test.X.rows; i += net-&gt;batch){
+        for(b = 0; b &lt; net-&gt;batch; ++b){
+            if(i+b == test.X.rows) break;
+            memcpy(X+b*test.X.cols, test.X.vals[i+b], test.X.cols*sizeof(float));
+        }
+        float *out = network_predict(net, X);
+        for(b = 0; b &lt; net-&gt;batch; ++b){
+            if(i+b == test.X.rows) break;
+            for(j = 0; j &lt; k; ++j){
+                pred.vals[i+b][j] = out[j+b*k];
+            }
+        }
+    }
+    free(X);
+    return pred;   
+}
+</code></pre><ul>
+<li>network&#xC5D0; data&#xB97C; &#xC785;&#xB825;&#xD558;&#xACE0; &#xC608;&#xCE21;&#xAC12;&#xC744; &#xBC18;&#xD658;&#xD569;&#xB2C8;&#xB2E4;.</li>
+</ul>
+<h2 id="printnetwork">print_network</h2>
+<pre><code>void print_network(network *net)
+{
+    int i,j;
+    for(i = 0; i &lt; net-&gt;n; ++i){
+        layer l = net-&gt;layers[i];
+        float *output = l.output;
+        int n = l.outputs;
+        float mean = mean_array(output, n);
+        float vari = variance_array(output, n);
+        fprintf(stderr, &quot;Layer %d - Mean: %f, Variance: %f\n&quot;,i,mean, vari);
+        if(n &gt; 100) n = 100;
+        for(j = 0; j &lt; n; ++j) fprintf(stderr, &quot;%f, &quot;, output[j]);
+        if(n == 100)fprintf(stderr,&quot;.....\n&quot;);
+        fprintf(stderr, &quot;\n&quot;);
+    }
+}
+</code></pre><ul>
+<li>network&#xC758; &#xC815;&#xBCF4;(mean, variance, output)&#xB97C; &#xCD9C;&#xB825; &#xD569;&#xB2C8;&#xB2E4;.</li>
+</ul>
+<h2 id="comparenetworks">compare_networks</h2>
+<pre><code>void compare_networks(network *n1, network *n2, data test)
+{
+    matrix g1 = network_predict_data(n1, test);
+    matrix g2 = network_predict_data(n2, test);
+    int i;
+    int a,b,c,d;
+    a = b = c = d = 0;
+    for(i = 0; i &lt; g1.rows; ++i){
+        int truth = max_index(test.y.vals[i], test.y.cols);
+        int p1 = max_index(g1.vals[i], g1.cols);
+        int p2 = max_index(g2.vals[i], g2.cols);
+        if(p1 == truth){
+            if(p2 == truth) ++d;
+            else ++c;
+        }else{
+            if(p2 == truth) ++b;
+            else ++a;
+        }
+    }
+    printf(&quot;%5d %5d\n%5d %5d\n&quot;, a, b, c, d);
+    float num = pow((abs(b - c) - 1.), 2.);
+    float den = b + c;
+    printf(&quot;%f\n&quot;, num/den);
+}
+</code></pre><ul>
+<li>2&#xAC1C;&#xC758; network&#xC758; &#xC131;&#xB2A5;&#xC744; &#xBE44;&#xAD50;&#xD569;&#xB2C8;&#xB2E4;.</li>
+</ul>
+<h2 id="networkaccuracy">network_accuracy</h2>
+<pre><code>float network_accuracy(network *net, data d)
+{
+    matrix guess = network_predict_data(net, d);
+    float acc = matrix_topk_accuracy(d.y, guess,1);
+    free_matrix(guess);
+    return acc;
+}
+</code></pre><ul>
+<li>network&#xC758; top-1 &#xC815;&#xD655;&#xB3C4;&#xB97C; &#xBC18;&#xD658;&#xD569;&#xB2C8;&#xB2E4;.</li>
+</ul>
+<h2 id="networkaccuracies">network_accuracies</h2>
+<pre><code>float *network_accuracies(network *net, data d, int n)
+{
+    static float acc[2];
+    matrix guess = network_predict_data(net, d);
+    acc[0] = matrix_topk_accuracy(d.y, guess, 1);
+    acc[1] = matrix_topk_accuracy(d.y, guess, n);
+    free_matrix(guess);
+    return acc;
+}
+</code></pre><ul>
+<li>network&#xC758; top-1 &#xC815;&#xD655;&#xB3C4;&#xC640; top-n &#xC815;&#xD655;&#xB3C4;&#xB97C; &#xBC18;&#xD658;&#xD569;&#xB2C8;&#xB2E4;.</li>
+</ul>
+<h2 id="getnetworkoutputlayer">get_network_output_layer</h2>
+<pre><code>layer get_network_output_layer(network *net)
+{
+    int i;
+    for(i = net-&gt;n - 1; i &gt;= 0; --i){
+        if(net-&gt;layers[i].type != COST) break;
+    }
+    return net-&gt;layers[i];
+}
+</code></pre><ul>
+<li>network&#xC758; cost&#xB97C; &#xAD6C;&#xD558;&#xAE30; &#xC804; layer&#xB97C; &#xBC18;&#xD658;&#xD569;&#xB2C8;&#xB2E4;.</li>
+</ul>
+<h2 id="networkaccuracymulti">network_accuracy_multi</h2>
+<pre><code>float network_accuracy_multi(network *net, data d, int n)
+{
+    matrix guess = network_predict_data_multi(net, d, n);
+    float acc = matrix_topk_accuracy(d.y, guess,1);
+    free_matrix(guess);
+    return acc;
+}
+</code></pre><p>-</p>
+<h2 id="freenetwork">free_network</h2>
+<pre><code>void free_network(network *net)
+{
+    int i;
+    for(i = 0; i &lt; net-&gt;n; ++i){
+        free_layer(net-&gt;layers[i]);
+    }
+    free(net-&gt;layers);
+    if(net-&gt;input) free(net-&gt;input);
+    if(net-&gt;truth) free(net-&gt;truth);
+
+    free(net);
+}
+</code></pre><ul>
+<li>network&#xC758; &#xBA54;&#xBAA8;&#xB9AC; &#xD560;&#xB2F9;&#xC744; &#xD574;&#xC81C;&#xD569;&#xB2C8;&#xB2E4;.</li>
+</ul>
+<h2 id="networkoutputlayer">network_output_layer</h2>
+<pre><code>layer network_output_layer(network *net)
+{
+    int i;
+    for(i = net-&gt;n - 1; i &gt;= 0; --i){
+        if(net-&gt;layers[i].type != COST) break;
+    }
+    return net-&gt;layers[i];
+}
+</code></pre><ul>
+<li>network&#xC758; cost&#xB97C; &#xAD6C;&#xD558;&#xAE30; &#xC804; layer&#xB97C; &#xBC18;&#xD658;&#xD569;&#xB2C8;&#xB2E4;. (get_network_output_layer&#xC640; &#xAC19;&#xC740; &#xC5ED;&#xD560;&#xC785;&#xB2C8;&#xB2E4;.)</li>
+</ul>
+<h2 id="networkinputs">network_inputs</h2>
+<pre><code>int network_inputs(network *net)
+{
+    return net-&gt;layers[0].inputs;
+}
+</code></pre><ul>
+<li>network&#xC758; inputs&#xC744; &#xBC18;&#xD658;&#xD569;&#xB2C8;&#xB2E4;.</li>
+</ul>
+<h2 id="networkoutputs">network_outputs</h2>
+<pre><code>int network_outputs(network *net)
+{
+    return network_output_layer(net).outputs;
+}
+</code></pre><ul>
+<li>network&#xC758; outputs&#xC744; &#xBC18;&#xD658;&#xD569;&#xB2C8;&#xB2E4;.</li>
+</ul>
+<h2 id="networkoutput">network_output</h2>
+<pre><code>float *network_output(network *net)
+{
+    return network_output_layer(net).output;
+}
+</code></pre><ul>
+<li>network&#xC758; output&#xC744; &#xBC18;&#xD658;&#xD569;&#xB2C8;&#xB2E4;.</li>
+</ul>
+
                                 
                                 </section>
                             
@@ -1996,7 +2712,7 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"network.c","level":"5.32","depth":1,"next":{"title":"normalization_layer.c","level":"5.33","depth":1,"path":"part3_src/normalization_layer.md","ref":"part3_src/normalization_layer.md","articles":[]},"previous":{"title":"maxpool_layer.c","level":"5.31","depth":1,"path":"part3_src/maxpool.md","ref":"part3_src/maxpool.md","articles":[]},"dir":"ltr"},"config":{"plugins":["advanced-emoji","theme-gestalt","-theme-default","styles-sass-fix","theme-api","mathjax"],"root":"./","styles":{"website":"website-1596049586635.css"},"pluginsConfig":{"styles-sass-fix":{},"theme-gestalt":{"showLevel":false,"styles":{"website":"styles/website.css"},"logo":"/darknet_book/assets/darknet.png","baseUrl":null,"excludeDefaultStyles":true,"doNotHideChildrenChapters":false},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"theme-api":{"languages":[],"split":true,"theme":"light"},"mathjax":{"forceSVG":false,"version":"2.6-latest"},"advanced-emoji":{"embedEmojis":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]}},"theme":"default","author":"JJM","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"DarkNet Book","output.name":"site","gitbook":"*"},"file":{"path":"part3_src/network.md","mtime":"2020-07-09T09:10:33.253Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-07-29T19:06:03.401Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"network.c","level":"5.32","depth":1,"next":{"title":"normalization_layer.c","level":"5.33","depth":1,"path":"part3_src/normalization_layer.md","ref":"part3_src/normalization_layer.md","articles":[]},"previous":{"title":"maxpool_layer.c","level":"5.31","depth":1,"path":"part3_src/maxpool.md","ref":"part3_src/maxpool.md","articles":[]},"dir":"ltr"},"config":{"plugins":["advanced-emoji","theme-gestalt","-theme-default","styles-sass-fix","theme-api","mathjax"],"root":"./","styles":{"website":"website-1596554398914.css"},"pluginsConfig":{"styles-sass-fix":{},"theme-gestalt":{"showLevel":false,"styles":{"website":"styles/website.css"},"logo":"/darknet_book/assets/darknet.png","baseUrl":null,"excludeDefaultStyles":true,"doNotHideChildrenChapters":false},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"theme-api":{"languages":[],"split":true,"theme":"light"},"mathjax":{"forceSVG":false,"version":"2.6-latest"},"advanced-emoji":{"embedEmojis":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]}},"theme":"default","author":"JJM","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"DarkNet Book","output.name":"site","gitbook":"*"},"file":{"path":"part3_src/network.md","mtime":"2020-08-04T15:18:48.070Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-08-04T15:19:37.284Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>

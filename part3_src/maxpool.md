@@ -89,7 +89,7 @@ void forward_maxpool_layer(const maxpool_layer l, network net)
 
 ## backward_maxpool_layer
 
-```
+```c
 void backward_maxpool_layer(const maxpool_layer l, network net)
 {
     int i;
@@ -114,7 +114,7 @@ void backward_maxpool_layer(const maxpool_layer l, network net)
 
 ## get_maxpool_image
 
-```
+```c
 image get_maxpool_image(maxpool_layer l)
 {
     int h = l.out_h;
@@ -124,9 +124,11 @@ image get_maxpool_image(maxpool_layer l)
 }
 ```
 
+- maxpooling layer의 출력을 image 구조로 바꾸어 반환합니다.
+
 ## get_maxpool_delta
 
-```
+```c
 image get_maxpool_delta(maxpool_layer l)
 {
     int h = l.out_h;
@@ -136,9 +138,11 @@ image get_maxpool_delta(maxpool_layer l)
 }
 ```
 
+- maxpooling layer의 delta를 image 구조로 바꾸어 반환합니다.
+
 ## resize_maxpool_layer
 
-```
+```c
 void resize_maxpool_layer(maxpool_layer *l, int w, int h)
 {
     l->h = h;
@@ -153,14 +157,7 @@ void resize_maxpool_layer(maxpool_layer *l, int w, int h)
     l->indexes = realloc(l->indexes, output_size * sizeof(int));
     l->output = realloc(l->output, output_size * sizeof(float));
     l->delta = realloc(l->delta, output_size * sizeof(float));
-
-    #ifdef GPU
-    cuda_free((float *)l->indexes_gpu);
-    cuda_free(l->output_gpu);
-    cuda_free(l->delta_gpu);
-    l->indexes_gpu = cuda_make_int_array(0, output_size);
-    l->output_gpu  = cuda_make_array(l->output, output_size);
-    l->delta_gpu   = cuda_make_array(l->delta,  output_size);
-    #endif
 }
 ```
+
+- maxpooling layer의 크기를 resize합니다.

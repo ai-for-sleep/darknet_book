@@ -187,6 +187,8 @@ void update_convolutional_layer(convolutional_layer l, update_args a)
 }
 ```
 
+- convolutional layer의 학습 파라미터를 업데이트 하는 함수입니다.
+
 ## make_convolutional_layer
 
 ```
@@ -427,7 +429,7 @@ void binarize_weights(float *weights, int n, int size, float *binary)
 
 ## binarize_cpu
 
-```
+```c
 void binarize_cpu(float *input, int n, float *binary)
 {
     int i;
@@ -442,7 +444,7 @@ void binarize_cpu(float *input, int n, float *binary)
 
 ## binarize_input
 
-```
+```c
 void binarize_input(float *input, int n, int size, float *binary)
 {
     int i, s;
@@ -465,7 +467,7 @@ void binarize_input(float *input, int n, int size, float *binary)
 
 ## convolutional_out_height
 
-```
+```c
 int convolutional_out_height(convolutional_layer l)
 {
     return (l.h + 2*l.pad - l.size) / l.stride + 1;
@@ -476,7 +478,7 @@ int convolutional_out_height(convolutional_layer l)
 
 ## convolutional_out_width
 
-```
+```c
 int convolutional_out_width(convolutional_layer l)
 {
     return (l.w + 2*l.pad - l.size) / l.stride + 1;
@@ -487,7 +489,7 @@ int convolutional_out_width(convolutional_layer l)
 
 ## get_convolutional_image
 
-```
+```c
 image get_convolutional_image(convolutional_layer l)
 {
     return float_to_image(l.out_w,l.out_h,l.out_c,l.output);
@@ -498,7 +500,7 @@ image get_convolutional_image(convolutional_layer l)
 
 ## get_convolutional_delta
 
-```
+```c
 image get_convolutional_delta(convolutional_layer l)
 {
     return float_to_image(l.out_w,l.out_h,l.out_c,l.delta);
@@ -509,7 +511,7 @@ image get_convolutional_delta(convolutional_layer l)
 
 ## get_convolutional_weight
 
-```
+```c
 image get_convolutional_weight(convolutional_layer l, int i)
 {
     int h = l.size;
@@ -523,7 +525,7 @@ image get_convolutional_weight(convolutional_layer l, int i)
 
 ## rgbgr_weights
 
-```
+```c
 void rgbgr_weights(convolutional_layer l)
 {
     int i;
@@ -540,7 +542,7 @@ void rgbgr_weights(convolutional_layer l)
 
 ## rescale_weights
 
-```
+```c
 void rescale_weights(convolutional_layer l, float scale, float trans)
 {
     int i;
@@ -559,7 +561,7 @@ void rescale_weights(convolutional_layer l, float scale, float trans)
 
 ## get_weights
 
-```
+```c
 image *get_weights(convolutional_layer l)
 {
     image *weights = calloc(l.n, sizeof(image));
@@ -582,7 +584,7 @@ image *get_weights(convolutional_layer l)
 
 ## visualize_convolutional_layer
 
-```
+```c
 image *visualize_convolutional_layer(convolutional_layer l, char *window, image *prev_weights)
 {
     image *single_weights = get_weights(l);
@@ -599,4 +601,4 @@ image *visualize_convolutional_layer(convolutional_layer l, char *window, image 
 }
 ```
 
-- convolutional layer를 시각화 하기 위한 함수 입니다.
+- convolutional layer를 시각화 하기 위한 함수입니다.

@@ -121,7 +121,7 @@ void scal_cpu(int N, float ALPHA, float *X, int INCX)
 
 ## fill_cpu
 
-```
+```c
 void fill_cpu(int N, float ALPHA, float *X, int INCX)
 {
     int i;
@@ -145,7 +145,7 @@ void mul_cpu(int N, float *X, int INCX, float *Y, int INCY)
 
 ## pow_cpu
 
-```
+```c
 void pow_cpu(int N, float ALPHA, float *X, int INCX, float *Y, int INCY)
 {
     int i;
@@ -157,7 +157,7 @@ void pow_cpu(int N, float ALPHA, float *X, int INCX, float *Y, int INCY)
 
 ## deinter_cpu
 
-```
+```c
 void deinter_cpu(int NX, float *X, int NY, float *Y, int B, float *OUT)
 {
     int i, j;
@@ -179,7 +179,7 @@ void deinter_cpu(int NX, float *X, int NY, float *Y, int B, float *OUT)
 
 ## inter_cpu
 
-```
+```c
 void inter_cpu(int NX, float *X, int NY, float *Y, int B, float *OUT)
 {
     int i, j;
@@ -211,7 +211,7 @@ $$Z = Z + X*Y$$
 
 ## smooth_l1_cpu
 
-```
+```c
 void smooth_l1_cpu(int n, float *pred, float *truth, float *delta, float *error)
 {
     int i;
@@ -242,7 +242,7 @@ void smooth_l1_cpu(int n, float *pred, float *truth, float *delta, float *error)
 
 ## l1_cpu
 
-```
+```c
 void l1_cpu(int n, float *pred, float *truth, float *delta, float *error)
 {
     int i;
@@ -259,7 +259,7 @@ void l1_cpu(int n, float *pred, float *truth, float *delta, float *error)
 
 ## softmax_x_ent_cpu
 
-```
+```c
 void softmax_x_ent_cpu(int n, float *pred, float *truth, float *delta, float *error)
 {
     int i;
@@ -295,7 +295,7 @@ void logistic_x_ent_cpu(int n, float *pred, float *truth, float *delta, float *e
 
 ## l2_cpu
 
-```
+```c
 void l2_cpu(int n, float *pred, float *truth, float *delta, float *error)
 {
     int i;
@@ -312,7 +312,7 @@ void l2_cpu(int n, float *pred, float *truth, float *delta, float *error)
 
 ## dot_cpu
 
-```
+```c
 float dot_cpu(int N, float *X, int INCX, float *Y, int INCY)
 {
     int i;
@@ -327,7 +327,7 @@ float dot_cpu(int N, float *X, int INCX, float *Y, int INCY)
 
 ## softmax
 
-```
+```c
 void softmax(float *input, int n, float temp, int stride, float *output)
 {
     int i;
@@ -348,11 +348,12 @@ void softmax(float *input, int n, float temp, int stride, float *output)
 ```
 
 - softmax 연산함수
+
 - $$\frac{e(x_i - max(x))}{\sum e(x_i - max(x))}$$
 
 ## softmax_cpu
 
-```
+```c
 void softmax_cpu(float *input, int n, int batch, int batch_offset, int groups, int group_offset, int stride, float temp, float *output)
 {
     int g, b;
@@ -420,14 +421,14 @@ void reorg_cpu(float *x, int w, int h, int c, int batch, int stride, int forward
 
 ## flatten
 
-```
+```c
 void flatten(float *x, int size, int layers, int batch, int forward)
 {
     float *swap = calloc(size*layers*batch, sizeof(float));
     int i,c,b;
     for(b = 0; b < batch; ++b){
         for(c = 0; c < layers; ++c){
-            for(i = 0; i < size; ++i){
+            for(i = 0; i < size; ++i){  
                 int i1 = b*layers*size + c*size + i;
                 int i2 = b*layers*size + i*layers + c;
                 if (forward) swap[i2] = x[i1];
@@ -440,11 +441,18 @@ void flatten(float *x, int size, int layers, int batch, int forward)
 }
 ```
 
-- reorg
+- 다차원 배열을 1차원 배열로 만드는 함수 입니다.
+
+- 기존부터 1차원 배열이기 때문에 darknet에서 flatten은 재배열 입니다.
+
+
+![flatten](/figure/flatten.PNG)
+
+
 
 ## weighted_sum_cpu
 
-```
+```c
 void weighted_sum_cpu(float *a, float *b, float *s, int n, float *c)
 {
     int i;
@@ -458,7 +466,7 @@ void weighted_sum_cpu(float *a, float *b, float *s, int n, float *c)
 
 ## weighted_delta_cpu
 
-```
+```c
 void weighted_delta_cpu(float *a, float *b, float *s, float *da, float *db, float *ds, int n, float *dc)
 {
     int i;
@@ -476,7 +484,7 @@ void weighted_delta_cpu(float *a, float *b, float *s, float *da, float *db, floa
 
 ## shortcut_cpu
 
-```
+```c
 void shortcut_cpu(int batch, int w1, int h1, int c1, float *add, int w2, int h2, int c2, float s1, float s2, float *out)
 {
     int stride = w1/w2;
@@ -510,7 +518,7 @@ void shortcut_cpu(int batch, int w1, int h1, int c1, float *add, int w2, int h2,
 
 ## softmax_x_ent_cpu
 
-```
+```c
 void softmax_x_ent_cpu(int n, float *pred, float *truth, float *delta, float *error)
 {
     int i;
