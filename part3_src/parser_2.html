@@ -1,0 +1,3022 @@
+
+<!DOCTYPE HTML>
+<html lang="" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>+ parser.c · DarkNet Book</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 3.2.3">
+        <meta name="author" content="JJM">
+        
+        
+    
+    
+
+    
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-advanced-emoji/emoji-website.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-search/search.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-fontsettings/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-theme-api/theme-api.css">
+                
+            
+        
+
+    
+
+    
+        
+        <link rel="stylesheet" href="../website-1597154999314.css">
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    
+    
+        <link rel="shortcut icon" href="../gitbook/images/favicon.ico" type="image/x-icon">
+    
+    
+    
+
+    
+    <link rel="next" href="region_layer.html" />
+    
+    
+    <link rel="prev" href="parser_1.html" />
+    
+
+    </head>
+    <body>
+        
+<div class="book">
+    <div class="book-summary">
+        
+            <div class="book-logo">   
+                
+                <img src="/darknet_book/assets/darknet.png"/>
+                
+            </div>
+            
+<div id="book-search-input" role="search">
+    <input type="text" placeholder="Type to search" />
+</div>
+
+            
+                <nav role="navigation">
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        
+        <li class="header ">DARKNET</li>
+        
+        
+    
+        
+        <li class="chapter 
+              "
+            data-level="1.1" 
+            data-path="../">
+
+            
+                <a href="../">
+            
+                    
+                    DarkNet
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="1.2" 
+            data-path="../INSTALL.html">
+
+            
+                <a href="../INSTALL.html">
+            
+                    
+                    설치하기
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+        
+        
+        <li class="header ">Paper</li>
+        
+        
+    
+        
+        <li class="chapter 
+              "
+            data-level="2.1" 
+            data-path="../part1_paper/yolov1.html">
+
+            
+                <a href="../part1_paper/yolov1.html">
+            
+                    
+                    YOLOv1
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="2.2" 
+            data-path="../part1_paper/yolov2.html">
+
+            
+                <a href="../part1_paper/yolov2.html">
+            
+                    
+                    YOLOv2
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="2.3" 
+            data-path="../part1_paper/yolov3.html">
+
+            
+                <a href="../part1_paper/yolov3.html">
+            
+                    
+                    YOLOv3
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="2.4" 
+            data-path="../part1_paper/yolov4.html">
+
+            
+                <a href="../part1_paper/yolov4.html">
+            
+                    
+                    YOLOv4
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+        
+        
+        <li class="header ">SOURCE</li>
+        
+        
+    
+        
+        <li class="chapter 
+              "
+            data-level="3.1" 
+            data-path="../part2_source/0_Project.html">
+
+            
+                <a href="../part2_source/0_Project.html">
+            
+                    
+                    project
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="3.2" 
+            data-path="../part2_source/1_DATA.html">
+
+            
+                <a href="../part2_source/1_DATA.html">
+            
+                    
+                    /data
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="3.3" 
+            data-path="../part2_source/2_CFG.html">
+
+            
+                <a href="../part2_source/2_CFG.html">
+            
+                    
+                    /cfg
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="3.4" 
+            data-path="../part2_source/3_EXAMPLE.html">
+
+            
+                <a href="../part2_source/3_EXAMPLE.html">
+            
+                    
+                    /example
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="3.5" 
+            data-path="../part2_source/4_SRC.html">
+
+            
+                <a href="../part2_source/4_SRC.html">
+            
+                    
+                    /src
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+        
+        
+        <li class="header ">Structure</li>
+        
+        
+    
+        
+        <li class="chapter 
+              "
+            data-level="4.1" 
+            data-path="../part4_structure/network.html">
+
+            
+                <a href="../part4_structure/network.html">
+            
+                    
+                    network
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="4.2" 
+            data-path="../part4_structure/layer.html">
+
+            
+                <a href="../part4_structure/layer.html">
+            
+                    
+                    layer
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="4.3" 
+            data-path="../part4_structure/etc.html">
+
+            
+                <a href="../part4_structure/etc.html">
+            
+                    
+                    etc
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+        
+        
+        <li class="header  selected ">/SRC</li>
+        
+        
+    
+        
+        <li class="chapter 
+              "
+            data-level="5.1" 
+            data-path="activation_layer.html">
+
+            
+                <a href="activation_layer.html">
+            
+                    
+                    activation_layer.c
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="5.2" 
+            data-path="activations_1.html">
+
+            
+                <a href="activations_1.html">
+            
+                    
+                    activations.c
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+                
+    
+        
+        <li class="chapter 
+               hide "
+            data-level="5.2.1" 
+            data-path="activations_2.html">
+
+            
+                <a href="activations_2.html">
+            
+                    
+                    activation.h
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="5.3" 
+            data-path="avgpool.html">
+
+            
+                <a href="avgpool.html">
+            
+                    
+                    avgpool_layer.c
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="5.4" 
+            data-path="batchnorm_layer.html">
+
+            
+                <a href="batchnorm_layer.html">
+            
+                    
+                    batchnorm_layer.c
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="5.5" 
+            data-path="blas.html">
+
+            
+                <a href="blas.html">
+            
+                    
+                    blas.c
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="5.6" 
+            data-path="box.html">
+
+            
+                <a href="box.html">
+            
+                    
+                    box.c
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="5.7" 
+            data-path="col2im.html">
+
+            
+                <a href="col2im.html">
+            
+                    
+                    col2im.c
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="5.8" 
+            data-path="compare.html">
+
+            
+                <a href="compare.html">
+            
+                    
+                    compare.c
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="5.9" 
+            data-path="connected_layer.html">
+
+            
+                <a href="connected_layer.html">
+            
+                    
+                    connected_layer.c
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="5.10" 
+            data-path="convolutional_layer.html">
+
+            
+                <a href="convolutional_layer.html">
+            
+                    
+                    convolutional_layer.c
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="5.11" 
+            data-path="cost_layer.html">
+
+            
+                <a href="cost_layer.html">
+            
+                    
+                    cost_layer.c
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="5.12" 
+            data-path="crnn_layer.html">
+
+            
+                <a href="crnn_layer.html">
+            
+                    
+                    crnn_layer.c
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="5.13" 
+            data-path="crop_layer.html">
+
+            
+                <a href="crop_layer.html">
+            
+                    
+                    crop_layer.c
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="5.14" 
+            data-path="data.html">
+
+            
+                <a href="data.html">
+            
+                    
+                    data.c
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="5.15" 
+            data-path="deconvolutional_layer.html">
+
+            
+                <a href="deconvolutional_layer.html">
+            
+                    
+                    deconvolutional_layer.c
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="5.16" 
+            data-path="demo.html">
+
+            
+                <a href="demo.html">
+            
+                    
+                    demo.c
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="5.17" 
+            data-path="detection_layer.html">
+
+            
+                <a href="detection_layer.html">
+            
+                    
+                    detection_layer.c
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="5.18" 
+            data-path="dropout_layer.html">
+
+            
+                <a href="dropout_layer.html">
+            
+                    
+                    dropout_layer.c
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="5.19" 
+            data-path="gemm.html">
+
+            
+                <a href="gemm.html">
+            
+                    
+                    gemm.c
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="5.20" 
+            data-path="gru_layer.html">
+
+            
+                <a href="gru_layer.html">
+            
+                    
+                    gru_layer.c
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="5.21" 
+            data-path="im2col.html">
+
+            
+                <a href="im2col.html">
+            
+                    
+                    im2col.c
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="5.22" 
+            data-path="image.html">
+
+            
+                <a href="image.html">
+            
+                    
+                    image.c
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="5.23" 
+            data-path="iseg_layer.html">
+
+            
+                <a href="iseg_layer.html">
+            
+                    
+                    iseg_layer.c
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="5.24" 
+            data-path="l2norm_layer.html">
+
+            
+                <a href="l2norm_layer.html">
+            
+                    
+                    l2norm_layer.c
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="5.25" 
+            data-path="layer.html">
+
+            
+                <a href="layer.html">
+            
+                    
+                    layer.c
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="5.26" 
+            data-path="list.html">
+
+            
+                <a href="list.html">
+            
+                    
+                    list.c
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="5.27" 
+            data-path="local_layer.html">
+
+            
+                <a href="local_layer.html">
+            
+                    
+                    local_layer.c
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="5.28" 
+            data-path="logistic_layer.html">
+
+            
+                <a href="logistic_layer.html">
+            
+                    
+                    logistic_layer.c
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="5.29" 
+            data-path="lstm_layer.html">
+
+            
+                <a href="lstm_layer.html">
+            
+                    
+                    lstm_layer.c
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="5.30" 
+            data-path="matrix.html">
+
+            
+                <a href="matrix.html">
+            
+                    
+                    matrix.c
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="5.31" 
+            data-path="maxpool.html">
+
+            
+                <a href="maxpool.html">
+            
+                    
+                    maxpool_layer.c
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="5.32" 
+            data-path="network.html">
+
+            
+                <a href="network.html">
+            
+                    
+                    network.c
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="5.33" 
+            data-path="normalization_layer.html">
+
+            
+                <a href="normalization_layer.html">
+            
+                    
+                    normalization_layer.c
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="5.34" 
+            data-path="option_list.html">
+
+            
+                <a href="option_list.html">
+            
+                    
+                    option_list.c
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              selected  "
+            data-level="5.35" 
+            data-path="parser_1.html">
+
+            
+                <a href="parser_1.html">
+            
+                    
+                    parser.c
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                  
+                
+    
+        
+        <li class="chapter 
+            active  selected  "
+            data-level="5.35.1" 
+            data-path="parser_2.html">
+
+            
+                <a href="parser_2.html">
+            
+                    
+                    + parser.c
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="5.36" 
+            data-path="region_layer.html">
+
+            
+                <a href="region_layer.html">
+            
+                    
+                    region_layer.c
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="5.37" 
+            data-path="reorg_layer.html">
+
+            
+                <a href="reorg_layer.html">
+            
+                    
+                    reorg_layer.c
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="5.38" 
+            data-path="rnn_layer.html">
+
+            
+                <a href="rnn_layer.html">
+            
+                    
+                    rnn_layer.c
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="5.39" 
+            data-path="route_layer.html">
+
+            
+                <a href="route_layer.html">
+            
+                    
+                    route_layer.c
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="5.40" 
+            data-path="shortcut.md">
+
+            
+                <span>
+            
+                    
+                    shortcut_layer.c
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="5.41" 
+            data-path="softmax_layer.html">
+
+            
+                <a href="softmax_layer.html">
+            
+                    
+                    softmax_layer.c
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="5.42" 
+            data-path="tree.html">
+
+            
+                <a href="tree.html">
+            
+                    
+                    tree.c
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="5.43" 
+            data-path="upsample_layer.html">
+
+            
+                <a href="upsample_layer.html">
+            
+                    
+                    upsample_layer.c
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="5.44" 
+            data-path="utils.html">
+
+            
+                <a href="utils.html">
+            
+                    
+                    utils.c
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="5.45" 
+            data-path="yolo_layer.html">
+
+            
+                <a href="yolo_layer.html">
+            
+                    
+                    yolo_layer.c
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="5.46" 
+            data-path="image_opencv.html">
+
+            
+                <a href="image_opencv.html">
+            
+                    
+                    image_opencv.cpp
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+        
+        
+        <li class="header ">CUDA</li>
+        
+        
+    
+        
+        <li class="chapter 
+              "
+            data-level="6.1" 
+            >
+
+            
+                <span>
+            
+                    
+                    cuda.c
+            
+                </span>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="6.2" 
+            >
+
+            
+                <span>
+            
+                    
+                    avgpool_layer_kernels.cu
+            
+                </span>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="6.3" 
+            >
+
+            
+                <span>
+            
+                    
+                    maxpool_layer_kernels.cu
+            
+                </span>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="6.4" 
+            >
+
+            
+                <span>
+            
+                    
+                    im2col_kernels.cu
+            
+                </span>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="6.5" 
+            >
+
+            
+                <span>
+            
+                    
+                    blas_kernels.cu
+            
+                </span>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="6.6" 
+            >
+
+            
+                <span>
+            
+                    
+                    activation_kernels.cu
+            
+                </span>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="6.7" 
+            >
+
+            
+                <span>
+            
+                    
+                    col2im_kernels.cu
+            
+                </span>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="6.8" 
+            >
+
+            
+                <span>
+            
+                    
+                    convolutional_kernels.cu
+            
+                </span>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="6.9" 
+            >
+
+            
+                <span>
+            
+                    
+                    crop_layer_kernels.cu
+            
+                </span>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="6.10" 
+            >
+
+            
+                <span>
+            
+                    
+                    deconvolutional_kernels.cu
+            
+                </span>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="6.11" 
+            >
+
+            
+                <span>
+            
+                    
+                    dropout_layer_kernels.cu
+            
+                </span>
+            
+
+            
+        </li>
+    
+
+    
+        
+        
+        <li class="header ">/example</li>
+        
+        
+    
+        
+        <li class="chapter 
+              "
+            data-level="7.1" 
+            >
+
+            
+                <span>
+            
+                    
+                    art.c
+            
+                </span>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="7.2" 
+            >
+
+            
+                <span>
+            
+                    
+                    attention.c
+            
+                </span>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="7.3" 
+            >
+
+            
+                <span>
+            
+                    
+                    captcha.c
+            
+                </span>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="7.4" 
+            >
+
+            
+                <span>
+            
+                    
+                    cifar.c
+            
+                </span>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="7.5" 
+            >
+
+            
+                <span>
+            
+                    
+                    classifier.c
+            
+                </span>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="7.6" 
+            >
+
+            
+                <span>
+            
+                    
+                    coco.c
+            
+                </span>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="7.7" 
+            >
+
+            
+                <span>
+            
+                    
+                    darknet.c
+            
+                </span>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="7.8" 
+            >
+
+            
+                <span>
+            
+                    
+                    detector-scipy-opencv.py
+            
+                </span>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="7.9" 
+            >
+
+            
+                <span>
+            
+                    
+                    detector.c
+            
+                </span>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="7.10" 
+            >
+
+            
+                <span>
+            
+                    
+                    detector.py
+            
+                </span>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="7.11" 
+            >
+
+            
+                <span>
+            
+                    
+                    dice.c
+            
+                </span>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="7.12" 
+            >
+
+            
+                <span>
+            
+                    
+                    go.c
+            
+                </span>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="7.13" 
+            >
+
+            
+                <span>
+            
+                    
+                    instance-segmenter.c
+            
+                </span>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="7.14" 
+            >
+
+            
+                <span>
+            
+                    
+                    lsd.c
+            
+                </span>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="7.15" 
+            >
+
+            
+                <span>
+            
+                    
+                    nightmare.c
+            
+                </span>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="7.16" 
+            >
+
+            
+                <span>
+            
+                    
+                    regressor.c
+            
+                </span>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="7.17" 
+            >
+
+            
+                <span>
+            
+                    
+                    rnn.c
+            
+                </span>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="7.18" 
+            >
+
+            
+                <span>
+            
+                    
+                    rnn_vid.c
+            
+                </span>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="7.19" 
+            >
+
+            
+                <span>
+            
+                    
+                    segmenter.c
+            
+                </span>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="7.20" 
+            >
+
+            
+                <span>
+            
+                    
+                    super.c
+            
+                </span>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="7.21" 
+            >
+
+            
+                <span>
+            
+                    
+                    swag.c
+            
+                </span>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="7.22" 
+            >
+
+            
+                <span>
+            
+                    
+                    tag.c
+            
+                </span>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="7.23" 
+            >
+
+            
+                <span>
+            
+                    
+                    voxel.c
+            
+                </span>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="7.24" 
+            >
+
+            
+                <span>
+            
+                    
+                    writing.c
+            
+                </span>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="7.25" 
+            >
+
+            
+                <span>
+            
+                    
+                    yolo.c
+            
+                </span>
+            
+
+            
+        </li>
+    
+
+    
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href=".." >+ parser.c</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+<div id="book-search-results">
+    <div class="search-noresults">
+    
+                                <section class="normal markdown-section">
+                                
+                                <h2 id="freesection">free_section</h2>
+<pre><code>void free_section(section *s)
+{
+    free(s-&gt;type);
+    node *n = s-&gt;options-&gt;front;
+    while(n){
+        kvp *pair = (kvp *)n-&gt;val;
+        free(pair-&gt;key);
+        free(pair);
+        node *next = n-&gt;next;
+        free(n);
+        n = next;
+    }
+    free(s-&gt;options);
+    free(s);
+}
+</code></pre><ul>
+<li>section&#xC758; &#xBA54;&#xBAA8;&#xB9AC; &#xD560;&#xB2F9;&#xC744; &#xD574;&#xC81C;&#xD569;&#xB2C8;&#xB2E4;.</li>
+</ul>
+<h2 id="parsedata">parse_data</h2>
+<pre><code>void parse_data(char *data, float *a, int n)
+{
+    int i;
+    if(!data) return;
+    char *curr = data;
+
+    char *next = data;
+    int done = 0;
+    for(i = 0; i &lt; n &amp;&amp; !done; ++i){
+        while(*++next !=&apos;\0&apos; &amp;&amp; *next != &apos;,&apos;);
+        if(*next == &apos;\0&apos;) done = 1;
+        *next = &apos;\0&apos;;
+        sscanf(curr, &quot;%g&quot;, &amp;a[i]);
+        curr = next+1;
+    }
+}
+</code></pre><ul>
+<li><code>%g</code> : &#xC22B;&#xC790;&#xC5D0; &#xD06C;&#xAE30;&#xC5D0; &#xB530;&#xB77C;&#xC11C; f(123.456)&#xB098; e(12.3456e + 001)&#xB85C; &#xCD9C;&#xB825;&#xD569;&#xB2C8;&#xB2E4;.</li>
+<li><code>sscanf(curr, &quot;%g&quot;, &amp;a[i]);</code> curr&#xC5D0; &#xC800;&#xC7A5;&#xB41C; &#xAC12;&#xC774; a[i]&#xC5D0; %g &#xD615;&#xD0DC;&#xB85C; &#xC785;&#xB825;&#xB429;&#xB2C8;&#xB2E4;.</li>
+</ul>
+<h2 id="parselocal">parse_local</h2>
+<pre><code>local_layer parse_local(list *options, size_params params)
+{
+    int n = option_find_int(options, &quot;filters&quot;,1);
+    int size = option_find_int(options, &quot;size&quot;,1);
+    int stride = option_find_int(options, &quot;stride&quot;,1);
+    int pad = option_find_int(options, &quot;pad&quot;,0);
+    char *activation_s = option_find_str(options, &quot;activation&quot;, &quot;logistic&quot;);
+    ACTIVATION activation = get_activation(activation_s);
+
+    int batch,h,w,c;
+    h = params.h;
+    w = params.w;
+    c = params.c;
+    batch=params.batch;
+    if(!(h &amp;&amp; w &amp;&amp; c)) error(&quot;Layer before local layer must output image.&quot;);
+
+    local_layer layer = make_local_layer(batch,h,w,c,n,size,stride,pad,activation);
+
+    return layer;
+}
+</code></pre><ul>
+<li>local layer&#xC5D0; &#xD574;&#xB2F9;&#xD558;&#xB294; &#xD30C;&#xB77C;&#xBBF8;&#xD130;&#xB4E4;&#xC744; parsing&#xD574;&#xC11C; layer&#xB85C; &#xB9CC;&#xB4ED;&#xB2C8;&#xB2E4;.</li>
+</ul>
+<h2 id="parsedeconvolutional">parse_deconvolutional</h2>
+<pre><code>layer parse_deconvolutional(list *options, size_params params)
+{
+    int n = option_find_int(options, &quot;filters&quot;,1);
+    int size = option_find_int(options, &quot;size&quot;,1);
+    int stride = option_find_int(options, &quot;stride&quot;,1);
+
+    char *activation_s = option_find_str(options, &quot;activation&quot;, &quot;logistic&quot;);
+    ACTIVATION activation = get_activation(activation_s);
+
+    int batch,h,w,c;
+    h = params.h;
+    w = params.w;
+    c = params.c;
+    batch=params.batch;
+    if(!(h &amp;&amp; w &amp;&amp; c)) error(&quot;Layer before deconvolutional layer must output image.&quot;);
+    int batch_normalize = option_find_int_quiet(options, &quot;batch_normalize&quot;, 0);
+    int pad = option_find_int_quiet(options, &quot;pad&quot;,0);
+    int padding = option_find_int_quiet(options, &quot;padding&quot;,0);
+    if(pad) padding = size/2;
+
+    layer l = make_deconvolutional_layer(batch,h,w,c,n,size,stride,padding, activation, batch_normalize, params.net-&gt;adam);
+
+    return l;
+}
+</code></pre><ul>
+<li>deconvolutional layer&#xC5D0; &#xD574;&#xB2F9;&#xD558;&#xB294; &#xD30C;&#xB77C;&#xBBF8;&#xD130;&#xB4E4;&#xC744; parsing&#xD574;&#xC11C; layer&#xB85C; &#xB9CC;&#xB4ED;&#xB2C8;&#xB2E4;.</li>
+</ul>
+<h2 id="parseconvolutional">parse_convolutional</h2>
+<pre><code>convolutional_layer parse_convolutional(list *options, size_params params)
+{
+    int n = option_find_int(options, &quot;filters&quot;,1);
+    int size = option_find_int(options, &quot;size&quot;,1);
+    int stride = option_find_int(options, &quot;stride&quot;,1);
+    int pad = option_find_int_quiet(options, &quot;pad&quot;,0);
+    int padding = option_find_int_quiet(options, &quot;padding&quot;,0);
+    int groups = option_find_int_quiet(options, &quot;groups&quot;, 1);
+    if(pad) padding = size/2;
+
+    char *activation_s = option_find_str(options, &quot;activation&quot;, &quot;logistic&quot;);
+    ACTIVATION activation = get_activation(activation_s);
+
+    int batch,h,w,c;
+    h = params.h;
+    w = params.w;
+    c = params.c;
+    batch=params.batch;
+    if(!(h &amp;&amp; w &amp;&amp; c)) error(&quot;Layer before convolutional layer must output image.&quot;);
+    int batch_normalize = option_find_int_quiet(options, &quot;batch_normalize&quot;, 0);
+    int binary = option_find_int_quiet(options, &quot;binary&quot;, 0);
+    int xnor = option_find_int_quiet(options, &quot;xnor&quot;, 0);
+
+    convolutional_layer layer = make_convolutional_layer(batch,h,w,c,n,groups,size,stride,padding,activation, batch_normalize, binary, xnor, params.net-&gt;adam);
+    layer.flipped = option_find_int_quiet(options, &quot;flipped&quot;, 0);
+    layer.dot = option_find_float_quiet(options, &quot;dot&quot;, 0);
+
+    return layer;
+}
+</code></pre><ul>
+<li>convolutional layer&#xC5D0; &#xD574;&#xB2F9;&#xD558;&#xB294; &#xD30C;&#xB77C;&#xBBF8;&#xD130;&#xB4E4;&#xC744; parsing&#xD574;&#xC11C; layer&#xB85C; &#xB9CC;&#xB4ED;&#xB2C8;&#xB2E4;.</li>
+</ul>
+<h2 id="parsecrnn">parse_crnn</h2>
+<pre><code>layer parse_crnn(list *options, size_params params)
+{
+    int output_filters = option_find_int(options, &quot;output_filters&quot;,1);
+    int hidden_filters = option_find_int(options, &quot;hidden_filters&quot;,1);
+    char *activation_s = option_find_str(options, &quot;activation&quot;, &quot;logistic&quot;);
+    ACTIVATION activation = get_activation(activation_s);
+    int batch_normalize = option_find_int_quiet(options, &quot;batch_normalize&quot;, 0);
+
+    layer l = make_crnn_layer(params.batch, params.w, params.h, params.c, hidden_filters, output_filters, params.time_steps, activation, batch_normalize);
+
+    l.shortcut = option_find_int_quiet(options, &quot;shortcut&quot;, 0);
+
+    return l;
+}
+</code></pre><ul>
+<li>crnn layer&#xC5D0; &#xD574;&#xB2F9;&#xD558;&#xB294; &#xD30C;&#xB77C;&#xBBF8;&#xD130;&#xB4E4;&#xC744; parsing&#xD574;&#xC11C; layer&#xB85C; &#xB9CC;&#xB4ED;&#xB2C8;&#xB2E4;.</li>
+</ul>
+<h2 id="parsernn">parse_rnn</h2>
+<pre><code>layer parse_rnn(list *options, size_params params)
+{
+    int output = option_find_int(options, &quot;output&quot;,1);
+    char *activation_s = option_find_str(options, &quot;activation&quot;, &quot;logistic&quot;);
+    ACTIVATION activation = get_activation(activation_s);
+    int batch_normalize = option_find_int_quiet(options, &quot;batch_normalize&quot;, 0);
+
+    layer l = make_rnn_layer(params.batch, params.inputs, output, params.time_steps, activation, batch_normalize, params.net-&gt;adam);
+
+    l.shortcut = option_find_int_quiet(options, &quot;shortcut&quot;, 0);
+
+    return l;
+}
+</code></pre><ul>
+<li>rnn layer&#xC5D0; &#xD574;&#xB2F9;&#xD558;&#xB294; &#xD30C;&#xB77C;&#xBBF8;&#xD130;&#xB4E4;&#xC744; parsing&#xD574;&#xC11C; layer&#xB85C; &#xB9CC;&#xB4ED;&#xB2C8;&#xB2E4;.</li>
+</ul>
+<h2 id="parsegru">parse_gru</h2>
+<pre><code>layer parse_gru(list *options, size_params params)
+{
+    int output = option_find_int(options, &quot;output&quot;,1);
+    int batch_normalize = option_find_int_quiet(options, &quot;batch_normalize&quot;, 0);
+
+    layer l = make_gru_layer(params.batch, params.inputs, output, params.time_steps, batch_normalize, params.net-&gt;adam);
+    l.tanh = option_find_int_quiet(options, &quot;tanh&quot;, 0);
+
+    return l;
+}
+</code></pre><ul>
+<li>gru layer&#xC5D0; &#xD574;&#xB2F9;&#xD558;&#xB294; &#xD30C;&#xB77C;&#xBBF8;&#xD130;&#xB4E4;&#xC744; parsing&#xD574;&#xC11C; layer&#xB85C; &#xB9CC;&#xB4ED;&#xB2C8;&#xB2E4;.</li>
+</ul>
+<h2 id="parselstm">parse_lstm</h2>
+<pre><code>layer parse_lstm(list *options, size_params params)
+{
+    int output = option_find_int(options, &quot;output&quot;, 1);
+    int batch_normalize = option_find_int_quiet(options, &quot;batch_normalize&quot;, 0);
+
+    layer l = make_lstm_layer(params.batch, params.inputs, output, params.time_steps, batch_normalize, params.net-&gt;adam);
+
+    return l;
+}
+</code></pre><ul>
+<li>lstm layer&#xC5D0; &#xD574;&#xB2F9;&#xD558;&#xB294; &#xD30C;&#xB77C;&#xBBF8;&#xD130;&#xB4E4;&#xC744; parsing&#xD574;&#xC11C; layer&#xB85C; &#xB9CC;&#xB4ED;&#xB2C8;&#xB2E4;.</li>
+</ul>
+<h2 id="parseconnected">parse_connected</h2>
+<pre><code>layer parse_connected(list *options, size_params params)
+{
+    int output = option_find_int(options, &quot;output&quot;,1);
+    char *activation_s = option_find_str(options, &quot;activation&quot;, &quot;logistic&quot;);
+    ACTIVATION activation = get_activation(activation_s);
+    int batch_normalize = option_find_int_quiet(options, &quot;batch_normalize&quot;, 0);
+
+    layer l = make_connected_layer(params.batch, params.inputs, output, activation, batch_normalize, params.net-&gt;adam);
+    return l;
+}
+</code></pre><ul>
+<li>connected layer&#xC5D0; &#xD574;&#xB2F9;&#xD558;&#xB294; &#xD30C;&#xB77C;&#xBBF8;&#xD130;&#xB4E4;&#xC744; parsing&#xD574;&#xC11C; layer&#xB85C; &#xB9CC;&#xB4ED;&#xB2C8;&#xB2E4;.</li>
+</ul>
+<h2 id="parsesoftmax">parse_softmax</h2>
+<pre><code>layer parse_softmax(list *options, size_params params)
+{
+    int groups = option_find_int_quiet(options, &quot;groups&quot;,1);
+    layer l = make_softmax_layer(params.batch, params.inputs, groups);
+    l.temperature = option_find_float_quiet(options, &quot;temperature&quot;, 1);
+    char *tree_file = option_find_str(options, &quot;tree&quot;, 0);
+    if (tree_file) l.softmax_tree = read_tree(tree_file);
+    l.w = params.w;
+    l.h = params.h;
+    l.c = params.c;
+    l.spatial = option_find_float_quiet(options, &quot;spatial&quot;, 0);
+    l.noloss =  option_find_int_quiet(options, &quot;noloss&quot;, 0);
+    return l;
+}
+</code></pre><ul>
+<li>softmax layer&#xC5D0; &#xD574;&#xB2F9;&#xD558;&#xB294; &#xD30C;&#xB77C;&#xBBF8;&#xD130;&#xB4E4;&#xC744; parsing&#xD574;&#xC11C; layer&#xB85C; &#xB9CC;&#xB4ED;&#xB2C8;&#xB2E4;.</li>
+</ul>
+<h2 id="parseyolomask">parse_yolo_mask</h2>
+<pre><code>int *parse_yolo_mask(char *a, int *num)
+{
+    int *mask = 0;
+    if(a){
+        int len = strlen(a);
+        int n = 1;
+        int i;
+        for(i = 0; i &lt; len; ++i){
+            if (a[i] == &apos;,&apos;) ++n;
+        }
+        mask = calloc(n, sizeof(int));
+        for(i = 0; i &lt; n; ++i){
+            int val = atoi(a);
+            mask[i] = val;
+            a = strchr(a, &apos;,&apos;)+1;
+        }
+        *num = n;
+    }
+    return mask;
+}
+</code></pre><h2 id="parseyolo">parse_yolo</h2>
+<pre><code>layer parse_yolo(list *options, size_params params)
+{
+    int classes = option_find_int(options, &quot;classes&quot;, 20);
+    int total = option_find_int(options, &quot;num&quot;, 1);
+    int num = total;
+
+    char *a = option_find_str(options, &quot;mask&quot;, 0);
+    int *mask = parse_yolo_mask(a, &amp;num);
+    layer l = make_yolo_layer(params.batch, params.w, params.h, num, total, mask, classes);
+    assert(l.outputs == params.inputs);
+
+    l.max_boxes = option_find_int_quiet(options, &quot;max&quot;,90);
+    l.jitter = option_find_float(options, &quot;jitter&quot;, .2);
+
+    l.ignore_thresh = option_find_float(options, &quot;ignore_thresh&quot;, .5);
+    l.truth_thresh = option_find_float(options, &quot;truth_thresh&quot;, 1);
+    l.random = option_find_int_quiet(options, &quot;random&quot;, 0);
+
+    char *map_file = option_find_str(options, &quot;map&quot;, 0);
+    if (map_file) l.map = read_map(map_file);
+
+    a = option_find_str(options, &quot;anchors&quot;, 0);
+    if(a){
+        int len = strlen(a);
+        int n = 1;
+        int i;
+        for(i = 0; i &lt; len; ++i){
+            if (a[i] == &apos;,&apos;) ++n;
+        }
+        for(i = 0; i &lt; n; ++i){
+            float bias = atof(a);
+            l.biases[i] = bias;
+            a = strchr(a, &apos;,&apos;)+1;
+        }
+    }
+    return l;
+}
+</code></pre><ul>
+<li>yolo layer&#xC5D0; &#xD574;&#xB2F9;&#xD558;&#xB294; &#xD30C;&#xB77C;&#xBBF8;&#xD130;&#xB4E4;&#xC744; parsing&#xD574;&#xC11C; layer&#xB85C; &#xB9CC;&#xB4ED;&#xB2C8;&#xB2E4;.</li>
+</ul>
+<h2 id="parseiseg">parse_iseg</h2>
+<pre><code>layer parse_iseg(list *options, size_params params)
+{
+    int classes = option_find_int(options, &quot;classes&quot;, 20);
+    int ids = option_find_int(options, &quot;ids&quot;, 32);
+    layer l = make_iseg_layer(params.batch, params.w, params.h, classes, ids);
+    assert(l.outputs == params.inputs);
+    return l;
+}
+</code></pre><ul>
+<li>iseg layer&#xC5D0; &#xD574;&#xB2F9;&#xD558;&#xB294; &#xD30C;&#xB77C;&#xBBF8;&#xD130;&#xB4E4;&#xC744; parsing&#xD574;&#xC11C; layer&#xB85C; &#xB9CC;&#xB4ED;&#xB2C8;&#xB2E4;.</li>
+</ul>
+<h2 id="parseregion">parse_region</h2>
+<pre><code>layer parse_region(list *options, size_params params)
+{
+    int coords = option_find_int(options, &quot;coords&quot;, 4);
+    int classes = option_find_int(options, &quot;classes&quot;, 20);
+    int num = option_find_int(options, &quot;num&quot;, 1);
+
+    layer l = make_region_layer(params.batch, params.w, params.h, num, classes, coords);
+    assert(l.outputs == params.inputs);
+
+    l.log = option_find_int_quiet(options, &quot;log&quot;, 0);
+    l.sqrt = option_find_int_quiet(options, &quot;sqrt&quot;, 0);
+
+    l.softmax = option_find_int(options, &quot;softmax&quot;, 0);
+    l.background = option_find_int_quiet(options, &quot;background&quot;, 0);
+    l.max_boxes = option_find_int_quiet(options, &quot;max&quot;,30);
+    l.jitter = option_find_float(options, &quot;jitter&quot;, .2);
+    l.rescore = option_find_int_quiet(options, &quot;rescore&quot;,0);
+
+    l.thresh = option_find_float(options, &quot;thresh&quot;, .5);
+    l.classfix = option_find_int_quiet(options, &quot;classfix&quot;, 0);
+    l.absolute = option_find_int_quiet(options, &quot;absolute&quot;, 0);
+    l.random = option_find_int_quiet(options, &quot;random&quot;, 0);
+
+    l.coord_scale = option_find_float(options, &quot;coord_scale&quot;, 1);
+    l.object_scale = option_find_float(options, &quot;object_scale&quot;, 1);
+    l.noobject_scale = option_find_float(options, &quot;noobject_scale&quot;, 1);
+    l.mask_scale = option_find_float(options, &quot;mask_scale&quot;, 1);
+    l.class_scale = option_find_float(options, &quot;class_scale&quot;, 1);
+    l.bias_match = option_find_int_quiet(options, &quot;bias_match&quot;,0);
+
+    char *tree_file = option_find_str(options, &quot;tree&quot;, 0);
+    if (tree_file) l.softmax_tree = read_tree(tree_file);
+    char *map_file = option_find_str(options, &quot;map&quot;, 0);
+    if (map_file) l.map = read_map(map_file);
+
+    char *a = option_find_str(options, &quot;anchors&quot;, 0);
+    if(a){
+        int len = strlen(a);
+        int n = 1;
+        int i;
+        for(i = 0; i &lt; len; ++i){
+            if (a[i] == &apos;,&apos;) ++n;
+        }
+        for(i = 0; i &lt; n; ++i){
+            float bias = atof(a);
+            l.biases[i] = bias;
+            a = strchr(a, &apos;,&apos;)+1;
+        }
+    }
+    return l;
+}
+</code></pre><ul>
+<li>region layer&#xC5D0; &#xD574;&#xB2F9;&#xD558;&#xB294; &#xD30C;&#xB77C;&#xBBF8;&#xD130;&#xB4E4;&#xC744; parsing&#xD574;&#xC11C; layer&#xB85C; &#xB9CC;&#xB4ED;&#xB2C8;&#xB2E4;.</li>
+</ul>
+<h2 id="parsedetection">parse_detection</h2>
+<pre><code>detection_layer parse_detection(list *options, size_params params)
+{
+    int coords = option_find_int(options, &quot;coords&quot;, 1);
+    int classes = option_find_int(options, &quot;classes&quot;, 1);
+    int rescore = option_find_int(options, &quot;rescore&quot;, 0);
+    int num = option_find_int(options, &quot;num&quot;, 1);
+    int side = option_find_int(options, &quot;side&quot;, 7);
+    detection_layer layer = make_detection_layer(params.batch, params.inputs, num, side, classes, coords, rescore);
+
+    layer.softmax = option_find_int(options, &quot;softmax&quot;, 0);
+    layer.sqrt = option_find_int(options, &quot;sqrt&quot;, 0);
+
+    layer.max_boxes = option_find_int_quiet(options, &quot;max&quot;,90);
+    layer.coord_scale = option_find_float(options, &quot;coord_scale&quot;, 1);
+    layer.forced = option_find_int(options, &quot;forced&quot;, 0);
+    layer.object_scale = option_find_float(options, &quot;object_scale&quot;, 1);
+    layer.noobject_scale = option_find_float(options, &quot;noobject_scale&quot;, 1);
+    layer.class_scale = option_find_float(options, &quot;class_scale&quot;, 1);
+    layer.jitter = option_find_float(options, &quot;jitter&quot;, .2);
+    layer.random = option_find_int_quiet(options, &quot;random&quot;, 0);
+    layer.reorg = option_find_int_quiet(options, &quot;reorg&quot;, 0);
+    return layer;
+}
+</code></pre><ul>
+<li>detection layer&#xC5D0; &#xD574;&#xB2F9;&#xD558;&#xB294; &#xD30C;&#xB77C;&#xBBF8;&#xD130;&#xB4E4;&#xC744; parsing&#xD574;&#xC11C; layer&#xB85C; &#xB9CC;&#xB4ED;&#xB2C8;&#xB2E4;.</li>
+</ul>
+<h2 id="parsecost">parse_cost</h2>
+<pre><code>cost_layer parse_cost(list *options, size_params params)
+{
+    char *type_s = option_find_str(options, &quot;type&quot;, &quot;sse&quot;);
+    COST_TYPE type = get_cost_type(type_s);
+    float scale = option_find_float_quiet(options, &quot;scale&quot;,1);
+    cost_layer layer = make_cost_layer(params.batch, params.inputs, type, scale);
+    layer.ratio =  option_find_float_quiet(options, &quot;ratio&quot;,0);
+    layer.noobject_scale =  option_find_float_quiet(options, &quot;noobj&quot;, 1);
+    layer.thresh =  option_find_float_quiet(options, &quot;thresh&quot;,0);
+    return layer;
+}
+</code></pre><ul>
+<li>cost layer&#xC5D0; &#xD574;&#xB2F9;&#xD558;&#xB294; &#xD30C;&#xB77C;&#xBBF8;&#xD130;&#xB4E4;&#xC744; parsing&#xD574;&#xC11C; layer&#xB85C; &#xB9CC;&#xB4ED;&#xB2C8;&#xB2E4;.</li>
+</ul>
+<h2 id="parsecrop">parse_crop</h2>
+<pre><code>crop_layer parse_crop(list *options, size_params params)
+{
+    int crop_height = option_find_int(options, &quot;crop_height&quot;,1);
+    int crop_width = option_find_int(options, &quot;crop_width&quot;,1);
+    int flip = option_find_int(options, &quot;flip&quot;,0);
+    float angle = option_find_float(options, &quot;angle&quot;,0);
+    float saturation = option_find_float(options, &quot;saturation&quot;,1);
+    float exposure = option_find_float(options, &quot;exposure&quot;,1);
+
+    int batch,h,w,c;
+    h = params.h;
+    w = params.w;
+    c = params.c;
+    batch=params.batch;
+    if(!(h &amp;&amp; w &amp;&amp; c)) error(&quot;Layer before crop layer must output image.&quot;);
+
+    int noadjust = option_find_int_quiet(options, &quot;noadjust&quot;,0);
+
+    crop_layer l = make_crop_layer(batch,h,w,c,crop_height,crop_width,flip, angle, saturation, exposure);
+    l.shift = option_find_float(options, &quot;shift&quot;, 0);
+    l.noadjust = noadjust;
+    return l;
+}
+</code></pre><ul>
+<li>crop layer&#xC5D0; &#xD574;&#xB2F9;&#xD558;&#xB294; &#xD30C;&#xB77C;&#xBBF8;&#xD130;&#xB4E4;&#xC744; parsing&#xD574;&#xC11C; layer&#xB85C; &#xB9CC;&#xB4ED;&#xB2C8;&#xB2E4;.</li>
+</ul>
+<h2 id="parsereorg">parse_reorg</h2>
+<pre><code>layer parse_reorg(list *options, size_params params)
+{
+    int stride = option_find_int(options, &quot;stride&quot;,1);
+    int reverse = option_find_int_quiet(options, &quot;reverse&quot;,0);
+    int flatten = option_find_int_quiet(options, &quot;flatten&quot;,0);
+    int extra = option_find_int_quiet(options, &quot;extra&quot;,0);
+
+    int batch,h,w,c;
+    h = params.h;
+    w = params.w;
+    c = params.c;
+    batch=params.batch;
+    if(!(h &amp;&amp; w &amp;&amp; c)) error(&quot;Layer before reorg layer must output image.&quot;);
+
+    layer layer = make_reorg_layer(batch,w,h,c,stride,reverse, flatten, extra);
+    return layer;
+}
+</code></pre><ul>
+<li>reorg layer&#xC5D0; &#xD574;&#xB2F9;&#xD558;&#xB294; &#xD30C;&#xB77C;&#xBBF8;&#xD130;&#xB4E4;&#xC744; parsing&#xD574;&#xC11C; layer&#xB85C; &#xB9CC;&#xB4ED;&#xB2C8;&#xB2E4;.</li>
+</ul>
+<h2 id="parsemaxpool">parse_maxpool</h2>
+<pre><code>maxpool_layer parse_maxpool(list *options, size_params params)
+{
+    int stride = option_find_int(options, &quot;stride&quot;,1);
+    int size = option_find_int(options, &quot;size&quot;,stride);
+    int padding = option_find_int_quiet(options, &quot;padding&quot;, size-1);
+
+    int batch,h,w,c;
+    h = params.h;
+    w = params.w;
+    c = params.c;
+    batch=params.batch;
+    if(!(h &amp;&amp; w &amp;&amp; c)) error(&quot;Layer before maxpool layer must output image.&quot;);
+
+    maxpool_layer layer = make_maxpool_layer(batch,h,w,c,size,stride,padding);
+    return layer;
+}
+</code></pre><ul>
+<li>maxpooling layer&#xC5D0; &#xD574;&#xB2F9;&#xD558;&#xB294; &#xD30C;&#xB77C;&#xBBF8;&#xD130;&#xB4E4;&#xC744; parsing&#xD574;&#xC11C; layer&#xB85C; &#xB9CC;&#xB4ED;&#xB2C8;&#xB2E4;.</li>
+</ul>
+<h2 id="parseavgpool">parse_avgpool</h2>
+<pre><code>avgpool_layer parse_avgpool(list *options, size_params params)
+{
+    int batch,w,h,c;
+    w = params.w;
+    h = params.h;
+    c = params.c;
+    batch=params.batch;
+    if(!(h &amp;&amp; w &amp;&amp; c)) error(&quot;Layer before avgpool layer must output image.&quot;);
+
+    avgpool_layer layer = make_avgpool_layer(batch,w,h,c);
+    return layer;
+}
+</code></pre><ul>
+<li>avgpooling layer&#xC5D0; &#xD574;&#xB2F9;&#xD558;&#xB294; &#xD30C;&#xB77C;&#xBBF8;&#xD130;&#xB4E4;&#xC744; parsing&#xD574;&#xC11C; layer&#xB85C; &#xB9CC;&#xB4ED;&#xB2C8;&#xB2E4;.</li>
+</ul>
+<h2 id="parsedropout">parse_dropout</h2>
+<pre><code>dropout_layer parse_dropout(list *options, size_params params)
+{
+    float probability = option_find_float(options, &quot;probability&quot;, .5);
+    dropout_layer layer = make_dropout_layer(params.batch, params.inputs, probability);
+    layer.out_w = params.w;
+    layer.out_h = params.h;
+    layer.out_c = params.c;
+    return layer;
+}
+</code></pre><ul>
+<li>dropout layer&#xC5D0; &#xD574;&#xB2F9;&#xD558;&#xB294; &#xD30C;&#xB77C;&#xBBF8;&#xD130;&#xB4E4;&#xC744; parsing&#xD574;&#xC11C; layer&#xB85C; &#xB9CC;&#xB4ED;&#xB2C8;&#xB2E4;.</li>
+</ul>
+<h2 id="parsenormalization">parse_normalization</h2>
+<pre><code>layer parse_normalization(list *options, size_params params)
+{
+    float alpha = option_find_float(options, &quot;alpha&quot;, .0001);
+    float beta =  option_find_float(options, &quot;beta&quot; , .75);
+    float kappa = option_find_float(options, &quot;kappa&quot;, 1);
+    int size = option_find_int(options, &quot;size&quot;, 5);
+    layer l = make_normalization_layer(params.batch, params.w, params.h, params.c, size, alpha, beta, kappa);
+    return l;
+}
+</code></pre><ul>
+<li>normalization layer&#xC5D0; &#xD574;&#xB2F9;&#xD558;&#xB294; &#xD30C;&#xB77C;&#xBBF8;&#xD130;&#xB4E4;&#xC744; parsing&#xD574;&#xC11C; layer&#xB85C; &#xB9CC;&#xB4ED;&#xB2C8;&#xB2E4;.</li>
+</ul>
+<h2 id="parsebatchnorm">parse_batchnorm</h2>
+<pre><code>layer parse_batchnorm(list *options, size_params params)
+{
+    layer l = make_batchnorm_layer(params.batch, params.w, params.h, params.c);
+    return l;
+}
+</code></pre><ul>
+<li>batch normalization layer&#xC5D0; &#xD574;&#xB2F9;&#xD558;&#xB294; &#xD30C;&#xB77C;&#xBBF8;&#xD130;&#xB4E4;&#xC744; parsing&#xD574;&#xC11C; layer&#xB85C; &#xB9CC;&#xB4ED;&#xB2C8;&#xB2E4;.</li>
+</ul>
+<h2 id="parseshortcut">parse_shortcut</h2>
+<pre><code>layer parse_shortcut(list *options, size_params params, network *net)
+{
+    char *l = option_find(options, &quot;from&quot;);
+    int index = atoi(l);
+    if(index &lt; 0) index = params.index + index;
+
+    int batch = params.batch;
+    layer from = net-&gt;layers[index];
+
+    layer s = make_shortcut_layer(batch, index, params.w, params.h, params.c, from.out_w, from.out_h, from.out_c);
+
+    char *activation_s = option_find_str(options, &quot;activation&quot;, &quot;linear&quot;);
+    ACTIVATION activation = get_activation(activation_s);
+    s.activation = activation;
+    s.alpha = option_find_float_quiet(options, &quot;alpha&quot;, 1);
+    s.beta = option_find_float_quiet(options, &quot;beta&quot;, 1);
+    return s;
+}
+</code></pre><ul>
+<li>shortcut layer&#xC5D0; &#xD574;&#xB2F9;&#xD558;&#xB294; &#xD30C;&#xB77C;&#xBBF8;&#xD130;&#xB4E4;&#xC744; parsing&#xD574;&#xC11C; layer&#xB85C; &#xB9CC;&#xB4ED;&#xB2C8;&#xB2E4;.</li>
+</ul>
+<h2 id="parsel2norm">parse_l2norm</h2>
+<pre><code>layer parse_l2norm(list *options, size_params params)
+{
+    layer l = make_l2norm_layer(params.batch, params.inputs);
+    l.h = l.out_h = params.h;
+    l.w = l.out_w = params.w;
+    l.c = l.out_c = params.c;
+    return l;
+}
+</code></pre><ul>
+<li>l2norm layer&#xC5D0; &#xD574;&#xB2F9;&#xD558;&#xB294; &#xD30C;&#xB77C;&#xBBF8;&#xD130;&#xB4E4;&#xC744; parsing&#xD574;&#xC11C; layer&#xB85C; &#xB9CC;&#xB4ED;&#xB2C8;&#xB2E4;.</li>
+</ul>
+<h2 id="parselogistic">parse_logistic</h2>
+<pre><code>layer parse_logistic(list *options, size_params params)
+{
+    layer l = make_logistic_layer(params.batch, params.inputs);
+    l.h = l.out_h = params.h;
+    l.w = l.out_w = params.w;
+    l.c = l.out_c = params.c;
+    return l;
+}
+</code></pre><ul>
+<li>logistic layer&#xC5D0; &#xD574;&#xB2F9;&#xD558;&#xB294; &#xD30C;&#xB77C;&#xBBF8;&#xD130;&#xB4E4;&#xC744; parsing&#xD574;&#xC11C; layer&#xB85C; &#xB9CC;&#xB4ED;&#xB2C8;&#xB2E4;.</li>
+</ul>
+<h2 id="parseactivation">parse_activation</h2>
+<pre><code>layer parse_activation(list *options, size_params params)
+{
+    char *activation_s = option_find_str(options, &quot;activation&quot;, &quot;linear&quot;);
+    ACTIVATION activation = get_activation(activation_s);
+
+    layer l = make_activation_layer(params.batch, params.inputs, activation);
+
+    l.h = l.out_h = params.h;
+    l.w = l.out_w = params.w;
+    l.c = l.out_c = params.c;
+
+    return l;
+}
+</code></pre><ul>
+<li>activation layer&#xC5D0; &#xD574;&#xB2F9;&#xD558;&#xB294; &#xD30C;&#xB77C;&#xBBF8;&#xD130;&#xB4E4;&#xC744; parsing&#xD574;&#xC11C; layer&#xB85C; &#xB9CC;&#xB4ED;&#xB2C8;&#xB2E4;.</li>
+</ul>
+<h2 id="parseupsample">parse_upsample</h2>
+<pre><code>layer parse_upsample(list *options, size_params params, network *net)
+{
+
+    int stride = option_find_int(options, &quot;stride&quot;,2);
+    layer l = make_upsample_layer(params.batch, params.w, params.h, params.c, stride);
+    l.scale = option_find_float_quiet(options, &quot;scale&quot;, 1);
+    return l;
+}
+</code></pre><ul>
+<li>upsampling layer&#xC5D0; &#xD574;&#xB2F9;&#xD558;&#xB294; &#xD30C;&#xB77C;&#xBBF8;&#xD130;&#xB4E4;&#xC744; parsing&#xD574;&#xC11C; layer&#xB85C; &#xB9CC;&#xB4ED;&#xB2C8;&#xB2E4;.</li>
+</ul>
+<h2 id="parseroute">parse_route</h2>
+<pre><code>route_layer parse_route(list *options, size_params params, network *net)
+{
+    char *l = option_find(options, &quot;layers&quot;);
+    int len = strlen(l);
+    if(!l) error(&quot;Route Layer must specify input layers&quot;);
+    int n = 1;
+    int i;
+    for(i = 0; i &lt; len; ++i){
+        if (l[i] == &apos;,&apos;) ++n;
+    }
+
+    int *layers = calloc(n, sizeof(int));
+    int *sizes = calloc(n, sizeof(int));
+    for(i = 0; i &lt; n; ++i){
+        int index = atoi(l);
+        l = strchr(l, &apos;,&apos;)+1;
+        if(index &lt; 0) index = params.index + index;
+        layers[i] = index;
+        sizes[i] = net-&gt;layers[index].outputs;
+    }
+    int batch = params.batch;
+
+    route_layer layer = make_route_layer(batch, n, layers, sizes);
+
+    convolutional_layer first = net-&gt;layers[layers[0]];
+    layer.out_w = first.out_w;
+    layer.out_h = first.out_h;
+    layer.out_c = first.out_c;
+    for(i = 1; i &lt; n; ++i){
+        int index = layers[i];
+        convolutional_layer next = net-&gt;layers[index];
+        if(next.out_w == first.out_w &amp;&amp; next.out_h == first.out_h){
+            layer.out_c += next.out_c;
+        }else{
+            layer.out_h = layer.out_w = layer.out_c = 0;
+        }
+    }
+
+    return layer;
+}
+</code></pre><ul>
+<li>route layer&#xC5D0; &#xD574;&#xB2F9;&#xD558;&#xB294; &#xD30C;&#xB77C;&#xBBF8;&#xD130;&#xB4E4;&#xC744; parsing&#xD574;&#xC11C; layer&#xB85C; &#xB9CC;&#xB4ED;&#xB2C8;&#xB2E4;.</li>
+</ul>
+<h2 id="getpolicy">get_policy</h2>
+<pre><code>typedef enum {
+    CONSTANT, STEP, EXP, POLY, STEPS, SIG, RANDOM
+} learning_rate_policy;
+
+learning_rate_policy get_policy(char *s)
+{
+    if (strcmp(s, &quot;random&quot;)==0) return RANDOM;
+    if (strcmp(s, &quot;poly&quot;)==0) return POLY;
+    if (strcmp(s, &quot;constant&quot;)==0) return CONSTANT;
+    if (strcmp(s, &quot;step&quot;)==0) return STEP;
+    if (strcmp(s, &quot;exp&quot;)==0) return EXP;
+    if (strcmp(s, &quot;sigmoid&quot;)==0) return SIG;
+    if (strcmp(s, &quot;steps&quot;)==0) return STEPS;
+    fprintf(stderr, &quot;Couldn&apos;t find policy %s, going with constant\n&quot;, s);
+    return CONSTANT;
+}
+</code></pre><ul>
+<li>learning rate scheduler&#xC5D0; &#xD574;&#xB2F9;&#xD558;&#xB294; &#xAC12;&#xC744; &#xBC18;&#xD658;&#xD569;&#xB2C8;&#xB2E4;.</li>
+</ul>
+<h2 id="isnetwork">is_network</h2>
+<pre><code>int is_network(section *s)
+{
+    return (strcmp(s-&gt;type, &quot;[net]&quot;)==0 || strcmp(s-&gt;type, &quot;[network]&quot;)==0);
+}
+</code></pre><ul>
+<li>&#xB124;&#xD2B8;&#xC6CC;&#xD06C;&#xC778;&#xC9C0; &#xC544;&#xB2CC;&#xC9C0; &#xD655;&#xC778;&#xD569;&#xB2C8;&#xB2E4;.</li>
+</ul>
+<h2 id="loadweights">load_weights</h2>
+<pre><code>void load_weights(network *net, char *filename)
+{
+    load_weights_upto(net, filename, 0, net-&gt;n);
+}
+</code></pre><pre><code>void load_weights_upto(network *net, char *filename, int start, int cutoff)
+{
+    fprintf(stderr, &quot;Loading weights from %s...&quot;, filename);
+    fflush(stdout);
+    FILE *fp = fopen(filename, &quot;rb&quot;);
+    if(!fp) file_error(filename);
+
+    int major;
+    int minor;
+    int revision;
+    fread(&amp;major, sizeof(int), 1, fp);
+    fread(&amp;minor, sizeof(int), 1, fp);
+    fread(&amp;revision, sizeof(int), 1, fp);
+    if ((major*10 + minor) &gt;= 2 &amp;&amp; major &lt; 1000 &amp;&amp; minor &lt; 1000){
+        fread(net-&gt;seen, sizeof(size_t), 1, fp);
+    } else {
+        int iseen = 0;
+        fread(&amp;iseen, sizeof(int), 1, fp);
+        *net-&gt;seen = iseen;
+    }
+    int transpose = (major &gt; 1000) || (minor &gt; 1000);
+
+    int i;
+    for(i = start; i &lt; net-&gt;n &amp;&amp; i &lt; cutoff; ++i){
+        layer l = net-&gt;layers[i];
+        if (l.dontload) continue;
+        if(l.type == CONVOLUTIONAL || l.type == DECONVOLUTIONAL){
+            load_convolutional_weights(l, fp);
+        }
+        if(l.type == CONNECTED){
+            load_connected_weights(l, fp, transpose);
+        }
+        if(l.type == BATCHNORM){
+            load_batchnorm_weights(l, fp);
+        }
+        if(l.type == CRNN){
+            load_convolutional_weights(*(l.input_layer), fp);
+            load_convolutional_weights(*(l.self_layer), fp);
+            load_convolutional_weights(*(l.output_layer), fp);
+        }
+        if(l.type == RNN){
+            load_connected_weights(*(l.input_layer), fp, transpose);
+            load_connected_weights(*(l.self_layer), fp, transpose);
+            load_connected_weights(*(l.output_layer), fp, transpose);
+        }
+        if (l.type == LSTM) {
+            load_connected_weights(*(l.wi), fp, transpose);
+            load_connected_weights(*(l.wf), fp, transpose);
+            load_connected_weights(*(l.wo), fp, transpose);
+            load_connected_weights(*(l.wg), fp, transpose);
+            load_connected_weights(*(l.ui), fp, transpose);
+            load_connected_weights(*(l.uf), fp, transpose);
+            load_connected_weights(*(l.uo), fp, transpose);
+            load_connected_weights(*(l.ug), fp, transpose);
+        }
+        if (l.type == GRU) {
+            if(1){
+                load_connected_weights(*(l.wz), fp, transpose);
+                load_connected_weights(*(l.wr), fp, transpose);
+                load_connected_weights(*(l.wh), fp, transpose);
+                load_connected_weights(*(l.uz), fp, transpose);
+                load_connected_weights(*(l.ur), fp, transpose);
+                load_connected_weights(*(l.uh), fp, transpose);
+            }else{
+                load_connected_weights(*(l.reset_layer), fp, transpose);
+                load_connected_weights(*(l.update_layer), fp, transpose);
+                load_connected_weights(*(l.state_layer), fp, transpose);
+            }
+        }
+        if(l.type == LOCAL){
+            int locations = l.out_w*l.out_h;
+            int size = l.size*l.size*l.c*l.n*locations;
+            fread(l.biases, sizeof(float), l.outputs, fp);
+            fread(l.weights, sizeof(float), size, fp);
+        }
+    }
+    fprintf(stderr, &quot;Done!\n&quot;);
+    fclose(fp);
+}
+</code></pre><ul>
+<li>weights &#xD30C;&#xC77C;&#xC744; &#xBD88;&#xB7EC;&#xC624;&#xACE0; &#xAC01; Layer&#xC758; &#xD574;&#xB2F9;&#xB418;&#xB294; &#xD30C;&#xB77C;&#xBBF8;&#xD130;&#xB97C; &#xB123;&#xC2B5;&#xB2C8;&#xB2E4;.</li>
+</ul>
+<h2 id="loadconvolutionalweights">load_convolutional_weights</h2>
+<pre><code>void load_convolutional_weights(layer l, FILE *fp)
+{
+    if(l.binary){
+        //load_convolutional_weights_binary(l, fp);
+        //return;
+    }
+    if(l.numload) l.n = l.numload;
+    int num = l.c/l.groups*l.n*l.size*l.size;
+    fread(l.biases, sizeof(float), l.n, fp);
+    if (l.batch_normalize &amp;&amp; (!l.dontloadscales)){
+        fread(l.scales, sizeof(float), l.n, fp);
+        fread(l.rolling_mean, sizeof(float), l.n, fp);
+        fread(l.rolling_variance, sizeof(float), l.n, fp);
+        if(0){
+            int i;
+            for(i = 0; i &lt; l.n; ++i){
+                printf(&quot;%g, &quot;, l.rolling_mean[i]);
+            }
+            printf(&quot;\n&quot;);
+            for(i = 0; i &lt; l.n; ++i){
+                printf(&quot;%g, &quot;, l.rolling_variance[i]);
+            }
+            printf(&quot;\n&quot;);
+        }
+        if(0){
+            fill_cpu(l.n, 0, l.rolling_mean, 1);
+            fill_cpu(l.n, 0, l.rolling_variance, 1);
+        }
+        if(0){
+            int i;
+            for(i = 0; i &lt; l.n; ++i){
+                printf(&quot;%g, &quot;, l.rolling_mean[i]);
+            }
+            printf(&quot;\n&quot;);
+            for(i = 0; i &lt; l.n; ++i){
+                printf(&quot;%g, &quot;, l.rolling_variance[i]);
+            }
+            printf(&quot;\n&quot;);
+        }
+    }
+    fread(l.weights, sizeof(float), num, fp);
+    //if(l.c == 3) scal_cpu(num, 1./256, l.weights, 1);
+    if (l.flipped) {
+        transpose_matrix(l.weights, l.c*l.size*l.size, l.n);
+    }
+    //if (l.binary) binarize_weights(l.weights, l.n, l.c*l.size*l.size, l.weights);
+}
+</code></pre><ul>
+<li>convolution layer&#xC5D0; &#xD544;&#xC694;&#xD55C; &#xBAA8;&#xB4E0; weights&#xB97C; &#xBD88;&#xB7EC;&#xC635;&#xB2C8;&#xB2E4;.</li>
+</ul>
+<h2 id="loadbatchnormweights">load_batchnorm_weights</h2>
+<pre><code>void load_batchnorm_weights(layer l, FILE *fp)
+{
+    fread(l.scales, sizeof(float), l.c, fp);
+    fread(l.rolling_mean, sizeof(float), l.c, fp);
+    fread(l.rolling_variance, sizeof(float), l.c, fp);
+}
+</code></pre><ul>
+<li>batch normalization&#xC5D0;&#xC11C; &#xCD94;&#xB860;&#xC5D0; &#xD544;&#xC694;&#xD55C; rolling mean, rolling variance&#xB97C; &#xBD88;&#xB7EC;&#xC635;&#xB2C8;&#xB2E4;.</li>
+</ul>
+<h2 id="loadconnectedweights">load_connected_weights</h2>
+<pre><code>void load_connected_weights(layer l, FILE *fp, int transpose)
+{
+    fread(l.biases, sizeof(float), l.outputs, fp);
+    fread(l.weights, sizeof(float), l.outputs*l.inputs, fp);
+    if(transpose){
+        transpose_matrix(l.weights, l.inputs, l.outputs);
+    }
+    //printf(&quot;Biases: %f mean %f variance\n&quot;, mean_array(l.biases, l.outputs), variance_array(l.biases, l.outputs));
+    //printf(&quot;Weights: %f mean %f variance\n&quot;, mean_array(l.weights, l.outputs*l.inputs), variance_array(l.weights, l.outputs*l.inputs));
+    if (l.batch_normalize &amp;&amp; (!l.dontloadscales)){
+        fread(l.scales, sizeof(float), l.outputs, fp);
+        fread(l.rolling_mean, sizeof(float), l.outputs, fp);
+        fread(l.rolling_variance, sizeof(float), l.outputs, fp);
+        //printf(&quot;Scales: %f mean %f variance\n&quot;, mean_array(l.scales, l.outputs), variance_array(l.scales, l.outputs));
+        //printf(&quot;rolling_mean: %f mean %f variance\n&quot;, mean_array(l.rolling_mean, l.outputs), variance_array(l.rolling_mean, l.outputs));
+        //printf(&quot;rolling_variance: %f mean %f variance\n&quot;, mean_array(l.rolling_variance, l.outputs), variance_array(l.rolling_variance, l.outputs));
+    }
+}
+</code></pre><ul>
+<li>fully connected layer&#xC5D0; &#xD544;&#xC694;&#xD55C; &#xBAA8;&#xB4E0; weights&#xB97C; &#xBD88;&#xB7EC;&#xC635;&#xB2C8;&#xB2E4;.</li>
+</ul>
+<h2 id="transposematrix">transpose_matrix</h2>
+<pre><code>void transpose_matrix(float *a, int rows, int cols)
+{
+    float *transpose = calloc(rows*cols, sizeof(float));
+    int x, y;
+    for(x = 0; x &lt; rows; ++x){
+        for(y = 0; y &lt; cols; ++y){
+            transpose[y*rows + x] = a[x*cols + y];
+        }
+    }
+    memcpy(a, transpose, rows*cols*sizeof(float));
+    free(transpose);
+}
+</code></pre><ul>
+<li>&#xD589;&#xB82C;&#xC744; &#xC804;&#xCE58; &#xC2DC;&#xD0B5;&#xB2C8;&#xB2E4;.</li>
+</ul>
+<pre><code>-------------                   -------------
+| 1 | 2 | 3 |                   | 1 | 4 | 7 |
+-------------                   -------------
+| 4 | 5 | 6 |        -&gt;         | 2 | 5 | 8 |
+-------------                   -------------
+| 7 | 8 | 9 |                   | 3 | 6 | 9 |
+-------------                   -------------
+</code></pre><h2 id="saveweights">save_weights</h2>
+<pre><code>void save_weights(network *net, char *filename)
+{
+    save_weights_upto(net, filename, net-&gt;n);
+}
+</code></pre><pre><code>void save_weights_upto(network *net, char *filename, int cutoff)
+{
+    fprintf(stderr, &quot;Saving weights to %s\n&quot;, filename);
+    FILE *fp = fopen(filename, &quot;wb&quot;);
+    if(!fp) file_error(filename);
+
+    int major = 0;
+    int minor = 2;
+    int revision = 0;
+    fwrite(&amp;major, sizeof(int), 1, fp);
+    fwrite(&amp;minor, sizeof(int), 1, fp);
+    fwrite(&amp;revision, sizeof(int), 1, fp);
+    fwrite(net-&gt;seen, sizeof(size_t), 1, fp);
+
+    int i;
+    for(i = 0; i &lt; net-&gt;n &amp;&amp; i &lt; cutoff; ++i){
+        layer l = net-&gt;layers[i];
+        if (l.dontsave) continue;
+        if(l.type == CONVOLUTIONAL || l.type == DECONVOLUTIONAL){
+            save_convolutional_weights(l, fp);
+        } if(l.type == CONNECTED){
+            save_connected_weights(l, fp);
+        } if(l.type == BATCHNORM){
+            save_batchnorm_weights(l, fp);
+        } if(l.type == RNN){
+            save_connected_weights(*(l.input_layer), fp);
+            save_connected_weights(*(l.self_layer), fp);
+            save_connected_weights(*(l.output_layer), fp);
+        } if (l.type == LSTM) {
+            save_connected_weights(*(l.wi), fp);
+            save_connected_weights(*(l.wf), fp);
+            save_connected_weights(*(l.wo), fp);
+            save_connected_weights(*(l.wg), fp);
+            save_connected_weights(*(l.ui), fp);
+            save_connected_weights(*(l.uf), fp);
+            save_connected_weights(*(l.uo), fp);
+            save_connected_weights(*(l.ug), fp);
+        } if (l.type == GRU) {
+            if(1){
+                save_connected_weights(*(l.wz), fp);
+                save_connected_weights(*(l.wr), fp);
+                save_connected_weights(*(l.wh), fp);
+                save_connected_weights(*(l.uz), fp);
+                save_connected_weights(*(l.ur), fp);
+                save_connected_weights(*(l.uh), fp);
+            }else{
+                save_connected_weights(*(l.reset_layer), fp);
+                save_connected_weights(*(l.update_layer), fp);
+                save_connected_weights(*(l.state_layer), fp);
+            }
+        }  if(l.type == CRNN){
+            save_convolutional_weights(*(l.input_layer), fp);
+            save_convolutional_weights(*(l.self_layer), fp);
+            save_convolutional_weights(*(l.output_layer), fp);
+        } if(l.type == LOCAL){
+            int locations = l.out_w*l.out_h;
+            int size = l.size*l.size*l.c*l.n*locations;
+            fwrite(l.biases, sizeof(float), l.outputs, fp);
+            fwrite(l.weights, sizeof(float), size, fp);
+        }
+    }
+    fclose(fp);
+}
+</code></pre><ul>
+<li>&#xAC01; Layer&#xC758; &#xD574;&#xB2F9;&#xB418;&#xB294; &#xD30C;&#xB77C;&#xBBF8;&#xD130;&#xB97C; weights &#xD30C;&#xC77C;&#xB85C;&#xC368; &#xC800;&#xC7A5;&#xD569;&#xB2C8;&#xB2E4;.</li>
+</ul>
+<h2 id="saveconnectedweights">save_connected_weights</h2>
+<pre><code>void save_connected_weights(layer l, FILE *fp)
+{
+    fwrite(l.biases, sizeof(float), l.outputs, fp);
+    fwrite(l.weights, sizeof(float), l.outputs*l.inputs, fp);
+    if (l.batch_normalize){
+        fwrite(l.scales, sizeof(float), l.outputs, fp);
+        fwrite(l.rolling_mean, sizeof(float), l.outputs, fp);
+        fwrite(l.rolling_variance, sizeof(float), l.outputs, fp);
+    }
+}
+</code></pre><ul>
+<li>fully connected layer&#xC5D0; &#xD544;&#xC694;&#xD55C; &#xBAA8;&#xB4E0; weights&#xB97C; &#xC800;&#xC7A5;&#xD569;&#xB2C8;&#xB2E4;.</li>
+</ul>
+<h2 id="savebatchnormweights">save_batchnorm_weights</h2>
+<pre><code>void save_batchnorm_weights(layer l, FILE *fp)
+{
+    fwrite(l.scales, sizeof(float), l.c, fp);
+    fwrite(l.rolling_mean, sizeof(float), l.c, fp);
+    fwrite(l.rolling_variance, sizeof(float), l.c, fp);
+}
+</code></pre><ul>
+<li>batch normalization&#xC5D0;&#xC11C; &#xCD94;&#xB860;&#xC5D0; &#xD544;&#xC694;&#xD55C; rolling mean, rolling variance&#xB97C; &#xC800;&#xC7A5;&#xD569;&#xB2C8;&#xB2E4;.</li>
+</ul>
+<h2 id="saveconvolutionalweights">save_convolutional_weights</h2>
+<pre><code>void save_convolutional_weights(layer l, FILE *fp)
+{
+    if(l.binary){
+        //save_convolutional_weights_binary(l, fp);
+        //return;
+    }
+
+    int num = l.nweights;
+    fwrite(l.biases, sizeof(float), l.n, fp);
+    if (l.batch_normalize){
+        fwrite(l.scales, sizeof(float), l.n, fp);
+        fwrite(l.rolling_mean, sizeof(float), l.n, fp);
+        fwrite(l.rolling_variance, sizeof(float), l.n, fp);
+    }
+    fwrite(l.weights, sizeof(float), num, fp);
+}
+</code></pre><ul>
+<li>convolutional layer&#xC5D0; &#xD544;&#xC694;&#xD55C; &#xBAA8;&#xB4E0; weights&#xB97C; &#xC800;&#xC7A5;&#xD569;&#xB2C8;&#xB2E4;.</li>
+</ul>
+
+                                
+                                </section>
+                            
+    </div>
+    <div class="search-results">
+        <div class="has-results">
+            
+            <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+            <ul class="search-results-list"></ul>
+            
+        </div>
+        <div class="no-results">
+            
+            <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+            
+        </div>
+    </div>
+</div>
+
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="parser_1.html" class="navigation navigation-prev " aria-label="Previous page: parser.c">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="region_layer.html" class="navigation navigation-next " aria-label="Next page: region_layer.c">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"+ parser.c","level":"5.35.1","depth":2,"next":{"title":"region_layer.c","level":"5.36","depth":1,"path":"part3_src/region_layer.md","ref":"part3_src/region_layer.md","articles":[]},"previous":{"title":"parser.c","level":"5.35","depth":1,"path":"part3_src/parser_1.md","ref":"part3_src/parser_1.md","articles":[{"title":"+ parser.c","level":"5.35.1","depth":2,"path":"part3_src/parser_2.md","ref":"part3_src/parser_2.md","articles":[]}]},"dir":"ltr"},"config":{"plugins":["advanced-emoji","theme-gestalt","-theme-default","styles-sass-fix","theme-api","mathjax"],"root":"./","styles":{"website":"website-1597154999314.css"},"pluginsConfig":{"styles-sass-fix":{},"theme-gestalt":{"showLevel":false,"styles":{"website":"styles/website.css"},"logo":"/darknet_book/assets/darknet.png","baseUrl":null,"excludeDefaultStyles":true,"doNotHideChildrenChapters":false},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"theme-api":{"languages":[],"split":true,"theme":"light"},"mathjax":{"forceSVG":false,"version":"2.6-latest"},"advanced-emoji":{"embedEmojis":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]}},"theme":"default","author":"JJM","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"DarkNet Book","output.name":"site","gitbook":"*"},"file":{"path":"part3_src/parser_2.md","mtime":"2020-08-11T14:07:14.124Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-08-11T14:09:44.526Z"},"basePath":"..","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <script src="../gitbook/gitbook.js"></script>
+    <script src="../gitbook/theme.js"></script>
+    
+        
+        <script src="https://cdn.mathjax.org/mathjax/2.6-latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-mathjax/plugin.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-search/search-engine.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-search/search.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lunr/lunr.min.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lunr/search-lunr.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-sharing/buttons.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-fontsettings/fontsettings.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-theme-api/theme-api.js"></script>
+        
+    
+
+    </body>
+</html>
+

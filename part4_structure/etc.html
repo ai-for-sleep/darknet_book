@@ -42,7 +42,7 @@
 
     
         
-        <link rel="stylesheet" href="../website-1596554398914.css">
+        <link rel="stylesheet" href="../website-1597154999314.css">
         
     
 
@@ -1038,6 +1038,31 @@
             
 
             
+            <ul class="articles">
+                
+                
+    
+        
+        <li class="chapter 
+               hide "
+            data-level="5.35.1" 
+            data-path="../part3_src/parser_2.html">
+
+            
+                <a href="../part3_src/parser_2.html">
+            
+                    
+                    + parser.c
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
         </li>
     
         
@@ -1945,7 +1970,7 @@
 </ul>
 <hr>
 <h1 id="srcincludedarkneth">src/include/darknet.h</h1>
-<h2 id="node-&#xAD6C;&#xC870;&#xCCB4;">node &#xAD6C;&#xC870;&#xCCB4;</h2>
+<h2 id="node">node</h2>
 <pre><code>typedef struct node{
     void *val;
     struct node *next;
@@ -1957,11 +1982,6 @@
     node *front;
     node *back;
 } list;
-</code></pre><h2 id="section">section</h2>
-<pre><code>typedef struct{
-    char *type;
-    list *options;
-}section;
 </code></pre><h2 id="matrix">matrix</h2>
 <pre><code>typedef struct matrix{
     int rows, cols;
@@ -2011,7 +2031,12 @@
 } kvp;
 </code></pre><hr>
 <h1 id="srcparserc">/src/parser.c</h1>
-<h2 id="sizeparams-&#xAD6C;&#xC870;&#xCCB4;">size_params &#xAD6C;&#xC870;&#xCCB4;</h2>
+<h2 id="section">section</h2>
+<pre><code>typedef struct{
+    char *type;
+    list *options;
+}section;
+</code></pre><h2 id="sizeparams">size_params</h2>
 <pre><code>typedef struct size_params{
     int batch;
     int inputs;
@@ -2023,7 +2048,7 @@
     network *net;
 } size_params;
 </code></pre><h1 id="srcboxh">/src/box.h</h1>
-<h2 id="dbox-&#xAD6C;&#xC870;&#xCCB4;">dbox &#xAD6C;&#xC870;&#xCCB4;</h2>
+<h2 id="dbox">dbox</h2>
 <pre><code>typedef struct{
     float dx, dy, dw, dh;
 } dbox;
@@ -2079,7 +2104,7 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"etc","level":"4.3","depth":1,"next":{"title":"activation_layer.c","level":"5.1","depth":1,"path":"part3_src/activation_layer.md","ref":"part3_src/activation_layer.md","articles":[]},"previous":{"title":"layer","level":"4.2","depth":1,"path":"part4_structure/layer.md","ref":"part4_structure/layer.md","articles":[]},"dir":"ltr"},"config":{"plugins":["advanced-emoji","theme-gestalt","-theme-default","styles-sass-fix","theme-api","mathjax"],"root":"./","styles":{"website":"website-1596554398914.css"},"pluginsConfig":{"styles-sass-fix":{},"theme-gestalt":{"showLevel":false,"styles":{"website":"styles/website.css"},"logo":"/darknet_book/assets/darknet.png","baseUrl":null,"excludeDefaultStyles":true,"doNotHideChildrenChapters":false},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"theme-api":{"languages":[],"split":true,"theme":"light"},"mathjax":{"forceSVG":false,"version":"2.6-latest"},"advanced-emoji":{"embedEmojis":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]}},"theme":"default","author":"JJM","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"DarkNet Book","output.name":"site","gitbook":"*"},"file":{"path":"part4_structure/etc.md","mtime":"2020-07-29T06:35:12.240Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-08-04T15:19:37.284Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"etc","level":"4.3","depth":1,"next":{"title":"activation_layer.c","level":"5.1","depth":1,"path":"part3_src/activation_layer.md","ref":"part3_src/activation_layer.md","articles":[]},"previous":{"title":"layer","level":"4.2","depth":1,"path":"part4_structure/layer.md","ref":"part4_structure/layer.md","articles":[]},"dir":"ltr"},"config":{"plugins":["advanced-emoji","theme-gestalt","-theme-default","styles-sass-fix","theme-api","mathjax"],"root":"./","styles":{"website":"website-1597154999314.css"},"pluginsConfig":{"styles-sass-fix":{},"theme-gestalt":{"showLevel":false,"styles":{"website":"styles/website.css"},"logo":"/darknet_book/assets/darknet.png","baseUrl":null,"excludeDefaultStyles":true,"doNotHideChildrenChapters":false},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"theme-api":{"languages":[],"split":true,"theme":"light"},"mathjax":{"forceSVG":false,"version":"2.6-latest"},"advanced-emoji":{"embedEmojis":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]}},"theme":"default","author":"JJM","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"DarkNet Book","output.name":"site","gitbook":"*"},"file":{"path":"part4_structure/etc.md","mtime":"2020-08-10T10:53:33.913Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-08-11T14:09:44.526Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>

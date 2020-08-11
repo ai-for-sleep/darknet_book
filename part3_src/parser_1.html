@@ -42,7 +42,7 @@
 
     
         
-        <link rel="stylesheet" href="../website-1596554398914.css">
+        <link rel="stylesheet" href="../website-1597154999314.css">
         
     
 
@@ -61,7 +61,7 @@
     
 
     
-    <link rel="next" href="region_layer.html" />
+    <link rel="next" href="parser_2.html" />
     
     
     <link rel="prev" href="option_list.html" />
@@ -1037,6 +1037,31 @@
                 </a>
             
 
+            
+            <ul class="articles">
+                  
+                
+    
+        
+        <li class="chapter 
+              "
+            data-level="5.35.1" 
+            data-path="parser_2.html">
+
+            
+                <a href="parser_2.html">
+            
+                    
+                    + parser.c
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
             
         </li>
     
@@ -2140,6 +2165,90 @@ param2=value2
 </ul>
 <p><code>cfg</code>&#xD30C;&#xC77C;&#xC758; &#xBB38;&#xC790;&#xC5F4;&#xC744; list&#xC5D0; &#xB123;&#xC5B4;&#xC90D;&#xB2C8;&#xB2E4;. &#xC804;&#xCCB4; &#xC790;&#xB8CC; &#xAD6C;&#xC870;&#xB294; &#xC544;&#xB798;&#xC640; &#xAC19;&#xC2B5;&#xB2C8;&#xB2E4;.</p>
 <p><img src="../figure/read_cfg.PNG" alt="read_cfg"></p>
+<h2 id="parsenetoptions">parse_net_options</h2>
+<pre><code>void parse_net_options(list *options, network *net)
+{
+    net-&gt;batch = option_find_int(options, &quot;batch&quot;,1);
+    net-&gt;learning_rate = option_find_float(options, &quot;learning_rate&quot;, .001);
+    net-&gt;momentum = option_find_float(options, &quot;momentum&quot;, .9);
+    net-&gt;decay = option_find_float(options, &quot;decay&quot;, .0001);
+    int subdivs = option_find_int(options, &quot;subdivisions&quot;,1);
+    net-&gt;time_steps = option_find_int_quiet(options, &quot;time_steps&quot;,1);
+    net-&gt;notruth = option_find_int_quiet(options, &quot;notruth&quot;,0);
+    net-&gt;batch /= subdivs;
+    net-&gt;batch *= net-&gt;time_steps;
+    net-&gt;subdivisions = subdivs;
+    net-&gt;random = option_find_int_quiet(options, &quot;random&quot;, 0);
+
+    net-&gt;adam = option_find_int_quiet(options, &quot;adam&quot;, 0);
+    if(net-&gt;adam){
+        net-&gt;B1 = option_find_float(options, &quot;B1&quot;, .9);
+        net-&gt;B2 = option_find_float(options, &quot;B2&quot;, .999);
+        net-&gt;eps = option_find_float(options, &quot;eps&quot;, .0000001);
+    }
+
+    net-&gt;h = option_find_int_quiet(options, &quot;height&quot;,0);
+    net-&gt;w = option_find_int_quiet(options, &quot;width&quot;,0);
+    net-&gt;c = option_find_int_quiet(options, &quot;channels&quot;,0);
+    net-&gt;inputs = option_find_int_quiet(options, &quot;inputs&quot;, net-&gt;h * net-&gt;w * net-&gt;c);
+    net-&gt;max_crop = option_find_int_quiet(options, &quot;max_crop&quot;,net-&gt;w*2);
+    net-&gt;min_crop = option_find_int_quiet(options, &quot;min_crop&quot;,net-&gt;w);
+    net-&gt;max_ratio = option_find_float_quiet(options, &quot;max_ratio&quot;, (float) net-&gt;max_crop / net-&gt;w);
+    net-&gt;min_ratio = option_find_float_quiet(options, &quot;min_ratio&quot;, (float) net-&gt;min_crop / net-&gt;w);
+    net-&gt;center = option_find_int_quiet(options, &quot;center&quot;,0);
+    net-&gt;clip = option_find_float_quiet(options, &quot;clip&quot;, 0);
+
+    net-&gt;angle = option_find_float_quiet(options, &quot;angle&quot;, 0);
+    net-&gt;aspect = option_find_float_quiet(options, &quot;aspect&quot;, 1);
+    net-&gt;saturation = option_find_float_quiet(options, &quot;saturation&quot;, 1);
+    net-&gt;exposure = option_find_float_quiet(options, &quot;exposure&quot;, 1);
+    net-&gt;hue = option_find_float_quiet(options, &quot;hue&quot;, 0);
+
+    if(!net-&gt;inputs &amp;&amp; !(net-&gt;h &amp;&amp; net-&gt;w &amp;&amp; net-&gt;c)) error(&quot;No input parameters supplied&quot;);
+
+    char *policy_s = option_find_str(options, &quot;policy&quot;, &quot;constant&quot;);
+    net-&gt;policy = get_policy(policy_s);
+    net-&gt;burn_in = option_find_int_quiet(options, &quot;burn_in&quot;, 0);
+    net-&gt;power = option_find_float_quiet(options, &quot;power&quot;, 4);
+    if(net-&gt;policy == STEP){
+        net-&gt;step = option_find_int(options, &quot;step&quot;, 1);
+        net-&gt;scale = option_find_float(options, &quot;scale&quot;, 1);
+    } else if (net-&gt;policy == STEPS){
+        char *l = option_find(options, &quot;steps&quot;);
+        char *p = option_find(options, &quot;scales&quot;);
+        if(!l || !p) error(&quot;STEPS policy must have steps and scales in cfg file&quot;);
+
+        int len = strlen(l);
+        int n = 1;
+        int i;
+        for(i = 0; i &lt; len; ++i){
+            if (l[i] == &apos;,&apos;) ++n;
+        }
+        int *steps = calloc(n, sizeof(int));
+        float *scales = calloc(n, sizeof(float));
+        for(i = 0; i &lt; n; ++i){
+            int step    = atoi(l);
+            float scale = atof(p);
+            l = strchr(l, &apos;,&apos;)+1;
+            p = strchr(p, &apos;,&apos;)+1;
+            steps[i] = step;
+            scales[i] = scale;
+        }
+        net-&gt;scales = scales;
+        net-&gt;steps = steps;
+        net-&gt;num_steps = n;
+    } else if (net-&gt;policy == EXP){
+        net-&gt;gamma = option_find_float(options, &quot;gamma&quot;, 1);
+    } else if (net-&gt;policy == SIG){
+        net-&gt;gamma = option_find_float(options, &quot;gamma&quot;, 1);
+        net-&gt;step = option_find_int(options, &quot;step&quot;, 1);
+    } else if (net-&gt;policy == POLY || net-&gt;policy == RANDOM){
+    }
+    net-&gt;max_batches = option_find_int(options, &quot;max_batches&quot;, 0);
+}
+</code></pre><ul>
+<li>network&#xC5D0; &#xD544;&#xC694;&#xD55C; &#xD30C;&#xB77C;&#xBBF8;&#xD130;&#xB4E4;&#xC744; &#xB123;&#xC2B5;&#xB2C8;&#xB2E4;.</li>
+</ul>
 
                                 
                                 </section>
@@ -2172,7 +2281,7 @@ param2=value2
                 </a>
                 
                 
-                <a href="region_layer.html" class="navigation navigation-next " aria-label="Next page: region_layer.c">
+                <a href="parser_2.html" class="navigation navigation-next " aria-label="Next page: + parser.c">
                     <i class="fa fa-angle-right"></i>
                 </a>
                 
@@ -2183,7 +2292,7 @@ param2=value2
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"parser.c","level":"5.35","depth":1,"next":{"title":"region_layer.c","level":"5.36","depth":1,"path":"part3_src/region_layer.md","ref":"part3_src/region_layer.md","articles":[]},"previous":{"title":"option_list.c","level":"5.34","depth":1,"path":"part3_src/option_list.md","ref":"part3_src/option_list.md","articles":[]},"dir":"ltr"},"config":{"plugins":["advanced-emoji","theme-gestalt","-theme-default","styles-sass-fix","theme-api","mathjax"],"root":"./","styles":{"website":"website-1596554398914.css"},"pluginsConfig":{"styles-sass-fix":{},"theme-gestalt":{"showLevel":false,"styles":{"website":"styles/website.css"},"logo":"/darknet_book/assets/darknet.png","baseUrl":null,"excludeDefaultStyles":true,"doNotHideChildrenChapters":false},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"theme-api":{"languages":[],"split":true,"theme":"light"},"mathjax":{"forceSVG":false,"version":"2.6-latest"},"advanced-emoji":{"embedEmojis":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]}},"theme":"default","author":"JJM","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"DarkNet Book","output.name":"site","gitbook":"*"},"file":{"path":"part3_src/parser_1.md","mtime":"2020-07-14T16:42:10.845Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-08-04T15:19:37.284Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"parser.c","level":"5.35","depth":1,"next":{"title":"+ parser.c","level":"5.35.1","depth":2,"path":"part3_src/parser_2.md","ref":"part3_src/parser_2.md","articles":[]},"previous":{"title":"option_list.c","level":"5.34","depth":1,"path":"part3_src/option_list.md","ref":"part3_src/option_list.md","articles":[]},"dir":"ltr"},"config":{"plugins":["advanced-emoji","theme-gestalt","-theme-default","styles-sass-fix","theme-api","mathjax"],"root":"./","styles":{"website":"website-1597154999314.css"},"pluginsConfig":{"styles-sass-fix":{},"theme-gestalt":{"showLevel":false,"styles":{"website":"styles/website.css"},"logo":"/darknet_book/assets/darknet.png","baseUrl":null,"excludeDefaultStyles":true,"doNotHideChildrenChapters":false},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"theme-api":{"languages":[],"split":true,"theme":"light"},"mathjax":{"forceSVG":false,"version":"2.6-latest"},"advanced-emoji":{"embedEmojis":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]}},"theme":"default","author":"JJM","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"DarkNet Book","output.name":"site","gitbook":"*"},"file":{"path":"part3_src/parser_1.md","mtime":"2020-08-10T10:51:09.977Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-08-11T14:09:44.526Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>

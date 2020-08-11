@@ -42,7 +42,7 @@
 
     
         
-        <link rel="stylesheet" href="../website-1596554398914.css">
+        <link rel="stylesheet" href="../website-1597154999314.css">
         
     
 
@@ -1038,6 +1038,31 @@
             
 
             
+            <ul class="articles">
+                
+                
+    
+        
+        <li class="chapter 
+               hide "
+            data-level="5.35.1" 
+            data-path="parser_2.html">
+
+            
+                <a href="parser_2.html">
+            
+                    
+                    + parser.c
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
         </li>
     
         
@@ -1940,7 +1965,52 @@
                                 <section class="normal markdown-section">
                                 
                                 <h1 id="optionlistc">option_list.c</h1>
-<h2 id="readoption">read_option</h2>
+<h2 id="readdatacfg">read_data_cfg</h2>
+<pre><code>list *read_data_cfg(char *filename)
+{
+    FILE *file = fopen(filename, &quot;r&quot;);
+    if(file == 0) file_error(filename);
+    char *line;
+    int nu = 0;
+    list *options = make_list();
+    while((line=fgetl(file)) != 0){
+        ++ nu;
+        strip(line);
+        switch(line[0]){
+            case &apos;\0&apos;:
+            case &apos;#&apos;:
+            case &apos;;&apos;:
+                free(line);
+                break;
+            default:
+                if(!read_option(line, options)){
+                    fprintf(stderr, &quot;Config file error line %d, could parse: %s\n&quot;, nu, line);
+                    free(line);
+                }
+                break;
+        }
+    }
+    fclose(file);
+    return options;
+}
+</code></pre><h2 id="getmetadata">get_metadata</h2>
+<pre><code>metadata get_metadata(char *file)
+{
+    metadata m = {0};
+    list *options = read_data_cfg(file);
+
+    char *name_list = option_find_str(options, &quot;names&quot;, 0);
+    if(!name_list) name_list = option_find_str(options, &quot;labels&quot;, 0);
+    if(!name_list) {
+        fprintf(stderr, &quot;No names or labels found\n&quot;);
+    } else {
+        m.names = get_labels(name_list);
+    }
+    m.classes = option_find_int(options, &quot;classes&quot;, 2);
+    free_list(options);
+    return m;
+}
+</code></pre><h2 id="readoption">read_option</h2>
 <pre><code>int read_option(char *s, list *options)
 {
     size_t i;
@@ -1967,7 +2037,102 @@
     p-&gt;used = 0;
     list_insert(l, p);
 }
-</code></pre>
+</code></pre><ul>
+<li>list&#xC5D0; option&#xC744; &#xB123;&#xC2B5;&#xB2C8;&#xB2E4;.</li>
+<li>key&#xC640; val&#xC744; &#xAC00;&#xC9C0;&#xB294; kvp&#xAD6C;&#xC870;&#xCCB4; &#xC785;&#xB2C8;&#xB2E4;.</li>
+</ul>
+<h2 id="optionunused">option_unused</h2>
+<pre><code>void option_unused(list *l)
+{
+    node *n = l-&gt;front;
+    while(n){
+        kvp *p = (kvp *)n-&gt;val;
+        if(!p-&gt;used){
+            fprintf(stderr, &quot;Unused field: &apos;%s = %s&apos;\n&quot;, p-&gt;key, p-&gt;val);
+        }
+        n = n-&gt;next;
+    }
+}
+</code></pre><ul>
+<li>&#xC0AC;&#xC6A9;&#xB418;&#xC9C0; &#xC54A;&#xC740; option&#xC744; &#xD655;&#xC778;&#xD569;&#xB2C8;&#xB2E4;.</li>
+<li>&#xB9CC;&#xC57D; &#xC0AC;&#xC6A9;&#xB418;&#xC9C0; &#xC54A;&#xC740; option&#xC774; &#xC788;&#xB2E4;&#xBA74; &#xC5D0;&#xB7EC;&#xAC00; &#xBC1C;&#xC0DD;&#xD569;&#xB2C8;&#xB2E4;.</li>
+</ul>
+<h2 id="optionfind">option_find</h2>
+<pre><code>char *option_find(list *l, char *key)
+{
+    node *n = l-&gt;front;
+    while(n){
+        kvp *p = (kvp *)n-&gt;val;
+        if(strcmp(p-&gt;key, key) == 0){
+            p-&gt;used = 1;
+            return p-&gt;val;
+        }
+        n = n-&gt;next;
+    }
+    return 0;
+}
+</code></pre><ul>
+<li>key&#xC5D0; &#xD574;&#xB2F9;&#xD558;&#xB294; val&#xC744; &#xBC18;&#xD658;&#xD569;&#xB2C8;&#xB2E4;.</li>
+</ul>
+<h2 id="optionfindstr">option_find_str</h2>
+<pre><code>char *option_find_str(list *l, char *key, char *def)
+{
+    char *v = option_find(l, key);
+    if(v) return v;
+    if(def) fprintf(stderr, &quot;%s: Using default &apos;%s&apos;\n&quot;, key, def);
+    return def;
+}
+</code></pre><ul>
+<li>string&#xAC12;&#xC744; &#xAC00;&#xC9C0;&#xB294; val&#xC744; &#xBC18;&#xD658;&#xD569;&#xB2C8;&#xB2E4;.</li>
+</ul>
+<h2 id="optionfindint">option_find_int</h2>
+<pre><code>int option_find_int(list *l, char *key, int def)
+{
+    char *v = option_find(l, key);
+    if(v) return atoi(v);
+    fprintf(stderr, &quot;%s: Using default &apos;%d&apos;\n&quot;, key, def);
+    return def;
+}
+</code></pre><ul>
+<li>int&#xAC12;&#xC744; &#xAC00;&#xC9C0;&#xB294; val&#xC744; string&#xC73C;&#xB85C; &#xBC18;&#xD658;&#xD569;&#xB2C8;&#xB2E4;.</li>
+<li>&#xC5C6;&#xC744;&#xC2DC; error&#xAC00; &#xBC1C;&#xC0DD;&#xD569;&#xB2C8;&#xB2E4;.</li>
+</ul>
+<h2 id="optionfindintquiet">option_find_int_quiet</h2>
+<pre><code>int option_find_int_quiet(list *l, char *key, int def)
+{
+    char *v = option_find(l, key);
+    if(v) return atoi(v);
+    return def;
+}
+</code></pre><ul>
+<li>int&#xAC12;&#xC744; &#xAC00;&#xC9C0;&#xB294; val&#xC744; string&#xC73C;&#xB85C; &#xBC18;&#xD658;&#xD569;&#xB2C8;&#xB2E4;.</li>
+<li>&#xC5C6;&#xC744;&#xC2DC; error&#xAC00; &#xBC1C;&#xC0DD;&#xD558;&#xC9C0; &#xC54A;&#xC2B5;&#xB2C8;&#xB2E4;.</li>
+</ul>
+<h2 id="optionfindfloatquiet">option_find_float_quiet</h2>
+<pre><code>float option_find_float_quiet(list *l, char *key, float def)
+{
+    char *v = option_find(l, key);
+    if(v) return atof(v);
+    return def;
+}
+</code></pre><ul>
+<li>float&#xAC12;&#xC744; &#xAC00;&#xC9C0;&#xB294; val&#xC744; string&#xC73C;&#xB85C; &#xBC18;&#xD658;&#xD569;&#xB2C8;&#xB2E4;.</li>
+<li>&#xC5C6;&#xC744;&#xC2DC; error&#xAC00; &#xBC1C;&#xC0DD;&#xD558;&#xC9C0; &#xC54A;&#xC2B5;&#xB2C8;&#xB2E4;.</li>
+</ul>
+<h2 id="optionfindfloat">option_find_float</h2>
+<pre><code>float option_find_float(list *l, char *key, float def)
+{
+    char *v = option_find(l, key);
+    if(v) return atof(v);
+    fprintf(stderr, &quot;%s: Using default &apos;%lf&apos;\n&quot;, key, def);
+    return def;
+}
+</code></pre><ul>
+<li>float&#xAC12;&#xC744; &#xAC00;&#xC9C0;&#xB294; val&#xC744; string&#xC73C;&#xB85C; &#xBC18;&#xD658;&#xD569;&#xB2C8;&#xB2E4;.</li>
+<li>&#xC5C6;&#xC744;&#xC2DC; error&#xAC00; &#xBC1C;&#xC0DD;&#xD569;&#xB2C8;&#xB2E4;.</li>
+</ul>
+<h1 id="">#</h1>
+
                                 
                                 </section>
                             
@@ -2010,7 +2175,7 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"option_list.c","level":"5.34","depth":1,"next":{"title":"parser.c","level":"5.35","depth":1,"path":"part3_src/parser_1.md","ref":"part3_src/parser_1.md","articles":[]},"previous":{"title":"normalization_layer.c","level":"5.33","depth":1,"path":"part3_src/normalization_layer.md","ref":"part3_src/normalization_layer.md","articles":[]},"dir":"ltr"},"config":{"plugins":["advanced-emoji","theme-gestalt","-theme-default","styles-sass-fix","theme-api","mathjax"],"root":"./","styles":{"website":"website-1596554398914.css"},"pluginsConfig":{"styles-sass-fix":{},"theme-gestalt":{"showLevel":false,"styles":{"website":"styles/website.css"},"logo":"/darknet_book/assets/darknet.png","baseUrl":null,"excludeDefaultStyles":true,"doNotHideChildrenChapters":false},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"theme-api":{"languages":[],"split":true,"theme":"light"},"mathjax":{"forceSVG":false,"version":"2.6-latest"},"advanced-emoji":{"embedEmojis":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]}},"theme":"default","author":"JJM","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"DarkNet Book","output.name":"site","gitbook":"*"},"file":{"path":"part3_src/option_list.md","mtime":"2020-07-09T09:08:34.946Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-08-04T15:19:37.284Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"option_list.c","level":"5.34","depth":1,"next":{"title":"parser.c","level":"5.35","depth":1,"path":"part3_src/parser_1.md","ref":"part3_src/parser_1.md","articles":[{"title":"+ parser.c","level":"5.35.1","depth":2,"path":"part3_src/parser_2.md","ref":"part3_src/parser_2.md","articles":[]}]},"previous":{"title":"normalization_layer.c","level":"5.33","depth":1,"path":"part3_src/normalization_layer.md","ref":"part3_src/normalization_layer.md","articles":[]},"dir":"ltr"},"config":{"plugins":["advanced-emoji","theme-gestalt","-theme-default","styles-sass-fix","theme-api","mathjax"],"root":"./","styles":{"website":"website-1597154999314.css"},"pluginsConfig":{"styles-sass-fix":{},"theme-gestalt":{"showLevel":false,"styles":{"website":"styles/website.css"},"logo":"/darknet_book/assets/darknet.png","baseUrl":null,"excludeDefaultStyles":true,"doNotHideChildrenChapters":false},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"theme-api":{"languages":[],"split":true,"theme":"light"},"mathjax":{"forceSVG":false,"version":"2.6-latest"},"advanced-emoji":{"embedEmojis":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]}},"theme":"default","author":"JJM","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"DarkNet Book","output.name":"site","gitbook":"*"},"file":{"path":"part3_src/option_list.md","mtime":"2020-08-10T08:42:16.394Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-08-11T14:09:44.526Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>

@@ -6,7 +6,7 @@
 
 # src/include/darknet.h
 
-## node 구조체
+## node
 
 ```
 typedef struct node{
@@ -24,15 +24,6 @@ typedef struct list{
     node *front;
     node *back;
 } list;
-```
-
-## section
-
-```
-typedef struct{
-    char *type;
-    list *options;
-}section;
 ```
 
 ## matrix
@@ -107,7 +98,16 @@ typedef struct{
 
 # /src/parser.c
 
-## size_params 구조체
+## section
+
+```
+typedef struct{
+    char *type;
+    list *options;
+}section;
+```
+
+## size_params
 
 ```
 typedef struct size_params{
@@ -124,7 +124,7 @@ typedef struct size_params{
 
 # /src/box.h
 
-## dbox 구조체
+## dbox
 
 ```
 typedef struct{

@@ -90,6 +90,8 @@ float get_current_rate(network *net)
 
 - 다양한 learning rate scheduler를 이용해 learning rate를 반환합니다.
 
+
+
 ## get_layer_string
 
 ```

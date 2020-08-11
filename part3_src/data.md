@@ -19,6 +19,8 @@ list *get_paths(char *filename)
 }
 ```
 
+-
+
 ## get_random_paths_indexes
 
 ```
@@ -119,6 +121,8 @@ matrix load_image_paths(char **paths, int n, int w, int h)
 }
 ```
 
+- `path`의 이미지를 읽고 반환합니다.
+
 ## load_image_augment_paths
 
 ```
@@ -156,6 +160,8 @@ matrix load_image_augment_paths(char **paths, int n, int min, int max, int size,
 }
 ```
 
+- crop, flip
+
 ## read_boxes
 
 ```
@@ -189,6 +195,8 @@ box_label *read_boxes(char *filename, int *n)
     return boxes;
 }
 ```
+
+- box의 정보가 들어있는 파일을 읽고 box를 반환합니다.
 
 ## randomize_boxes
 

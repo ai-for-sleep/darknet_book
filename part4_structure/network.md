@@ -2,6 +2,82 @@
 
 Network 구조체 입니다.
 
+- `n` : layer의 수
+- `batch` : batch 크기
+- `seen` :
+- `t` :
+- `epoch` : epoch 수
+- `subdivisions` :
+- `layers` :
+- `output` :
+- `policy` : learning rate policy
+- `learning_rate` : 학습률
+- `momentum` : learning rate의 운동에너지를 감소시키기 위한 값
+
+```
+# origin
+
+weight = weight + learning rate * dL / dw
+
+# momentum
+
+velocity = momentum * velocity - learning rate * dL / dw
+weight = weight + velocity
+```
+
+만약 momentum이 0.9이고 2번을 한다고 가정하면, $$velocity = 0.9 * (-\frac{\partial L}{\partial W_1}) - \lambda \frac{\partial L}{\partial W_2}$$
+
+- `decay` : weight decay (L2 regularization)
+
+L2 regularization은 가중치가 크면 클수록 큰 페널티를 줘서 overfitting을 방지하는 방법입니다.
+
+Loss함수에 $$\frac{1}{2} \lambda W W^T$$를 더합니다. 여기서 $$\lambda$$가 `decay`입니다. 클수록 가중치에 큰 페널티를 줍니다.
+
+$$\frac{1}{2}$$가 있는 이유는 미분시 $$W^2$$의 2가 내려와서 값을 1로 만들기 위함입니다.
+
+$$W = W - learning rate * (\frac{\partial L}{\partial W} + \lambda W)$$
+
+- `gamma` : learning rate 감소율
+- `scale` :
+- `power` :
+- `time_steps` :
+- `step` : 현재 스탭
+- `max_batches` :
+- `scales` :
+- `steps` :
+- `num_steps` :
+- `burn_in` :
+- `adam` :
+- `B1` :
+- `B2` :
+- `eps` :
+- `inputs` :
+- `outputs` :
+- `truths` :
+- `notruth` :
+- `h, w, c` :
+- `max_crop` :
+- `min_crop` :
+- `max_ratio` :
+- `min_ratio` :
+- `center` :
+- `angle` :
+- `aspect` :
+- `exposure` :
+- `saturation` :
+- `hue` :
+- `random` :
+- `gpu_index` :
+- `hierarchy` :
+- `input` :
+- `truth` :
+- `delta` :
+- `workspace` :
+- `train` :
+- `index` :
+- `cost` :
+- `clip` :
+
 ```
 typedef struct network{
     int n;                            
@@ -63,10 +139,3 @@ typedef struct network{
     float clip;
 } network;
 ```
-
-- `n` : layer의 수
-- `t` :
-- `seen` :
-- `batch` : batch의 수
-- `epoch` : epoch의 수
-- `learning_rate` : 학습률
