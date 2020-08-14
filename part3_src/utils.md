@@ -1,6 +1,8 @@
 
 # utils.c
 
+- `rand()` : 0 ~ 32767 사이의 랜덤한 값을 반환합니다.
+
 ## what_time_is_it_now
 
 ```
@@ -385,6 +387,8 @@ void file_error(char *s)
 
 ```
 
+- file을 읽는데 에러가 발생하는 경우를 처리합니다.
+
 ## split_str
 
 ```
@@ -551,7 +555,7 @@ void read_all(int fd, char *buffer, size_t bytes)
 }
 ```
 
-## read_all
+## write_all
 
 ```
 void write_all(int fd, char *buffer, size_t bytes)
@@ -575,6 +579,8 @@ char *copy_string(char *s)
     return copy;
 }
 ```
+
+- 문자열을 복사하여 반환합니다.
 
 ## parse_csv_line
 
@@ -649,6 +655,8 @@ float sum_array(float *a, int n)
 }
 ```
 
+- 배열 a의 합을 반환합니다.
+
 ## mean_array
 
 ```
@@ -657,6 +665,8 @@ float mean_array(float *a, int n)
     return sum_array(a,n)/n;
 }
 ```
+
+- 배열 a의 평균을 반환합니다.
 
 ## mean_arrays
 
@@ -677,6 +687,8 @@ void mean_arrays(float **a, int n, int els, float *avg)
 }
 ```
 
+- 2차원 배열 a의 평균을 반환합니다.
+
 ## print_statistics
 
 ```
@@ -687,6 +699,8 @@ void print_statistics(float *a, int n)
     printf("MSE: %.6f, Mean: %.6f, Variance: %.6f\n", mse_array(a, n), m, v);
 }
 ```
+
+- mse, mean, variance를 출력합니다.
 
 ## variance_array
 
@@ -702,6 +716,8 @@ float variance_array(float *a, int n)
 }
 ```
 
+- 배열 a의 분산을 반환합니다.
+
 ## constrain_int
 
 ```
@@ -713,6 +729,11 @@ int constrain_int(int a, int min, int max)
 }
 ```
 
+- int
+- min보다 작으면 min
+- max보다 크면 max
+- 항상 min ~ max의 값만 반환한다.
+
 ## constrain
 
 ```
@@ -723,6 +744,11 @@ float constrain(float min, float max, float a)
     return a;
 }
 ```
+
+- float
+- min보다 작으면 min
+- max보다 크면 max
+- 항상 min ~ max의 값만 반환한다.
 
 ## dist_array
 
@@ -736,6 +762,9 @@ float dist_array(float *a, float *b, int n, int sub)
 }
 ```
 
+- a와 b의 유클리드 거리를 구합니다.
+- $$\sqrt{\sum_{i=1}^{n} (a_i - b_i)^2}$$
+
 ## mse_array
 
 ```
@@ -746,8 +775,10 @@ float mse_array(float *a, int n)
     for(i = 0; i < n; ++i) sum += a[i]*a[i];
     return sqrt(sum/n);
 }
-
 ```
+
+- mean square를 구합니다.
+- $$\frac{1}{N} \sum_{i=1}^{n} a_i^2$$
 
 ## normalize_array
 
@@ -765,6 +796,8 @@ void normalize_array(float *a, int n)
 }
 ```
 
+- 배열 a를 정규화 합니다.
+
 ## translate_array
 
 ```
@@ -776,6 +809,8 @@ void translate_array(float *a, int n, float s)
     }
 }
 ```
+
+- 배열 a에 추가할 값을 더합니다.
 
 ## mag_array
 
@@ -791,6 +826,8 @@ float mag_array(float *a, int n)
 }
 ```
 
+- ???
+
 ## scale_array
 
 ```
@@ -802,6 +839,8 @@ void scale_array(float *a, int n, float s)
     }
 }
 ```
+
+- 배열 a의 scale을 조절합니다.
 
 ## sample_array
 
@@ -819,6 +858,8 @@ int sample_array(float *a, int n)
     return n-1;
 }
 ```
+
+-
 
 ## max_int_index
 
@@ -838,6 +879,8 @@ int max_int_index(int *a, int n)
 }
 ```
 
+- int 배열에서 최댓값 index를 반환합니다.
+
 ## max_index
 
 ```
@@ -856,6 +899,8 @@ int max_index(float *a, int n)
 }
 ```
 
+- float 배열에서 최댓값 index를 반환합니다.
+
 ## int_index
 
 ```
@@ -868,6 +913,8 @@ int int_index(int *a, int val, int n)
     return -1;
 }
 ```
+
+- 배열 a에서 val의 index를 반환합니다.
 
 ## rand_int
 
@@ -883,6 +930,8 @@ int rand_int(int min, int max)
     return r;
 }
 ```
+
+- min ~ max 사이의 정수를 반환합니다.
 
 ## rand_normal
 
@@ -910,6 +959,8 @@ float rand_normal()
 }
 ```
 
+- [http://en.wikipedia.org/wiki/Box%E2%80%93Muller_transform](http://en.wikipedia.org/wiki/Box%E2%80%93Muller_transform)
+
 ## rand_size_t
 
 ```
@@ -926,6 +977,8 @@ size_t rand_size_t()
 }
 ```
 
+- 8 byte 크기의 랜덤한 값을 생성합니다.
+
 ## rand_uniform
 
 ```
@@ -940,6 +993,8 @@ float rand_uniform(float min, float max)
 }
 ```
 
+- max와 min사이의 랜덤한 값을 반환합니다.
+
 ## rand_scale
 
 ```
@@ -950,6 +1005,8 @@ float rand_scale(float s)
     return 1./scale;
 }
 ```
+
+- 1에서 s사이의 랜덤한 값을 반환합니다.
 
 ## one_hot_encode
 
@@ -967,6 +1024,13 @@ float **one_hot_encode(float *a, int n, int k)
 }
 ```
 
+- 크기가 n인 배열 a를 one hot encoding 합니다.
+
+```
+a : [0, 1, 2]
+
+return [[1, 0, 0], [0, 1, 0], [0, 0, 1]]
+```
 
 ## sum_array
 

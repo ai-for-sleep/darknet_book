@@ -42,7 +42,7 @@
 
     
         
-        <link rel="stylesheet" href="../website-1597154999314.css">
+        <link rel="stylesheet" href="../website-1597403756570.css">
         
     
 
@@ -2021,59 +2021,62 @@
 <hr>
 <h1 id="softmaxlayerc">softmax_layer.c</h1>
 <h2 id="forwardsoftmaxlayer">forward_softmax_layer</h2>
-<pre><code>void forward_softmax_layer(const softmax_layer l, network net)
-{
-    if(l.softmax_tree){
-        int i;
-        int count = 0;
-        for (i = 0; i &lt; l.softmax_tree-&gt;groups; ++i) {
-            int group_size = l.softmax_tree-&gt;group_size[i];
-            softmax_cpu(net.input + count, group_size, l.batch, l.inputs, 1, 0, 1, l.temperature, l.output + count);
+<pre><code class="lang-c"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">forward_softmax_layer</span><span class="hljs-params">(<span class="hljs-keyword">const</span> softmax_layer l, network net)</span>
+</span>{
+    <span class="hljs-keyword">if</span>(l.softmax_tree){
+        <span class="hljs-keyword">int</span> i;
+        <span class="hljs-keyword">int</span> count = <span class="hljs-number">0</span>;
+        <span class="hljs-keyword">for</span> (i = <span class="hljs-number">0</span>; i &lt; l.softmax_tree-&gt;groups; ++i) {
+            <span class="hljs-keyword">int</span> group_size = l.softmax_tree-&gt;group_size[i];
+            softmax_cpu(net.input + count, group_size, l.batch, l.inputs, <span class="hljs-number">1</span>, <span class="hljs-number">0</span>, <span class="hljs-number">1</span>, l.temperature, l.output + count);
             count += group_size;
         }
-    } else {
-        softmax_cpu(net.input, l.inputs/l.groups, l.batch, l.inputs, l.groups, l.inputs/l.groups, 1, l.temperature, l.output);
+    } <span class="hljs-keyword">else</span> {
+        softmax_cpu(net.input, l.inputs/l.groups, l.batch, l.inputs, l.groups, l.inputs/l.groups, <span class="hljs-number">1</span>, l.temperature, l.output);
     }
 
-    if(net.truth &amp;&amp; !l.noloss){
+    <span class="hljs-keyword">if</span>(net.truth &amp;&amp; !l.noloss){
         softmax_x_ent_cpu(l.batch*l.inputs, l.output, net.truth, l.delta, l.loss);
-        l.cost[0] = sum_array(l.loss, l.batch*l.inputs);
+        l.cost[<span class="hljs-number">0</span>] = sum_array(l.loss, l.batch*l.inputs);
     }
 }
-</code></pre><ul>
+</code></pre>
+<ul>
 <li>softmax&#xB97C; &#xC9C4;&#xD589;&#xD569;&#xB2C8;&#xB2E4;.</li>
 </ul>
 <h2 id="backwardsoftmaxlayer">backward_softmax_layer</h2>
-<pre><code>void backward_softmax_layer(const softmax_layer l, network net)
-{
-    axpy_cpu(l.inputs*l.batch, 1, l.delta, 1, net.delta, 1); // network delta = layer delta
+<pre><code class="lang-c"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">backward_softmax_layer</span><span class="hljs-params">(<span class="hljs-keyword">const</span> softmax_layer l, network net)</span>
+</span>{
+    axpy_cpu(l.inputs*l.batch, <span class="hljs-number">1</span>, l.delta, <span class="hljs-number">1</span>, net.delta, <span class="hljs-number">1</span>); <span class="hljs-comment">// network delta = layer delta</span>
 }
-</code></pre><ul>
+</code></pre>
+<ul>
 <li>&#xC5ED;&#xC804;&#xD30C;&#xD569;&#xB2C8;&#xB2E4;.</li>
 </ul>
 <h2 id="makesoftmaxlayer">make_softmax_layer</h2>
-<pre><code>softmax_layer make_softmax_layer(int batch, int inputs, int groups)
-{
-    assert(inputs%groups == 0);
-    fprintf(stderr, &quot;softmax                                        %4d\n&quot;,  inputs);
-    softmax_layer l = {0};
+<pre><code class="lang-c"><span class="hljs-function">softmax_layer <span class="hljs-title">make_softmax_layer</span><span class="hljs-params">(<span class="hljs-keyword">int</span> batch, <span class="hljs-keyword">int</span> inputs, <span class="hljs-keyword">int</span> groups)</span>
+</span>{
+    assert(inputs%groups == <span class="hljs-number">0</span>);
+    <span class="hljs-built_in">fprintf</span>(<span class="hljs-built_in">stderr</span>, <span class="hljs-string">&quot;softmax                                        %4d\n&quot;</span>,  inputs);
+    softmax_layer l = {<span class="hljs-number">0</span>};
     l.type = SOFTMAX;
     l.batch = batch;
     l.groups = groups;
     l.inputs = inputs;
     l.outputs = inputs;
-    l.loss = calloc(inputs*batch, sizeof(float));
-    l.output = calloc(inputs*batch, sizeof(float));
-    l.delta = calloc(inputs*batch, sizeof(float));
-    l.cost = calloc(1, sizeof(float));
+    l.loss = <span class="hljs-built_in">calloc</span>(inputs*batch, <span class="hljs-keyword">sizeof</span>(<span class="hljs-keyword">float</span>));
+    l.output = <span class="hljs-built_in">calloc</span>(inputs*batch, <span class="hljs-keyword">sizeof</span>(<span class="hljs-keyword">float</span>));
+    l.delta = <span class="hljs-built_in">calloc</span>(inputs*batch, <span class="hljs-keyword">sizeof</span>(<span class="hljs-keyword">float</span>));
+    l.cost = <span class="hljs-built_in">calloc</span>(<span class="hljs-number">1</span>, <span class="hljs-keyword">sizeof</span>(<span class="hljs-keyword">float</span>));
 
     l.forward = forward_softmax_layer;
     l.backward = backward_softmax_layer;
 
 
-    return l;
+    <span class="hljs-keyword">return</span> l;
 }
-</code></pre><ul>
+</code></pre>
+<ul>
 <li>softmax&#xB97C; layer&#xB85C; &#xB9CC;&#xB4ED;&#xB2C8;&#xB2E4;.</li>
 </ul>
 
@@ -2119,7 +2122,7 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"softmax_layer.c","level":"5.41","depth":1,"next":{"title":"tree.c","level":"5.42","depth":1,"path":"part3_src/tree.md","ref":"part3_src/tree.md","articles":[]},"previous":{"title":"shortcut_layer.c","level":"5.40","depth":1,"path":"part3_src/shortcut.md","ref":"part3_src/shortcut.md","articles":[]},"dir":"ltr"},"config":{"plugins":["advanced-emoji","theme-gestalt","-theme-default","styles-sass-fix","theme-api","mathjax"],"root":"./","styles":{"website":"website-1597154999314.css"},"pluginsConfig":{"styles-sass-fix":{},"theme-gestalt":{"showLevel":false,"styles":{"website":"styles/website.css"},"logo":"/darknet_book/assets/darknet.png","baseUrl":null,"excludeDefaultStyles":true,"doNotHideChildrenChapters":false},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"theme-api":{"languages":[],"split":true,"theme":"light"},"mathjax":{"forceSVG":false,"version":"2.6-latest"},"advanced-emoji":{"embedEmojis":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]}},"theme":"default","author":"JJM","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"DarkNet Book","output.name":"site","gitbook":"*"},"file":{"path":"part3_src/softmax_layer.md","mtime":"2020-07-26T15:17:51.707Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-08-11T14:09:44.526Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"softmax_layer.c","level":"5.41","depth":1,"next":{"title":"tree.c","level":"5.42","depth":1,"path":"part3_src/tree.md","ref":"part3_src/tree.md","articles":[]},"previous":{"title":"shortcut_layer.c","level":"5.40","depth":1,"path":"part3_src/shortcut.md","ref":"part3_src/shortcut.md","articles":[]},"dir":"ltr"},"config":{"plugins":["advanced-emoji","theme-gestalt","-theme-default","styles-sass-fix","theme-api","mathjax"],"root":"./","styles":{"website":"website-1597403756570.css"},"pluginsConfig":{"styles-sass-fix":{},"theme-gestalt":{"showLevel":false,"styles":{"website":"styles/website.css"},"logo":"/darknet_book/assets/darknet.png","baseUrl":null,"excludeDefaultStyles":true,"doNotHideChildrenChapters":false},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"theme-api":{"languages":[],"split":true,"theme":"light"},"mathjax":{"forceSVG":false,"version":"2.6-latest"},"advanced-emoji":{"embedEmojis":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]}},"theme":"default","author":"JJM","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"DarkNet Book","output.name":"site","gitbook":"*"},"file":{"path":"part3_src/softmax_layer.md","mtime":"2020-08-13T07:16:55.181Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-08-14T11:15:45.491Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>

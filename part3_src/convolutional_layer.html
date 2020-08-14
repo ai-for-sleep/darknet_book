@@ -42,7 +42,7 @@
 
     
         
-        <link rel="stylesheet" href="../website-1597154999314.css">
+        <link rel="stylesheet" href="../website-1597403756570.css">
         
     
 
@@ -1997,138 +1997,141 @@
 <hr>
 <h1 id="convolutionallayerc">convolutional_layer.c</h1>
 <h2 id="forwardconvolutionallayer">forward_convolutional_layer</h2>
-<pre><code>void forward_convolutional_layer(convolutional_layer l, network net)
-{
-    int i, j;
+<pre><code class="lang-c"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">forward_convolutional_layer</span><span class="hljs-params">(convolutional_layer l, network net)</span>
+</span>{
+    <span class="hljs-keyword">int</span> i, j;
 
-    fill_cpu(l.outputs*l.batch, 0, l.output, 1);                                    /// output&#xC744; 0&#xC73C;&#xB85C; &#xCD08;&#xAE30;&#xD654;
+    fill_cpu(l.outputs*l.batch, <span class="hljs-number">0</span>, l.output, <span class="hljs-number">1</span>);                                    <span class="hljs-comment">/// output&#xC744; 0&#xC73C;&#xB85C; &#xCD08;&#xAE30;&#xD654;</span>
 
-    if(l.xnor){                                                                     
+    <span class="hljs-keyword">if</span>(l.xnor){                                                                     
         binarize_weights(l.weights, l.n, l.c/l.groups*l.size*l.size, l.binary_weights);
         swap_binary(&amp;l);
         binarize_cpu(net.input, l.c*l.h*l.w*l.batch, l.binary_input);
         net.input = l.binary_input;
     }
 
-    int m = l.n/l.groups;                                                           /// filter &#xAC1C;&#xC218;
-    int k = l.size*l.size*l.c/l.groups;                                             /// filter &#xD06C;&#xAE30;
-    int n = l.out_w*l.out_h;                                                        /// output feature map &#xD06C;&#xAE30;
-    for(i = 0; i &lt; l.batch; ++i){
-        for(j = 0; j &lt; l.groups; ++j){
-            float *a = l.weights + j*l.nweights/l.groups;                           /// &#xD559;&#xC2B5; &#xC2DC;&#xC791; &#xD3EC;&#xC778;&#xD130;
-            float *b = net.workspace;                                               
-            float *c = l.output + (i*l.groups + j)*n*m;                             /// output &#xC2DC;&#xC791; &#xD3EC;&#xC778;&#xD130;
-            float *im =  net.input + (i*l.groups + j)*l.c/l.groups*l.h*l.w;         /// input &#xC2DC;&#xC791; &#xD3EC;&#xC778;&#xD130;
+    <span class="hljs-keyword">int</span> m = l.n/l.groups;                                                           <span class="hljs-comment">/// filter &#xAC1C;&#xC218;</span>
+    <span class="hljs-keyword">int</span> k = l.size*l.size*l.c/l.groups;                                             <span class="hljs-comment">/// filter &#xD06C;&#xAE30;</span>
+    <span class="hljs-keyword">int</span> n = l.out_w*l.out_h;                                                        <span class="hljs-comment">/// output feature map &#xD06C;&#xAE30;</span>
+    <span class="hljs-keyword">for</span>(i = <span class="hljs-number">0</span>; i &lt; l.batch; ++i){
+        <span class="hljs-keyword">for</span>(j = <span class="hljs-number">0</span>; j &lt; l.groups; ++j){
+            <span class="hljs-keyword">float</span> *a = l.weights + j*l.nweights/l.groups;                           <span class="hljs-comment">/// &#xD559;&#xC2B5; &#xC2DC;&#xC791; &#xD3EC;&#xC778;&#xD130;</span>
+            <span class="hljs-keyword">float</span> *b = net.workspace;                                               
+            <span class="hljs-keyword">float</span> *c = l.output + (i*l.groups + j)*n*m;                             <span class="hljs-comment">/// output &#xC2DC;&#xC791; &#xD3EC;&#xC778;&#xD130;</span>
+            <span class="hljs-keyword">float</span> *im =  net.input + (i*l.groups + j)*l.c/l.groups*l.h*l.w;         <span class="hljs-comment">/// input &#xC2DC;&#xC791; &#xD3EC;&#xC778;&#xD130;</span>
 
-            if (l.size == 1) {                                                      
+            <span class="hljs-keyword">if</span> (l.size == <span class="hljs-number">1</span>) {                                                      
                 b = im;
-            } else {
-                im2col_cpu(im, l.c/l.groups, l.h, l.w, l.size, l.stride, l.pad, b); /// &#xC774;&#xBBF8;&#xC9C0;&#xB97C; columns&#xB85C; &#xBCC0;&#xD658;
+            } <span class="hljs-keyword">else</span> {
+                im2col_cpu(im, l.c/l.groups, l.h, l.w, l.size, l.stride, l.pad, b); <span class="hljs-comment">/// &#xC774;&#xBBF8;&#xC9C0;&#xB97C; columns&#xB85C; &#xBCC0;&#xD658;</span>
             }
-            gemm(0,0,m,n,k,1,a,k,b,n,1,c,n);                                        /// &#xCEE8;&#xBCFC;&#xB8E8;&#xC158; &#xC5F0;&#xC0B0;
+            gemm(<span class="hljs-number">0</span>,<span class="hljs-number">0</span>,m,n,k,<span class="hljs-number">1</span>,a,k,b,n,<span class="hljs-number">1</span>,c,n);                                        <span class="hljs-comment">/// &#xCEE8;&#xBCFC;&#xB8E8;&#xC158; &#xC5F0;&#xC0B0;</span>
         }
     }
 
-    if(l.batch_normalize){                                                          
+    <span class="hljs-keyword">if</span>(l.batch_normalize){                                                          
         forward_batchnorm_layer(l, net);                                            
-    } else {
+    } <span class="hljs-keyword">else</span> {
         add_bias(l.output, l.biases, l.batch, l.n, l.out_h*l.out_w);                
     }
 
     activate_array(l.output, l.outputs*l.batch, l.activation);                      
-    if(l.binary || l.xnor) swap_binary(&amp;l);                                         
+    <span class="hljs-keyword">if</span>(l.binary || l.xnor) swap_binary(&amp;l);                                         
 }
-</code></pre><p><code>forward</code></p>
+</code></pre>
+<p><code>forward</code></p>
 <ul>
 <li>convolution &#xC5F0;&#xC0B0;</li>
 <li>batch normalization(no bias) or bias</li>
 <li>activation function</li>
 </ul>
 <h2 id="backwardconvolutionallayer">backward_convolutional_layer</h2>
-<pre><code>void backward_convolutional_layer(convolutional_layer l, network net)
-{
-    int i, j;
-    int m = l.n/l.groups;                                                           /// filter &#xAC1C;&#xC218;
-    int k = l.size*l.size*l.c/l.groups;                                             /// filter &#xD06C;&#xAE30;
-    int n = l.out_w*l.out_h;                                                        /// output feature map &#xD06C;&#xAE30;
+<pre><code class="lang-c"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">backward_convolutional_layer</span><span class="hljs-params">(convolutional_layer l, network net)</span>
+</span>{
+    <span class="hljs-keyword">int</span> i, j;
+    <span class="hljs-keyword">int</span> m = l.n/l.groups;                                                           <span class="hljs-comment">/// filter &#xAC1C;&#xC218;</span>
+    <span class="hljs-keyword">int</span> k = l.size*l.size*l.c/l.groups;                                             <span class="hljs-comment">/// filter &#xD06C;&#xAE30;</span>
+    <span class="hljs-keyword">int</span> n = l.out_w*l.out_h;                                                        <span class="hljs-comment">/// output feature map &#xD06C;&#xAE30;</span>
 
-    gradient_array(l.output, l.outputs*l.batch, l.activation, l.delta);             /// activation function &#xC5ED;&#xC804;&#xD30C;
+    gradient_array(l.output, l.outputs*l.batch, l.activation, l.delta);             <span class="hljs-comment">/// activation function &#xC5ED;&#xC804;&#xD30C;</span>
 
-    if(l.batch_normalize){
-        backward_batchnorm_layer(l, net);                                           /// batch normalize &#xC5ED;&#xC804;&#xD30C;
-    } else {
-        backward_bias(l.bias_updates, l.delta, l.batch, l.n, k);                    /// bias &#xC5ED;&#xC804;&#xD30C;
+    <span class="hljs-keyword">if</span>(l.batch_normalize){
+        backward_batchnorm_layer(l, net);                                           <span class="hljs-comment">/// batch normalize &#xC5ED;&#xC804;&#xD30C;</span>
+    } <span class="hljs-keyword">else</span> {
+        backward_bias(l.bias_updates, l.delta, l.batch, l.n, k);                    <span class="hljs-comment">/// bias &#xC5ED;&#xC804;&#xD30C;</span>
     }
 
-    for(i = 0; i &lt; l.batch; ++i){
-        for(j = 0; j &lt; l.groups; ++j){
-            float *a = l.delta + (i*l.groups + j)*m*k;                              /// gradient &#xD3EC;&#xC778;&#xD130; &#xC774;&#xB3D9;
-            float *b = net.workspace;                                               
-            float *c = l.weight_updates + j*l.nweights/l.groups;                    /// update &#xD3EC;&#xC778;&#xD130; &#xC774;&#xB3D9;
+    <span class="hljs-keyword">for</span>(i = <span class="hljs-number">0</span>; i &lt; l.batch; ++i){
+        <span class="hljs-keyword">for</span>(j = <span class="hljs-number">0</span>; j &lt; l.groups; ++j){
+            <span class="hljs-keyword">float</span> *a = l.delta + (i*l.groups + j)*m*k;                              <span class="hljs-comment">/// gradient &#xD3EC;&#xC778;&#xD130; &#xC774;&#xB3D9;</span>
+            <span class="hljs-keyword">float</span> *b = net.workspace;                                               
+            <span class="hljs-keyword">float</span> *c = l.weight_updates + j*l.nweights/l.groups;                    <span class="hljs-comment">/// update &#xD3EC;&#xC778;&#xD130; &#xC774;&#xB3D9;</span>
 
-            float *im  = net.input + (i*l.groups + j)*l.c/l.groups*l.h*l.w;         /// &#xC774;&#xBBF8;&#xC9C0; &#xD3EC;&#xC778;&#xD130;
-            float *imd = net.delta + (i*l.groups + j)*l.c/l.groups*l.h*l.w;         
+            <span class="hljs-keyword">float</span> *im  = net.input + (i*l.groups + j)*l.c/l.groups*l.h*l.w;         <span class="hljs-comment">/// &#xC774;&#xBBF8;&#xC9C0; &#xD3EC;&#xC778;&#xD130;</span>
+            <span class="hljs-keyword">float</span> *imd = net.delta + (i*l.groups + j)*l.c/l.groups*l.h*l.w;         
 
-            if(l.size == 1){                                                       
+            <span class="hljs-keyword">if</span>(l.size == <span class="hljs-number">1</span>){                                                       
                 b = im;                                                             
-            } else {
+            } <span class="hljs-keyword">else</span> {
                 im2col_cpu(im, l.c/l.groups, l.h, l.w,
-                        l.size, l.stride, l.pad, b);                                /// &#xC774;&#xBBF8;&#xC9C0;&#xB97C; columns&#xB85C; &#xBCC0;&#xD658;
+                        l.size, l.stride, l.pad, b);                                <span class="hljs-comment">/// &#xC774;&#xBBF8;&#xC9C0;&#xB97C; columns&#xB85C; &#xBCC0;&#xD658;</span>
             }
 
-            gemm(0,1,m,n,k,1,a,k,b,k,1,c,n);                                        /// b(image)&#xB97C; &#xC804;&#xCE58;&#xD589;&#xB82C;&#xB85C; &#xCEE8;&#xBCFC;&#xB8E8;&#xC158; &#xC5F0;&#xC0B0;
+            gemm(<span class="hljs-number">0</span>,<span class="hljs-number">1</span>,m,n,k,<span class="hljs-number">1</span>,a,k,b,k,<span class="hljs-number">1</span>,c,n);                                        <span class="hljs-comment">/// b(image)&#xB97C; &#xC804;&#xCE58;&#xD589;&#xB82C;&#xB85C; &#xCEE8;&#xBCFC;&#xB8E8;&#xC158; &#xC5F0;&#xC0B0;</span>
 
-            if (net.delta) {
-                a = l.weights + j*l.nweights/l.groups;                              /// weight &#xD3EC;&#xC778;&#xD130; &#xC774;&#xB3D9;          
-                b = l.delta + (i*l.groups + j)*m*k;                                 /// gradient &#xD3EC;&#xC778;&#xD130; &#xC774;&#xB3D9;
+            <span class="hljs-keyword">if</span> (net.delta) {
+                a = l.weights + j*l.nweights/l.groups;                              <span class="hljs-comment">/// weight &#xD3EC;&#xC778;&#xD130; &#xC774;&#xB3D9;          </span>
+                b = l.delta + (i*l.groups + j)*m*k;                                 <span class="hljs-comment">/// gradient &#xD3EC;&#xC778;&#xD130; &#xC774;&#xB3D9;</span>
                 c = net.workspace;                                                  
-                if (l.size == 1) {
+                <span class="hljs-keyword">if</span> (l.size == <span class="hljs-number">1</span>) {
                     c = imd;
                 }
 
-                gemm(1,0,n,k,m,1,a,n,b,k,0,c,k);                                    /// a(weight)&#xB97C; &#xC804;&#xCE58;&#xD589;&#xB82C;&#xB85C; &#xCEE8;&#xBCFC;&#xB8E8;&#xC158; &#xC5F0;&#xC0B0;
+                gemm(<span class="hljs-number">1</span>,<span class="hljs-number">0</span>,n,k,m,<span class="hljs-number">1</span>,a,n,b,k,<span class="hljs-number">0</span>,c,k);                                    <span class="hljs-comment">/// a(weight)&#xB97C; &#xC804;&#xCE58;&#xD589;&#xB82C;&#xB85C; &#xCEE8;&#xBCFC;&#xB8E8;&#xC158; &#xC5F0;&#xC0B0;</span>
 
-                if (l.size != 1) {
-                    col2im_cpu(net.workspace, l.c/l.groups, l.h, l.w, l.size, l.stride, l.pad, imd);    /// columns&#xC744; &#xC774;&#xBBF8;&#xC9C0;&#xB85C; &#xBCC0;&#xD658;
+                <span class="hljs-keyword">if</span> (l.size != <span class="hljs-number">1</span>) {
+                    col2im_cpu(net.workspace, l.c/l.groups, l.h, l.w, l.size, l.stride, l.pad, imd);    <span class="hljs-comment">/// columns&#xC744; &#xC774;&#xBBF8;&#xC9C0;&#xB85C; &#xBCC0;&#xD658;</span>
                 }
             }
         }
     }
 }
-</code></pre><p><code>backward</code></p>
+</code></pre>
+<p><code>backward</code></p>
 <ul>
 <li>activation function</li>
 <li>batch normalization(no bias) or bias</li>
 <li>convolution &#xC5F0;&#xC0B0;</li>
 </ul>
 <h2 id="updateconvolutionallayer">update_convolutional_layer</h2>
-<pre><code>void update_convolutional_layer(convolutional_layer l, update_args a)
-{
-    float learning_rate = a.learning_rate*l.learning_rate_scale;
-    float momentum = a.momentum;
-    float decay = a.decay;
-    int batch = a.batch;
+<pre><code class="lang-c"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">update_convolutional_layer</span><span class="hljs-params">(convolutional_layer l, update_args a)</span>
+</span>{
+    <span class="hljs-keyword">float</span> learning_rate = a.learning_rate*l.learning_rate_scale;
+    <span class="hljs-keyword">float</span> momentum = a.momentum;
+    <span class="hljs-keyword">float</span> decay = a.decay;
+    <span class="hljs-keyword">int</span> batch = a.batch;
 
-    axpy_cpu(l.n, learning_rate/batch, l.bias_updates, 1, l.biases, 1);
-    scal_cpu(l.n, momentum, l.bias_updates, 1);
+    axpy_cpu(l.n, learning_rate/batch, l.bias_updates, <span class="hljs-number">1</span>, l.biases, <span class="hljs-number">1</span>);
+    scal_cpu(l.n, momentum, l.bias_updates, <span class="hljs-number">1</span>);
 
-    if(l.scales){
-        axpy_cpu(l.n, learning_rate/batch, l.scale_updates, 1, l.scales, 1);
-        scal_cpu(l.n, momentum, l.scale_updates, 1);
+    <span class="hljs-keyword">if</span>(l.scales){
+        axpy_cpu(l.n, learning_rate/batch, l.scale_updates, <span class="hljs-number">1</span>, l.scales, <span class="hljs-number">1</span>);
+        scal_cpu(l.n, momentum, l.scale_updates, <span class="hljs-number">1</span>);
     }
 
-    axpy_cpu(l.nweights, -decay*batch, l.weights, 1, l.weight_updates, 1);
-    axpy_cpu(l.nweights, learning_rate/batch, l.weight_updates, 1, l.weights, 1);
-    scal_cpu(l.nweights, momentum, l.weight_updates, 1);
+    axpy_cpu(l.nweights, -decay*batch, l.weights, <span class="hljs-number">1</span>, l.weight_updates, <span class="hljs-number">1</span>);
+    axpy_cpu(l.nweights, learning_rate/batch, l.weight_updates, <span class="hljs-number">1</span>, l.weights, <span class="hljs-number">1</span>);
+    scal_cpu(l.nweights, momentum, l.weight_updates, <span class="hljs-number">1</span>);
 }
-</code></pre><ul>
+</code></pre>
+<ul>
 <li>convolutional layer&#xC758; &#xD559;&#xC2B5; &#xD30C;&#xB77C;&#xBBF8;&#xD130;&#xB97C; &#xC5C5;&#xB370;&#xC774;&#xD2B8; &#xD558;&#xB294; &#xD568;&#xC218;&#xC785;&#xB2C8;&#xB2E4;.</li>
 </ul>
 <h2 id="makeconvolutionallayer">make_convolutional_layer</h2>
-<pre><code>convolutional_layer make_convolutional_layer(int batch, int h, int w, int c, int n, int groups, int size, int stride, int padding, ACTIVATION activation, int batch_normalize, int binary, int xnor, int adam)
-{
-    int i;
-    convolutional_layer l = {0};
+<pre><code class="lang-c"><span class="hljs-function">convolutional_layer <span class="hljs-title">make_convolutional_layer</span><span class="hljs-params">(<span class="hljs-keyword">int</span> batch, <span class="hljs-keyword">int</span> h, <span class="hljs-keyword">int</span> w, <span class="hljs-keyword">int</span> c, <span class="hljs-keyword">int</span> n, <span class="hljs-keyword">int</span> groups, <span class="hljs-keyword">int</span> size, <span class="hljs-keyword">int</span> stride, <span class="hljs-keyword">int</span> padding, ACTIVATION activation, <span class="hljs-keyword">int</span> batch_normalize, <span class="hljs-keyword">int</span> binary, <span class="hljs-keyword">int</span> xnor, <span class="hljs-keyword">int</span> adam)</span>
+</span>{
+    <span class="hljs-keyword">int</span> i;
+    convolutional_layer l = {<span class="hljs-number">0</span>};
     l.type = CONVOLUTIONAL;
 
     l.groups = groups;
@@ -2144,102 +2147,104 @@
     l.pad = padding;
     l.batch_normalize = batch_normalize;
 
-    l.weights = calloc(c/groups*n*size*size, sizeof(float));
-    l.weight_updates = calloc(c/groups*n*size*size, sizeof(float));
+    l.weights = <span class="hljs-built_in">calloc</span>(c/groups*n*size*size, <span class="hljs-keyword">sizeof</span>(<span class="hljs-keyword">float</span>));
+    l.weight_updates = <span class="hljs-built_in">calloc</span>(c/groups*n*size*size, <span class="hljs-keyword">sizeof</span>(<span class="hljs-keyword">float</span>));
 
-    l.biases = calloc(n, sizeof(float));
-    l.bias_updates = calloc(n, sizeof(float));
+    l.biases = <span class="hljs-built_in">calloc</span>(n, <span class="hljs-keyword">sizeof</span>(<span class="hljs-keyword">float</span>));
+    l.bias_updates = <span class="hljs-built_in">calloc</span>(n, <span class="hljs-keyword">sizeof</span>(<span class="hljs-keyword">float</span>));
 
     l.nweights = c/groups*n*size*size;
     l.nbiases = n;
 
-    // float scale = 1./sqrt(size*size*c);
-    float scale = sqrt(2./(size*size*c/l.groups));
-    //printf(&quot;convscale %f\n&quot;, scale);
-    //scale = .02;
-    //for(i = 0; i &lt; c*n*size*size; ++i) l.weights[i] = scale*rand_uniform(-1, 1);
-    for(i = 0; i &lt; l.nweights; ++i) l.weights[i] = scale*rand_normal();
-    int out_w = convolutional_out_width(l);
-    int out_h = convolutional_out_height(l);
+    <span class="hljs-comment">// float scale = 1./sqrt(size*size*c);</span>
+    <span class="hljs-keyword">float</span> scale = <span class="hljs-built_in">sqrt</span>(<span class="hljs-number">2.</span>/(size*size*c/l.groups));
+    <span class="hljs-comment">//printf(&quot;convscale %f\n&quot;, scale);</span>
+    <span class="hljs-comment">//scale = .02;</span>
+    <span class="hljs-comment">//for(i = 0; i &lt; c*n*size*size; ++i) l.weights[i] = scale*rand_uniform(-1, 1);</span>
+    <span class="hljs-keyword">for</span>(i = <span class="hljs-number">0</span>; i &lt; l.nweights; ++i) l.weights[i] = <span class="hljs-function">scale*<span class="hljs-title">rand_normal</span><span class="hljs-params">()</span></span>;
+    <span class="hljs-keyword">int</span> out_w = convolutional_out_width(l);
+    <span class="hljs-keyword">int</span> out_h = convolutional_out_height(l);
     l.out_h = out_h;
     l.out_w = out_w;
     l.out_c = n;
     l.outputs = l.out_h * l.out_w * l.out_c;
     l.inputs = l.w * l.h * l.c;
 
-    l.output = calloc(l.batch*l.outputs, sizeof(float));
-    l.delta  = calloc(l.batch*l.outputs, sizeof(float));
+    l.output = <span class="hljs-built_in">calloc</span>(l.batch*l.outputs, <span class="hljs-keyword">sizeof</span>(<span class="hljs-keyword">float</span>));
+    l.delta  = <span class="hljs-built_in">calloc</span>(l.batch*l.outputs, <span class="hljs-keyword">sizeof</span>(<span class="hljs-keyword">float</span>));
 
     l.forward = forward_convolutional_layer;
     l.backward = backward_convolutional_layer;
     l.update = update_convolutional_layer;
-    if(binary){
-        l.binary_weights = calloc(l.nweights, sizeof(float));
-        l.cweights = calloc(l.nweights, sizeof(char));
-        l.scales = calloc(n, sizeof(float));
+    <span class="hljs-keyword">if</span>(binary){
+        l.binary_weights = <span class="hljs-built_in">calloc</span>(l.nweights, <span class="hljs-keyword">sizeof</span>(<span class="hljs-keyword">float</span>));
+        l.cweights = <span class="hljs-built_in">calloc</span>(l.nweights, <span class="hljs-keyword">sizeof</span>(<span class="hljs-keyword">char</span>));
+        l.scales = <span class="hljs-built_in">calloc</span>(n, <span class="hljs-keyword">sizeof</span>(<span class="hljs-keyword">float</span>));
     }
-    if(xnor){
-        l.binary_weights = calloc(l.nweights, sizeof(float));
-        l.binary_input = calloc(l.inputs*l.batch, sizeof(float));
+    <span class="hljs-keyword">if</span>(xnor){
+        l.binary_weights = <span class="hljs-built_in">calloc</span>(l.nweights, <span class="hljs-keyword">sizeof</span>(<span class="hljs-keyword">float</span>));
+        l.binary_input = <span class="hljs-built_in">calloc</span>(l.inputs*l.batch, <span class="hljs-keyword">sizeof</span>(<span class="hljs-keyword">float</span>));
     }
 
-    if(batch_normalize){
-        l.scales = calloc(n, sizeof(float));
-        l.scale_updates = calloc(n, sizeof(float));
-        for(i = 0; i &lt; n; ++i){
-            l.scales[i] = 1;
+    <span class="hljs-keyword">if</span>(batch_normalize){
+        l.scales = <span class="hljs-built_in">calloc</span>(n, <span class="hljs-keyword">sizeof</span>(<span class="hljs-keyword">float</span>));
+        l.scale_updates = <span class="hljs-built_in">calloc</span>(n, <span class="hljs-keyword">sizeof</span>(<span class="hljs-keyword">float</span>));
+        <span class="hljs-keyword">for</span>(i = <span class="hljs-number">0</span>; i &lt; n; ++i){
+            l.scales[i] = <span class="hljs-number">1</span>;
         }
 
-        l.mean = calloc(n, sizeof(float));
-        l.variance = calloc(n, sizeof(float));
+        l.mean = <span class="hljs-built_in">calloc</span>(n, <span class="hljs-keyword">sizeof</span>(<span class="hljs-keyword">float</span>));
+        l.variance = <span class="hljs-built_in">calloc</span>(n, <span class="hljs-keyword">sizeof</span>(<span class="hljs-keyword">float</span>));
 
-        l.mean_delta = calloc(n, sizeof(float));
-        l.variance_delta = calloc(n, sizeof(float));
+        l.mean_delta = <span class="hljs-built_in">calloc</span>(n, <span class="hljs-keyword">sizeof</span>(<span class="hljs-keyword">float</span>));
+        l.variance_delta = <span class="hljs-built_in">calloc</span>(n, <span class="hljs-keyword">sizeof</span>(<span class="hljs-keyword">float</span>));
 
-        l.rolling_mean = calloc(n, sizeof(float));
-        l.rolling_variance = calloc(n, sizeof(float));
-        l.x = calloc(l.batch*l.outputs, sizeof(float));
-        l.x_norm = calloc(l.batch*l.outputs, sizeof(float));
+        l.rolling_mean = <span class="hljs-built_in">calloc</span>(n, <span class="hljs-keyword">sizeof</span>(<span class="hljs-keyword">float</span>));
+        l.rolling_variance = <span class="hljs-built_in">calloc</span>(n, <span class="hljs-keyword">sizeof</span>(<span class="hljs-keyword">float</span>));
+        l.x = <span class="hljs-built_in">calloc</span>(l.batch*l.outputs, <span class="hljs-keyword">sizeof</span>(<span class="hljs-keyword">float</span>));
+        l.x_norm = <span class="hljs-built_in">calloc</span>(l.batch*l.outputs, <span class="hljs-keyword">sizeof</span>(<span class="hljs-keyword">float</span>));
     }
-    if(adam){
-        l.m = calloc(l.nweights, sizeof(float));
-        l.v = calloc(l.nweights, sizeof(float));
-        l.bias_m = calloc(n, sizeof(float));
-        l.scale_m = calloc(n, sizeof(float));
-        l.bias_v = calloc(n, sizeof(float));
-        l.scale_v = calloc(n, sizeof(float));
+    <span class="hljs-keyword">if</span>(adam){
+        l.m = <span class="hljs-built_in">calloc</span>(l.nweights, <span class="hljs-keyword">sizeof</span>(<span class="hljs-keyword">float</span>));
+        l.v = <span class="hljs-built_in">calloc</span>(l.nweights, <span class="hljs-keyword">sizeof</span>(<span class="hljs-keyword">float</span>));
+        l.bias_m = <span class="hljs-built_in">calloc</span>(n, <span class="hljs-keyword">sizeof</span>(<span class="hljs-keyword">float</span>));
+        l.scale_m = <span class="hljs-built_in">calloc</span>(n, <span class="hljs-keyword">sizeof</span>(<span class="hljs-keyword">float</span>));
+        l.bias_v = <span class="hljs-built_in">calloc</span>(n, <span class="hljs-keyword">sizeof</span>(<span class="hljs-keyword">float</span>));
+        l.scale_v = <span class="hljs-built_in">calloc</span>(n, <span class="hljs-keyword">sizeof</span>(<span class="hljs-keyword">float</span>));
     }
 
     l.workspace_size = get_workspace_size(l);
     l.activation = activation;
 
-    fprintf(stderr, &quot;conv  %5d %2d x%2d /%2d  %4d x%4d x%4d   -&gt;  %4d x%4d x%4d  %5.3f BFLOPs\n&quot;, n, size, size, stride, w, h, c, l.out_w, l.out_h, l.out_c, (2.0 * l.n * l.size*l.size*l.c/l.groups * l.out_h*l.out_w)/1000000000.);
+    <span class="hljs-built_in">fprintf</span>(<span class="hljs-built_in">stderr</span>, <span class="hljs-string">&quot;conv  %5d %2d x%2d /%2d  %4d x%4d x%4d   -&gt;  %4d x%4d x%4d  %5.3f BFLOPs\n&quot;</span>, n, size, size, stride, w, h, c, l.out_w, l.out_h, l.out_c, (<span class="hljs-number">2.0</span> * l.n * l.size*l.size*l.c/l.groups * l.out_h*l.out_w)/<span class="hljs-number">1000000000.</span>);
 
-    return l;
+    <span class="hljs-keyword">return</span> l;
 }
-</code></pre><ul>
+</code></pre>
+<ul>
 <li>convolution layer&#xB97C; &#xB9CC;&#xB4DC;&#xB294; &#xD568;&#xC218; &#xC785;&#xB2C8;&#xB2E4;.</li>
 </ul>
 <h2 id="denormalizeconvolutionallayer">denormalize_convolutional_layer</h2>
-<pre><code>void denormalize_convolutional_layer(convolutional_layer l)
-{
-    int i, j;
-    for(i = 0; i &lt; l.n; ++i){
-        float scale = l.scales[i]/sqrt(l.rolling_variance[i] + .00001);
-        for(j = 0; j &lt; l.c/l.groups*l.size*l.size; ++j){
+<pre><code class="lang-c"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">denormalize_convolutional_layer</span><span class="hljs-params">(convolutional_layer l)</span>
+</span>{
+    <span class="hljs-keyword">int</span> i, j;
+    <span class="hljs-keyword">for</span>(i = <span class="hljs-number">0</span>; i &lt; l.n; ++i){
+        <span class="hljs-keyword">float</span> scale = l.scales[i]/<span class="hljs-built_in">sqrt</span>(l.rolling_variance[i] + <span class="hljs-number">.00001</span>);
+        <span class="hljs-keyword">for</span>(j = <span class="hljs-number">0</span>; j &lt; l.c/l.groups*l.size*l.size; ++j){
             l.weights[i*l.c/l.groups*l.size*l.size + j] *= scale;
         }
         l.biases[i] -= l.rolling_mean[i] * scale;
-        l.scales[i] = 1;
-        l.rolling_mean[i] = 0;
-        l.rolling_variance[i] = 1;
+        l.scales[i] = <span class="hljs-number">1</span>;
+        l.rolling_mean[i] = <span class="hljs-number">0</span>;
+        l.rolling_variance[i] = <span class="hljs-number">1</span>;
     }
 }
-</code></pre><ul>
+</code></pre>
+<ul>
 <li>&#xC5ED;&#xC815;&#xADDC;&#xD654;&#xB97C; &#xD558;&#xB294; &#xD568;&#xC218;&#xC785;&#xB2C8;&#xB2E4;.</li>
 </ul>
 <h2 id="resizeconvolutionallayer">resize_convolutional_layer</h2>
-<pre><code>void resize_convolutional_layer(convolutional_layer *l, int w, int h)
+<pre><code class="lang-c">void resize_convolutional_layer(convolutional_layer *l, int w, int h)
 {
     l-&gt;w = w;
     l-&gt;h = h;
@@ -2261,79 +2266,85 @@
 
     l-&gt;workspace_size = get_workspace_size(*l);
 }
-</code></pre><ul>
+</code></pre>
+<ul>
 <li>convolutional layer&#xB97C; resize&#xC2DC;&#xD0B5;&#xB2C8;&#xB2E4;.</li>
 </ul>
 <h2 id="addbias">add_bias</h2>
-<pre><code>void add_bias(float *output, float *biases, int batch, int n, int size)
-{
-    int i,j,b;
-    for(b = 0; b &lt; batch; ++b){
-        for(i = 0; i &lt; n; ++i){
-            for(j = 0; j &lt; size; ++j){
+<pre><code class="lang-c"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">add_bias</span><span class="hljs-params">(<span class="hljs-keyword">float</span> *output, <span class="hljs-keyword">float</span> *biases, <span class="hljs-keyword">int</span> batch, <span class="hljs-keyword">int</span> n, <span class="hljs-keyword">int</span> size)</span>
+</span>{
+    <span class="hljs-keyword">int</span> i,j,b;
+    <span class="hljs-keyword">for</span>(b = <span class="hljs-number">0</span>; b &lt; batch; ++b){
+        <span class="hljs-keyword">for</span>(i = <span class="hljs-number">0</span>; i &lt; n; ++i){
+            <span class="hljs-keyword">for</span>(j = <span class="hljs-number">0</span>; j &lt; size; ++j){
                 output[(b*n + i)*size + j] += biases[i];
             }
         }
     }
 }
-</code></pre><ul>
+</code></pre>
+<ul>
 <li>bias&#xB97C; &#xB354;&#xD569;&#xB2C8;&#xB2E4;.</li>
 </ul>
 <h2 id="scalebias">scale_bias</h2>
-<pre><code>void scale_bias(float *output, float *scales, int batch, int n, int size)
-{
-    int i,j,b;
-    for(b = 0; b &lt; batch; ++b){
-        for(i = 0; i &lt; n; ++i){
-            for(j = 0; j &lt; size; ++j){
+<pre><code class="lang-c"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">scale_bias</span><span class="hljs-params">(<span class="hljs-keyword">float</span> *output, <span class="hljs-keyword">float</span> *scales, <span class="hljs-keyword">int</span> batch, <span class="hljs-keyword">int</span> n, <span class="hljs-keyword">int</span> size)</span>
+</span>{
+    <span class="hljs-keyword">int</span> i,j,b;
+    <span class="hljs-keyword">for</span>(b = <span class="hljs-number">0</span>; b &lt; batch; ++b){
+        <span class="hljs-keyword">for</span>(i = <span class="hljs-number">0</span>; i &lt; n; ++i){
+            <span class="hljs-keyword">for</span>(j = <span class="hljs-number">0</span>; j &lt; size; ++j){
                 output[(b*n + i)*size + j] *= scales[i];
             }
         }
     }
 }
-</code></pre><ul>
+</code></pre>
+<ul>
 <li>bias&#xC758; scale&#xC744; &#xC870;&#xC808;&#xD569;&#xB2C8;&#xB2E4;.</li>
 </ul>
 <h2 id="backwardbias">backward_bias</h2>
-<pre><code>void backward_bias(float *bias_updates, float *delta, int batch, int n, int size)
-{
-    int i,b;
-    for(b = 0; b &lt; batch; ++b){
-        for(i = 0; i &lt; n; ++i){
+<pre><code class="lang-c"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">backward_bias</span><span class="hljs-params">(<span class="hljs-keyword">float</span> *bias_updates, <span class="hljs-keyword">float</span> *delta, <span class="hljs-keyword">int</span> batch, <span class="hljs-keyword">int</span> n, <span class="hljs-keyword">int</span> size)</span>
+</span>{
+    <span class="hljs-keyword">int</span> i,b;
+    <span class="hljs-keyword">for</span>(b = <span class="hljs-number">0</span>; b &lt; batch; ++b){
+        <span class="hljs-keyword">for</span>(i = <span class="hljs-number">0</span>; i &lt; n; ++i){
             bias_updates[i] += sum_array(delta+size*(i+b*n), size);
         }
     }
 }
-</code></pre><ul>
+</code></pre>
+<ul>
 <li>bias&#xB97C; &#xC5C5;&#xB370;&#xC774;&#xD2B8;&#xD560; &#xAE30;&#xC6B8;&#xAE30; &#xAC12;&#xC744; &#xAD6C;&#xD569;&#xB2C8;&#xB2E4;.</li>
 <li>bias&#xB294; &#xB525;&#xB7EC;&#xB2DD; &#xC5F0;&#xC0B0;&#xC5D0;&#xC11C; &#xB354;&#xD574;&#xC9C0;&#xB294; &#xD56D;&#xC774;&#xAE30; &#xB54C;&#xBB38;&#xC5D0; &#xBBF8;&#xBD84;&#xC744; &#xD558;&#xB294; &#xACBD;&#xC6B0; 1&#xC774;&#xB418;&#xACE0; &#xD758;&#xB7EC;&#xB4E4;&#xC5B4;&#xC628; &#xADF8;&#xB798;&#xB514;&#xC5B8;&#xD2B8;&#xB97C; &#xC5C5;&#xB370;&#xC774;&#xD2B8; &#xAC12;&#xC73C;&#xB85C; &#xC0AC;&#xC6A9;&#xD569;&#xB2C8;&#xB2E4;.</li>
 </ul>
 <h2 id="swapbinary">swap_binary</h2>
-<pre><code>void swap_binary(convolutional_layer *l)
-{
-    float *swap = l-&gt;weights;
+<pre><code class="lang-c"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">swap_binary</span><span class="hljs-params">(convolutional_layer *l)</span>
+</span>{
+    <span class="hljs-keyword">float</span> *swap = l-&gt;weights;
     l-&gt;weights = l-&gt;binary_weights;
     l-&gt;binary_weights = swap;
 }
-</code></pre><ul>
+</code></pre>
+<ul>
 <li>weights&#xB97C; binary_weights&#xB85C; &#xC62E;&#xAE40;&#xB2C8;&#xB2E4;.</li>
 </ul>
 <h2 id="binarizeweights">binarize_weights</h2>
-<pre><code>void binarize_weights(float *weights, int n, int size, float *binary)
-{
-    int i, f;
-    for(f = 0; f &lt; n; ++f){
-        float mean = 0;
-        for(i = 0; i &lt; size; ++i){
-            mean += fabs(weights[f*size + i]);
+<pre><code class="lang-c"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">binarize_weights</span><span class="hljs-params">(<span class="hljs-keyword">float</span> *weights, <span class="hljs-keyword">int</span> n, <span class="hljs-keyword">int</span> size, <span class="hljs-keyword">float</span> *binary)</span>
+</span>{
+    <span class="hljs-keyword">int</span> i, f;
+    <span class="hljs-keyword">for</span>(f = <span class="hljs-number">0</span>; f &lt; n; ++f){
+        <span class="hljs-keyword">float</span> mean = <span class="hljs-number">0</span>;
+        <span class="hljs-keyword">for</span>(i = <span class="hljs-number">0</span>; i &lt; size; ++i){
+            mean += <span class="hljs-built_in">fabs</span>(weights[f*size + i]);
         }
         mean = mean / size;
-        for(i = 0; i &lt; size; ++i){
-            binary[f*size + i] = (weights[f*size + i] &gt; 0) ? mean : -mean;
+        <span class="hljs-keyword">for</span>(i = <span class="hljs-number">0</span>; i &lt; size; ++i){
+            binary[f*size + i] = (weights[f*size + i] &gt; <span class="hljs-number">0</span>) ? mean : -mean;
         }
     }
 }
-</code></pre><ul>
+</code></pre>
+<ul>
 <li>&#xAC00;&#xC911;&#xCE58;&#xB97C; &#xC774;&#xC9C4;&#xD654; &#xD558;&#xB294; &#xD568;&#xC218; &#xC785;&#xB2C8;&#xB2E4;.</li>
 <li>&#xC591;&#xC218;&#xC77C;&#xB54C;&#xB294; &#xD3C9;&#xADE0;&#xAC12;</li>
 <li>&#xC74C;&#xC218;&#xC77C;&#xB54C;&#xB294; -&#xD3C9;&#xADE0;&#xAC12;</li>
@@ -2535,7 +2546,7 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"convolutional_layer.c","level":"5.10","depth":1,"next":{"title":"cost_layer.c","level":"5.11","depth":1,"path":"part3_src/cost_layer.md","ref":"part3_src/cost_layer.md","articles":[]},"previous":{"title":"connected_layer.c","level":"5.9","depth":1,"path":"part3_src/connected_layer.md","ref":"part3_src/connected_layer.md","articles":[]},"dir":"ltr"},"config":{"plugins":["advanced-emoji","theme-gestalt","-theme-default","styles-sass-fix","theme-api","mathjax"],"root":"./","styles":{"website":"website-1597154999314.css"},"pluginsConfig":{"styles-sass-fix":{},"theme-gestalt":{"showLevel":false,"styles":{"website":"styles/website.css"},"logo":"/darknet_book/assets/darknet.png","baseUrl":null,"excludeDefaultStyles":true,"doNotHideChildrenChapters":false},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"theme-api":{"languages":[],"split":true,"theme":"light"},"mathjax":{"forceSVG":false,"version":"2.6-latest"},"advanced-emoji":{"embedEmojis":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]}},"theme":"default","author":"JJM","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"DarkNet Book","output.name":"site","gitbook":"*"},"file":{"path":"part3_src/convolutional_layer.md","mtime":"2020-08-04T06:29:52.300Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-08-11T14:09:44.526Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"convolutional_layer.c","level":"5.10","depth":1,"next":{"title":"cost_layer.c","level":"5.11","depth":1,"path":"part3_src/cost_layer.md","ref":"part3_src/cost_layer.md","articles":[]},"previous":{"title":"connected_layer.c","level":"5.9","depth":1,"path":"part3_src/connected_layer.md","ref":"part3_src/connected_layer.md","articles":[]},"dir":"ltr"},"config":{"plugins":["advanced-emoji","theme-gestalt","-theme-default","styles-sass-fix","theme-api","mathjax"],"root":"./","styles":{"website":"website-1597403756570.css"},"pluginsConfig":{"styles-sass-fix":{},"theme-gestalt":{"showLevel":false,"styles":{"website":"styles/website.css"},"logo":"/darknet_book/assets/darknet.png","baseUrl":null,"excludeDefaultStyles":true,"doNotHideChildrenChapters":false},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"theme-api":{"languages":[],"split":true,"theme":"light"},"mathjax":{"forceSVG":false,"version":"2.6-latest"},"advanced-emoji":{"embedEmojis":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]}},"theme":"default","author":"JJM","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"DarkNet Book","output.name":"site","gitbook":"*"},"file":{"path":"part3_src/convolutional_layer.md","mtime":"2020-08-13T07:16:30.121Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-08-14T11:15:45.491Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>

@@ -3,7 +3,7 @@
 
 ## nms_comparator
 
-```
+```c
 int nms_comparator(const void *pa, const void *pb)
 {
     detection a = *(detection *)pa;
@@ -26,7 +26,7 @@ int nms_comparator(const void *pa, const void *pb)
 
 ## do_nms_obj
 
-```
+```c
 void do_nms_obj(detection *dets, int total, int classes, float thresh)
 {
     int i, j, k;
@@ -73,7 +73,7 @@ void do_nms_obj(detection *dets, int total, int classes, float thresh)
 
 ## do_nms_sort
 
-```
+```c
 void do_nms_sort(detection *dets, int total, int classes, float thresh)
 {
     int i, j, k;
@@ -117,7 +117,7 @@ void do_nms_sort(detection *dets, int total, int classes, float thresh)
 
 ## float_to_box
 
-```
+```c
 box float_to_box(float *f, int stride)
 {
     box b = {0};
@@ -133,7 +133,7 @@ box float_to_box(float *f, int stride)
 
 ## overlap
 
-```
+```c
 float overlap(float x1, float w1, float x2, float w2)
 {
     float l1 = x1 - w1/2;
@@ -150,7 +150,7 @@ float overlap(float x1, float w1, float x2, float w2)
 
 ## box_intersection
 
-```
+```c
 float box_intersection(box a, box b)
 {
     float w = overlap(a.x, a.w, b.x, b.w);
@@ -165,7 +165,7 @@ float box_intersection(box a, box b)
 
 ## box_union
 
-```
+```c
 float box_union(box a, box b)
 {
     float i = box_intersection(a, b);
@@ -178,7 +178,7 @@ float box_union(box a, box b)
 
 ## box_iou
 
-```
+```c
 float box_iou(box a, box b)
 {
     return box_intersection(a, b)/box_union(a, b);
@@ -195,7 +195,7 @@ float box_iou(box a, box b)
 
 ## box_rmse
 
-```
+```c
 float box_rmse(box a, box b)
 {
     return sqrt(pow(a.x-b.x, 2) +
@@ -211,7 +211,7 @@ float box_rmse(box a, box b)
 
 ## derivative
 
-```
+```c
 dbox derivative(box a, box b)
 {
     dbox d;
@@ -268,7 +268,7 @@ dbox derivative(box a, box b)
 
 ## dintersect
 
-```
+```c
 dbox dintersect(box a, box b)
 {
     float w = overlap(a.x, a.w, b.x, b.w);
@@ -289,7 +289,7 @@ dbox dintersect(box a, box b)
 
 ## dunion
 
-```
+```c
 dbox dunion(box a, box b)
 {
     dbox du;
@@ -308,7 +308,7 @@ dbox dunion(box a, box b)
 
 ## test
 
-```
+```c
 void test_dunion()
 {
     box a = {0, 0, 1, 1};
@@ -414,7 +414,7 @@ IOU manual -0.390865 0.001386 -0.156757 0.039369
 
 ## diou
 
-```
+```c
 dbox diou(box a, box b)
 {
     float u = box_union(a,b);
@@ -443,7 +443,7 @@ dbox diou(box a, box b)
 
 ## do_nms
 
-```
+```c
 void do_nms(box *boxes, float **probs, int total, int classes, float thresh)
 {
     int i, j, k;
@@ -470,7 +470,7 @@ void do_nms(box *boxes, float **probs, int total, int classes, float thresh)
 
 ## encode_box
 
-```
+```c
 box encode_box(box b, box anchor)
 {
     box encode;
@@ -487,7 +487,7 @@ box encode_box(box b, box anchor)
 
 ## decode_box
 
-```
+```c
 box decode_box(box b, box anchor)
 {
     box decode;

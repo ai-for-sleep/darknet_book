@@ -42,7 +42,7 @@
 
     
         
-        <link rel="stylesheet" href="../website-1597154999314.css">
+        <link rel="stylesheet" href="../website-1597403756570.css">
         
     
 
@@ -1965,6 +1965,9 @@
                                 <section class="normal markdown-section">
                                 
                                 <h1 id="utilsc">utils.c</h1>
+<ul>
+<li><code>rand()</code> : 0 ~ 32767 &#xC0AC;&#xC774;&#xC758; &#xB79C;&#xB364;&#xD55C; &#xAC12;&#xC744; &#xBC18;&#xD658;&#xD569;&#xB2C8;&#xB2E4;.</li>
+</ul>
 <h2 id="whattimeisitnow">what_time_is_it_now</h2>
 <pre><code>double what_time_is_it_now()
 {
@@ -2275,7 +2278,10 @@
     fprintf(stderr, &quot;Couldn&apos;t open file: %s\n&quot;, s);
     exit(0);
 }
-</code></pre><h2 id="splitstr">split_str</h2>
+</code></pre><ul>
+<li>file&#xC744; &#xC77D;&#xB294;&#xB370; &#xC5D0;&#xB7EC;&#xAC00; &#xBC1C;&#xC0DD;&#xD558;&#xB294; &#xACBD;&#xC6B0;&#xB97C; &#xCC98;&#xB9AC;&#xD569;&#xB2C8;&#xB2E4;.</li>
+</ul>
+<h2 id="splitstr">split_str</h2>
 <pre><code>list *split_str(char *s, char delim)
 {
     size_t i;
@@ -2400,7 +2406,7 @@
         n += next;
     }
 }
-</code></pre><h2 id="readall">read_all</h2>
+</code></pre><h2 id="writeall">write_all</h2>
 <pre><code>void write_all(int fd, char *buffer, size_t bytes)
 {
     size_t n = 0;
@@ -2417,7 +2423,10 @@
     strncpy(copy, s, strlen(s)+1);
     return copy;
 }
-</code></pre><h2 id="parsecsvline">parse_csv_line</h2>
+</code></pre><ul>
+<li>&#xBB38;&#xC790;&#xC5F4;&#xC744; &#xBCF5;&#xC0AC;&#xD558;&#xC5EC; &#xBC18;&#xD658;&#xD569;&#xB2C8;&#xB2E4;.</li>
+</ul>
+<h2 id="parsecsvline">parse_csv_line</h2>
 <pre><code>list *parse_csv_line(char *line)
 {
     list *l = make_list();
@@ -2474,12 +2483,18 @@
     for(i = 0; i &lt; n; ++i) sum += a[i];
     return sum;
 }
-</code></pre><h2 id="meanarray">mean_array</h2>
+</code></pre><ul>
+<li>&#xBC30;&#xC5F4; a&#xC758; &#xD569;&#xC744; &#xBC18;&#xD658;&#xD569;&#xB2C8;&#xB2E4;.</li>
+</ul>
+<h2 id="meanarray">mean_array</h2>
 <pre><code>float mean_array(float *a, int n)
 {
     return sum_array(a,n)/n;
 }
-</code></pre><h2 id="meanarrays">mean_arrays</h2>
+</code></pre><ul>
+<li>&#xBC30;&#xC5F4; a&#xC758; &#xD3C9;&#xADE0;&#xC744; &#xBC18;&#xD658;&#xD569;&#xB2C8;&#xB2E4;.</li>
+</ul>
+<h2 id="meanarrays">mean_arrays</h2>
 <pre><code>void mean_arrays(float **a, int n, int els, float *avg)
 {
     int i;
@@ -2494,14 +2509,20 @@
         avg[i] /= n;
     }
 }
-</code></pre><h2 id="printstatistics">print_statistics</h2>
+</code></pre><ul>
+<li>2&#xCC28;&#xC6D0; &#xBC30;&#xC5F4; a&#xC758; &#xD3C9;&#xADE0;&#xC744; &#xBC18;&#xD658;&#xD569;&#xB2C8;&#xB2E4;.</li>
+</ul>
+<h2 id="printstatistics">print_statistics</h2>
 <pre><code>void print_statistics(float *a, int n)
 {
     float m = mean_array(a, n);
     float v = variance_array(a, n);
     printf(&quot;MSE: %.6f, Mean: %.6f, Variance: %.6f\n&quot;, mse_array(a, n), m, v);
 }
-</code></pre><h2 id="variancearray">variance_array</h2>
+</code></pre><ul>
+<li>mse, mean, variance&#xB97C; &#xCD9C;&#xB825;&#xD569;&#xB2C8;&#xB2E4;.</li>
+</ul>
+<h2 id="variancearray">variance_array</h2>
 <pre><code>float variance_array(float *a, int n)
 {
     int i;
@@ -2511,21 +2532,36 @@
     float variance = sum/n;
     return variance;
 }
-</code></pre><h2 id="constrainint">constrain_int</h2>
+</code></pre><ul>
+<li>&#xBC30;&#xC5F4; a&#xC758; &#xBD84;&#xC0B0;&#xC744; &#xBC18;&#xD658;&#xD569;&#xB2C8;&#xB2E4;.</li>
+</ul>
+<h2 id="constrainint">constrain_int</h2>
 <pre><code>int constrain_int(int a, int min, int max)
 {
     if (a &lt; min) return min;
     if (a &gt; max) return max;
     return a;
 }
-</code></pre><h2 id="constrain">constrain</h2>
+</code></pre><ul>
+<li>int</li>
+<li>min&#xBCF4;&#xB2E4; &#xC791;&#xC73C;&#xBA74; min</li>
+<li>max&#xBCF4;&#xB2E4; &#xD06C;&#xBA74; max</li>
+<li>&#xD56D;&#xC0C1; min ~ max&#xC758; &#xAC12;&#xB9CC; &#xBC18;&#xD658;&#xD55C;&#xB2E4;.</li>
+</ul>
+<h2 id="constrain">constrain</h2>
 <pre><code>float constrain(float min, float max, float a)
 {
     if (a &lt; min) return min;
     if (a &gt; max) return max;
     return a;
 }
-</code></pre><h2 id="distarray">dist_array</h2>
+</code></pre><ul>
+<li>float</li>
+<li>min&#xBCF4;&#xB2E4; &#xC791;&#xC73C;&#xBA74; min</li>
+<li>max&#xBCF4;&#xB2E4; &#xD06C;&#xBA74; max</li>
+<li>&#xD56D;&#xC0C1; min ~ max&#xC758; &#xAC12;&#xB9CC; &#xBC18;&#xD658;&#xD55C;&#xB2E4;.</li>
+</ul>
+<h2 id="distarray">dist_array</h2>
 <pre><code>float dist_array(float *a, float *b, int n, int sub)
 {
     int i;
@@ -2533,7 +2569,11 @@
     for(i = 0; i &lt; n; i += sub) sum += pow(a[i]-b[i], 2);
     return sqrt(sum);
 }
-</code></pre><h2 id="msearray">mse_array</h2>
+</code></pre><ul>
+<li>a&#xC640; b&#xC758; &#xC720;&#xD074;&#xB9AC;&#xB4DC; &#xAC70;&#xB9AC;&#xB97C; &#xAD6C;&#xD569;&#xB2C8;&#xB2E4;.</li>
+<li><script type="math/tex; ">\sqrt{\sum_{i=1}^{n} (a_i - b_i)^2}</script></li>
+</ul>
+<h2 id="msearray">mse_array</h2>
 <pre><code>float mse_array(float *a, int n)
 {
     int i;
@@ -2541,7 +2581,11 @@
     for(i = 0; i &lt; n; ++i) sum += a[i]*a[i];
     return sqrt(sum/n);
 }
-</code></pre><h2 id="normalizearray">normalize_array</h2>
+</code></pre><ul>
+<li>mean square&#xB97C; &#xAD6C;&#xD569;&#xB2C8;&#xB2E4;.</li>
+<li><script type="math/tex; ">\frac{1}{N} \sum_{i=1}^{n} a_i^2</script></li>
+</ul>
+<h2 id="normalizearray">normalize_array</h2>
 <pre><code>void normalize_array(float *a, int n)
 {
     int i;
@@ -2553,7 +2597,10 @@
     mu = mean_array(a,n);
     sigma = sqrt(variance_array(a,n));
 }
-</code></pre><h2 id="translatearray">translate_array</h2>
+</code></pre><ul>
+<li>&#xBC30;&#xC5F4; a&#xB97C; &#xC815;&#xADDC;&#xD654; &#xD569;&#xB2C8;&#xB2E4;.</li>
+</ul>
+<h2 id="translatearray">translate_array</h2>
 <pre><code>void translate_array(float *a, int n, float s)
 {
     int i;
@@ -2561,7 +2608,10 @@
         a[i] += s;
     }
 }
-</code></pre><h2 id="magarray">mag_array</h2>
+</code></pre><ul>
+<li>&#xBC30;&#xC5F4; a&#xC5D0; &#xCD94;&#xAC00;&#xD560; &#xAC12;&#xC744; &#xB354;&#xD569;&#xB2C8;&#xB2E4;.</li>
+</ul>
+<h2 id="magarray">mag_array</h2>
 <pre><code>float mag_array(float *a, int n)
 {
     int i;
@@ -2571,7 +2621,10 @@
     }
     return sqrt(sum);
 }
-</code></pre><h2 id="scalearray">scale_array</h2>
+</code></pre><ul>
+<li>???</li>
+</ul>
+<h2 id="scalearray">scale_array</h2>
 <pre><code>void scale_array(float *a, int n, float s)
 {
     int i;
@@ -2579,7 +2632,10 @@
         a[i] *= s;
     }
 }
-</code></pre><h2 id="samplearray">sample_array</h2>
+</code></pre><ul>
+<li>&#xBC30;&#xC5F4; a&#xC758; scale&#xC744; &#xC870;&#xC808;&#xD569;&#xB2C8;&#xB2E4;.</li>
+</ul>
+<h2 id="samplearray">sample_array</h2>
 <pre><code>int sample_array(float *a, int n)
 {
     float sum = sum_array(a, n);
@@ -2592,7 +2648,8 @@
     }
     return n-1;
 }
-</code></pre><h2 id="maxintindex">max_int_index</h2>
+</code></pre><p>-</p>
+<h2 id="maxintindex">max_int_index</h2>
 <pre><code>int max_int_index(int *a, int n)
 {
     if(n &lt;= 0) return -1;
@@ -2606,7 +2663,10 @@
     }
     return max_i;
 }
-</code></pre><h2 id="maxindex">max_index</h2>
+</code></pre><ul>
+<li>int &#xBC30;&#xC5F4;&#xC5D0;&#xC11C; &#xCD5C;&#xB313;&#xAC12; index&#xB97C; &#xBC18;&#xD658;&#xD569;&#xB2C8;&#xB2E4;.</li>
+</ul>
+<h2 id="maxindex">max_index</h2>
 <pre><code>int max_index(float *a, int n)
 {
     if(n &lt;= 0) return -1;
@@ -2620,7 +2680,10 @@
     }
     return max_i;
 }
-</code></pre><h2 id="intindex">int_index</h2>
+</code></pre><ul>
+<li>float &#xBC30;&#xC5F4;&#xC5D0;&#xC11C; &#xCD5C;&#xB313;&#xAC12; index&#xB97C; &#xBC18;&#xD658;&#xD569;&#xB2C8;&#xB2E4;.</li>
+</ul>
+<h2 id="intindex">int_index</h2>
 <pre><code>int int_index(int *a, int val, int n)
 {
     int i;
@@ -2629,7 +2692,10 @@
     }
     return -1;
 }
-</code></pre><h2 id="randint">rand_int</h2>
+</code></pre><ul>
+<li>&#xBC30;&#xC5F4; a&#xC5D0;&#xC11C; val&#xC758; index&#xB97C; &#xBC18;&#xD658;&#xD569;&#xB2C8;&#xB2E4;.</li>
+</ul>
+<h2 id="randint">rand_int</h2>
 <pre><code>int rand_int(int min, int max)
 {
     if (max &lt; min){
@@ -2640,7 +2706,10 @@
     int r = (rand()%(max - min + 1)) + min;
     return r;
 }
-</code></pre><h2 id="randnormal">rand_normal</h2>
+</code></pre><ul>
+<li>min ~ max &#xC0AC;&#xC774;&#xC758; &#xC815;&#xC218;&#xB97C; &#xBC18;&#xD658;&#xD569;&#xB2C8;&#xB2E4;.</li>
+</ul>
+<h2 id="randnormal">rand_normal</h2>
 <pre><code>// From http://en.wikipedia.org/wiki/Box%E2%80%93Muller_transform
 float rand_normal()
 {
@@ -2662,7 +2731,10 @@ float rand_normal()
 
     return sqrt(rand1) * cos(rand2);
 }
-</code></pre><h2 id="randsizet">rand_size_t</h2>
+</code></pre><ul>
+<li><a href="http://en.wikipedia.org/wiki/Box%E2%80%93Muller_transform" target="_blank">http://en.wikipedia.org/wiki/Box%E2%80%93Muller_transform</a></li>
+</ul>
+<h2 id="randsizet">rand_size_t</h2>
 <pre><code>size_t rand_size_t()
 {
     return  ((size_t)(rand()&amp;0xff) &lt;&lt; 56) |
@@ -2674,7 +2746,10 @@ float rand_normal()
         ((size_t)(rand()&amp;0xff) &lt;&lt; 8) |
         ((size_t)(rand()&amp;0xff) &lt;&lt; 0);
 }
-</code></pre><h2 id="randuniform">rand_uniform</h2>
+</code></pre><ul>
+<li>8 byte &#xD06C;&#xAE30;&#xC758; &#xB79C;&#xB364;&#xD55C; &#xAC12;&#xC744; &#xC0DD;&#xC131;&#xD569;&#xB2C8;&#xB2E4;.</li>
+</ul>
+<h2 id="randuniform">rand_uniform</h2>
 <pre><code>float rand_uniform(float min, float max)
 {
     if(max &lt; min){
@@ -2684,14 +2759,20 @@ float rand_normal()
     }
     return ((float)rand()/RAND_MAX * (max - min)) + min;
 }
-</code></pre><h2 id="randscale">rand_scale</h2>
+</code></pre><ul>
+<li>max&#xC640; min&#xC0AC;&#xC774;&#xC758; &#xB79C;&#xB364;&#xD55C; &#xAC12;&#xC744; &#xBC18;&#xD658;&#xD569;&#xB2C8;&#xB2E4;.</li>
+</ul>
+<h2 id="randscale">rand_scale</h2>
 <pre><code>float rand_scale(float s)
 {
     float scale = rand_uniform(1, s);
     if(rand()%2) return scale;
     return 1./scale;
 }
-</code></pre><h2 id="onehotencode">one_hot_encode</h2>
+</code></pre><ul>
+<li>1&#xC5D0;&#xC11C; s&#xC0AC;&#xC774;&#xC758; &#xB79C;&#xB364;&#xD55C; &#xAC12;&#xC744; &#xBC18;&#xD658;&#xD569;&#xB2C8;&#xB2E4;.</li>
+</ul>
+<h2 id="onehotencode">one_hot_encode</h2>
 <pre><code>float **one_hot_encode(float *a, int n, int k)
 {
     int i;
@@ -2703,6 +2784,12 @@ float rand_normal()
     }
     return t;
 }
+</code></pre><ul>
+<li>&#xD06C;&#xAE30;&#xAC00; n&#xC778; &#xBC30;&#xC5F4; a&#xB97C; one hot encoding &#xD569;&#xB2C8;&#xB2E4;.</li>
+</ul>
+<pre><code>a : [0, 1, 2]
+
+return [[1, 0, 0], [0, 1, 0], [0, 0, 1]]
 </code></pre><h2 id="sumarray">sum_array</h2>
 <pre><code>float sum_array(float *a, int n)
 {
@@ -2765,7 +2852,7 @@ float rand_normal()
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"utils.c","level":"5.44","depth":1,"next":{"title":"yolo_layer.c","level":"5.45","depth":1,"path":"part3_src/yolo_layer.md","ref":"part3_src/yolo_layer.md","articles":[]},"previous":{"title":"upsample_layer.c","level":"5.43","depth":1,"path":"part3_src/upsample_layer.md","ref":"part3_src/upsample_layer.md","articles":[]},"dir":"ltr"},"config":{"plugins":["advanced-emoji","theme-gestalt","-theme-default","styles-sass-fix","theme-api","mathjax"],"root":"./","styles":{"website":"website-1597154999314.css"},"pluginsConfig":{"styles-sass-fix":{},"theme-gestalt":{"showLevel":false,"styles":{"website":"styles/website.css"},"logo":"/darknet_book/assets/darknet.png","baseUrl":null,"excludeDefaultStyles":true,"doNotHideChildrenChapters":false},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"theme-api":{"languages":[],"split":true,"theme":"light"},"mathjax":{"forceSVG":false,"version":"2.6-latest"},"advanced-emoji":{"embedEmojis":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]}},"theme":"default","author":"JJM","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"DarkNet Book","output.name":"site","gitbook":"*"},"file":{"path":"part3_src/utils.md","mtime":"2020-07-29T17:34:58.937Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-08-11T14:09:44.526Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"utils.c","level":"5.44","depth":1,"next":{"title":"yolo_layer.c","level":"5.45","depth":1,"path":"part3_src/yolo_layer.md","ref":"part3_src/yolo_layer.md","articles":[]},"previous":{"title":"upsample_layer.c","level":"5.43","depth":1,"path":"part3_src/upsample_layer.md","ref":"part3_src/upsample_layer.md","articles":[]},"dir":"ltr"},"config":{"plugins":["advanced-emoji","theme-gestalt","-theme-default","styles-sass-fix","theme-api","mathjax"],"root":"./","styles":{"website":"website-1597403756570.css"},"pluginsConfig":{"styles-sass-fix":{},"theme-gestalt":{"showLevel":false,"styles":{"website":"styles/website.css"},"logo":"/darknet_book/assets/darknet.png","baseUrl":null,"excludeDefaultStyles":true,"doNotHideChildrenChapters":false},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"theme-api":{"languages":[],"split":true,"theme":"light"},"mathjax":{"forceSVG":false,"version":"2.6-latest"},"advanced-emoji":{"embedEmojis":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]}},"theme":"default","author":"JJM","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"DarkNet Book","output.name":"site","gitbook":"*"},"file":{"path":"part3_src/utils.md","mtime":"2020-08-13T07:15:42.341Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-08-14T11:15:45.491Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>

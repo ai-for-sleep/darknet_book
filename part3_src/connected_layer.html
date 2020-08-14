@@ -42,7 +42,7 @@
 
     
         
-        <link rel="stylesheet" href="../website-1597154999314.css">
+        <link rel="stylesheet" href="../website-1597403756570.css">
         
     
 
@@ -1980,47 +1980,48 @@
 <hr>
 <h1 id="connectedlayerc">connected_layer.c</h1>
 <h2 id="forwardconnectedlayer">forward_connected_layer</h2>
-<pre><code>void forward_connected_layer(layer l, network net)
-{
-    fill_cpu(l.outputs*l.batch, 0, l.output, 1);
-    int m = l.batch;
-    int k = l.inputs;
-    int n = l.outputs;
-    float *a = net.input;
-    float *b = l.weights;
-    float *c = l.output;
-    gemm(0,1,m,n,k,1,a,k,b,k,1,c,n);
-    if(l.batch_normalize){
+<pre><code class="lang-c"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">forward_connected_layer</span><span class="hljs-params">(layer l, network net)</span>
+</span>{
+    fill_cpu(l.outputs*l.batch, <span class="hljs-number">0</span>, l.output, <span class="hljs-number">1</span>);
+    <span class="hljs-keyword">int</span> m = l.batch;
+    <span class="hljs-keyword">int</span> k = l.inputs;
+    <span class="hljs-keyword">int</span> n = l.outputs;
+    <span class="hljs-keyword">float</span> *a = net.input;
+    <span class="hljs-keyword">float</span> *b = l.weights;
+    <span class="hljs-keyword">float</span> *c = l.output;
+    gemm(<span class="hljs-number">0</span>,<span class="hljs-number">1</span>,m,n,k,<span class="hljs-number">1</span>,a,k,b,k,<span class="hljs-number">1</span>,c,n);
+    <span class="hljs-keyword">if</span>(l.batch_normalize){
         forward_batchnorm_layer(l, net);
-    } else {
-        add_bias(l.output, l.biases, l.batch, l.outputs, 1);
+    } <span class="hljs-keyword">else</span> {
+        add_bias(l.output, l.biases, l.batch, l.outputs, <span class="hljs-number">1</span>);
     }
     activate_array(l.output, l.outputs*l.batch, l.activation);
 }
-</code></pre><p><code>forward</code></p>
+</code></pre>
+<p><code>forward</code></p>
 <ul>
 <li>fully connected layer &#xC5F0;&#xC0B0;</li>
 <li>batch normalization(no bias) or bias</li>
 <li>activation function</li>
 </ul>
 <h2 id="backwardconnectedlayer">backward_connected_layer</h2>
-<pre><code>void backward_connected_layer(layer l, network net)
-{
+<pre><code class="lang-c"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">backward_connected_layer</span><span class="hljs-params">(layer l, network net)</span>
+</span>{
     gradient_array(l.output, l.outputs*l.batch, l.activation, l.delta);
 
-    if(l.batch_normalize){
+    <span class="hljs-keyword">if</span>(l.batch_normalize){
         backward_batchnorm_layer(l, net);
-    } else {
-        backward_bias(l.bias_updates, l.delta, l.batch, l.outputs, 1);
+    } <span class="hljs-keyword">else</span> {
+        backward_bias(l.bias_updates, l.delta, l.batch, l.outputs, <span class="hljs-number">1</span>);
     }
 
-    int m = l.outputs;
-    int k = l.batch;
-    int n = l.inputs;
-    float *a = l.delta;
-    float *b = net.input;
-    float *c = l.weight_updates;
-    gemm(1,0,m,n,k,1,a,m,b,n,1,c,n);
+    <span class="hljs-keyword">int</span> m = l.outputs;
+    <span class="hljs-keyword">int</span> k = l.batch;
+    <span class="hljs-keyword">int</span> n = l.inputs;
+    <span class="hljs-keyword">float</span> *a = l.delta;
+    <span class="hljs-keyword">float</span> *b = net.input;
+    <span class="hljs-keyword">float</span> *c = l.weight_updates;
+    gemm(<span class="hljs-number">1</span>,<span class="hljs-number">0</span>,m,n,k,<span class="hljs-number">1</span>,a,m,b,n,<span class="hljs-number">1</span>,c,n);
 
     m = l.batch;
     k = l.outputs;
@@ -2030,9 +2031,10 @@
     b = l.weights;
     c = net.delta;
 
-    if(c) gemm(0,0,m,n,k,1,a,k,b,n,1,c,n);
+    <span class="hljs-keyword">if</span>(c) gemm(<span class="hljs-number">0</span>,<span class="hljs-number">0</span>,m,n,k,<span class="hljs-number">1</span>,a,k,b,n,<span class="hljs-number">1</span>,c,n);
 }
-</code></pre><p><code>backward</code></p>
+</code></pre>
+<p><code>backward</code></p>
 <ul>
 <li>activation function</li>
 <li>batch normalization(no bias) or bias</li>
@@ -2181,7 +2183,7 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"connected_layer.c","level":"5.9","depth":1,"next":{"title":"convolutional_layer.c","level":"5.10","depth":1,"path":"part3_src/convolutional_layer.md","ref":"part3_src/convolutional_layer.md","articles":[]},"previous":{"title":"compare.c","level":"5.8","depth":1,"path":"part3_src/compare.md","ref":"part3_src/compare.md","articles":[]},"dir":"ltr"},"config":{"plugins":["advanced-emoji","theme-gestalt","-theme-default","styles-sass-fix","theme-api","mathjax"],"root":"./","styles":{"website":"website-1597154999314.css"},"pluginsConfig":{"styles-sass-fix":{},"theme-gestalt":{"showLevel":false,"styles":{"website":"styles/website.css"},"logo":"/darknet_book/assets/darknet.png","baseUrl":null,"excludeDefaultStyles":true,"doNotHideChildrenChapters":false},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"theme-api":{"languages":[],"split":true,"theme":"light"},"mathjax":{"forceSVG":false,"version":"2.6-latest"},"advanced-emoji":{"embedEmojis":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]}},"theme":"default","author":"JJM","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"DarkNet Book","output.name":"site","gitbook":"*"},"file":{"path":"part3_src/connected_layer.md","mtime":"2020-08-04T06:27:13.741Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-08-11T14:09:44.526Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"connected_layer.c","level":"5.9","depth":1,"next":{"title":"convolutional_layer.c","level":"5.10","depth":1,"path":"part3_src/convolutional_layer.md","ref":"part3_src/convolutional_layer.md","articles":[]},"previous":{"title":"compare.c","level":"5.8","depth":1,"path":"part3_src/compare.md","ref":"part3_src/compare.md","articles":[]},"dir":"ltr"},"config":{"plugins":["advanced-emoji","theme-gestalt","-theme-default","styles-sass-fix","theme-api","mathjax"],"root":"./","styles":{"website":"website-1597403756570.css"},"pluginsConfig":{"styles-sass-fix":{},"theme-gestalt":{"showLevel":false,"styles":{"website":"styles/website.css"},"logo":"/darknet_book/assets/darknet.png","baseUrl":null,"excludeDefaultStyles":true,"doNotHideChildrenChapters":false},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"theme-api":{"languages":[],"split":true,"theme":"light"},"mathjax":{"forceSVG":false,"version":"2.6-latest"},"advanced-emoji":{"embedEmojis":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]}},"theme":"default","author":"JJM","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"DarkNet Book","output.name":"site","gitbook":"*"},"file":{"path":"part3_src/connected_layer.md","mtime":"2020-08-13T07:14:03.501Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-08-14T11:15:45.491Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>

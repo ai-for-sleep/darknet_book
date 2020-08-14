@@ -31,7 +31,6 @@ LSTM의 `cell state`는 공장의 컨베이어 벨트와 같으며 이러한 컨
 ## increment_layer
 
 ```
-
 static void increment_layer(layer *l, int steps)
 {
     int num = l->outputs*l->batch*steps;

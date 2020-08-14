@@ -58,7 +58,7 @@ $$i \neq j$$ 일때
 
 ## forward_softmax_layer
 
-```
+```c
 void forward_softmax_layer(const softmax_layer l, network net)
 {
     if(l.softmax_tree){
@@ -84,7 +84,7 @@ void forward_softmax_layer(const softmax_layer l, network net)
 
 ## backward_softmax_layer
 
-```
+```c
 void backward_softmax_layer(const softmax_layer l, network net)
 {
     axpy_cpu(l.inputs*l.batch, 1, l.delta, 1, net.delta, 1); // network delta = layer delta
@@ -95,7 +95,7 @@ void backward_softmax_layer(const softmax_layer l, network net)
 
 ## make_softmax_layer
 
-```
+```c
 softmax_layer make_softmax_layer(int batch, int inputs, int groups)
 {
     assert(inputs%groups == 0);

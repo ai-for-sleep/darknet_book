@@ -33,7 +33,7 @@ output을 계산하기 위해서 각자의 id를 가지고 있는 weight가 사�
 
 ## forward_connected_layer
 
-```
+```c
 void forward_connected_layer(layer l, network net)
 {
     fill_cpu(l.outputs*l.batch, 0, l.output, 1);
@@ -61,7 +61,7 @@ void forward_connected_layer(layer l, network net)
 
 ## backward_connected_layer
 
-```
+```c
 void backward_connected_layer(layer l, network net)
 {
     gradient_array(l.output, l.outputs*l.batch, l.activation, l.delta);

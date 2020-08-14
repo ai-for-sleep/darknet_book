@@ -51,7 +51,7 @@ output을 계산하기 위해서 각자의 id를 가지고 있는 weight가 사�
 
 ## forward_convolutional_layer
 
-```
+```c
 void forward_convolutional_layer(convolutional_layer l, network net)
 {
     int i, j;
@@ -104,7 +104,7 @@ void forward_convolutional_layer(convolutional_layer l, network net)
 
 ## backward_convolutional_layer
 
-```
+```c
 void backward_convolutional_layer(convolutional_layer l, network net)
 {
     int i, j;
@@ -165,7 +165,7 @@ void backward_convolutional_layer(convolutional_layer l, network net)
 
 ## update_convolutional_layer
 
-```
+```c
 void update_convolutional_layer(convolutional_layer l, update_args a)
 {
     float learning_rate = a.learning_rate*l.learning_rate_scale;
@@ -191,7 +191,7 @@ void update_convolutional_layer(convolutional_layer l, update_args a)
 
 ## make_convolutional_layer
 
-```
+```c
 convolutional_layer make_convolutional_layer(int batch, int h, int w, int c, int n, int groups, int size, int stride, int padding, ACTIVATION activation, int batch_normalize, int binary, int xnor, int adam)
 {
     int i;
@@ -290,7 +290,7 @@ convolutional_layer make_convolutional_layer(int batch, int h, int w, int c, int
 
 ## denormalize_convolutional_layer
 
-```
+```c
 void denormalize_convolutional_layer(convolutional_layer l)
 {
     int i, j;
@@ -311,7 +311,7 @@ void denormalize_convolutional_layer(convolutional_layer l)
 
 ## resize_convolutional_layer
 
-```
+```c
 void resize_convolutional_layer(convolutional_layer *l, int w, int h)
 {
     l->w = w;
@@ -340,7 +340,7 @@ void resize_convolutional_layer(convolutional_layer *l, int w, int h)
 
 ## add_bias
 
-```
+```c
 void add_bias(float *output, float *biases, int batch, int n, int size)
 {
     int i,j,b;
@@ -358,7 +358,7 @@ void add_bias(float *output, float *biases, int batch, int n, int size)
 
 ## scale_bias
 
-```
+```c
 void scale_bias(float *output, float *scales, int batch, int n, int size)
 {
     int i,j,b;
@@ -376,7 +376,7 @@ void scale_bias(float *output, float *scales, int batch, int n, int size)
 
 ## backward_bias
 
-```
+```c
 void backward_bias(float *bias_updates, float *delta, int batch, int n, int size)
 {
     int i,b;
@@ -393,7 +393,7 @@ void backward_bias(float *bias_updates, float *delta, int batch, int n, int size
 
 ## swap_binary
 
-```
+```c
 void swap_binary(convolutional_layer *l)
 {
     float *swap = l->weights;
@@ -406,7 +406,7 @@ void swap_binary(convolutional_layer *l)
 
 ## binarize_weights
 
-```
+```c
 void binarize_weights(float *weights, int n, int size, float *binary)
 {
     int i, f;

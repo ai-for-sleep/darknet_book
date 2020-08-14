@@ -42,7 +42,7 @@
 
     
         
-        <link rel="stylesheet" href="../website-1597154999314.css">
+        <link rel="stylesheet" href="../website-1597403756570.css">
         
     
 
@@ -1966,21 +1966,22 @@
                                 
                                 <h1 id="boxc">box.c</h1>
 <h2 id="nmscomparator">nms_comparator</h2>
-<pre><code>int nms_comparator(const void *pa, const void *pb)
-{
+<pre><code class="lang-c"><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">nms_comparator</span><span class="hljs-params">(<span class="hljs-keyword">const</span> <span class="hljs-keyword">void</span> *pa, <span class="hljs-keyword">const</span> <span class="hljs-keyword">void</span> *pb)</span>
+</span>{
     detection a = *(detection *)pa;
     detection b = *(detection *)pb;
-    float diff = 0;
-    if(b.sort_class &gt;= 0){
+    <span class="hljs-keyword">float</span> diff = <span class="hljs-number">0</span>;
+    <span class="hljs-keyword">if</span>(b.sort_class &gt;= <span class="hljs-number">0</span>){
         diff = a.prob[b.sort_class] - b.prob[b.sort_class];
-    } else {
+    } <span class="hljs-keyword">else</span> {
         diff = a.objectness - b.objectness;
     }
-    if(diff &lt; 0) return 1;
-    else if(diff &gt; 0) return -1;
-    return 0;
+    <span class="hljs-keyword">if</span>(diff &lt; <span class="hljs-number">0</span>) <span class="hljs-keyword">return</span> <span class="hljs-number">1</span>;
+    <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span>(diff &gt; <span class="hljs-number">0</span>) <span class="hljs-keyword">return</span> <span class="hljs-number">-1</span>;
+    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
 }
-</code></pre><ul>
+</code></pre>
+<ul>
 <li>&#xAC80;&#xCD9C; &#xB41C; box&#xB97C; &#xBE44;&#xAD50;&#xD569;&#xB2C8;&#xB2E4;.<ul>
 <li>class probabilty&#xC758; &#xCC28;&#xC774;</li>
 <li>objectness&#xC758; &#xCC28;&#xC774;</li>
@@ -1988,12 +1989,12 @@
 </li>
 </ul>
 <h2 id="donmsobj">do_nms_obj</h2>
-<pre><code>void do_nms_obj(detection *dets, int total, int classes, float thresh)
-{
-    int i, j, k;
-    k = total-1;
-    for(i = 0; i &lt;= k; ++i){
-        if(dets[i].objectness == 0){
+<pre><code class="lang-c"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">do_nms_obj</span><span class="hljs-params">(detection *dets, <span class="hljs-keyword">int</span> total, <span class="hljs-keyword">int</span> classes, <span class="hljs-keyword">float</span> thresh)</span>
+</span>{
+    <span class="hljs-keyword">int</span> i, j, k;
+    k = total<span class="hljs-number">-1</span>;
+    <span class="hljs-keyword">for</span>(i = <span class="hljs-number">0</span>; i &lt;= k; ++i){
+        <span class="hljs-keyword">if</span>(dets[i].objectness == <span class="hljs-number">0</span>){
             detection swap = dets[i];
             dets[i] = dets[k];
             dets[k] = swap;
@@ -2001,29 +2002,30 @@
             --i;
         }
     }
-    total = k+1;
+    total = k+<span class="hljs-number">1</span>;
 
-    for(i = 0; i &lt; total; ++i){
-        dets[i].sort_class = -1;
+    <span class="hljs-keyword">for</span>(i = <span class="hljs-number">0</span>; i &lt; total; ++i){
+        dets[i].sort_class = <span class="hljs-number">-1</span>;
     }
 
-    qsort(dets, total, sizeof(detection), nms_comparator);
-    for(i = 0; i &lt; total; ++i){
-        if(dets[i].objectness == 0) continue;
+    qsort(dets, total, <span class="hljs-keyword">sizeof</span>(detection), nms_comparator);
+    <span class="hljs-keyword">for</span>(i = <span class="hljs-number">0</span>; i &lt; total; ++i){
+        <span class="hljs-keyword">if</span>(dets[i].objectness == <span class="hljs-number">0</span>) <span class="hljs-keyword">continue</span>;
         box a = dets[i].bbox;
-        for(j = i+1; j &lt; total; ++j){
-            if(dets[j].objectness == 0) continue;
+        <span class="hljs-keyword">for</span>(j = i+<span class="hljs-number">1</span>; j &lt; total; ++j){
+            <span class="hljs-keyword">if</span>(dets[j].objectness == <span class="hljs-number">0</span>) <span class="hljs-keyword">continue</span>;
             box b = dets[j].bbox;
-            if (box_iou(a, b) &gt; thresh){
-                dets[j].objectness = 0;
-                for(k = 0; k &lt; classes; ++k){
-                    dets[j].prob[k] = 0;
+            <span class="hljs-keyword">if</span> (box_iou(a, b) &gt; thresh){
+                dets[j].objectness = <span class="hljs-number">0</span>;
+                <span class="hljs-keyword">for</span>(k = <span class="hljs-number">0</span>; k &lt; classes; ++k){
+                    dets[j].prob[k] = <span class="hljs-number">0</span>;
                 }
             }
         }
     }
 }
-</code></pre><ul>
+</code></pre>
+<ul>
 <li>Objectness&#xB97C; &#xD1B5;&#xD574; NMS&#xB97C; &#xD558;&#xB294; &#xD568;&#xC218; &#xC785;&#xB2C8;&#xB2E4;.</li>
 <li><p><code>qsort</code> : Quick Sort</p>
 </li>
@@ -2033,12 +2035,12 @@
 <li>&#xAC80;&#xCD9C;&#xB41C; &#xBC15;&#xC2A4;&#xB4E4;&#xC758; IOU&#xAC00; threshold&#xBCF4;&#xB2E4; &#xD070; &#xACBD;&#xC6B0; &#xD558;&#xB098;&#xB97C; &#xC81C;&#xAC70;(objectness = 0)&#xD569;&#xB2C8;&#xB2E4;.</li>
 </ul>
 <h2 id="donmssort">do_nms_sort</h2>
-<pre><code>void do_nms_sort(detection *dets, int total, int classes, float thresh)
-{
-    int i, j, k;
-    k = total-1;
-    for(i = 0; i &lt;= k; ++i){
-        if(dets[i].objectness == 0){
+<pre><code class="lang-c"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">do_nms_sort</span><span class="hljs-params">(detection *dets, <span class="hljs-keyword">int</span> total, <span class="hljs-keyword">int</span> classes, <span class="hljs-keyword">float</span> thresh)</span>
+</span>{
+    <span class="hljs-keyword">int</span> i, j, k;
+    k = total<span class="hljs-number">-1</span>;
+    <span class="hljs-keyword">for</span>(i = <span class="hljs-number">0</span>; i &lt;= k; ++i){
+        <span class="hljs-keyword">if</span>(dets[i].objectness == <span class="hljs-number">0</span>){
             detection swap = dets[i];
             dets[i] = dets[k];
             dets[k] = swap;
@@ -2046,26 +2048,27 @@
             --i;
         }
     }
-    total = k+1;
+    total = k+<span class="hljs-number">1</span>;
 
-    for(k = 0; k &lt; classes; ++k){
-        for(i = 0; i &lt; total; ++i){
+    <span class="hljs-keyword">for</span>(k = <span class="hljs-number">0</span>; k &lt; classes; ++k){
+        <span class="hljs-keyword">for</span>(i = <span class="hljs-number">0</span>; i &lt; total; ++i){
             dets[i].sort_class = k;
         }
-        qsort(dets, total, sizeof(detection), nms_comparator);
-        for(i = 0; i &lt; total; ++i){
-            if(dets[i].prob[k] == 0) continue;
+        qsort(dets, total, <span class="hljs-keyword">sizeof</span>(detection), nms_comparator);
+        <span class="hljs-keyword">for</span>(i = <span class="hljs-number">0</span>; i &lt; total; ++i){
+            <span class="hljs-keyword">if</span>(dets[i].prob[k] == <span class="hljs-number">0</span>) <span class="hljs-keyword">continue</span>;
             box a = dets[i].bbox;
-            for(j = i+1; j &lt; total; ++j){
+            <span class="hljs-keyword">for</span>(j = i+<span class="hljs-number">1</span>; j &lt; total; ++j){
                 box b = dets[j].bbox;
-                if (box_iou(a, b) &gt; thresh){
-                    dets[j].prob[k] = 0;
+                <span class="hljs-keyword">if</span> (box_iou(a, b) &gt; thresh){
+                    dets[j].prob[k] = <span class="hljs-number">0</span>;
                 }
             }
         }
     }
 }
-</code></pre><ul>
+</code></pre>
+<ul>
 <li>Class Probabilty&#xB97C; &#xD1B5;&#xD574; NMS&#xB97C; &#xD558;&#xB294; &#xD568;&#xC218; &#xC785;&#xB2C8;&#xB2E4;.</li>
 <li><p><code>qsort</code> : Quick Sort</p>
 </li>
@@ -2075,134 +2078,141 @@
 <li>&#xAC80;&#xCD9C;&#xB41C; &#xBC15;&#xC2A4;&#xB4E4;&#xC758; IOU&#xAC00; threshold&#xBCF4;&#xB2E4; &#xD070; &#xACBD;&#xC6B0; &#xD558;&#xB098;&#xB97C; &#xC81C;&#xAC70;(probabilty = 0)&#xD569;&#xB2C8;&#xB2E4;.</li>
 </ul>
 <h2 id="floattobox">float_to_box</h2>
-<pre><code>box float_to_box(float *f, int stride)
-{
-    box b = {0};
-    b.x = f[0];
-    b.y = f[1*stride];
-    b.w = f[2*stride];
-    b.h = f[3*stride];
-    return b;
+<pre><code class="lang-c"><span class="hljs-function">box <span class="hljs-title">float_to_box</span><span class="hljs-params">(<span class="hljs-keyword">float</span> *f, <span class="hljs-keyword">int</span> stride)</span>
+</span>{
+    box b = {<span class="hljs-number">0</span>};
+    b.x = f[<span class="hljs-number">0</span>];
+    b.y = f[<span class="hljs-number">1</span>*stride];
+    b.w = f[<span class="hljs-number">2</span>*stride];
+    b.h = f[<span class="hljs-number">3</span>*stride];
+    <span class="hljs-keyword">return</span> b;
 }
-</code></pre><ul>
+</code></pre>
+<ul>
 <li>float&#xD615; &#xB370;&#xC774;&#xD130;&#xB97C; box&#xB85C; &#xB9CC;&#xB4ED;&#xB2C8;&#xB2E4;.</li>
 </ul>
 <h2 id="overlap">overlap</h2>
-<pre><code>float overlap(float x1, float w1, float x2, float w2)
-{
-    float l1 = x1 - w1/2;
-    float l2 = x2 - w2/2;
-    float left = l1 &gt; l2 ? l1 : l2;
-    float r1 = x1 + w1/2;
-    float r2 = x2 + w2/2;
-    float right = r1 &lt; r2 ? r1 : r2;
-    return right - left;
+<pre><code class="lang-c"><span class="hljs-function"><span class="hljs-keyword">float</span> <span class="hljs-title">overlap</span><span class="hljs-params">(<span class="hljs-keyword">float</span> x1, <span class="hljs-keyword">float</span> w1, <span class="hljs-keyword">float</span> x2, <span class="hljs-keyword">float</span> w2)</span>
+</span>{
+    <span class="hljs-keyword">float</span> l1 = x1 - w1/<span class="hljs-number">2</span>;
+    <span class="hljs-keyword">float</span> l2 = x2 - w2/<span class="hljs-number">2</span>;
+    <span class="hljs-keyword">float</span> left = l1 &gt; l2 ? l1 : l2;
+    <span class="hljs-keyword">float</span> r1 = x1 + w1/<span class="hljs-number">2</span>;
+    <span class="hljs-keyword">float</span> r2 = x2 + w2/<span class="hljs-number">2</span>;
+    <span class="hljs-keyword">float</span> right = r1 &lt; r2 ? r1 : r2;
+    <span class="hljs-keyword">return</span> right - left;
 }
-</code></pre><ul>
+</code></pre>
+<ul>
 <li>&#xACB9;&#xCE58;&#xB294; width, height&#xB97C; &#xAD6C;&#xD569;&#xB2C8;&#xB2E4;.</li>
 </ul>
 <h2 id="boxintersection">box_intersection</h2>
-<pre><code>float box_intersection(box a, box b)
-{
-    float w = overlap(a.x, a.w, b.x, b.w);
-    float h = overlap(a.y, a.h, b.y, b.h);
-    if(w &lt; 0 || h &lt; 0) return 0;
-    float area = w*h;
-    return area;
+<pre><code class="lang-c"><span class="hljs-function"><span class="hljs-keyword">float</span> <span class="hljs-title">box_intersection</span><span class="hljs-params">(box a, box b)</span>
+</span>{
+    <span class="hljs-keyword">float</span> w = overlap(a.x, a.w, b.x, b.w);
+    <span class="hljs-keyword">float</span> h = overlap(a.y, a.h, b.y, b.h);
+    <span class="hljs-keyword">if</span>(w &lt; <span class="hljs-number">0</span> || h &lt; <span class="hljs-number">0</span>) <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+    <span class="hljs-keyword">float</span> area = w*h;
+    <span class="hljs-keyword">return</span> area;
 }
-</code></pre><ul>
+</code></pre>
+<ul>
 <li>&#xACB9;&#xCE58;&#xB294; &#xC601;&#xC5ED;&#xC744; &#xAD6C;&#xD569;&#xB2C8;&#xB2E4;.</li>
 </ul>
 <h2 id="boxunion">box_union</h2>
-<pre><code>float box_union(box a, box b)
-{
-    float i = box_intersection(a, b);
-    float u = a.w*a.h + b.w*b.h - i;
-    return u;
+<pre><code class="lang-c"><span class="hljs-function"><span class="hljs-keyword">float</span> <span class="hljs-title">box_union</span><span class="hljs-params">(box a, box b)</span>
+</span>{
+    <span class="hljs-keyword">float</span> i = box_intersection(a, b);
+    <span class="hljs-keyword">float</span> u = a.w*a.h + b.w*b.h - i;
+    <span class="hljs-keyword">return</span> u;
 }
-</code></pre><ul>
+</code></pre>
+<ul>
 <li>&#xACB9;&#xCE58;&#xB294; &#xC601;&#xC5ED;&#xC744; &#xD3EC;&#xD568;&#xD55C; &#xBAA8;&#xB4E0; &#xC601;&#xC5ED;&#xC744; &#xAD6C;&#xD569;&#xB2C8;&#xB2E4;.</li>
 </ul>
 <h2 id="boxiou">box_iou</h2>
-<pre><code>float box_iou(box a, box b)
-{
-    return box_intersection(a, b)/box_union(a, b);
+<pre><code class="lang-c"><span class="hljs-function"><span class="hljs-keyword">float</span> <span class="hljs-title">box_iou</span><span class="hljs-params">(box a, box b)</span>
+</span>{
+    <span class="hljs-keyword">return</span> box_intersection(a, b)/box_union(a, b);
 }
-</code></pre><ul>
+</code></pre>
+<ul>
 <li>IOU&#xB97C; &#xACC4;&#xC0B0;&#xD569;&#xB2C8;&#xB2E4;.</li>
 </ul>
 <p><img src="../figure/iou.PNG" alt="iou"></p>
 <h2 id="boxrmse">box_rmse</h2>
-<pre><code>float box_rmse(box a, box b)
-{
-    return sqrt(pow(a.x-b.x, 2) +
-                pow(a.y-b.y, 2) +
-                pow(a.w-b.w, 2) +
-                pow(a.h-b.h, 2));
+<pre><code class="lang-c"><span class="hljs-function"><span class="hljs-keyword">float</span> <span class="hljs-title">box_rmse</span><span class="hljs-params">(box a, box b)</span>
+</span>{
+    <span class="hljs-keyword">return</span> <span class="hljs-built_in">sqrt</span>(<span class="hljs-built_in">pow</span>(a.x-b.x, <span class="hljs-number">2</span>) +
+                <span class="hljs-built_in">pow</span>(a.y-b.y, <span class="hljs-number">2</span>) +
+                <span class="hljs-built_in">pow</span>(a.w-b.w, <span class="hljs-number">2</span>) +
+                <span class="hljs-built_in">pow</span>(a.h-b.h, <span class="hljs-number">2</span>));
 }
-</code></pre><ul>
+</code></pre>
+<ul>
 <li><code>RMSE</code> : &#xD3C9;&#xADE0; &#xC81C;&#xACF1;&#xADFC; &#xC624;&#xCC28;</li>
 <li>box&#xC758; &#xD3C9;&#xADE0; &#xC81C;&#xACF1;&#xADFC; &#xC624;&#xCC28;&#xB97C; &#xAD6C;&#xD569;&#xB2C8;&#xB2E4;.</li>
 </ul>
 <h2 id="derivative">derivative</h2>
-<pre><code>dbox derivative(box a, box b)
-{
+<pre><code class="lang-c"><span class="hljs-function">dbox <span class="hljs-title">derivative</span><span class="hljs-params">(box a, box b)</span>
+</span>{
     dbox d;
-    d.dx = 0;
-    d.dw = 0;
-    float l1 = a.x - a.w/2;
-    float l2 = b.x - b.w/2;
-    if (l1 &gt; l2){
-        d.dx -= 1;
-        d.dw += .5;
+    d.dx = <span class="hljs-number">0</span>;
+    d.dw = <span class="hljs-number">0</span>;
+    <span class="hljs-keyword">float</span> l1 = a.x - a.w/<span class="hljs-number">2</span>;
+    <span class="hljs-keyword">float</span> l2 = b.x - b.w/<span class="hljs-number">2</span>;
+    <span class="hljs-keyword">if</span> (l1 &gt; l2){
+        d.dx -= <span class="hljs-number">1</span>;
+        d.dw += <span class="hljs-number">.5</span>;
     }
-    float r1 = a.x + a.w/2;
-    float r2 = b.x + b.w/2;
-    if(r1 &lt; r2){
-        d.dx += 1;
-        d.dw += .5;
+    <span class="hljs-keyword">float</span> r1 = a.x + a.w/<span class="hljs-number">2</span>;
+    <span class="hljs-keyword">float</span> r2 = b.x + b.w/<span class="hljs-number">2</span>;
+    <span class="hljs-keyword">if</span>(r1 &lt; r2){
+        d.dx += <span class="hljs-number">1</span>;
+        d.dw += <span class="hljs-number">.5</span>;
     }
-    if (l1 &gt; r2) {
-        d.dx = -1;
-        d.dw = 0;
+    <span class="hljs-keyword">if</span> (l1 &gt; r2) {
+        d.dx = <span class="hljs-number">-1</span>;
+        d.dw = <span class="hljs-number">0</span>;
     }
-    if (r1 &lt; l2){
-        d.dx = 1;
-        d.dw = 0;
+    <span class="hljs-keyword">if</span> (r1 &lt; l2){
+        d.dx = <span class="hljs-number">1</span>;
+        d.dw = <span class="hljs-number">0</span>;
     }
 
-    d.dy = 0;
-    d.dh = 0;
-    float t1 = a.y - a.h/2;
-    float t2 = b.y - b.h/2;
-    if (t1 &gt; t2){
-        d.dy -= 1;
-        d.dh += .5;
+    d.dy = <span class="hljs-number">0</span>;
+    d.dh = <span class="hljs-number">0</span>;
+    <span class="hljs-keyword">float</span> t1 = a.y - a.h/<span class="hljs-number">2</span>;
+    <span class="hljs-keyword">float</span> t2 = b.y - b.h/<span class="hljs-number">2</span>;
+    <span class="hljs-keyword">if</span> (t1 &gt; t2){
+        d.dy -= <span class="hljs-number">1</span>;
+        d.dh += <span class="hljs-number">.5</span>;
     }
-    float b1 = a.y + a.h/2;
-    float b2 = b.y + b.h/2;
-    if(b1 &lt; b2){
-        d.dy += 1;
-        d.dh += .5;
+    <span class="hljs-keyword">float</span> b1 = a.y + a.h/<span class="hljs-number">2</span>;
+    <span class="hljs-keyword">float</span> b2 = b.y + b.h/<span class="hljs-number">2</span>;
+    <span class="hljs-keyword">if</span>(b1 &lt; b2){
+        d.dy += <span class="hljs-number">1</span>;
+        d.dh += <span class="hljs-number">.5</span>;
     }
-    if (t1 &gt; b2) {
-        d.dy = -1;
-        d.dh = 0;
+    <span class="hljs-keyword">if</span> (t1 &gt; b2) {
+        d.dy = <span class="hljs-number">-1</span>;
+        d.dh = <span class="hljs-number">0</span>;
     }
-    if (b1 &lt; t2){
-        d.dy = 1;
-        d.dh = 0;
+    <span class="hljs-keyword">if</span> (b1 &lt; t2){
+        d.dy = <span class="hljs-number">1</span>;
+        d.dh = <span class="hljs-number">0</span>;
     }
-    return d;
+    <span class="hljs-keyword">return</span> d;
 }
-</code></pre><ul>
+</code></pre>
+<ul>
 <li>&#xACB9;&#xCE58;&#xB294; &#xC120;&#xC744; &#xAD6C;&#xD558;&#xB294; &#xACF5;&#xC2DD;&#xC744; &#xBBF8;&#xBD84;&#xD569;&#xB2C8;&#xB2E4;.</li>
 </ul>
 <h2 id="dintersect">dintersect</h2>
-<pre><code>dbox dintersect(box a, box b)
-{
-    float w = overlap(a.x, a.w, b.x, b.w);
-    float h = overlap(a.y, a.h, b.y, b.h);
+<pre><code class="lang-c"><span class="hljs-function">dbox <span class="hljs-title">dintersect</span><span class="hljs-params">(box a, box b)</span>
+</span>{
+    <span class="hljs-keyword">float</span> w = overlap(a.x, a.w, b.x, b.w);
+    <span class="hljs-keyword">float</span> h = overlap(a.y, a.h, b.y, b.h);
     dbox dover = derivative(a, b);
     dbox di;
 
@@ -2211,14 +2221,15 @@
     di.dh = dover.dh*w;
     di.dy = dover.dy*w;
 
-    return di;
+    <span class="hljs-keyword">return</span> di;
 }
-</code></pre><ul>
+</code></pre>
+<ul>
 <li>intersection &#xACF5;&#xC2DD;&#xC744; &#xBBF8;&#xBD84; &#xD569;&#xB2C8;&#xB2E4;.</li>
 </ul>
 <h2 id="dunion">dunion</h2>
-<pre><code>dbox dunion(box a, box b)
-{
+<pre><code class="lang-c"><span class="hljs-function">dbox <span class="hljs-title">dunion</span><span class="hljs-params">(box a, box b)</span>
+</span>{
     dbox du;
 
     dbox di = dintersect(a, b);
@@ -2227,87 +2238,89 @@
     du.dx = -di.dx;
     du.dy = -di.dy;
 
-    return du;
+    <span class="hljs-keyword">return</span> du;
 }
-</code></pre><ul>
+</code></pre>
+<ul>
 <li>union &#xACF5;&#xC2DD;&#xC744; &#xBBF8;&#xBD84; &#xD569;&#xB2C8;&#xB2E4;.</li>
 </ul>
 <h2 id="test">test</h2>
-<pre><code>void test_dunion()
-{
-    box a = {0, 0, 1, 1};
-    box dxa= {0+.0001, 0, 1, 1};
-    box dya= {0, 0+.0001, 1, 1};
-    box dwa= {0, 0, 1+.0001, 1};
-    box dha= {0, 0, 1, 1+.0001};
+<pre><code class="lang-c"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">test_dunion</span><span class="hljs-params">()</span>
+</span>{
+    box a = {<span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">1</span>, <span class="hljs-number">1</span>};
+    box dxa= {<span class="hljs-number">0</span>+<span class="hljs-number">.0001</span>, <span class="hljs-number">0</span>, <span class="hljs-number">1</span>, <span class="hljs-number">1</span>};
+    box dya= {<span class="hljs-number">0</span>, <span class="hljs-number">0</span>+<span class="hljs-number">.0001</span>, <span class="hljs-number">1</span>, <span class="hljs-number">1</span>};
+    box dwa= {<span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">1</span>+<span class="hljs-number">.0001</span>, <span class="hljs-number">1</span>};
+    box dha= {<span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">1</span>, <span class="hljs-number">1</span>+<span class="hljs-number">.0001</span>};
 
-    box b = {.5, .5, .2, .2};
+    box b = {<span class="hljs-number">.5</span>, <span class="hljs-number">.5</span>, <span class="hljs-number">.2</span>, <span class="hljs-number">.2</span>};
     dbox di = dunion(a,b);
-    printf(&quot;Union: %f %f %f %f\n&quot;, di.dx, di.dy, di.dw, di.dh);
-    float inter =  box_union(a, b);
-    float xinter = box_union(dxa, b);
-    float yinter = box_union(dya, b);
-    float winter = box_union(dwa, b);
-    float hinter = box_union(dha, b);
-    xinter = (xinter - inter)/(.0001);
-    yinter = (yinter - inter)/(.0001);
-    winter = (winter - inter)/(.0001);
-    hinter = (hinter - inter)/(.0001);
-    printf(&quot;Union Manual %f %f %f %f\n&quot;, xinter, yinter, winter, hinter);
+    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;Union: %f %f %f %f\n&quot;</span>, di.dx, di.dy, di.dw, di.dh);
+    <span class="hljs-keyword">float</span> inter =  box_union(a, b);
+    <span class="hljs-keyword">float</span> xinter = box_union(dxa, b);
+    <span class="hljs-keyword">float</span> yinter = box_union(dya, b);
+    <span class="hljs-keyword">float</span> winter = box_union(dwa, b);
+    <span class="hljs-keyword">float</span> hinter = box_union(dha, b);
+    xinter = (xinter - inter)/(<span class="hljs-number">.0001</span>);
+    yinter = (yinter - inter)/(<span class="hljs-number">.0001</span>);
+    winter = (winter - inter)/(<span class="hljs-number">.0001</span>);
+    hinter = (hinter - inter)/(<span class="hljs-number">.0001</span>);
+    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;Union Manual %f %f %f %f\n&quot;</span>, xinter, yinter, winter, hinter);
 }
 
-void test_dintersect()
-{
-    box a = {0, 0, 1, 1};
-    box dxa= {0+.0001, 0, 1, 1};
-    box dya= {0, 0+.0001, 1, 1};
-    box dwa= {0, 0, 1+.0001, 1};
-    box dha= {0, 0, 1, 1+.0001};
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">test_dintersect</span><span class="hljs-params">()</span>
+</span>{
+    box a = {<span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">1</span>, <span class="hljs-number">1</span>};
+    box dxa= {<span class="hljs-number">0</span>+<span class="hljs-number">.0001</span>, <span class="hljs-number">0</span>, <span class="hljs-number">1</span>, <span class="hljs-number">1</span>};
+    box dya= {<span class="hljs-number">0</span>, <span class="hljs-number">0</span>+<span class="hljs-number">.0001</span>, <span class="hljs-number">1</span>, <span class="hljs-number">1</span>};
+    box dwa= {<span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">1</span>+<span class="hljs-number">.0001</span>, <span class="hljs-number">1</span>};
+    box dha= {<span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">1</span>, <span class="hljs-number">1</span>+<span class="hljs-number">.0001</span>};
 
-    box b = {.5, .5, .2, .2};
+    box b = {<span class="hljs-number">.5</span>, <span class="hljs-number">.5</span>, <span class="hljs-number">.2</span>, <span class="hljs-number">.2</span>};
     dbox di = dintersect(a,b);
-    printf(&quot;Inter: %f %f %f %f\n&quot;, di.dx, di.dy, di.dw, di.dh);
-    float inter =  box_intersection(a, b);
-    float xinter = box_intersection(dxa, b);
-    float yinter = box_intersection(dya, b);
-    float winter = box_intersection(dwa, b);
-    float hinter = box_intersection(dha, b);
-    xinter = (xinter - inter)/(.0001);
-    yinter = (yinter - inter)/(.0001);
-    winter = (winter - inter)/(.0001);
-    hinter = (hinter - inter)/(.0001);
-    printf(&quot;Inter Manual %f %f %f %f\n&quot;, xinter, yinter, winter, hinter);
+    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;Inter: %f %f %f %f\n&quot;</span>, di.dx, di.dy, di.dw, di.dh);
+    <span class="hljs-keyword">float</span> inter =  box_intersection(a, b);
+    <span class="hljs-keyword">float</span> xinter = box_intersection(dxa, b);
+    <span class="hljs-keyword">float</span> yinter = box_intersection(dya, b);
+    <span class="hljs-keyword">float</span> winter = box_intersection(dwa, b);
+    <span class="hljs-keyword">float</span> hinter = box_intersection(dha, b);
+    xinter = (xinter - inter)/(<span class="hljs-number">.0001</span>);
+    yinter = (yinter - inter)/(<span class="hljs-number">.0001</span>);
+    winter = (winter - inter)/(<span class="hljs-number">.0001</span>);
+    hinter = (hinter - inter)/(<span class="hljs-number">.0001</span>);
+    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;Inter Manual %f %f %f %f\n&quot;</span>, xinter, yinter, winter, hinter);
 }
 
-void test_box()
-{
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">test_box</span><span class="hljs-params">()</span>
+</span>{
     test_dintersect();
     test_dunion();
-    box a = {0, 0, 1, 1};
-    box dxa= {0+.00001, 0, 1, 1};
-    box dya= {0, 0+.00001, 1, 1};
-    box dwa= {0, 0, 1+.00001, 1};
-    box dha= {0, 0, 1, 1+.00001};
+    box a = {<span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">1</span>, <span class="hljs-number">1</span>};
+    box dxa= {<span class="hljs-number">0</span>+<span class="hljs-number">.00001</span>, <span class="hljs-number">0</span>, <span class="hljs-number">1</span>, <span class="hljs-number">1</span>};
+    box dya= {<span class="hljs-number">0</span>, <span class="hljs-number">0</span>+<span class="hljs-number">.00001</span>, <span class="hljs-number">1</span>, <span class="hljs-number">1</span>};
+    box dwa= {<span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">1</span>+<span class="hljs-number">.00001</span>, <span class="hljs-number">1</span>};
+    box dha= {<span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">1</span>, <span class="hljs-number">1</span>+<span class="hljs-number">.00001</span>};
 
-    box b = {.5, 0, .2, .2};
+    box b = {<span class="hljs-number">.5</span>, <span class="hljs-number">0</span>, <span class="hljs-number">.2</span>, <span class="hljs-number">.2</span>};
 
-    float iou = box_iou(a,b);
-    iou = (1-iou)*(1-iou);
-    printf(&quot;%f\n&quot;, iou);
+    <span class="hljs-keyword">float</span> iou = box_iou(a,b);
+    iou = (<span class="hljs-number">1</span>-iou)*(<span class="hljs-number">1</span>-iou);
+    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;%f\n&quot;</span>, iou);
     dbox d = diou(a, b);
-    printf(&quot;%f %f %f %f\n&quot;, d.dx, d.dy, d.dw, d.dh);
+    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;%f %f %f %f\n&quot;</span>, d.dx, d.dy, d.dw, d.dh);
 
-    float xiou = box_iou(dxa, b);
-    float yiou = box_iou(dya, b);
-    float wiou = box_iou(dwa, b);
-    float hiou = box_iou(dha, b);
-    xiou = ((1-xiou)*(1-xiou) - iou)/(.00001);
-    yiou = ((1-yiou)*(1-yiou) - iou)/(.00001);
-    wiou = ((1-wiou)*(1-wiou) - iou)/(.00001);
-    hiou = ((1-hiou)*(1-hiou) - iou)/(.00001);
-    printf(&quot;manual %f %f %f %f\n&quot;, xiou, yiou, wiou, hiou);
+    <span class="hljs-keyword">float</span> xiou = box_iou(dxa, b);
+    <span class="hljs-keyword">float</span> yiou = box_iou(dya, b);
+    <span class="hljs-keyword">float</span> wiou = box_iou(dwa, b);
+    <span class="hljs-keyword">float</span> hiou = box_iou(dha, b);
+    xiou = ((<span class="hljs-number">1</span>-xiou)*(<span class="hljs-number">1</span>-xiou) - iou)/(<span class="hljs-number">.00001</span>);
+    yiou = ((<span class="hljs-number">1</span>-yiou)*(<span class="hljs-number">1</span>-yiou) - iou)/(<span class="hljs-number">.00001</span>);
+    wiou = ((<span class="hljs-number">1</span>-wiou)*(<span class="hljs-number">1</span>-wiou) - iou)/(<span class="hljs-number">.00001</span>);
+    hiou = ((<span class="hljs-number">1</span>-hiou)*(<span class="hljs-number">1</span>-hiou) - iou)/(<span class="hljs-number">.00001</span>);
+    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;manual %f %f %f %f\n&quot;</span>, xiou, yiou, wiou, hiou);
 }
-</code></pre><ul>
+</code></pre>
+<ul>
 <li>test &#xCF54;&#xB4DC; &#xC785;&#xB2C8;&#xB2E4;.</li>
 </ul>
 <pre><code>Inter: 0.100000 0.100000 0.050000 0.050000
@@ -2332,79 +2345,83 @@ IOU manual -0.390865 0.001386 -0.156757 0.039369
 <li>&#xBA87;&#xBC88; &#xC2E4;&#xD589;&#xD574;&#xBCF4;&#xB2C8; &#xBBF8;&#xBD84; &#xACC4;&#xC0B0; &#xD560; &#xB584; &#xC74C;&#xC218;&#xC640; &#xC591;&#xC218;&#xB97C; &#xB9DE;&#xCD94;&#xB294;&#xB370; &#xBB38;&#xC81C;&#xAC00; &#xACC4;&#xC18D; &#xC0DD;&#xACA8; &#xC5C6;&#xC564; &#xAC83; &#xAC19;&#xC2B5;&#xB2C8;&#xB2E4;.</li>
 </ul>
 <h2 id="diou">diou</h2>
-<pre><code>dbox diou(box a, box b)
-{
-    float u = box_union(a,b);
-    float i = box_intersection(a,b);
+<pre><code class="lang-c"><span class="hljs-function">dbox <span class="hljs-title">diou</span><span class="hljs-params">(box a, box b)</span>
+</span>{
+    <span class="hljs-keyword">float</span> u = box_union(a,b);
+    <span class="hljs-keyword">float</span> i = box_intersection(a,b);
     dbox di = dintersect(a,b);
     dbox du = dunion(a,b);
-    dbox dd = {0,0,0,0};
+    dbox dd = {<span class="hljs-number">0</span>,<span class="hljs-number">0</span>,<span class="hljs-number">0</span>,<span class="hljs-number">0</span>};
 
-    if(i &lt;= 0 || 1) {         // &#xC774;&#xC0C1;&#xD55C; &#xB0AD;&#xBE44; &#xCF54;&#xB4DC;
+    <span class="hljs-keyword">if</span>(i &lt;= <span class="hljs-number">0</span> || <span class="hljs-number">1</span>) {         <span class="hljs-comment">// &#xC774;&#xC0C1;&#xD55C; &#xB0AD;&#xBE44; &#xCF54;&#xB4DC;</span>
         dd.dx = b.x - a.x;
         dd.dy = b.y - a.y;
         dd.dw = b.w - a.w;
         dd.dh = b.h - a.h;
-        return dd;
+        <span class="hljs-keyword">return</span> dd;
     }
 
-    dd.dx = 2*pow((1-(i/u)),1)*(di.dx*u - du.dx*i)/(u*u);
-    dd.dy = 2*pow((1-(i/u)),1)*(di.dy*u - du.dy*i)/(u*u);
-    dd.dw = 2*pow((1-(i/u)),1)*(di.dw*u - du.dw*i)/(u*u);
-    dd.dh = 2*pow((1-(i/u)),1)*(di.dh*u - du.dh*i)/(u*u);
-    return dd;
+    dd.dx = <span class="hljs-number">2</span>*<span class="hljs-built_in">pow</span>((<span class="hljs-number">1</span>-(i/u)),<span class="hljs-number">1</span>)*(di.dx*u - du.dx*i)/(u*u);
+    dd.dy = <span class="hljs-number">2</span>*<span class="hljs-built_in">pow</span>((<span class="hljs-number">1</span>-(i/u)),<span class="hljs-number">1</span>)*(di.dy*u - du.dy*i)/(u*u);
+    dd.dw = <span class="hljs-number">2</span>*<span class="hljs-built_in">pow</span>((<span class="hljs-number">1</span>-(i/u)),<span class="hljs-number">1</span>)*(di.dw*u - du.dw*i)/(u*u);
+    dd.dh = <span class="hljs-number">2</span>*<span class="hljs-built_in">pow</span>((<span class="hljs-number">1</span>-(i/u)),<span class="hljs-number">1</span>)*(di.dh*u - du.dh*i)/(u*u);
+    <span class="hljs-keyword">return</span> dd;
 }
-</code></pre><ul>
+</code></pre>
+<ul>
 <li>IOU &#xACF5;&#xC2DD;&#xC744; &#xBBF8;&#xBD84;&#xD569;&#xB2C8;&#xB2E4;.</li>
 </ul>
 <h2 id="donms">do_nms</h2>
-<pre><code>void do_nms(box *boxes, float **probs, int total, int classes, float thresh)
-{
-    int i, j, k;
-    for(i = 0; i &lt; total; ++i){
-        int any = 0;
-        for(k = 0; k &lt; classes; ++k) any = any || (probs[i][k] &gt; 0);
-        if(!any) {
-            continue;
+<pre><code class="lang-c"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">do_nms</span><span class="hljs-params">(box *boxes, <span class="hljs-keyword">float</span> **probs, <span class="hljs-keyword">int</span> total, <span class="hljs-keyword">int</span> classes, <span class="hljs-keyword">float</span> thresh)</span>
+</span>{
+    <span class="hljs-keyword">int</span> i, j, k;
+    <span class="hljs-keyword">for</span>(i = <span class="hljs-number">0</span>; i &lt; total; ++i){
+        <span class="hljs-keyword">int</span> any = <span class="hljs-number">0</span>;
+        <span class="hljs-keyword">for</span>(k = <span class="hljs-number">0</span>; k &lt; classes; ++k) any = any || (probs[i][k] &gt; <span class="hljs-number">0</span>);
+        <span class="hljs-keyword">if</span>(!any) {
+            <span class="hljs-keyword">continue</span>;
         }
-        for(j = i+1; j &lt; total; ++j){
-            if (box_iou(boxes[i], boxes[j]) &gt; thresh){
-                for(k = 0; k &lt; classes; ++k){
-                    if (probs[i][k] &lt; probs[j][k]) probs[i][k] = 0;
-                    else probs[j][k] = 0;
+        <span class="hljs-keyword">for</span>(j = i+<span class="hljs-number">1</span>; j &lt; total; ++j){
+            <span class="hljs-keyword">if</span> (box_iou(boxes[i], boxes[j]) &gt; thresh){
+                <span class="hljs-keyword">for</span>(k = <span class="hljs-number">0</span>; k &lt; classes; ++k){
+                    <span class="hljs-keyword">if</span> (probs[i][k] &lt; probs[j][k]) probs[i][k] = <span class="hljs-number">0</span>;
+                    <span class="hljs-keyword">else</span> probs[j][k] = <span class="hljs-number">0</span>;
                 }
             }
         }
     }
 }
-</code></pre><ul>
+</code></pre>
+<ul>
 <li>&#xD074;&#xB798;&#xC2A4; &#xD655;&#xB960;&#xC774; &#xD558;&#xB098;&#xB77C;&#xB3C4; 0&#xBCF4;&#xB2E4; &#xD070;&#xAC8C; &#xC788;&#xB294;&#xC9C0; &#xBE44;&#xAD50;&#xD569;&#xB2C8;&#xB2E4;.</li>
 <li>IOU&#xAC00; threshold&#xBCF4;&#xB2E4; &#xD06C;&#xB2E4;&#xBA74; &#xAC00;&#xC7A5; &#xD074;&#xB798;&#xC2A4; &#xD655;&#xB960;&#xC774; &#xB192;&#xC740; &#xACF3;&#xB9CC; &#xB0A8;&#xAE30;&#xACE0; 0&#xC73C;&#xB85C; &#xB9CC;&#xB4ED;&#xB2C8;&#xB2E4;.</li>
 </ul>
 <h2 id="encodebox">encode_box</h2>
-<pre><code>box encode_box(box b, box anchor)
-{
+<pre><code class="lang-c"><span class="hljs-function">box <span class="hljs-title">encode_box</span><span class="hljs-params">(box b, box anchor)</span>
+</span>{
     box encode;
     encode.x = (b.x - anchor.x) / anchor.w;
     encode.y = (b.y - anchor.y) / anchor.h;
     encode.w = log2(b.w / anchor.w);
     encode.h = log2(b.h / anchor.h);
-    return encode;
+    <span class="hljs-keyword">return</span> encode;
 }
-</code></pre><ul>
+</code></pre>
+<ul>
 <li>box&#xB97C; encoding &#xD569;&#xB2C8;&#xB2E4;.</li>
 </ul>
 <h2 id="decodebox">decode_box</h2>
-<pre><code>box decode_box(box b, box anchor)
-{
+<pre><code class="lang-c"><span class="hljs-function">box <span class="hljs-title">decode_box</span><span class="hljs-params">(box b, box anchor)</span>
+</span>{
     box decode;
     decode.x = b.x * anchor.w + anchor.x;
     decode.y = b.y * anchor.h + anchor.y;
-    decode.w = pow(2., b.w) * anchor.w;
-    decode.h = pow(2., b.h) * anchor.h;
-    return decode;
+    decode.w = <span class="hljs-built_in">pow</span>(<span class="hljs-number">2.</span>, b.w) * anchor.w;
+    decode.h = <span class="hljs-built_in">pow</span>(<span class="hljs-number">2.</span>, b.h) * anchor.h;
+    <span class="hljs-keyword">return</span> decode;
 }
-</code></pre><ul>
+</code></pre>
+<ul>
 <li>box&#xB97C; decoding &#xD569;&#xB2C8;&#xB2E4;.</li>
 </ul>
 <p>encode, decode&#xB294; &#xC0AC;&#xC6A9;&#xB418;&#xC9C0; &#xC54A;&#xB294; &#xB4EF; &#xC2F6;&#xC2B5;&#xB2C8;&#xB2E4;.</p>
@@ -2451,7 +2468,7 @@ IOU manual -0.390865 0.001386 -0.156757 0.039369
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"box.c","level":"5.6","depth":1,"next":{"title":"col2im.c","level":"5.7","depth":1,"path":"part3_src/col2im.md","ref":"part3_src/col2im.md","articles":[]},"previous":{"title":"blas.c","level":"5.5","depth":1,"path":"part3_src/blas.md","ref":"part3_src/blas.md","articles":[]},"dir":"ltr"},"config":{"plugins":["advanced-emoji","theme-gestalt","-theme-default","styles-sass-fix","theme-api","mathjax"],"root":"./","styles":{"website":"website-1597154999314.css"},"pluginsConfig":{"styles-sass-fix":{},"theme-gestalt":{"showLevel":false,"styles":{"website":"styles/website.css"},"logo":"/darknet_book/assets/darknet.png","baseUrl":null,"excludeDefaultStyles":true,"doNotHideChildrenChapters":false},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"theme-api":{"languages":[],"split":true,"theme":"light"},"mathjax":{"forceSVG":false,"version":"2.6-latest"},"advanced-emoji":{"embedEmojis":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]}},"theme":"default","author":"JJM","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"DarkNet Book","output.name":"site","gitbook":"*"},"file":{"path":"part3_src/box.md","mtime":"2020-07-29T06:18:43.598Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-08-11T14:09:44.526Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"box.c","level":"5.6","depth":1,"next":{"title":"col2im.c","level":"5.7","depth":1,"path":"part3_src/col2im.md","ref":"part3_src/col2im.md","articles":[]},"previous":{"title":"blas.c","level":"5.5","depth":1,"path":"part3_src/blas.md","ref":"part3_src/blas.md","articles":[]},"dir":"ltr"},"config":{"plugins":["advanced-emoji","theme-gestalt","-theme-default","styles-sass-fix","theme-api","mathjax"],"root":"./","styles":{"website":"website-1597403756570.css"},"pluginsConfig":{"styles-sass-fix":{},"theme-gestalt":{"showLevel":false,"styles":{"website":"styles/website.css"},"logo":"/darknet_book/assets/darknet.png","baseUrl":null,"excludeDefaultStyles":true,"doNotHideChildrenChapters":false},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"theme-api":{"languages":[],"split":true,"theme":"light"},"mathjax":{"forceSVG":false,"version":"2.6-latest"},"advanced-emoji":{"embedEmojis":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]}},"theme":"default","author":"JJM","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"DarkNet Book","output.name":"site","gitbook":"*"},"file":{"path":"part3_src/box.md","mtime":"2020-08-13T07:13:43.757Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-08-14T11:15:45.491Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>

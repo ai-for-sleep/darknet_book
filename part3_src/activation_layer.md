@@ -15,7 +15,7 @@ layer make_activation_layer(int batch, int inputs, ACTIVATION activation)
 
     l.forward = forward_activation_layer;
     l.backward = backward_activation_layer;
-    
+
     l.activation = activation;
     fprintf(stderr, "Activation Layer: %d inputs\n", inputs);
     return l;
