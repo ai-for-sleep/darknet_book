@@ -2,7 +2,7 @@
 
 ## forward_reorg_layer
 
-```
+```c
 void forward_reorg_layer(const layer l, network net)
 {
     int i;
@@ -29,7 +29,7 @@ void forward_reorg_layer(const layer l, network net)
 
 ## backward_reorg_layer
 
-```
+```c
 void backward_reorg_layer(const layer l, network net)
 {
     int i;
@@ -54,9 +54,41 @@ void backward_reorg_layer(const layer l, network net)
 
 `backward`
 
+## resize_reorg_layer
+
+```c
+void resize_reorg_layer(layer *l, int w, int h)
+{
+    int stride = l->stride;
+    int c = l->c;
+
+    l->h = h;
+    l->w = w;
+
+    if(l->reverse){
+        l->out_w = w*stride;
+        l->out_h = h*stride;
+        l->out_c = c/(stride*stride);
+    }else{
+        l->out_w = w/stride;
+        l->out_h = h/stride;
+        l->out_c = c*(stride*stride);
+    }
+
+    l->outputs = l->out_h * l->out_w * l->out_c;
+    l->inputs = l->outputs;
+    int output_size = l->outputs * l->batch;
+
+    l->output = realloc(l->output, output_size * sizeof(float));
+    l->delta = realloc(l->delta, output_size * sizeof(float));
+}
+```
+
+`resize`
+
 ## make_reorg_layer
 
-```
+```c
 layer make_reorg_layer(int batch, int w, int h, int c, int stride, int reverse, int flatten, int extra)
 {
     layer l = {0};
@@ -102,32 +134,4 @@ layer make_reorg_layer(int batch, int w, int h, int c, int stride, int reverse, 
 }
 ```
 
-## resize_reorg_layer
-
-```
-void resize_reorg_layer(layer *l, int w, int h)
-{
-    int stride = l->stride;
-    int c = l->c;
-
-    l->h = h;
-    l->w = w;
-
-    if(l->reverse){
-        l->out_w = w*stride;
-        l->out_h = h*stride;
-        l->out_c = c/(stride*stride);
-    }else{
-        l->out_w = w/stride;
-        l->out_h = h/stride;
-        l->out_c = c*(stride*stride);
-    }
-
-    l->outputs = l->out_h * l->out_w * l->out_c;
-    l->inputs = l->outputs;
-    int output_size = l->outputs * l->batch;
-
-    l->output = realloc(l->output, output_size * sizeof(float));
-    l->delta = realloc(l->delta, output_size * sizeof(float));
-}
-```
+`make`

@@ -2,7 +2,7 @@
 
 ## image_to_ipl
 
-```
+```c
 #ifdef OPENCV
 
 using namespace cv;
@@ -28,7 +28,7 @@ IplImage *image_to_ipl(image im)
 
 ## ipl_to_image
 
-```
+```c
 image ipl_to_image(IplImage* src)
 {
     int h = src->height;
@@ -52,7 +52,7 @@ image ipl_to_image(IplImage* src)
 
 ## image_to_mat
 
-```
+```c
 Mat image_to_mat(image im)
 {
     image copy = copy_image(im);
@@ -69,7 +69,7 @@ Mat image_to_mat(image im)
 
 ## mat_to_image
 
-```
+```c
 image mat_to_image(Mat m)
 {
     IplImage ipl = m;
@@ -81,7 +81,7 @@ image mat_to_image(Mat m)
 
 ## open_video_stream
 
-```
+```c
 void *open_video_stream(const char *f, int c, int w, int h, int fps)
 {
     VideoCapture *cap;
@@ -97,7 +97,7 @@ void *open_video_stream(const char *f, int c, int w, int h, int fps)
 
 ## get_image_from_stream
 
-```
+```c
 image get_image_from_stream(void *p)
 {
     VideoCapture *cap = (VideoCapture *)p;
@@ -110,7 +110,7 @@ image get_image_from_stream(void *p)
 
 ## load_image_cv
 
-```
+```c
 image load_image_cv(char *filename, int channels)
 {
     int flag = -1;
@@ -137,7 +137,7 @@ image load_image_cv(char *filename, int channels)
 
 ## show_image_cv
 
-```
+```c
 int show_image_cv(image im, const char* name, int ms)
 {
     Mat m = image_to_mat(im);
@@ -150,7 +150,7 @@ int show_image_cv(image im, const char* name, int ms)
 
 ## make_window
 
-```
+```c
 void make_window(char *name, int w, int h, int fullscreen)
 {
     namedWindow(name, WINDOW_NORMAL);

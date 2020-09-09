@@ -80,7 +80,7 @@ void forward_softmax_layer(const softmax_layer l, network net)
 }
 ```
 
-- softmax를 진행합니다.
+`forward`
 
 ## backward_softmax_layer
 
@@ -91,7 +91,7 @@ void backward_softmax_layer(const softmax_layer l, network net)
 }
 ```
 
-- 역전파합니다.
+`backward`
 
 ## make_softmax_layer
 
@@ -119,4 +119,4 @@ softmax_layer make_softmax_layer(int batch, int inputs, int groups)
 }
 ```
 
-- softmax를 layer로 만듭니다.
+`update`

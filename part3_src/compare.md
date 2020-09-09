@@ -2,7 +2,7 @@
 
 ## train_compare
 
-```
+```c
 void train_compare(char *cfgfile, char *weightfile)
 {
     srand(time(0));
@@ -77,7 +77,7 @@ void train_compare(char *cfgfile, char *weightfile)
 
 ## validate_compare
 
-```
+```c
 void validate_compare(char *filename, char *weightfile)
 {
     int i = 0;
@@ -148,7 +148,7 @@ void validate_compare(char *filename, char *weightfile)
 
 ## sortable_bbox
 
-```
+```c
 typedef struct {
     network net;
     char *filename;
@@ -161,7 +161,7 @@ typedef struct {
 
 ## elo_comparator
 
-```
+```c
 int total_compares = 0;
 int current_class = 0;
 
@@ -177,7 +177,7 @@ int elo_comparator(const void*a, const void *b)
 
 ## bbox_comparator
 
-```
+```c
 int bbox_comparator(const void *a, const void *b)
 {
     ++total_compares;
@@ -205,7 +205,7 @@ int bbox_comparator(const void *a, const void *b)
 
 ## bbox_update
 
-```
+```c
 void bbox_update(sortable_bbox *a, sortable_bbox *b, int class, int result)
 {
     int k = 32;
@@ -220,7 +220,7 @@ void bbox_update(sortable_bbox *a, sortable_bbox *b, int class, int result)
 
 ## bbox_fight
 
-```
+```c
 void bbox_fight(network net, sortable_bbox *a, sortable_bbox *b, int classes, int class)
 {
     image im1 = load_image_color(a->filename, net.w, net.h);
@@ -247,7 +247,7 @@ void bbox_fight(network net, sortable_bbox *a, sortable_bbox *b, int classes, in
 
 ## SortMaster3000
 
-```
+```c
 void SortMaster3000(char *filename, char *weightfile)
 {
     int i = 0;
@@ -282,7 +282,7 @@ void SortMaster3000(char *filename, char *weightfile)
 
 ## BattleRoyaleWithCheese
 
-```
+```c
 void BattleRoyaleWithCheese(char *filename, char *weightfile)
 {
     int classes = 20;
@@ -361,7 +361,7 @@ void BattleRoyaleWithCheese(char *filename, char *weightfile)
 
 ## run_compare
 
-```
+```c
 void run_compare(int argc, char **argv)
 {
     if(argc < 4){

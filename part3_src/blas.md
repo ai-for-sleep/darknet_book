@@ -22,7 +22,7 @@ void copy_cpu(int N, float *X, int INCX, float *Y, int INCY)
 
 ## mean_cpu
 
-```
+```c
 void mean_cpu(float *x, int batch, int filters, int spatial, float *mean)
 {
     float scale = 1./(batch * spatial);
@@ -48,7 +48,7 @@ $$mean = \frac{1}{m} \sum_{i=0}^{m} X[i]$$
 
 ## variance_cpu
 
-```
+```c
 void variance_cpu(float *x, float *mean, int batch, int filters, int spatial, float *variance)
 {
     float scale = 1./(batch * spatial - 1);
@@ -109,7 +109,7 @@ void axpy_cpu(int N, float ALPHA, float *X, int INCX, float *Y, int INCY)
 
 ## scal_cpu
 
-```
+```c
 void scal_cpu(int N, float ALPHA, float *X, int INCX)
 {
     int i;
@@ -133,7 +133,7 @@ void fill_cpu(int N, float ALPHA, float *X, int INCX)
 
 ## mul_cpu
 
-```
+```c
 void mul_cpu(int N, float *X, int INCX, float *Y, int INCY)
 {
     int i;
@@ -199,7 +199,7 @@ void inter_cpu(int NX, float *X, int NY, float *Y, int B, float *OUT)
 
 ## mult_add_into_cpu
 
-```
+```c
 void mult_add_into_cpu(int N, float *X, float *Y, float *Z)
 {
     int i;
@@ -277,7 +277,7 @@ void softmax_x_ent_cpu(int n, float *pred, float *truth, float *delta, float *er
 
 ## logistic_x_ent_cpu
 
-```
+```c
 void logistic_x_ent_cpu(int n, float *pred, float *truth, float *delta, float *error)
 {
     int i;
@@ -369,7 +369,7 @@ void softmax_cpu(float *input, int n, int batch, int batch_offset, int groups, i
 
 ## upsample_cpu
 
-```
+```c
 void upsample_cpu(float *in, int w, int h, int c, int batch, int stride, int forward, float scale, float *out)
 {
     int i, j, k, b;
@@ -390,9 +390,17 @@ void upsample_cpu(float *in, int w, int h, int c, int batch, int stride, int for
 
 - upsampling layer
 
-## reorg_cpu
+- 가장 근접한 값으로 값을 채워서 upsampling 합니다.
 
 ```
+if stride : 2
+
+[1, 2, 3, 4]  -->  [1, 1, 2, 2, 3, 3, 4, 4]
+```
+
+## reorg_cpu
+
+```c
 void reorg_cpu(float *x, int w, int h, int c, int batch, int stride, int forward, float *out)
 {
     int b,i,j,k;
@@ -418,6 +426,17 @@ void reorg_cpu(float *x, int w, int h, int c, int batch, int stride, int forward
 ```
 
 - reorg layer
+
+- 재구성합니다.
+
+```
+if | w : 2 | h : 2 | c : 4 | stride : 2 |
+
+[ 1,  2,  3,  4]            [ 1,  5,  2,  6]
+[ 5,  6,  7,  8]     --     [ 9, 13, 10, 14]
+[ 9, 10, 11, 12]     --     [ 3,  7,  4,  8]
+[13, 14, 15, 16]            [11, 15, 12, 16]
+```
 
 ## flatten
 

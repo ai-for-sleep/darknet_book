@@ -2,7 +2,7 @@
 
 Layer 구조체 입니다.
 
-```
+```c
 struct layer{
     LAYER_TYPE type;
     ACTIVATION activation;

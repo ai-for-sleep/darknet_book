@@ -19,28 +19,7 @@ list *get_paths(char *filename)
 }
 ```
 
--
-
-## get_random_paths_indexes
-
-```
-/*
-char **get_random_paths_indexes(char **paths, int n, int m, int *indexes)
-{
-    char **random_paths = calloc(n, sizeof(char*));
-    int i;
-    pthread_mutex_lock(&mutex);
-    for(i = 0; i < n; ++i){
-        int index = rand()%m;
-        indexes[i] = index;
-        random_paths[i] = paths[index];
-        if(i == 0) printf("%s\n", paths[index]);
-    }
-    pthread_mutex_unlock(&mutex);
-    return random_paths;
-}
-*/
-```
+- 파일을 읽고 list 구조체에 한줄 씩 담아서 반환합니다.
 
 ## get_random_paths
 
@@ -60,6 +39,8 @@ char **get_random_paths(char **paths, int n, int m)
 }
 ```
 
+- 해당 경로에 모든 파일 경로를 무작위로 섞어서 반환합니다.
+
 ## find_replace_paths
 
 ```
@@ -75,6 +56,7 @@ char **find_replace_paths(char **paths, int n, char *find, char *replace)
     return replace_paths;
 }
 ```
+
 
 ## load_image_paths_gray
 
@@ -101,6 +83,8 @@ matrix load_image_paths_gray(char **paths, int n, int w, int h)
 }
 ```
 
+- 해당 경로의 이미지를 Gray로 반환합니다.
+
 ## load_image_paths
 
 ```
@@ -121,7 +105,7 @@ matrix load_image_paths(char **paths, int n, int w, int h)
 }
 ```
 
-- `path`의 이미지를 읽고 반환합니다.
+- 해당 경로의 이미지를 반환합니다.
 
 ## load_image_augment_paths
 
@@ -160,7 +144,7 @@ matrix load_image_augment_paths(char **paths, int n, int min, int max, int size,
 }
 ```
 
-- crop, flip
+- 해당 경로의 이미지를 crop, flip, rotation, color transform 하여 반환합니다.
 
 ## read_boxes
 
@@ -196,7 +180,7 @@ box_label *read_boxes(char *filename, int *n)
 }
 ```
 
-- box의 정보가 들어있는 파일을 읽고 box를 반환합니다.
+- box의 정보가 들어있는 파일을 읽고 `box_label`을 반환합니다.
 
 ## randomize_boxes
 
@@ -212,6 +196,8 @@ void randomize_boxes(box_label *b, int n)
     }
 }
 ```
+
+- `box_label`중 랜덤한 박스를 반환합니다.
 
 ## correct_boxes
 

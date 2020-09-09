@@ -3,7 +3,7 @@
 
 ## get_color
 
-```
+```c
 float colors[6][3] = { {1,0,1}, {0,0,1},{0,1,1},{0,1,0},{1,1,0},{1,0,0} }; // BGR순서
 
 
@@ -19,11 +19,12 @@ float get_color(int c, int x, int max)
 }
 ```
 
-- ???
+- 색을 얻습니다.
+- ++
 
 ## mask_to_rgb
 
-```
+```c
 image mask_to_rgb(image mask)
 {
     int n = mask.c;
@@ -44,11 +45,12 @@ image mask_to_rgb(image mask)
 }
 ```
 
-- ???
+- image에 rgb color를 줍니다.
+- ++
 
 ## get_pixel
 
-```
+```c
 static float get_pixel(image m, int x, int y, int c)
 {
     assert(x < m.w && y < m.h && c < m.c);
@@ -60,7 +62,7 @@ static float get_pixel(image m, int x, int y, int c)
 
 ## get_pixel_extend
 
-```
+```c
 static float get_pixel_extend(image m, int x, int y, int c)
 {
     if(x < 0 || x >= m.w || y < 0 || y >= m.h) return 0;
@@ -74,7 +76,7 @@ static float get_pixel_extend(image m, int x, int y, int c)
 
 ## set_pixel
 
-```
+```c
 static void set_pixel(image m, int x, int y, int c, float val)
 {
     if (x < 0 || y < 0 || c < 0 || x >= m.w || y >= m.h || c >= m.c) return;
@@ -87,7 +89,7 @@ static void set_pixel(image m, int x, int y, int c, float val)
 
 ## add_pixel
 
-```
+```c
 static void add_pixel(image m, int x, int y, int c, float val)
 {
     assert(x < m.w && y < m.h && c < m.c);
@@ -99,7 +101,7 @@ static void add_pixel(image m, int x, int y, int c, float val)
 
 ## bilinear_interpolate
 
-```
+```c
 static float bilinear_interpolate(image im, float x, float y, int c)
 {
     int ix = (int) floorf(x);
@@ -128,7 +130,7 @@ static float bilinear_interpolate(image im, float x, float y, int c)
 
 ## composite_image
 
-```
+```c
 void composite_image(image source, image dest, int dx, int dy)
 {
     int x,y,k;
@@ -148,7 +150,7 @@ void composite_image(image source, image dest, int dx, int dy)
 
 ## border_image
 
-```
+```c
 
 image border_image(image a, int border)
 {
@@ -171,7 +173,7 @@ image border_image(image a, int border)
 
 ## tile_images
 
-```
+```c
 image tile_images(image a, image b, int dx)
 {
     if(a.w == 0) return copy_image(b);
@@ -183,9 +185,11 @@ image tile_images(image a, image b, int dx)
 }
 ```
 
+- 이미지가 타일같이 표현 됩니다.
+
 ## get_label
 
-```
+```c
 image get_label(image **characters, char *string, int size)
 {
     size = size/10;
@@ -204,9 +208,11 @@ image get_label(image **characters, char *string, int size)
 }
 ```
 
+- label을 반환합니다.
+
 ## draw_label
 
-```
+```c
 void draw_label(image a, int r, int c, image label, const float *rgb)
 {
     int w = label.w;
@@ -229,7 +235,7 @@ void draw_label(image a, int r, int c, image label, const float *rgb)
 
 ## draw_box
 
-```
+```c
 void draw_box(image a, int x1, int y1, int x2, int y2, float r, float g, float b)
 {
     //normalize_image(a);
@@ -273,7 +279,7 @@ void draw_box(image a, int x1, int y1, int x2, int y2, float r, float g, float b
 
 ## draw_box_width
 
-```
+```c
 void draw_box_width(image a, int x1, int y1, int x2, int y2, int w, float r, float g, float b)
 {
     int i;
@@ -287,7 +293,7 @@ void draw_box_width(image a, int x1, int y1, int x2, int y2, int w, float r, flo
 
 ## draw_bbox
 
-```
+```c
 void draw_bbox(image a, box bbox, int w, float r, float g, float b)
 {
     int left  = (bbox.x-bbox.w/2)*a.w;
@@ -306,7 +312,7 @@ void draw_bbox(image a, box bbox, int w, float r, float g, float b)
 
 ## load_alphabet
 
-```
+```c
 image **load_alphabet()
 {
     int i, j;
@@ -328,7 +334,7 @@ image **load_alphabet()
 
 ## draw_detections
 
-```
+```c
 void draw_detections(image im, detection *dets, int num, float thresh, char **names, image **alphabet, int classes)
 {
     int i,j;
@@ -405,7 +411,7 @@ void draw_detections(image im, detection *dets, int num, float thresh, char **na
 
 ## transpose_image
 
-```
+```c
 void transpose_image(image im)
 {
     assert(im.w == im.h);
@@ -437,7 +443,7 @@ void transpose_image(image im)
 
 ## flip_images
 
-```
+```c
 void flip_image(image a)
 {
     int i,j,k;
@@ -514,7 +520,7 @@ image image_distance(image a, image b)
 
 ## ghost_image
 
-```
+```c
 void ghost_image(image source, image dest, int dx, int dy)
 {
     int x,y,k;
@@ -565,7 +571,7 @@ void blocky_image(image im, int s)
 
 ## censor_image
 
-```
+```c
 void censor_image(image im, int dx, int dy, int w, int h)
 {
     int i,j,k;
@@ -590,7 +596,7 @@ void censor_image(image im, int dx, int dy, int w, int h)
 
 ## embed_image
 
-```
+```c
 void embed_image(image source, image dest, int dx, int dy)
 {
     int x,y,k;
@@ -611,7 +617,7 @@ void embed_image(image source, image dest, int dx, int dy)
 
 ## collapse_image_layers
 
-```
+```c
 image collapse_image_layers(image source, int border)
 {
     int h = source.h;
@@ -628,9 +634,11 @@ image collapse_image_layers(image source, int border)
 }
 ```
 
+- 이미지의 각 채널을 결합합니다.
+
 ## constrain_image
 
-```
+```c
 void constrain_image(image im)
 {
     int i;
@@ -647,7 +655,7 @@ void constrain_image(image im)
 
 ## normalize_image
 
-```
+```c
 void normalize_image(image p)
 {
     int i;
@@ -675,7 +683,7 @@ void normalize_image(image p)
 
 ## normalize_image2
 
-```
+```c
 void normalize_image2(image p)
 {
     float *min = calloc(p.c, sizeof(float));
@@ -706,9 +714,15 @@ void normalize_image2(image p)
 }
 ```
 
+- 이미지를 min max scaling 합니다.
+
+- $$\frac{x_i - min(x)}{max(x) - min(x)}$$
+
+- `normalize_image` 함수랑 for문 동작 방식만 다른 것 같습니다.
+
 ## copy_image_into
 
-```
+```c
 void copy_image_into(image src, image dest)
 {
     memcpy(dest.data, src.data, src.h*src.w*src.c*sizeof(float));
@@ -719,7 +733,7 @@ void copy_image_into(image src, image dest)
 
 ## copy_image
 
-```
+```c
 image copy_image(image p)
 {
     image copy = p;
@@ -733,7 +747,7 @@ image copy_image(image p)
 
 ## rgbgr_image
 
-```
+```c
 void rgbgr_image(image im)
 {
     int i;
@@ -749,7 +763,7 @@ void rgbgr_image(image im)
 
 ## show_image
 
-```
+```c
 int show_image(image p, const char *name, int ms)
 {
 #ifdef OPENCV
@@ -767,7 +781,7 @@ int show_image(image p, const char *name, int ms)
 
 ## save_image_options
 
-```
+```c
 void save_image_options(image im, const char *name, IMTYPE f, int quality)
 {
     char buff[256];
@@ -798,7 +812,7 @@ void save_image_options(image im, const char *name, IMTYPE f, int quality)
 
 ## save_image
 
-```
+```c
 void save_image(image im, const char *name)
 {
     save_image_options(im, name, JPG, 80);
@@ -809,7 +823,7 @@ void save_image(image im, const char *name)
 
 ## show_image_layers
 
-```
+```c
 void show_image_layers(image p, char *name)
 {
     int i;
@@ -827,7 +841,7 @@ void show_image_layers(image p, char *name)
 
 ## show_image_collapsed
 
-```
+```c
 void show_image_collapsed(image p, char *name)
 {
     image c = collapse_image_layers(p, 1);
@@ -836,11 +850,11 @@ void show_image_collapsed(image p, char *name)
 }
 ```
 
--
+- 각 채널을 결합한 이미지를 시각화 합니다.
 
 ## make_empty_image
 
-```
+```c
 image make_empty_image(int w, int h, int c)
 {
     image out;
@@ -856,7 +870,7 @@ image make_empty_image(int w, int h, int c)
 
 ## make_image
 
-```
+```c
 image make_image(int w, int h, int c)
 {
     image out = make_empty_image(w,h,c);
@@ -869,7 +883,7 @@ image make_image(int w, int h, int c)
 
 ## make_random_image
 
-```
+```c
 image make_random_image(int w, int h, int c)
 {
     image out = make_empty_image(w,h,c);
@@ -886,7 +900,7 @@ image make_random_image(int w, int h, int c)
 
 ## float_to_image
 
-```
+```c
 image float_to_image(int w, int h, int c, float *data)
 {
     image out = make_empty_image(w,h,c);
@@ -899,7 +913,7 @@ image float_to_image(int w, int h, int c, float *data)
 
 ## place_image
 
-```
+```c
 void place_image(image im, int w, int h, int dx, int dy, image canvas)
 {
     int x, y, c;
@@ -918,7 +932,7 @@ void place_image(image im, int w, int h, int dx, int dy, image canvas)
 
 ## center_crop_image
 
-```
+```c
 image center_crop_image(image im, int w, int h)
 {
     int m = (im.w < im.h) ? im.w : im.h;   
@@ -933,7 +947,7 @@ image center_crop_image(image im, int w, int h)
 
 ## rotate_crop_image
 
-```
+```c
 image rotate_crop_image(image im, float rad, float s, int w, int h, float dx, float dy, float aspect)
 {
     int x, y, c;
@@ -956,7 +970,7 @@ image rotate_crop_image(image im, float rad, float s, int w, int h, float dx, fl
 
 ## rotate_image
 
-```
+```c
 image rotate_image(image im, float rad)
 {
     int x, y, c;
@@ -981,7 +995,7 @@ image rotate_image(image im, float rad)
 
 ## fill_image
 
-```
+```c
 void fill_image(image m, float s)
 {
     int i;
@@ -993,7 +1007,7 @@ void fill_image(image m, float s)
 
 ## translate_image
 
-```
+```c
 void translate_image(image m, float s)
 {
     int i;
@@ -1005,7 +1019,7 @@ void translate_image(image m, float s)
 
 ## scale_image
 
-```
+```c
 void scale_image(image m, float s)
 {
     int i;
@@ -1017,7 +1031,7 @@ void scale_image(image m, float s)
 
 ## crop_image
 
-```
+```c
 image crop_image(image im, int dx, int dy, int w, int h)
 {
     image cropped = make_image(w, h, im.c);
@@ -1039,11 +1053,11 @@ image crop_image(image im, int dx, int dy, int w, int h)
 }
 ```
 
--
+- 이미지를 crop 합니다.
 
 ## best_3d_shift_r
 
-```
+```c
 int best_3d_shift_r(image a, image b, int min, int max)
 {
     if(min == max) return min;
@@ -1059,9 +1073,11 @@ int best_3d_shift_r(image a, image b, int min, int max)
 }
 ```
 
+-
+
 ## best_3d_shift
 
-```
+```c
 int best_3d_shift(image a, image b, int min, int max)
 {
     int i;
@@ -1081,9 +1097,11 @@ int best_3d_shift(image a, image b, int min, int max)
 }
 ```
 
+-
+
 ## composite_3d
 
-```
+```c
 void composite_3d(char *f1, char *f2, char *out, int delta)
 {
     if(!out) out = "out";
@@ -1118,7 +1136,7 @@ void composite_3d(char *f1, char *f2, char *out, int delta)
 
 ## letterbox_image_into
 
-```
+```c
 void letterbox_image_into(image im, int w, int h, image boxed)
 {
     int new_w = im.w;
@@ -1139,7 +1157,7 @@ void letterbox_image_into(image im, int w, int h, image boxed)
 
 ## letterbox_image
 
-```
+```c
 image letterbox_image(image im, int w, int h)
 {
     int new_w = im.w;
@@ -1164,7 +1182,7 @@ image letterbox_image(image im, int w, int h)
 
 ## resize_max
 
-```
+```c
 image resize_max(image im, int max)
 {
     int w = im.w;
@@ -1182,9 +1200,11 @@ image resize_max(image im, int max)
 }
 ```
 
+- 이미지를 resize합니다.
+
 ## resize_min
 
-```
+```c
 image resize_min(image im, int min)
 {
     int w = im.w;
@@ -1202,9 +1222,11 @@ image resize_min(image im, int min)
 }
 ```
 
+- 이미지를 resize합니다.
+
 ## random_crop_image
 
-```
+```c
 image random_crop_image(image im, int w, int h)
 {
     int dx = rand_int(0, im.w - w);
@@ -1214,9 +1236,11 @@ image random_crop_image(image im, int w, int h)
 }
 ```
 
+- 이미지에서 랜덤한 영역을 crop합니다.
+
 ## random_augment_args
 
-```
+```c
 augment_args random_augment_args(image im, float angle, float aspect, int low, int high, int w, int h)
 {
     augment_args a = {0};
@@ -1245,9 +1269,11 @@ augment_args random_augment_args(image im, float angle, float aspect, int low, i
 }
 ```
 
+- 이미지에 변환에 필요한 인자값을 받아 랜덤하게 변환한 뒤 반환합니다.
+
 ## random_augment_image
 
-```
+```c
 image random_augment_image(image im, float angle, float aspect, int low, int high, int w, int h)
 {
     augment_args a = random_augment_args(im, angle, aspect, low, high, w, h);
@@ -1256,27 +1282,33 @@ image random_augment_image(image im, float angle, float aspect, int low, int hig
 }
 ```
 
+- 이미지에 랜덤한 변환을 주어서 반환합니다.
+
 ## three_way_max
 
-```
+```c
 float three_way_max(float a, float b, float c)
 {
     return (a > b) ? ( (a > c) ? a : c) : ( (b > c) ? b : c) ;
 }
 ```
 
+- 3개의 값 중 최댓값을 반환합니다.
+
 ## three_way_min
 
-```
+```c
 float three_way_min(float a, float b, float c)
 {
     return (a < b) ? ( (a < c) ? a : c) : ( (b < c) ? b : c) ;
 }
 ```
 
+- 3개의 값 중 최솟값을 반환합니다.
+
 ## yuv_to_rgb
 
-```
+```c
 void yuv_to_rgb(image im)
 {
     assert(im.c == 3);
@@ -1301,9 +1333,11 @@ void yuv_to_rgb(image im)
 }
 ```
 
+- `YUV` -> `RGB`
+
 ## rgb_to_yuv
 
-```
+```c
 void rgb_to_yuv(image im)
 {
     assert(im.c == 3);
@@ -1328,11 +1362,11 @@ void rgb_to_yuv(image im)
 }
 ```
 
-- RGB -> YUV
+- `RGB` -> `YUV`
 
 ## rgb_to_hsv
 
-```
+```c
 void rgb_to_hsv(image im)
 {
     assert(im.c == 3);
@@ -1375,7 +1409,7 @@ void rgb_to_hsv(image im)
 
 ## hsv_to_rgb
 
-```
+```c
 void hsv_to_rgb(image im)
 {
     assert(im.c == 3);
@@ -1422,7 +1456,7 @@ void hsv_to_rgb(image im)
 
 ## grayscale_image_3c
 
-```
+```c
 void grayscale_image_3c(image im)
 {
     assert(im.c == 3);
@@ -1446,7 +1480,7 @@ void grayscale_image_3c(image im)
 
 ## grayscale_image
 
-```
+```c
 image grayscale_image(image im)
 {
     assert(im.c == 3);
@@ -1468,7 +1502,7 @@ image grayscale_image(image im)
 
 ## threshold_image
 
-```
+```c
 image threshold_image(image im, float thresh)
 {
     int i;
@@ -1486,7 +1520,7 @@ image threshold_image(image im, float thresh)
 
 ## blend_image
 
-```
+```c
 image blend_image(image fore, image back, float alpha)
 {
     assert(fore.w == back.w && fore.h == back.h && fore.c == back.c);
@@ -1509,7 +1543,7 @@ image blend_image(image fore, image back, float alpha)
 
 ## scale_image_channel
 
-```
+```c
 void scale_image_channel(image im, int c, float v)
 {
     int i, j;
@@ -1527,7 +1561,7 @@ void scale_image_channel(image im, int c, float v)
 
 ## translate_image_channel
 
-```
+```c
 void translate_image_channel(image im, int c, float v)
 {
     int i, j;
@@ -1545,7 +1579,7 @@ void translate_image_channel(image im, int c, float v)
 
 ## binarize_image
 
-```
+```c
 image binarize_image(image im)
 {
     image c = copy_image(im);
@@ -1564,7 +1598,7 @@ image binarize_image(image im)
 
 ## saturate_image
 
-```
+```c
 void saturate_image(image im, float sat)
 {
     rgb_to_hsv(im);
@@ -1580,7 +1614,7 @@ void saturate_image(image im, float sat)
 
 ## hue_image
 
-```
+```c
 void hue_image(image im, float hue)
 {
     rgb_to_hsv(im);
@@ -1599,7 +1633,7 @@ void hue_image(image im, float hue)
 
 ## exposure_image
 
-```
+```c
 void exposure_image(image im, float sat)
 {
     rgb_to_hsv(im);
@@ -1619,7 +1653,7 @@ void exposure_image(image im, float sat)
 
 ## distort_image
 
-```
+```c
 void distort_image(image im, float hue, float sat, float val)
 {
     rgb_to_hsv(im);
@@ -1638,7 +1672,7 @@ void distort_image(image im, float hue, float sat, float val)
 
 ## random_distort_image
 
-```
+```c
 void random_distort_image(image im, float hue, float saturation, float exposure)
 {
     float dhue = rand_uniform(-hue, hue);
@@ -1650,7 +1684,7 @@ void random_distort_image(image im, float hue, float saturation, float exposure)
 
 ## saturate_exposure_image
 
-```
+```c
 void saturate_exposure_image(image im, float sat, float exposure)
 {
     rgb_to_hsv(im);
@@ -1665,7 +1699,7 @@ void saturate_exposure_image(image im, float sat, float exposure)
 
 ## resize_image
 
-```
+```c
 image resize_image(image im, int w, int h)
 {
     image resized = make_image(w, h, im.c);   
@@ -1714,7 +1748,7 @@ image resize_image(image im, int w, int h)
 
 ## test_resize
 
-```
+```c
 void test_resize(char *filename)
 {
     image im = load_image(filename, 0,0, 3);
@@ -1767,7 +1801,7 @@ void test_resize(char *filename)
 
 ## load_image_stb
 
-```
+```c
 image load_image_stb(char *filename, int channels)
 {
     int w, h, c;
@@ -1797,7 +1831,7 @@ image load_image_stb(char *filename, int channels)
 
 ## load_image
 
-```
+```c
 image load_image(char *filename, int w, int h, int c)
 {
 #ifdef OPENCV
@@ -1819,7 +1853,7 @@ image load_image(char *filename, int w, int h, int c)
 
 ## load_image_color
 
-```
+```c
 image load_image_color(char *filename, int w, int h)
 {
     return load_image(filename, w, h, 3);
@@ -1830,7 +1864,7 @@ image load_image_color(char *filename, int w, int h)
 
 ## get_image_layer
 
-```
+```c
 image get_image_layer(image m, int l)
 {
     image out = make_image(m.w, m.h, 1);
@@ -1846,7 +1880,7 @@ image get_image_layer(image m, int l)
 
 ## print_image
 
-```
+```c
 void print_image(image m)
 {
     int i, j, k;
@@ -1869,7 +1903,7 @@ void print_image(image m)
 
 ## collapse_images_vert
 
-```
+```c
 image collapse_images_vert(image *ims, int n)
 {
     int color = 1;
@@ -1910,7 +1944,7 @@ image collapse_images_vert(image *ims, int n)
 
 ## collapse_images_horz
 
-```
+```c
 image collapse_images_horz(image *ims, int n)
 {
     int color = 1;
@@ -1952,7 +1986,7 @@ image collapse_images_horz(image *ims, int n)
 
 ## show_image_normalized
 
-```
+```c
 void show_image_normalized(image im, const char *name)
 {
     image c = copy_image(im);
@@ -1966,7 +2000,7 @@ void show_image_normalized(image im, const char *name)
 
 ## show_images
 
-```
+```c
 void show_images(image *ims, int n, char *window)
 {
     image m = collapse_images_vert(ims, n);
@@ -1982,7 +2016,7 @@ void show_images(image *ims, int n, char *window)
 
 ## free_image
 
-```
+```c
 void free_image(image m)
 {
     if(m.data){

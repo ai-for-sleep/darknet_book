@@ -5,7 +5,7 @@ instance segmentation을 위한 layer입니다.
 
 ## forward_iseg_layer
 
-```
+```c
 void forward_iseg_layer(const layer l, network net)
 {
 
@@ -121,7 +121,7 @@ void forward_iseg_layer(const layer l, network net)
 
 ## backward_iseg_layer
 
-```
+```c
 void backward_iseg_layer(const layer l, network net)
 {
     axpy_cpu(l.batch*l.inputs, 1, l.delta, 1, net.delta, 1);
@@ -130,9 +130,27 @@ void backward_iseg_layer(const layer l, network net)
 
 `backward`
 
+## resize_iseg_layer
+
+```c
+void resize_iseg_layer(layer *l, int w, int h)
+{
+    l->w = w;
+    l->h = h;
+
+    l->outputs = h*w*l->c;
+    l->inputs = l->outputs;
+
+    l->output = realloc(l->output, l->batch*l->outputs*sizeof(float));
+    l->delta = realloc(l->delta, l->batch*l->outputs*sizeof(float));
+}
+```
+
+`resize`
+
 ## make_iseg_layer
 
-```
+```c
 layer make_iseg_layer(int batch, int w, int h, int classes, int ids)
 {
     layer l = {0};
@@ -173,20 +191,4 @@ layer make_iseg_layer(int batch, int w, int h, int classes, int ids)
 }
 ```
 
-
-
-## resize_iseg_layer
-
-```
-void resize_iseg_layer(layer *l, int w, int h)
-{
-    l->w = w;
-    l->h = h;
-
-    l->outputs = h*w*l->c;
-    l->inputs = l->outputs;
-
-    l->output = realloc(l->output, l->batch*l->outputs*sizeof(float));
-    l->delta = realloc(l->delta, l->batch*l->outputs*sizeof(float));
-}
-```
+`make`

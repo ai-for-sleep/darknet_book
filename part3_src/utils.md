@@ -5,7 +5,7 @@
 
 ## what_time_is_it_now
 
-```
+```c
 double what_time_is_it_now()
 {
     struct timeval time;
@@ -20,7 +20,7 @@ double what_time_is_it_now()
 
 ## read_intlist
 
-```
+```c
 int *read_intlist(char *gpu_list, int *ngpus, int d)
 {
     int *gpus = 0;
@@ -47,7 +47,7 @@ int *read_intlist(char *gpu_list, int *ngpus, int d)
 
 ## read_map
 
-```
+```c
 int *read_map(char *filename)
 {
     int n = 0;
@@ -66,7 +66,7 @@ int *read_map(char *filename)
 
 ## sorta_shuffle
 
-```
+```c
 void sorta_shuffle(void *arr, size_t n, size_t size, size_t sections)
 {
     size_t i;
@@ -81,7 +81,7 @@ void sorta_shuffle(void *arr, size_t n, size_t size, size_t sections)
 
 ## shuffle
 
-```
+```c
 void shuffle(void *arr, size_t n, size_t size)
 {
     size_t i;
@@ -99,7 +99,7 @@ void shuffle(void *arr, size_t n, size_t size)
 
 ## random_index_order
 
-```
+```c
 int *random_index_order(int min, int max)
 {
     int *inds = calloc(max-min, sizeof(int));
@@ -121,7 +121,7 @@ int *random_index_order(int min, int max)
 
 ## del_arg
 
-```
+```c
 void del_arg(int argc, char **argv, int index)
 {
     int i;
@@ -134,7 +134,7 @@ void del_arg(int argc, char **argv, int index)
 
 ## find_arg
 
-```
+```c
 int find_arg(int argc, char* argv[], char *arg)
 {
     int i;
@@ -153,7 +153,7 @@ int find_arg(int argc, char* argv[], char *arg)
 
 ## find_int_arg
 
-```
+```c
 int find_int_arg(int argc, char **argv, char *arg, int def)
 {
     int i;
@@ -174,7 +174,7 @@ int find_int_arg(int argc, char **argv, char *arg, int def)
 
 ## find_float_arg
 
-```
+```c
 float find_float_arg(int argc, char **argv, char *arg, float def)
 {
     int i;
@@ -195,7 +195,7 @@ float find_float_arg(int argc, char **argv, char *arg, float def)
 
 ## find_char_arg
 
-```
+```c
 char *find_char_arg(int argc, char **argv, char *arg, char *def)
 {
     int i;
@@ -216,7 +216,7 @@ char *find_char_arg(int argc, char **argv, char *arg, char *def)
 
 ## basecfg
 
-```
+```c
 char *basecfg(char *cfgfile)
 {
     char *c = cfgfile;
@@ -238,7 +238,7 @@ char *basecfg(char *cfgfile)
 
 ## alphanum_to_int
 
-```
+```c
 int alphanum_to_int(char c)
 {
     return (c < 58) ? c - 48 : c-87;
@@ -249,7 +249,7 @@ int alphanum_to_int(char c)
 
 ## int_to_alphanum
 
-```
+```c
 char int_to_alphanum(int i)
 {
     if (i == 36) return '.';
@@ -261,7 +261,7 @@ char int_to_alphanum(int i)
 
 ## pm
 
-```
+```c
 void pm(int M, int N, float *A)
 {
     int i,j;
@@ -280,7 +280,7 @@ void pm(int M, int N, float *A)
 
 ## find_replace
 
-```
+```c
 void find_replace(char *str, char *orig, char *rep, char *output)
 {
     char buffer[4096] = {0};
@@ -300,7 +300,7 @@ void find_replace(char *str, char *orig, char *rep, char *output)
 
 ## sec
 
-```
+```c
 float sec(clock_t clocks)
 {
     return (float)clocks/CLOCKS_PER_SEC;
@@ -313,7 +313,7 @@ float sec(clock_t clocks)
 
 ## top_k
 
-```
+```c
 void top_k(float *a, int n, int k, int *index)
 {
     int i,j;
@@ -331,11 +331,11 @@ void top_k(float *a, int n, int k, int *index)
 }
 ```
 
--
+- 배열에서 값이 큰 순서대로 k개를 뽑아서 index를 반환합니다.
 
 ## error
 
-```
+```c
 void error(const char *s)
 {
     perror(s);
@@ -345,11 +345,10 @@ void error(const char *s)
 ```
 
 - `perror` : 오류 메세지를 출력합니다.
--
 
 ## read_file
 
-```
+```c
 unsigned char *read_file(char *filename)
 {
     FILE *fp = fopen(filename, "rb");
@@ -368,7 +367,7 @@ unsigned char *read_file(char *filename)
 
 ## malloc_error
 
-```
+```c
 void malloc_error()
 {
     fprintf(stderr, "Malloc error\n");
@@ -376,9 +375,11 @@ void malloc_error()
 }
 ```
 
+- 메모리 할당 에러
+
 ## file_error
 
-```
+```c
 void file_error(char *s)
 {
     fprintf(stderr, "Couldn't open file: %s\n", s);
@@ -391,7 +392,7 @@ void file_error(char *s)
 
 ## split_str
 
-```
+```c
 list *split_str(char *s, char delim)
 {
     size_t i;
@@ -411,7 +412,7 @@ list *split_str(char *s, char delim)
 ## strip
 
 
-```
+```c
 void strip(char *s)
 {
     size_t i;
@@ -428,7 +429,7 @@ void strip(char *s)
 
 ## strip_char
 
-```
+```c
 void strip_char(char *s, char bad)
 {
     size_t i;
@@ -445,7 +446,7 @@ void strip_char(char *s, char bad)
 
 ## free_ptrs
 
-```
+```c
 void free_ptrs(void **ptrs, int n)
 {
     int i;
@@ -456,7 +457,7 @@ void free_ptrs(void **ptrs, int n)
 
 ## free_ptrs
 
-```
+```c
 char *fgetl(FILE *fp)
 {
     if(feof(fp)) return 0;
@@ -491,7 +492,7 @@ char *fgetl(FILE *fp)
 
 ## read_int
 
-```
+```c
 int read_int(int fd)
 {
     int n = 0;
@@ -503,7 +504,7 @@ int read_int(int fd)
 
 ## write_int
 
-```
+```c
 void write_int(int fd, int n)
 {
     int next = write(fd, &n, sizeof(int));
@@ -513,7 +514,7 @@ void write_int(int fd, int n)
 
 ## read_all_fail
 
-```
+```c
 int read_all_fail(int fd, char *buffer, size_t bytes)
 {
     size_t n = 0;
@@ -528,7 +529,7 @@ int read_all_fail(int fd, char *buffer, size_t bytes)
 
 ## write_all_fail
 
-```
+```c
 int write_all_fail(int fd, char *buffer, size_t bytes)
 {
     size_t n = 0;
@@ -543,7 +544,7 @@ int write_all_fail(int fd, char *buffer, size_t bytes)
 
 ## read_all
 
-```
+```c
 void read_all(int fd, char *buffer, size_t bytes)
 {
     size_t n = 0;
@@ -557,7 +558,7 @@ void read_all(int fd, char *buffer, size_t bytes)
 
 ## write_all
 
-```
+```c
 void write_all(int fd, char *buffer, size_t bytes)
 {
     size_t n = 0;
@@ -571,7 +572,7 @@ void write_all(int fd, char *buffer, size_t bytes)
 
 ## copy_string
 
-```
+```c
 char *copy_string(char *s)
 {
     char *copy = malloc(strlen(s)+1);
@@ -584,7 +585,7 @@ char *copy_string(char *s)
 
 ## parse_csv_line
 
-```
+```c
 list *parse_csv_line(char *line)
 {
     list *l = make_list();
@@ -605,7 +606,7 @@ list *parse_csv_line(char *line)
 
 ## count_fields
 
-```
+```c
 int count_fields(char *line)
 {
     int count = 0;
@@ -619,9 +620,11 @@ int count_fields(char *line)
 }
 ```
 
+- `,`를 기준으로 분리하여 개수를 반환합니다.
+
 ## parse_fields
 
-```
+```c
 float *parse_fields(char *line, int n)
 {
     float *field = calloc(n, sizeof(float));
@@ -643,9 +646,13 @@ float *parse_fields(char *line, int n)
 }
 ```
 
+- `strtod` : 문자열을 실수 값으로 반환합니다.
+
+- 한줄을 읽어들여 배열 값을 반환합니다.
+
 ## sum_array
 
-```
+```c
 float sum_array(float *a, int n)
 {
     int i;
@@ -659,7 +666,7 @@ float sum_array(float *a, int n)
 
 ## mean_array
 
-```
+```c
 float mean_array(float *a, int n)
 {
     return sum_array(a,n)/n;
@@ -670,7 +677,7 @@ float mean_array(float *a, int n)
 
 ## mean_arrays
 
-```
+```c
 void mean_arrays(float **a, int n, int els, float *avg)
 {
     int i;
@@ -691,7 +698,7 @@ void mean_arrays(float **a, int n, int els, float *avg)
 
 ## print_statistics
 
-```
+```c
 void print_statistics(float *a, int n)
 {
     float m = mean_array(a, n);
@@ -704,7 +711,7 @@ void print_statistics(float *a, int n)
 
 ## variance_array
 
-```
+```c
 float variance_array(float *a, int n)
 {
     int i;
@@ -720,7 +727,7 @@ float variance_array(float *a, int n)
 
 ## constrain_int
 
-```
+```c
 int constrain_int(int a, int min, int max)
 {
     if (a < min) return min;
@@ -736,7 +743,7 @@ int constrain_int(int a, int min, int max)
 
 ## constrain
 
-```
+```c
 float constrain(float min, float max, float a)
 {
     if (a < min) return min;
@@ -752,7 +759,7 @@ float constrain(float min, float max, float a)
 
 ## dist_array
 
-```
+```c
 float dist_array(float *a, float *b, int n, int sub)
 {
     int i;
@@ -767,7 +774,7 @@ float dist_array(float *a, float *b, int n, int sub)
 
 ## mse_array
 
-```
+```c
 float mse_array(float *a, int n)
 {
     int i;
@@ -782,7 +789,7 @@ float mse_array(float *a, int n)
 
 ## normalize_array
 
-```
+```c
 void normalize_array(float *a, int n)
 {
     int i;
@@ -800,7 +807,7 @@ void normalize_array(float *a, int n)
 
 ## translate_array
 
-```
+```c
 void translate_array(float *a, int n, float s)
 {
     int i;
@@ -814,7 +821,7 @@ void translate_array(float *a, int n, float s)
 
 ## mag_array
 
-```
+```c
 float mag_array(float *a, int n)
 {
     int i;
@@ -830,7 +837,7 @@ float mag_array(float *a, int n)
 
 ## scale_array
 
-```
+```c
 void scale_array(float *a, int n, float s)
 {
     int i;
@@ -844,7 +851,7 @@ void scale_array(float *a, int n, float s)
 
 ## sample_array
 
-```
+```c
 int sample_array(float *a, int n)
 {
     float sum = sum_array(a, n);

@@ -187,7 +187,36 @@ void update_convolutional_layer(convolutional_layer l, update_args a)
 }
 ```
 
-- convolutional layer의 학습 파라미터를 업데이트 하는 함수입니다.
+`update`
+
+## resize_convolutional_layer
+
+```c
+void resize_convolutional_layer(convolutional_layer *l, int w, int h)
+{
+    l->w = w;
+    l->h = h;
+    int out_w = convolutional_out_width(*l);
+    int out_h = convolutional_out_height(*l);
+
+    l->out_w = out_w;
+    l->out_h = out_h;
+
+    l->outputs = l->out_h * l->out_w * l->out_c;
+    l->inputs = l->w * l->h * l->c;
+
+    l->output = realloc(l->output, l->batch*l->outputs*sizeof(float));
+    l->delta  = realloc(l->delta,  l->batch*l->outputs*sizeof(float));
+    if(l->batch_normalize){
+        l->x = realloc(l->x, l->batch*l->outputs*sizeof(float));
+        l->x_norm  = realloc(l->x_norm, l->batch*l->outputs*sizeof(float));
+    }
+
+    l->workspace_size = get_workspace_size(*l);
+}
+```
+
+`resize`
 
 ## make_convolutional_layer
 
@@ -286,7 +315,7 @@ convolutional_layer make_convolutional_layer(int batch, int h, int w, int c, int
 }
 ```
 
-- convolution layer를 만드는 함수 입니다.
+`make`
 
 ## denormalize_convolutional_layer
 
@@ -308,35 +337,6 @@ void denormalize_convolutional_layer(convolutional_layer l)
 ```
 
 - 역정규화를 하는 함수입니다.
-
-## resize_convolutional_layer
-
-```c
-void resize_convolutional_layer(convolutional_layer *l, int w, int h)
-{
-    l->w = w;
-    l->h = h;
-    int out_w = convolutional_out_width(*l);
-    int out_h = convolutional_out_height(*l);
-
-    l->out_w = out_w;
-    l->out_h = out_h;
-
-    l->outputs = l->out_h * l->out_w * l->out_c;
-    l->inputs = l->w * l->h * l->c;
-
-    l->output = realloc(l->output, l->batch*l->outputs*sizeof(float));
-    l->delta  = realloc(l->delta,  l->batch*l->outputs*sizeof(float));
-    if(l->batch_normalize){
-        l->x = realloc(l->x, l->batch*l->outputs*sizeof(float));
-        l->x_norm  = realloc(l->x_norm, l->batch*l->outputs*sizeof(float));
-    }
-
-    l->workspace_size = get_workspace_size(*l);
-}
-```
-
-- convolutional layer를 resize시킵니다.
 
 ## add_bias
 

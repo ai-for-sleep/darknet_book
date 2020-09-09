@@ -30,7 +30,7 @@ LSTM의 `cell state`는 공장의 컨베이어 벨트와 같으며 이러한 컨
 
 ## increment_layer
 
-```
+```c
 static void increment_layer(layer *l, int steps)
 {
     int num = l->outputs*l->batch*steps;
@@ -43,7 +43,7 @@ static void increment_layer(layer *l, int steps)
 
 ## forward_lstm_layer
 
-```
+```c
 void forward_lstm_layer(layer l, network state)
 {
     network s = { 0 };
@@ -135,7 +135,7 @@ void forward_lstm_layer(layer l, network state)
 
 ## backward_lstm_layer
 
-```
+```c
 void backward_lstm_layer(layer l, network state)
 {
     network s = { 0 };
@@ -284,7 +284,7 @@ void backward_lstm_layer(layer l, network state)
 
 ## update_lstm_layer
 
-```
+```c
 void update_lstm_layer(layer l, update_args a)
 {
     update_connected_layer(*(l.wf), a);
@@ -297,3 +297,5 @@ void update_lstm_layer(layer l, update_args a)
     update_connected_layer(*(l.uo), a);
 }
 ```
+
+`update`

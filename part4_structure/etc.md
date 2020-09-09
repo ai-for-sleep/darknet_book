@@ -8,7 +8,7 @@
 
 ## node
 
-```
+```c
 typedef struct node{
     void *val;
     struct node *next;
@@ -18,7 +18,7 @@ typedef struct node{
 
 ## list
 
-```
+```c
 typedef struct list{
     int size;
     node *front;
@@ -28,7 +28,7 @@ typedef struct list{
 
 ## matrix
 
-```
+```c
 typedef struct matrix{
     int rows, cols;
     float **vals;
@@ -37,15 +37,25 @@ typedef struct matrix{
 
 ## box
 
-```
+```c
 typedef struct{
     float x, y, w, h;
 } box;
 ```
 
+## box_label
+
+```c
+typedef struct{
+    int id;
+    float x,y,w,h;
+    float left, right, top, bottom;
+} box_label;
+```
+
 ## data
 
-```
+```c
 typedef struct{
     int w, h;
     matrix X; // X.cols = total pixel , rows = batch(64) , vals = each pixel's value (we can find information in data.c's load_data_detection)
@@ -67,7 +77,7 @@ Y : cols, rows
 
 ## detection
 
-```
+```c
 typedef struct detection{
     box bbox;
     int classes;
@@ -86,7 +96,7 @@ typedef struct detection{
 
 ## kvp 구조체
 
-```
+```c
 typedef struct{
     char *key;
     char *val;
@@ -100,7 +110,7 @@ typedef struct{
 
 ## section
 
-```
+```c
 typedef struct{
     char *type;
     list *options;
@@ -109,7 +119,7 @@ typedef struct{
 
 ## size_params
 
-```
+```c
 typedef struct size_params{
     int batch;
     int inputs;
@@ -126,7 +136,7 @@ typedef struct size_params{
 
 ## dbox
 
-```
+```c
 typedef struct{
     float dx, dy, dw, dh;
 } dbox;
@@ -138,7 +148,7 @@ typedef struct{
 
 ## timeval
 
-```
+```c
 struct timeval {
   long tv_sec;       // 1초
   long tv_usec;      // 1/1000000초

@@ -2,7 +2,7 @@
 
 ## free_matrix
 
-```
+```c
 void free_matrix(matrix m)
 {
     int i;
@@ -11,9 +11,11 @@ void free_matrix(matrix m)
 }
 ```
 
+- 행렬의 메모리 할당을 해제합니다.
+
 ## matrix_topk_accuracy
 
-```
+```c
 float matrix_topk_accuracy(matrix truth, matrix guess, int k)
 {
     int *indexes = calloc(k, sizeof(int));
@@ -35,9 +37,11 @@ float matrix_topk_accuracy(matrix truth, matrix guess, int k)
 }
 ```
 
+- 행렬 2개를 비교하여 상위 k개 안에 예측값이 있다면 맞은 것으로 간주하여 정확성을 측정합니다.
+
 ## scale_matrix
 
-```
+```c
 void scale_matrix(matrix m, float scale)
 {
     int i,j;
@@ -49,9 +53,11 @@ void scale_matrix(matrix m, float scale)
 }
 ```
 
+- 행렬에 모든 값에 scale을 곱합니다.
+
 ## resize_matrix
 
-```
+```c
 matrix resize_matrix(matrix m, int size)
 {
     int i;
@@ -72,9 +78,11 @@ matrix resize_matrix(matrix m, int size)
 }
 ```
 
+- 행렬에서 행의 개수를 resize 합니다.
+
 ## matrix_add_matrix
 
-```
+```c
 void matrix_add_matrix(matrix from, matrix to)
 {
     assert(from.rows == to.rows && from.cols == to.cols);
@@ -87,9 +95,11 @@ void matrix_add_matrix(matrix from, matrix to)
 }
 ```
 
+- 2개의 행렬을 더합니다.
+
 ## copy_matrix
 
-```
+```c
 matrix copy_matrix(matrix m)
 {
     matrix c = {0};
@@ -105,9 +115,11 @@ matrix copy_matrix(matrix m)
 }
 ```
 
+- 행렬을 복사합니다.
+
 ## make_matrix
 
-```
+```c
 matrix make_matrix(int rows, int cols)
 {
     int i;
@@ -122,9 +134,11 @@ matrix make_matrix(int rows, int cols)
 }
 ```
 
+- 비어있는 행렬을 만듭니다.
+
 ## hold_out_matrix
 
-```
+```c
 matrix hold_out_matrix(matrix *m, int n)
 {
     int i;
@@ -141,9 +155,11 @@ matrix hold_out_matrix(matrix *m, int n)
 }
 ```
 
+- 행렬에서 랜덤한 `n`개의 행을 유지한 뒤 반환합니다.
+
 ## pop_column
 
-```
+```c
 float *pop_column(matrix *m, int c)
 {
     float *col = calloc(m->rows, sizeof(float));
@@ -159,9 +175,11 @@ float *pop_column(matrix *m, int c)
 }
 ```
 
+- c에 해당하는 열을 제거하고 해당 열을 반환합니다.
+
 ## csv_to_matrix
 
-```
+```c
 matrix csv_to_matrix(char *filename)
 {
     FILE *fp = fopen(filename, "r");
@@ -191,9 +209,11 @@ matrix csv_to_matrix(char *filename)
 }
 ```
 
+- 파일을 한 줄씩 읽어 `,`를 기준으로 값을 분리해 행렬로 만들어줍니다.
+
 ## matrix_to_csv
 
-```
+```c
 void matrix_to_csv(matrix m)
 {
     int i, j;
@@ -208,9 +228,19 @@ void matrix_to_csv(matrix m)
 }
 ```
 
-## print_matrix
+- 행렬을 출력합니다.
 
 ```
+0,0,0
+0,0,0
+0,0,0
+```
+
+- 위와 같은 형태로 출력됩니다.
+
+## print_matrix
+
+```c
 void print_matrix(matrix m)
 {
     int i, j;
@@ -235,3 +265,16 @@ void print_matrix(matrix m)
     printf("__|\n");
 }
 ```
+
+- 행렬을 보기 쉽게 출력합니다.
+
+```
+__                                               __
+|                                                   |
+|        0.0000000       0.0000000       0.0000000  |
+|        0.0000000       0.0000000       0.0000000  |
+|        0.0000000       0.0000000       0.0000000  |
+|__                                               __|
+```
+
+- 위와 같은 형태로 출력됩니다.

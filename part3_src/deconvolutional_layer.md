@@ -2,7 +2,7 @@
 
 ## get_workspace_size
 
-```
+```c
 static size_t get_workspace_size(layer l){
     return (size_t)l.h*l.w*l.size*l.size*l.n*sizeof(float);
 }
@@ -10,7 +10,7 @@ static size_t get_workspace_size(layer l){
 
 ## bilinear_init
 
-```
+```c
 void bilinear_init(layer l)
 {
     int i,j,f;
@@ -30,7 +30,7 @@ void bilinear_init(layer l)
 
 ## forward_deconvolutional_layer
 
-```
+```c
 void forward_deconvolutional_layer(const layer l, network net)
 {
     int i;
@@ -63,7 +63,7 @@ void forward_deconvolutional_layer(const layer l, network net)
 
 ## backward_deconvolutional_layer
 
-```
+```c
 void backward_deconvolutional_layer(layer l, network net)
 {
     int i;
@@ -110,7 +110,7 @@ void backward_deconvolutional_layer(layer l, network net)
 
 ## update_deconvolutional_layer
 
-```
+```c
 void update_deconvolutional_layer(layer l, update_args a)
 {
     float learning_rate = a.learning_rate*l.learning_rate_scale;
@@ -133,9 +133,37 @@ void update_deconvolutional_layer(layer l, update_args a)
 }
 ```
 
+`update`
+
+## resize_deconvolutional_layer
+
+```c
+void resize_deconvolutional_layer(layer *l, int h, int w)
+{
+    l->h = h;
+    l->w = w;
+    l->out_h = (l->h - 1) * l->stride + l->size - 2*l->pad;
+    l->out_w = (l->w - 1) * l->stride + l->size - 2*l->pad;
+
+    l->outputs = l->out_h * l->out_w * l->out_c;
+    l->inputs = l->w * l->h * l->c;
+
+    l->output = realloc(l->output, l->batch*l->outputs*sizeof(float));
+    l->delta  = realloc(l->delta,  l->batch*l->outputs*sizeof(float));
+    if(l->batch_normalize){
+        l->x = realloc(l->x, l->batch*l->outputs*sizeof(float));
+        l->x_norm  = realloc(l->x_norm, l->batch*l->outputs*sizeof(float));
+    }
+
+    l->workspace_size = get_workspace_size(*l);
+}
+```
+
+`resize`
+
 ## make_deconvolutional_layer
 
-```
+```c
 layer make_deconvolutional_layer(int batch, int h, int w, int c, int n, int size, int stride, int padding, ACTIVATION activation, int batch_normalize, int adam)
 {
     int i;
@@ -221,9 +249,11 @@ layer make_deconvolutional_layer(int batch, int h, int w, int c, int n, int size
 }
 ```
 
+`make`
+
 ## denormalize_deconvolutional_layer
 
-```
+```c
 void denormalize_deconvolutional_layer(layer l)
 {
     int i, j;
@@ -237,29 +267,5 @@ void denormalize_deconvolutional_layer(layer l)
         l.rolling_mean[i] = 0;
         l.rolling_variance[i] = 1;
     }
-}
-```
-
-## resize_deconvolutional_layer
-
-```
-void resize_deconvolutional_layer(layer *l, int h, int w)
-{
-    l->h = h;
-    l->w = w;
-    l->out_h = (l->h - 1) * l->stride + l->size - 2*l->pad;
-    l->out_w = (l->w - 1) * l->stride + l->size - 2*l->pad;
-
-    l->outputs = l->out_h * l->out_w * l->out_c;
-    l->inputs = l->w * l->h * l->c;
-
-    l->output = realloc(l->output, l->batch*l->outputs*sizeof(float));
-    l->delta  = realloc(l->delta,  l->batch*l->outputs*sizeof(float));
-    if(l->batch_normalize){
-        l->x = realloc(l->x, l->batch*l->outputs*sizeof(float));
-        l->x_norm  = realloc(l->x_norm, l->batch*l->outputs*sizeof(float));
-    }
-
-    l->workspace_size = get_workspace_size(*l);
 }
 ```

@@ -121,7 +121,7 @@ void update_connected_layer(layer l, update_args a)
 }
 ```
 
-- connected layer의 학습 파라미터를 업데이트 하는 함수입니다.
+`update`
 
 ## make_connected_layer
 
@@ -200,4 +200,4 @@ layer make_connected_layer(int batch, int inputs, int outputs, ACTIVATION activa
 }
 ```
 
-- connected layer를 만드는 함수입니다.
+`make`

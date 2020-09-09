@@ -31,7 +31,7 @@ RNN 역전파는 위와 같습니다. weights가 공유되기 때문에 학습�
 
 ## increment_layer
 
-```
+```c
 static void increment_layer(layer *l, int steps)
 {
     int num = l->outputs*l->batch*steps;
@@ -44,7 +44,7 @@ static void increment_layer(layer *l, int steps)
 
 ## forward_rnn_layer
 
-```
+```c
 void forward_rnn_layer(layer l, network net)
 {
     network s = net;
@@ -91,7 +91,7 @@ void forward_rnn_layer(layer l, network net)
 
 ## backward_rnn_layer
 
-```
+```c
 void backward_rnn_layer(layer l, network net)
 {
     network s = net;
@@ -145,9 +145,22 @@ void backward_rnn_layer(layer l, network net)
 
 `backward`
 
+## update_rnn_layer
+
+```c
+void update_rnn_layer(layer l, update_args a)
+{
+    update_connected_layer(*(l.input_layer),  a);
+    update_connected_layer(*(l.self_layer),   a);
+    update_connected_layer(*(l.output_layer), a);
+}
+```
+
+`update`
+
 ## make_rnn_layer
 
-```
+```c
 layer make_rnn_layer(int batch, int inputs, int outputs, int steps, ACTIVATION activation, int batch_normalize, int adam)
 {
     fprintf(stderr, "RNN Layer: %d inputs, %d outputs\n", inputs, outputs);
@@ -185,16 +198,5 @@ layer make_rnn_layer(int batch, int inputs, int outputs, int steps, ACTIVATION a
     l.update = update_rnn_layer;
 
     return l;
-}
-```
-
-## update_rnn_layer
-
-```
-void update_rnn_layer(layer l, update_args a)
-{
-    update_connected_layer(*(l.input_layer),  a);
-    update_connected_layer(*(l.self_layer),   a);
-    update_connected_layer(*(l.output_layer), a);
 }
 ```

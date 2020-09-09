@@ -18,6 +18,6 @@ parameter2
 parameter3
 ```
 
-- 대괄호([])안에 Deep Neural Network Layer의 이름이 들어가고 그 아래에는 해당 `Layer에` 필요한 파라미터 값이 추가 됩니다.
+- 대괄호([])안에 Deep Neural Network Layer의 이름이 들어가고 그 아래에는 해당 `Layer`에 필요한 파라미터 값이 추가 됩니다.
 
 - 모델이 동작하는 순서대로 정의하면 됩니다.

@@ -1,0 +1,18 @@
+{
+    "title": "DarkNet Book",
+    "author": "JJM",
+    "output.name": "site",
+    "root": "./",
+    "plugins": [ "advanced-emoji", "theme-gestalt", "-theme-default", "styles-sass-fix", "theme-api", "mathjax" ],
+    "pluginsConfig": {
+        "theme-gestalt": {
+            "logo": "/darknet_book/assets/darknet.png",
+            "baseUrl": null,
+            "excludeDefaultStyles": true,
+            "doNotHideChildrenChapters" : false
+        }
+    },
+    "styles": {
+        "website": "./styles/website.scss"
+    }
+}

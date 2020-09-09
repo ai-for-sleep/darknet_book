@@ -170,9 +170,9 @@ layer make_batchnorm_layer(int batch, int w, int h, int c)
 }
 ```
 
-- batch normalization layer를 만드는 함수입니다.
+`make`
 
-## backward_batchnorm_layer
+## backward_scale_cpu
 
 ```c
 void backward_scale_cpu(float *x_norm, float *delta, int batch, int n, int size, float *scale_updates)

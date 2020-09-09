@@ -14,7 +14,7 @@ Network 구조체 입니다.
 - `learning_rate` : 학습률
 - `momentum` : learning rate의 운동에너지를 감소시키기 위한 값
 
-```
+```c
 # origin
 
 weight = weight + learning rate * dL / dw
@@ -78,7 +78,7 @@ $$W = W - learning rate * (\frac{\partial L}{\partial W} + \lambda W)$$
 - `cost` :
 - `clip` :
 
-```
+```c
 typedef struct network{
     int n;                            
     int batch;                        

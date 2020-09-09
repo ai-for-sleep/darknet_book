@@ -1,5 +1,6 @@
 # Upsample Layer란?
 
+Upsample Layer는 Feature Maps의 크기를 키우는 Layer입니다.
 
 ---
 
@@ -7,7 +8,7 @@
 
 ## forward_upsample_layer
 
-```
+```c
 void forward_upsample_layer(const layer l, network net)
 {
     fill_cpu(l.outputs*l.batch, 0, l.output, 1);
@@ -23,7 +24,7 @@ void forward_upsample_layer(const layer l, network net)
 
 ## backward_upsample_layer
 
-```
+```c
 void backward_upsample_layer(const layer l, network net)
 {
     if(l.reverse){
@@ -36,9 +37,31 @@ void backward_upsample_layer(const layer l, network net)
 
 `backward`
 
+## resize_upsample_layer
+
+```c
+void resize_upsample_layer(layer *l, int w, int h)
+{
+    l->w = w;
+    l->h = h;
+    l->out_w = w*l->stride;
+    l->out_h = h*l->stride;
+    if(l->reverse){
+        l->out_w = w/l->stride;
+        l->out_h = h/l->stride;
+    }
+    l->outputs = l->out_w*l->out_h*l->out_c;
+    l->inputs = l->h*l->w*l->c;
+    l->delta =  realloc(l->delta, l->outputs*l->batch*sizeof(float));
+    l->output = realloc(l->output, l->outputs*l->batch*sizeof(float));  
+}
+```
+
+`resize`
+
 ## make_upsample_layer
 
-```
+```c
 layer make_upsample_layer(int batch, int w, int h, int c, int stride)
 {
     layer l = {0};
@@ -64,35 +87,11 @@ layer make_upsample_layer(int batch, int w, int h, int c, int stride)
 
     l.forward = forward_upsample_layer;
     l.backward = backward_upsample_layer;
-    #ifdef GPU
-    l.forward_gpu = forward_upsample_layer_gpu;
-    l.backward_gpu = backward_upsample_layer_gpu;
 
-    l.delta_gpu =  cuda_make_array(l.delta, l.outputs*batch);
-    l.output_gpu = cuda_make_array(l.output, l.outputs*batch);
-    #endif
     if(l.reverse) fprintf(stderr, "downsample         %2dx  %4d x%4d x%4d   ->  %4d x%4d x%4d\n", stride, w, h, c, l.out_w, l.out_h, l.out_c);
     else fprintf(stderr, "upsample           %2dx  %4d x%4d x%4d   ->  %4d x%4d x%4d\n", stride, w, h, c, l.out_w, l.out_h, l.out_c);
     return l;
 }
 ```
 
-## resize_upsample_layer
-
-```
-void resize_upsample_layer(layer *l, int w, int h)
-{
-    l->w = w;
-    l->h = h;
-    l->out_w = w*l->stride;
-    l->out_h = h*l->stride;
-    if(l->reverse){
-        l->out_w = w/l->stride;
-        l->out_h = h/l->stride;
-    }
-    l->outputs = l->out_w*l->out_h*l->out_c;
-    l->inputs = l->h*l->w*l->c;
-    l->delta =  realloc(l->delta, l->outputs*l->batch*sizeof(float));
-    l->output = realloc(l->output, l->outputs*l->batch*sizeof(float));  
-}
-```
+`make`

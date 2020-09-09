@@ -37,7 +37,7 @@ static void increment_layer(layer *l, int steps)
 
 ## forward_gru_layer
 
-```
+```c
 void forward_gru_layer(layer l, network net)
 {
     network s = net;
@@ -141,9 +141,11 @@ void update_gru_layer(layer l, update_args a)
 }
 ```
 
-## mask_gru_layer
+`update`
 
-```
+## make_gru_layer
+
+```c
 layer make_gru_layer(int batch, int inputs, int outputs, int steps, int batch_normalize, int adam)
 {
     fprintf(stderr, "GRU Layer: %d inputs, %d outputs\n", inputs, outputs);
@@ -206,3 +208,5 @@ layer make_gru_layer(int batch, int inputs, int outputs, int steps, int batch_no
     return l;
 }
 ```
+
+`make`

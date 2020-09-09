@@ -7,7 +7,7 @@
 
 ## forward_yolo_layer
 
-```
+```c
 void forward_yolo_layer(const layer l, network net)
 {
     int i,j,b,t,n;
@@ -112,7 +112,7 @@ void forward_yolo_layer(const layer l, network net)
 
 ## backward_yolo_layer
 
-```
+```c
 void backward_yolo_layer(const layer l, network net)
 {
    axpy_cpu(l.batch*l.inputs, 1, l.delta, 1, net.delta, 1);
@@ -123,7 +123,7 @@ void backward_yolo_layer(const layer l, network net)
 
 ## make_yolo_layer
 
-```
+```c
 layer make_yolo_layer(int batch, int w, int h, int n, int total, int *mask, int classes)
 {
     int i;
@@ -169,9 +169,11 @@ layer make_yolo_layer(int batch, int w, int h, int n, int total, int *mask, int 
 }
 ```
 
+`make`
+
 ## correct_yolo_boxes
 
-```
+```c
 void correct_yolo_boxes(detection *dets, int n, int w, int h, int netw, int neth, int relative)
 {
     int i;
@@ -203,7 +205,7 @@ void correct_yolo_boxes(detection *dets, int n, int w, int h, int netw, int neth
 
 ## yolo_num_detections
 
-```
+```c
 int yolo_num_detections(layer l, float thresh)
 {
     int i, n;
@@ -222,7 +224,7 @@ int yolo_num_detections(layer l, float thresh)
 
 ## avg_flipped_yolo
 
-```
+```c
 void avg_flipped_yolo(layer l)
 {
     int i,j,n,z;
@@ -252,7 +254,7 @@ void avg_flipped_yolo(layer l)
 
 ## get_yolo_detections
 
-```
+```c
 int get_yolo_detections(layer l, int w, int h, int netw, int neth, float thresh, int *map, int relative, detection *dets)
 {
     int i,j,n;

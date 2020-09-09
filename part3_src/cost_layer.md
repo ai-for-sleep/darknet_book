@@ -56,7 +56,7 @@ char *get_cost_string(COST_TYPE a)
 
 ## forward_cost_layer
 
-```
+```c
 void forward_cost_layer(cost_layer l, network net)
 {
     if (!net.truth) return;
@@ -83,7 +83,7 @@ void forward_cost_layer(cost_layer l, network net)
 
 ## backward_cost_layer
 
-```
+```c
 void backward_cost_layer(const cost_layer l, network net)
 {
     axpy_cpu(l.batch*l.inputs, l.scale, l.delta, 1, net.delta, 1);
@@ -94,9 +94,23 @@ void backward_cost_layer(const cost_layer l, network net)
 
 - network delta = scale * layer delta
 
+## resize_cost_layer
+
+```c
+void resize_cost_layer(cost_layer *l, int inputs)
+{
+    l->inputs = inputs;
+    l->outputs = inputs;
+    l->delta = realloc(l->delta, inputs*l->batch*sizeof(float));
+    l->output = realloc(l->output, inputs*l->batch*sizeof(float));
+}
+```
+
+`resize`
+
 ## make_cost_layer
 
-```
+```c
 cost_layer make_cost_layer(int batch, int inputs, COST_TYPE cost_type, float scale)
 {
     fprintf(stderr, "cost                                           %4d\n",  inputs);
@@ -119,18 +133,4 @@ cost_layer make_cost_layer(int batch, int inputs, COST_TYPE cost_type, float sca
 }
 ```
 
-- Loss를 구하기 위한 cost layer를 만듭니다.
-
-## resize_cost_layer
-
-```
-void resize_cost_layer(cost_layer *l, int inputs)
-{
-    l->inputs = inputs;
-    l->outputs = inputs;
-    l->delta = realloc(l->delta, inputs*l->batch*sizeof(float));
-    l->output = realloc(l->output, inputs*l->batch*sizeof(float));
-}
-```
-
-- cost layer를 resize합니다.
+`make`

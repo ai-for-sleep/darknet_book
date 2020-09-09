@@ -2,7 +2,7 @@
 
 ## forward_region_layer
 
-```
+```c
 void forward_region_layer(const layer l, network net)
 {
     int i,j,b,t,n;
@@ -148,7 +148,7 @@ void forward_region_layer(const layer l, network net)
 
 ## backward_region_layer
 
-```
+```c
 void backward_region_layer(const layer l, network net)
 {
     /*
@@ -165,9 +165,27 @@ void backward_region_layer(const layer l, network net)
 
 `backward`
 
+## resize_reorg_layer
+
+```c
+void resize_region_layer(layer *l, int w, int h)
+{
+    l->w = w;
+    l->h = h;
+
+    l->outputs = h*w*l->n*(l->classes + l->coords + 1);
+    l->inputs = l->outputs;
+
+    l->output = realloc(l->output, l->batch*l->outputs*sizeof(float));
+    l->delta = realloc(l->delta, l->batch*l->outputs*sizeof(float));
+}
+```
+
+`resize`
+
 ## make_region_layer
 
-```
+```c
 layer make_region_layer(int batch, int w, int h, int n, int classes, int coords)
 {
     layer l = {0};
@@ -206,25 +224,11 @@ layer make_region_layer(int batch, int w, int h, int n, int classes, int coords)
 }
 ```
 
-## resize_reorg_layer
-
-```
-void resize_region_layer(layer *l, int w, int h)
-{
-    l->w = w;
-    l->h = h;
-
-    l->outputs = h*w*l->n*(l->classes + l->coords + 1);
-    l->inputs = l->outputs;
-
-    l->output = realloc(l->output, l->batch*l->outputs*sizeof(float));
-    l->delta = realloc(l->delta, l->batch*l->outputs*sizeof(float));
-}
-```
+`make`
 
 ## get_region_box
 
-```
+```c
 box get_region_box(float *x, float *biases, int n, int index, int i, int j, int w, int h, int stride)
 {
     box b;
@@ -238,7 +242,7 @@ box get_region_box(float *x, float *biases, int n, int index, int i, int j, int 
 
 ## delta_region_box
 
-```
+```c
 float delta_region_box(box truth, float *x, float *biases, int n, int index, int i, int j, int w, int h, float *delta, float scale, int stride)
 {
     box pred = get_region_box(x, biases, n, index, i, j, w, h, stride);
@@ -259,7 +263,7 @@ float delta_region_box(box truth, float *x, float *biases, int n, int index, int
 
 ## delta_region_mask
 
-```
+```c
 void delta_region_mask(float *truth, float *x, int n, int index, float *delta, int stride, int scale)
 {
     int i;
@@ -271,7 +275,7 @@ void delta_region_mask(float *truth, float *x, int n, int index, float *delta, i
 
 ## delta_region_class
 
-```
+```c
 void delta_region_class(float *output, float *delta, int index, int class, int classes, tree *hier, float scale, int stride, float *avg_cat, int tag)
 {
     int i, n;
@@ -304,7 +308,7 @@ void delta_region_class(float *output, float *delta, int index, int class, int c
 
 ## logit
 
-```
+```c
 float logit(float x)
 {
     return log(x/(1.-x));
@@ -313,7 +317,7 @@ float logit(float x)
 
 ## tisnan
 
-```
+```c
 float tisnan(float x)
 {
     return (x != x);
@@ -322,7 +326,7 @@ float tisnan(float x)
 
 ## entry_index
 
-```
+```c
 int entry_index(layer l, int batch, int location, int entry)
 {
     int n =   location / (l.w*l.h);

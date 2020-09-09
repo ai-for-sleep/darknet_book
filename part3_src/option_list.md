@@ -201,5 +201,3 @@ float option_find_float(list *l, char *key, float def)
 
 - float값을 가지는 val을 string으로 반환합니다.
 - 없을시 error가 발생합니다.
-
-##

@@ -2,7 +2,7 @@
 
 ## local_out_height
 
-```
+```c
 int local_out_height(local_layer l)
 {
     int h = l.h;
@@ -14,7 +14,7 @@ int local_out_height(local_layer l)
 
 ## local_out_width
 
-```
+```c
 int local_out_width(local_layer l)
 {
     int w = l.w;
@@ -26,7 +26,7 @@ int local_out_width(local_layer l)
 
 ## forward_local_layer
 
-```
+```c
 void forward_local_layer(const local_layer l, network net)
 {
     int out_h = local_out_height(l);
@@ -63,7 +63,7 @@ void forward_local_layer(const local_layer l, network net)
 
 ## backward_local_layer
 
-```
+```c
 void backward_local_layer(local_layer l, network net)
 {
     int i, j;
@@ -114,7 +114,7 @@ void backward_local_layer(local_layer l, network net)
 
 ## update_local_layer
 
-```
+```c
 void update_local_layer(local_layer l, update_args a)
 {
     float learning_rate = a.learning_rate*l.learning_rate_scale;
@@ -133,7 +133,11 @@ void update_local_layer(local_layer l, update_args a)
 }
 ```
 
-```
+`update`
+
+## make_local_layer
+
+```c
 local_layer make_local_layer(int batch, int h, int w, int c, int n, int size, int stride, int pad, ACTIVATION activation)
 {
     int i;
@@ -184,3 +188,5 @@ local_layer make_local_layer(int batch, int h, int w, int c, int n, int size, in
     return l;
 }
 ```
+
+`make`

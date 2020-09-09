@@ -5,7 +5,7 @@ input(image, feature map)을 crop하기 위한 layer입니다.
 
 ## get_crop_image
 
-```
+```c
 image get_crop_image(crop_layer l)
 {
     int h = l.out_h;
@@ -19,7 +19,7 @@ image get_crop_image(crop_layer l)
 
 ## forward_crop_layer
 
-```
+```c
 void forward_crop_layer(const crop_layer l, network net)
 {
     int i,j,c,b,row,col;
@@ -68,6 +68,26 @@ void backward_crop_layer(const crop_layer l, network net){}
 
 `backward`
 
+## resize_crop_layer
+
+```c
+void resize_crop_layer(layer *l, int w, int h)
+{
+    l->w = w;
+    l->h = h;
+
+    l->out_w =  l->scale*w;
+    l->out_h =  l->scale*h;
+
+    l->inputs = l->w * l->h * l->c;
+    l->outputs = l->out_h * l->out_w * l->out_c;
+
+    l->output = realloc(l->output, l->batch*l->outputs*sizeof(float));
+}
+```
+
+`resize`
+
 ## make_crop_layer
 
 ```c
@@ -98,20 +118,4 @@ crop_layer make_crop_layer(int batch, int h, int w, int c, int crop_height, int 
 }
 ```
 
-## resize_crop_layer
-
-```c
-void resize_crop_layer(layer *l, int w, int h)
-{
-    l->w = w;
-    l->h = h;
-
-    l->out_w =  l->scale*w;
-    l->out_h =  l->scale*h;
-
-    l->inputs = l->w * l->h * l->c;
-    l->outputs = l->out_h * l->out_w * l->out_c;
-
-    l->output = realloc(l->output, l->batch*l->outputs*sizeof(float));
-}
-```
+`make`

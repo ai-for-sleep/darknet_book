@@ -2,7 +2,7 @@
 
 ## forward_normalization_layer
 
-```
+```c
 void forward_normalization_layer(const layer layer, network net)
 {
     int k,b;
@@ -39,7 +39,7 @@ void forward_normalization_layer(const layer layer, network net)
 
 ## backward_normalization_layer
 
-```
+```c
 void backward_normalization_layer(const layer layer, network net)
 {
     // TODO This is approximate ;-)
@@ -55,9 +55,31 @@ void backward_normalization_layer(const layer layer, network net)
 
 `backward`
 
+## resize_normalization_layer
+
+```c
+void resize_normalization_layer(layer *layer, int w, int h)
+{
+    int c = layer->c;
+    int batch = layer->batch;
+    layer->h = h;
+    layer->w = w;
+    layer->out_h = h;
+    layer->out_w = w;
+    layer->inputs = w*h*c;
+    layer->outputs = layer->inputs;
+    layer->output = realloc(layer->output, h * w * c * batch * sizeof(float));
+    layer->delta = realloc(layer->delta, h * w * c * batch * sizeof(float));
+    layer->squared = realloc(layer->squared, h * w * c * batch * sizeof(float));
+    layer->norms = realloc(layer->norms, h * w * c * batch * sizeof(float));
+}
+```
+
+`resize`
+
 ## make_normalization_layer
 
-```
+```c
 layer make_normalization_layer(int batch, int w, int h, int c, int size, float alpha, float beta, float kappa)
 {
     fprintf(stderr, "Local Response Normalization Layer: %d x %d x %d image, %d size\n", w,h,c,size);
@@ -85,22 +107,4 @@ layer make_normalization_layer(int batch, int w, int h, int c, int size, float a
 }
 ```
 
-## resize_normalization_layer
-
-```
-void resize_normalization_layer(layer *layer, int w, int h)
-{
-    int c = layer->c;
-    int batch = layer->batch;
-    layer->h = h;
-    layer->w = w;
-    layer->out_h = h;
-    layer->out_w = w;
-    layer->inputs = w*h*c;
-    layer->outputs = layer->inputs;
-    layer->output = realloc(layer->output, h * w * c * batch * sizeof(float));
-    layer->delta = realloc(layer->delta, h * w * c * batch * sizeof(float));
-    layer->squared = realloc(layer->squared, h * w * c * batch * sizeof(float));
-    layer->norms = realloc(layer->norms, h * w * c * batch * sizeof(float));
-}
-```
+`make`

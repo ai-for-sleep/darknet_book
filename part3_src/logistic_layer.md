@@ -2,7 +2,7 @@
 
 ## forward_logistic_layer
 
-```
+```c
 void forward_logistic_layer(const layer l, network net)
 {
     copy_cpu(l.outputs*l.batch, net.input, 1, l.output, 1);
@@ -14,18 +14,22 @@ void forward_logistic_layer(const layer l, network net)
 }
 ```
 
+`forward`
+
 ## backward_logistic_layer
 
-```
+```c
 void backward_logistic_layer(const layer l, network net)
 {
     axpy_cpu(l.inputs*l.batch, 1, l.delta, 1, net.delta, 1);
 }
 ```
 
+`backward`
+
 ## make_logistic_layer
 
-```
+```c
 layer make_logistic_layer(int batch, int inputs)
 {
     fprintf(stderr, "logistic x entropy                             %4d\n",  inputs);
@@ -52,3 +56,5 @@ layer make_logistic_layer(int batch, int inputs)
     return l;
 }
 ```
+
+`make`

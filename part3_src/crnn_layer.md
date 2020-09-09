@@ -20,7 +20,7 @@ static void increment_layer(layer *l, int steps)
 
 ## forward_crnn_layer
 
-```
+```c
 void forward_crnn_layer(layer l, network net)
 {
     network s = net;
@@ -67,7 +67,7 @@ void forward_crnn_layer(layer l, network net)
 
 ## backward_crnn_layer
 
-```
+```c
 void backward_crnn_layer(layer l, network net)
 {
     network s = net;
@@ -132,9 +132,11 @@ void update_crnn_layer(layer l, update_args a)
 }
 ```
 
+`update`
+
 ## make_crnn_layer
 
-```
+```c
 layer make_crnn_layer(int batch, int h, int w, int c, int hidden_filters, int output_filters, int steps, ACTIVATION activation, int batch_normalize)
 {
     fprintf(stderr, "CRNN Layer: %d x %d x %d image, %d filters\n", h,w,c,output_filters);
@@ -181,4 +183,4 @@ layer make_crnn_layer(int batch, int h, int w, int c, int hidden_filters, int ou
 }
 ```
 
-- convolutional layer 3개
+`make`

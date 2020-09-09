@@ -2,7 +2,7 @@
 
 ## get_base_args
 
-```
+```c
 load_args get_base_args(network *net)
 {
     load_args args = {0};
@@ -26,7 +26,7 @@ load_args get_base_args(network *net)
 
 ## load_network
 
-```
+```c
 network *load_network(char *cfg, char *weights, int clear)
 {
     network *net = parse_network_cfg(cfg);
@@ -42,7 +42,7 @@ network *load_network(char *cfg, char *weights, int clear)
 
 ## get_current_batch
 
-```
+```c
 size_t get_current_batch(network *net)
 {
     size_t batch_num = (*net->seen)/(net->batch*net->subdivisions);
@@ -54,7 +54,7 @@ size_t get_current_batch(network *net)
 
 ## get_current_rate
 
-```
+```c
 float get_current_rate(network *net)
 {
     size_t batch_num = get_current_batch(net);
@@ -90,11 +90,9 @@ float get_current_rate(network *net)
 
 - 다양한 learning rate scheduler를 이용해 learning rate를 반환합니다.
 
-
-
 ## get_layer_string
 
-```
+```c
 char *get_layer_string(LAYER_TYPE a)
 {
     switch(a){
@@ -155,7 +153,7 @@ char *get_layer_string(LAYER_TYPE a)
 
 ## make_network
 
-```
+```c
 network *make_network(int n)
 {
     network *net = calloc(1, sizeof(network));
@@ -172,7 +170,7 @@ network *make_network(int n)
 
 ## forward_network
 
-```
+```c
 void forward_network(network *netp)
 {
     network net = *netp;
@@ -197,7 +195,7 @@ void forward_network(network *netp)
 
 ## update_network
 
-```
+```c
 void update_network(network *netp)
 {
     network net = *netp;
@@ -227,7 +225,7 @@ void update_network(network *netp)
 
 ## calc_network_cost
 
-```
+```c
 void calc_network_cost(network *netp)
 {
     network net = *netp;
@@ -248,7 +246,7 @@ void calc_network_cost(network *netp)
 
 ## get_predicted_class_network
 
-```
+```c
 int get_predicted_class_network(network *net)
 {
     return max_index(net->output, net->outputs);
@@ -259,7 +257,7 @@ int get_predicted_class_network(network *net)
 
 ## backward_network
 
-```
+```c
 void backward_network(network *netp)
 {
     network net = *netp;
@@ -285,7 +283,7 @@ void backward_network(network *netp)
 
 ## train_network_datum
 
-```
+```c
 float train_network_datum(network *net)
 {
     *net->seen += net->batch;
@@ -298,13 +296,11 @@ float train_network_datum(network *net)
 }
 ```
 
--
--
--
+- 하나의 batch를 학습하고 네트워크를 업데이트하는 루틴입니다.
 
 ## train_network_sgd
 
-```
+```c
 float train_network_sgd(network *net, data d, int n)
 {
     int batch = net->batch;
@@ -320,9 +316,11 @@ float train_network_sgd(network *net, data d, int n)
 }
 ```
 
+- SGD를 사용하여 네트워크를 학습합니다.
+
 ## train_network
 
-```
+```c
 float train_network(network *net, data d)
 {
     assert(d.X.rows % net->batch == 0);
@@ -342,7 +340,7 @@ float train_network(network *net, data d)
 
 ## set_temp_network
 
-```
+```c
 void set_temp_network(network *net, float t)
 {
     int i;
@@ -354,7 +352,7 @@ void set_temp_network(network *net, float t)
 
 ## set_batch_network
 
-```
+```c
 void set_batch_network(network *net, int b)
 {
     net->batch = b;
@@ -367,7 +365,7 @@ void set_batch_network(network *net, int b)
 
 ## resize_network
 
-```
+```c
 int resize_network(network *net, int w, int h)
 {
     int i;
@@ -436,7 +434,7 @@ int resize_network(network *net, int w, int h)
 
 ## get_network_detection_layer
 
-```
+```c
 layer get_network_detection_layer(network *net)
 {
     int i;
@@ -453,7 +451,7 @@ layer get_network_detection_layer(network *net)
 
 ## get_network_image_layer
 
-```
+```c
 image get_network_image_layer(network *net, int i)
 {
     layer l = net->layers[i];
@@ -468,7 +466,7 @@ image get_network_image_layer(network *net, int i)
 
 ## get_network_image
 
-```
+```c
 image get_network_image(network *net)
 {
     int i;
@@ -483,7 +481,7 @@ image get_network_image(network *net)
 
 ## visualize_network
 
-```
+```c
 void visualize_network(network *net)
 {
     image *prev = 0;
@@ -501,7 +499,7 @@ void visualize_network(network *net)
 
 ## top_predictions
 
-```
+```c
 void top_predictions(network *net, int k, int *index)
 {
     top_k(net->output, net->outputs, k, index);
@@ -510,7 +508,7 @@ void top_predictions(network *net, int k, int *index)
 
 ## network_predict
 
-```
+```c
 float *network_predict(network *net, float *input)
 {
     network orig = *net;
@@ -527,7 +525,7 @@ float *network_predict(network *net, float *input)
 
 ## num_detections
 
-```
+```c
 int num_detections(network *net, float thresh)
 {
     int i;
@@ -547,7 +545,7 @@ int num_detections(network *net, float thresh)
 
 ## make_network_boxes
 
-```
+```c
 detection *make_network_boxes(network *net, float thresh, int *num)
 {
     layer l = net->layers[net->n - 1];
@@ -567,7 +565,7 @@ detection *make_network_boxes(network *net, float thresh, int *num)
 
 ## fill_network_boxes
 
-```
+```c
 void fill_network_boxes(network *net, int w, int h, float thresh, float hier, int *map, int relative, detection *dets)
 {
     int j;
@@ -592,7 +590,7 @@ void fill_network_boxes(network *net, int w, int h, float thresh, float hier, in
 
 ## get_network_boxes
 
-```
+```c
 detection *get_network_boxes(network *net, int w, int h, float thresh, float hier, int *map, int relative, int *num)
 {
     detection *dets = make_network_boxes(net, thresh, num);
@@ -605,7 +603,7 @@ detection *get_network_boxes(network *net, int w, int h, float thresh, float hie
 
 ## free_detections
 
-```
+```c
 void free_detections(detection *dets, int n)
 {
     int i;
@@ -621,7 +619,7 @@ void free_detections(detection *dets, int n)
 
 ## network_predict_image
 
-```
+```c
 float *network_predict_image(network *net, image im)
 {
     image imr = letterbox_image(im, net->w, net->h);
@@ -636,7 +634,7 @@ float *network_predict_image(network *net, image im)
 
 ## network_width, network_height
 
-```
+```c
 int network_width(network *net){return net->w;}
 int network_height(network *net){return net->h;}
 ```
@@ -645,7 +643,7 @@ int network_height(network *net){return net->h;}
 
 ## network_predict_data_multi
 
-```
+```c
 matrix network_predict_data_multi(network *net, data test, int n)
 {
     int i,j,b,m;
@@ -676,7 +674,7 @@ matrix network_predict_data_multi(network *net, data test, int n)
 
 ## network_predict_data
 
-```
+```c
 matrix network_predict_data(network *net, data test)
 {
     int i,j,b;
@@ -705,7 +703,7 @@ matrix network_predict_data(network *net, data test)
 
 ## print_network
 
-```
+```c
 void print_network(network *net)
 {
     int i,j;
@@ -728,7 +726,7 @@ void print_network(network *net)
 
 ## compare_networks
 
-```
+```c
 void compare_networks(network *n1, network *n2, data test)
 {
     matrix g1 = network_predict_data(n1, test);
@@ -759,7 +757,7 @@ void compare_networks(network *n1, network *n2, data test)
 
 ## network_accuracy
 
-```
+```c
 float network_accuracy(network *net, data d)
 {
     matrix guess = network_predict_data(net, d);
@@ -773,7 +771,7 @@ float network_accuracy(network *net, data d)
 
 ## network_accuracies
 
-```
+```c
 float *network_accuracies(network *net, data d, int n)
 {
     static float acc[2];
@@ -789,7 +787,7 @@ float *network_accuracies(network *net, data d, int n)
 
 ## get_network_output_layer
 
-```
+```c
 layer get_network_output_layer(network *net)
 {
     int i;
@@ -804,7 +802,7 @@ layer get_network_output_layer(network *net)
 
 ## network_accuracy_multi
 
-```
+```c
 float network_accuracy_multi(network *net, data d, int n)
 {
     matrix guess = network_predict_data_multi(net, d, n);
@@ -818,7 +816,7 @@ float network_accuracy_multi(network *net, data d, int n)
 
 ## free_network
 
-```
+```c
 void free_network(network *net)
 {
     int i;
@@ -838,7 +836,7 @@ void free_network(network *net)
 
 ## network_output_layer
 
-```
+```c
 layer network_output_layer(network *net)
 {
     int i;
@@ -853,7 +851,7 @@ layer network_output_layer(network *net)
 
 ## network_inputs
 
-```
+```c
 int network_inputs(network *net)
 {
     return net->layers[0].inputs;
@@ -864,7 +862,7 @@ int network_inputs(network *net)
 
 ## network_outputs
 
-```
+```c
 int network_outputs(network *net)
 {
     return network_output_layer(net).outputs;
@@ -875,7 +873,7 @@ int network_outputs(network *net)
 
 ## network_output
 
-```
+```c
 float *network_output(network *net)
 {
     return network_output_layer(net).output;

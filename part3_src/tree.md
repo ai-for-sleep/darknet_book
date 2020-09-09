@@ -2,7 +2,7 @@
 
 ## change_leaves
 
-```
+```c
 void change_leaves(tree *t, char *leaf_list)
 {
     list *llist = get_paths(leaf_list);
@@ -26,7 +26,7 @@ void change_leaves(tree *t, char *leaf_list)
 
 ## get_hierarchy_probability
 
-```
+```c
 float get_hierarchy_probability(float *x, tree *hier, int c, int stride)
 {
     float p = 1;
@@ -40,7 +40,7 @@ float get_hierarchy_probability(float *x, tree *hier, int c, int stride)
 
 ## hierarchy_predictions
 
-```
+```c
 void hierarchy_predictions(float *predictions, int n, tree *hier, int only_leaves, int stride)
 {
     int j;
@@ -60,7 +60,7 @@ void hierarchy_predictions(float *predictions, int n, tree *hier, int only_leave
 
 ## hierarchy_top_prediction
 
-```
+```c
 int hierarchy_top_prediction(float *predictions, tree *hier, float thresh, int stride)
 {
     float p = 1;
@@ -94,7 +94,7 @@ int hierarchy_top_prediction(float *predictions, tree *hier, float thresh, int s
 
 ## read_tree
 
-```
+```c
 tree *read_tree(char *filename)
 {
     tree t = {0};

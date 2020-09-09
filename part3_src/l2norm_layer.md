@@ -2,7 +2,7 @@
 
 ## forward_l2norm_layer
 
-```
+```c
 void forward_l2norm_layer(const layer l, network net)
 {
     copy_cpu(l.outputs*l.batch, net.input, 1, l.output, 1);
@@ -14,7 +14,7 @@ void forward_l2norm_layer(const layer l, network net)
 
 ## backward_l2norm_layer
 
-```
+```c
 void backward_l2norm_layer(const layer l, network net)
 {
     //axpy_cpu(l.inputs*l.batch, 1, l.scales, 1, l.delta, 1);
@@ -26,7 +26,7 @@ void backward_l2norm_layer(const layer l, network net)
 
 ## make_l2norm_layer
 
-```
+```c
 layer make_l2norm_layer(int batch, int inputs)
 {
     fprintf(stderr, "l2norm                                         %4d\n",  inputs);
@@ -45,3 +45,5 @@ layer make_l2norm_layer(int batch, int inputs)
     return l;
 }
 ```
+
+`make`

@@ -2,7 +2,7 @@
 
 ## forward_detection_layer
 
-```
+```c
 void forward_detection_layer(const detection_layer l, network net)
 {
     int locations = l.side*l.side;
@@ -178,7 +178,7 @@ void forward_detection_layer(const detection_layer l, network net)
 
 ## backward_detection_layer
 
-```
+```c
 void backward_detection_layer(const detection_layer l, network net)
 {
     axpy_cpu(l.batch*l.inputs, 1, l.delta, 1, net.delta, 1);
@@ -189,7 +189,7 @@ void backward_detection_layer(const detection_layer l, network net)
 
 ## make_detection_layer
 
-```
+```c
 detection_layer make_detection_layer(int batch, int inputs, int n, int side, int classes, int coords, int rescore)
 {
     detection_layer l = {0};
@@ -221,9 +221,11 @@ detection_layer make_detection_layer(int batch, int inputs, int n, int side, int
 }
 ```
 
+`make`
+
 ## get_detection_detections
 
-```
+```c
 void get_detection_detections(layer l, int w, int h, float thresh, detection *dets)
 {
     int i,j,n;
