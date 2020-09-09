@@ -42,7 +42,7 @@
 
     
         
-        <link rel="stylesheet" href="../website-1597403756570.css">
+        <link rel="stylesheet" href="../website-1599634348142.css">
         
     
 
@@ -1966,223 +1966,224 @@
                                 
                                 <h2 id="layer-structure">Layer Structure</h2>
 <p>Layer &#xAD6C;&#xC870;&#xCCB4; &#xC785;&#xB2C8;&#xB2E4;.</p>
-<pre><code>struct layer{
+<pre><code class="lang-c"><span class="hljs-keyword">struct</span> layer{
     LAYER_TYPE type;
     ACTIVATION activation;
     COST_TYPE cost_type;
-    void (*forward)   (struct layer, struct network);
-    void (*backward)  (struct layer, struct network);
-    void (*update)    (struct layer, update_args);
-    int batch_normalize;
-    int shortcut;
-    int batch;
-    int forced;
-    int flipped;
-    int inputs;
-    int outputs;
-    int nweights;
-    int nbiases;
-    int extra;
-    int truths;
-    int h,w,c;                              /// input height, width, channel
-    int out_h, out_w, out_c;                /// output height, width, channel
-    int n;                                  /// number of filter(= output channel)
-    int max_boxes;
-    int groups;
-    int size;                               /// kernel size
-    int side;
-    int stride;
-    int reverse;
-    int flatten;
-    int spatial;
-    int pad;
-    int sqrt;
-    int flip;
-    int index;
-    int binary;
-    int xnor;
-    int steps;
-    int hidden;
-    int truth;
-    float smooth;
-    float dot;
-    float angle;
-    float jitter;
-    float saturation;
-    float exposure;
-    float shift;
-    float ratio;
-    float learning_rate_scale;
-    float clip;
-    int noloss;
-    int softmax;
-    int classes;
-    int coords;
-    int background;
-    int rescore;
-    int objectness;
-    int joint;
-    int noadjust;
-    int reorg;
-    int log;
-    int tanh;
-    int *mask;
-    int total;
+    <span class="hljs-keyword">void</span> (*forward)   (<span class="hljs-keyword">struct</span> layer, <span class="hljs-keyword">struct</span> network);
+    <span class="hljs-keyword">void</span> (*backward)  (<span class="hljs-keyword">struct</span> layer, <span class="hljs-keyword">struct</span> network);
+    <span class="hljs-keyword">void</span> (*update)    (<span class="hljs-keyword">struct</span> layer, update_args);
+    <span class="hljs-keyword">int</span> batch_normalize;
+    <span class="hljs-keyword">int</span> shortcut;
+    <span class="hljs-keyword">int</span> batch;
+    <span class="hljs-keyword">int</span> forced;
+    <span class="hljs-keyword">int</span> flipped;
+    <span class="hljs-keyword">int</span> inputs;
+    <span class="hljs-keyword">int</span> outputs;
+    <span class="hljs-keyword">int</span> nweights;
+    <span class="hljs-keyword">int</span> nbiases;
+    <span class="hljs-keyword">int</span> extra;
+    <span class="hljs-keyword">int</span> truths;
+    <span class="hljs-keyword">int</span> h,w,c;                              <span class="hljs-comment">/// input height, width, channel</span>
+    <span class="hljs-keyword">int</span> out_h, out_w, out_c;                <span class="hljs-comment">/// output height, width, channel</span>
+    <span class="hljs-keyword">int</span> n;                                  <span class="hljs-comment">/// number of filter(= output channel)</span>
+    <span class="hljs-keyword">int</span> max_boxes;
+    <span class="hljs-keyword">int</span> groups;
+    <span class="hljs-keyword">int</span> size;                               <span class="hljs-comment">/// kernel size</span>
+    <span class="hljs-keyword">int</span> side;
+    <span class="hljs-keyword">int</span> stride;
+    <span class="hljs-keyword">int</span> reverse;
+    <span class="hljs-keyword">int</span> flatten;
+    <span class="hljs-keyword">int</span> spatial;
+    <span class="hljs-keyword">int</span> pad;
+    <span class="hljs-keyword">int</span> <span class="hljs-built_in">sqrt</span>;
+    <span class="hljs-keyword">int</span> flip;
+    <span class="hljs-keyword">int</span> index;
+    <span class="hljs-keyword">int</span> binary;
+    <span class="hljs-keyword">int</span> xnor;
+    <span class="hljs-keyword">int</span> steps;
+    <span class="hljs-keyword">int</span> hidden;
+    <span class="hljs-keyword">int</span> truth;
+    <span class="hljs-keyword">float</span> smooth;
+    <span class="hljs-keyword">float</span> dot;
+    <span class="hljs-keyword">float</span> angle;
+    <span class="hljs-keyword">float</span> jitter;
+    <span class="hljs-keyword">float</span> saturation;
+    <span class="hljs-keyword">float</span> exposure;
+    <span class="hljs-keyword">float</span> shift;
+    <span class="hljs-keyword">float</span> ratio;
+    <span class="hljs-keyword">float</span> learning_rate_scale;
+    <span class="hljs-keyword">float</span> clip;
+    <span class="hljs-keyword">int</span> noloss;
+    <span class="hljs-keyword">int</span> softmax;
+    <span class="hljs-keyword">int</span> classes;
+    <span class="hljs-keyword">int</span> coords;
+    <span class="hljs-keyword">int</span> background;
+    <span class="hljs-keyword">int</span> rescore;
+    <span class="hljs-keyword">int</span> objectness;
+    <span class="hljs-keyword">int</span> joint;
+    <span class="hljs-keyword">int</span> noadjust;
+    <span class="hljs-keyword">int</span> reorg;
+    <span class="hljs-keyword">int</span> <span class="hljs-built_in">log</span>;
+    <span class="hljs-keyword">int</span> <span class="hljs-built_in">tanh</span>;
+    <span class="hljs-keyword">int</span> *mask;
+    <span class="hljs-keyword">int</span> total;
 
-    float alpha;
-    float beta;
-    float kappa;
+    <span class="hljs-keyword">float</span> alpha;
+    <span class="hljs-keyword">float</span> beta;
+    <span class="hljs-keyword">float</span> kappa;
 
-    float coord_scale;
-    float object_scale;
-    float noobject_scale;
-    float mask_scale;
-    float class_scale;
-    int bias_match;
-    int random;
-    float ignore_thresh;
-    float truth_thresh;
-    float thresh;
-    float focus;
-    int classfix;
-    int absolute;
+    <span class="hljs-keyword">float</span> coord_scale;
+    <span class="hljs-keyword">float</span> object_scale;
+    <span class="hljs-keyword">float</span> noobject_scale;
+    <span class="hljs-keyword">float</span> mask_scale;
+    <span class="hljs-keyword">float</span> class_scale;
+    <span class="hljs-keyword">int</span> bias_match;
+    <span class="hljs-keyword">int</span> random;
+    <span class="hljs-keyword">float</span> ignore_thresh;
+    <span class="hljs-keyword">float</span> truth_thresh;
+    <span class="hljs-keyword">float</span> thresh;
+    <span class="hljs-keyword">float</span> focus;
+    <span class="hljs-keyword">int</span> classfix;
+    <span class="hljs-keyword">int</span> absolute;
 
-    int onlyforward;
-    int stopbackward;
-    int dontload;
-    int dontsave;
-    int dontloadscales;
-    int numload;
+    <span class="hljs-keyword">int</span> onlyforward;
+    <span class="hljs-keyword">int</span> stopbackward;
+    <span class="hljs-keyword">int</span> dontload;
+    <span class="hljs-keyword">int</span> dontsave;
+    <span class="hljs-keyword">int</span> dontloadscales;
+    <span class="hljs-keyword">int</span> numload;
 
-    float temperature;
-    float probability;
-    float scale;
+    <span class="hljs-keyword">float</span> temperature;
+    <span class="hljs-keyword">float</span> probability;
+    <span class="hljs-keyword">float</span> scale;
 
-    char  * cweights;
-    int   * indexes;
-    int   * input_layers;
-    int   * input_sizes;
-    int   * map;
-    int   * counts;
-    float ** sums;
-    float * rand;
-    float * cost;
-    float * state;
-    float * prev_state;
-    float * forgot_state;
-    float * forgot_delta;
-    float * state_delta;
-    float * combine_cpu;
-    float * combine_delta_cpu;
+    <span class="hljs-keyword">char</span>  * cweights;
+    <span class="hljs-keyword">int</span>   * indexes;
+    <span class="hljs-keyword">int</span>   * input_layers;
+    <span class="hljs-keyword">int</span>   * input_sizes;
+    <span class="hljs-keyword">int</span>   * <span class="hljs-built_in">map</span>;
+    <span class="hljs-keyword">int</span>   * counts;
+    <span class="hljs-keyword">float</span> ** sums;
+    <span class="hljs-keyword">float</span> * rand;
+    <span class="hljs-keyword">float</span> * cost;
+    <span class="hljs-keyword">float</span> * state;
+    <span class="hljs-keyword">float</span> * prev_state;
+    <span class="hljs-keyword">float</span> * forgot_state;
+    <span class="hljs-keyword">float</span> * forgot_delta;
+    <span class="hljs-keyword">float</span> * state_delta;
+    <span class="hljs-keyword">float</span> * combine_cpu;
+    <span class="hljs-keyword">float</span> * combine_delta_cpu;
 
-    float * concat;
-    float * concat_delta;
+    <span class="hljs-keyword">float</span> * concat;
+    <span class="hljs-keyword">float</span> * concat_delta;
 
-    float * binary_weights;
+    <span class="hljs-keyword">float</span> * binary_weights;
 
-    float * biases;
-    float * bias_updates;
+    <span class="hljs-keyword">float</span> * biases;
+    <span class="hljs-keyword">float</span> * bias_updates;
 
-    float * scales;
-    float * scale_updates;
+    <span class="hljs-keyword">float</span> * scales;
+    <span class="hljs-keyword">float</span> * scale_updates;
 
-    float * weights;
-    float * weight_updates;
+    <span class="hljs-keyword">float</span> * weights;
+    <span class="hljs-keyword">float</span> * weight_updates;
 
-    float * delta;
-    float * output;
-    float * loss;
-    float * squared;
-    float * norms;
+    <span class="hljs-keyword">float</span> * delta;
+    <span class="hljs-keyword">float</span> * output;
+    <span class="hljs-keyword">float</span> * loss;
+    <span class="hljs-keyword">float</span> * squared;
+    <span class="hljs-keyword">float</span> * norms;
 
-    float * spatial_mean;
-    float * mean;
-    float * variance;
+    <span class="hljs-keyword">float</span> * spatial_mean;
+    <span class="hljs-keyword">float</span> * mean;
+    <span class="hljs-keyword">float</span> * variance;
 
-    float * mean_delta;
-    float * variance_delta;
+    <span class="hljs-keyword">float</span> * mean_delta;
+    <span class="hljs-keyword">float</span> * variance_delta;
 
-    float * rolling_mean;
-    float * rolling_variance;
+    <span class="hljs-keyword">float</span> * rolling_mean;
+    <span class="hljs-keyword">float</span> * rolling_variance;
 
-    float * x;
-    float * x_norm;
+    <span class="hljs-keyword">float</span> * x;
+    <span class="hljs-keyword">float</span> * x_norm;
 
-    float * m;
-    float * v;
+    <span class="hljs-keyword">float</span> * m;
+    <span class="hljs-keyword">float</span> * v;
 
-    float * bias_m;
-    float * bias_v;
-    float * scale_m;
-    float * scale_v;
+    <span class="hljs-keyword">float</span> * bias_m;
+    <span class="hljs-keyword">float</span> * bias_v;
+    <span class="hljs-keyword">float</span> * scale_m;
+    <span class="hljs-keyword">float</span> * scale_v;
 
 
-    float *z_cpu;
-    float *r_cpu;
-    float *h_cpu;
-    float * prev_state_cpu;
+    <span class="hljs-keyword">float</span> *z_cpu;
+    <span class="hljs-keyword">float</span> *r_cpu;
+    <span class="hljs-keyword">float</span> *h_cpu;
+    <span class="hljs-keyword">float</span> * prev_state_cpu;
 
-    float *temp_cpu;
-    float *temp2_cpu;
-    float *temp3_cpu;
+    <span class="hljs-keyword">float</span> *temp_cpu;
+    <span class="hljs-keyword">float</span> *temp2_cpu;
+    <span class="hljs-keyword">float</span> *temp3_cpu;
 
-    float *dh_cpu;
-    float *hh_cpu;
-    float *prev_cell_cpu;
-    float *cell_cpu;
-    float *f_cpu;
-    float *i_cpu;
-    float *g_cpu;
-    float *o_cpu;
-    float *c_cpu;
-    float *dc_cpu;
+    <span class="hljs-keyword">float</span> *dh_cpu;
+    <span class="hljs-keyword">float</span> *hh_cpu;
+    <span class="hljs-keyword">float</span> *prev_cell_cpu;
+    <span class="hljs-keyword">float</span> *cell_cpu;
+    <span class="hljs-keyword">float</span> *f_cpu;
+    <span class="hljs-keyword">float</span> *i_cpu;
+    <span class="hljs-keyword">float</span> *g_cpu;
+    <span class="hljs-keyword">float</span> *o_cpu;
+    <span class="hljs-keyword">float</span> *c_cpu;
+    <span class="hljs-keyword">float</span> *dc_cpu;
 
-    float * binary_input;
+    <span class="hljs-keyword">float</span> * binary_input;
 
-    struct layer *input_layer;                      /// rnn input layer
-    struct layer *self_layer;                       /// rnn self layer
-    struct layer *output_layer;                     /// rnn output layer
+    <span class="hljs-keyword">struct</span> layer *input_layer;                      <span class="hljs-comment">/// rnn input layer</span>
+    <span class="hljs-keyword">struct</span> layer *self_layer;                       <span class="hljs-comment">/// rnn self layer</span>
+    <span class="hljs-keyword">struct</span> layer *output_layer;                     <span class="hljs-comment">/// rnn output layer</span>
 
-    struct layer *reset_layer;
-    struct layer *update_layer;
-    struct layer *state_layer;
+    <span class="hljs-keyword">struct</span> layer *reset_layer;
+    <span class="hljs-keyword">struct</span> layer *update_layer;
+    <span class="hljs-keyword">struct</span> layer *state_layer;
 
-    struct layer *input_gate_layer;
-    struct layer *state_gate_layer;
-    struct layer *input_save_layer;
-    struct layer *state_save_layer;
-    struct layer *input_state_layer;
-    struct layer *state_state_layer;
+    <span class="hljs-keyword">struct</span> layer *input_gate_layer;
+    <span class="hljs-keyword">struct</span> layer *state_gate_layer;
+    <span class="hljs-keyword">struct</span> layer *input_save_layer;
+    <span class="hljs-keyword">struct</span> layer *state_save_layer;
+    <span class="hljs-keyword">struct</span> layer *input_state_layer;
+    <span class="hljs-keyword">struct</span> layer *state_state_layer;
 
-    struct layer *input_z_layer;
-    struct layer *state_z_layer;
+    <span class="hljs-keyword">struct</span> layer *input_z_layer;
+    <span class="hljs-keyword">struct</span> layer *state_z_layer;
 
-    struct layer *input_r_layer;
-    struct layer *state_r_layer;
+    <span class="hljs-keyword">struct</span> layer *input_r_layer;
+    <span class="hljs-keyword">struct</span> layer *state_r_layer;
 
-    struct layer *input_h_layer;
-    struct layer *state_h_layer;
+    <span class="hljs-keyword">struct</span> layer *input_h_layer;
+    <span class="hljs-keyword">struct</span> layer *state_h_layer;
 
-    struct layer *wz;
-    struct layer *uz;
-    struct layer *wr;
-    struct layer *ur;
-    struct layer *wh;
-    struct layer *uh;
-    struct layer *uo;
-    struct layer *wo;
-    struct layer *uf;
-    struct layer *wf;
-    struct layer *ui;
-    struct layer *wi;
-    struct layer *ug;
-    struct layer *wg;
+    <span class="hljs-keyword">struct</span> layer *wz;
+    <span class="hljs-keyword">struct</span> layer *uz;
+    <span class="hljs-keyword">struct</span> layer *wr;
+    <span class="hljs-keyword">struct</span> layer *ur;
+    <span class="hljs-keyword">struct</span> layer *wh;
+    <span class="hljs-keyword">struct</span> layer *uh;
+    <span class="hljs-keyword">struct</span> layer *uo;
+    <span class="hljs-keyword">struct</span> layer *wo;
+    <span class="hljs-keyword">struct</span> layer *uf;
+    <span class="hljs-keyword">struct</span> layer *wf;
+    <span class="hljs-keyword">struct</span> layer *ui;
+    <span class="hljs-keyword">struct</span> layer *wi;
+    <span class="hljs-keyword">struct</span> layer *ug;
+    <span class="hljs-keyword">struct</span> layer *wg;
 
     tree *softmax_tree;
 
-    size_t workspace_size;
+    <span class="hljs-keyword">size_t</span> workspace_size;
 };
 </code></pre>
+
                                 
                                 </section>
                             
@@ -2225,7 +2226,7 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"layer","level":"4.2","depth":1,"next":{"title":"etc","level":"4.3","depth":1,"path":"part4_structure/etc.md","ref":"part4_structure/etc.md","articles":[]},"previous":{"title":"network","level":"4.1","depth":1,"path":"part4_structure/network.md","ref":"part4_structure/network.md","articles":[]},"dir":"ltr"},"config":{"plugins":["advanced-emoji","theme-gestalt","-theme-default","styles-sass-fix","theme-api","mathjax"],"root":"./","styles":{"website":"website-1597403756570.css"},"pluginsConfig":{"styles-sass-fix":{},"theme-gestalt":{"showLevel":false,"styles":{"website":"styles/website.css"},"logo":"/darknet_book/assets/darknet.png","baseUrl":null,"excludeDefaultStyles":true,"doNotHideChildrenChapters":false},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"theme-api":{"languages":[],"split":true,"theme":"light"},"mathjax":{"forceSVG":false,"version":"2.6-latest"},"advanced-emoji":{"embedEmojis":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]}},"theme":"default","author":"JJM","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"DarkNet Book","output.name":"site","gitbook":"*"},"file":{"path":"part4_structure/layer.md","mtime":"2020-07-25T09:14:34.132Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-08-14T11:15:45.491Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"layer","level":"4.2","depth":1,"next":{"title":"etc","level":"4.3","depth":1,"path":"part4_structure/etc.md","ref":"part4_structure/etc.md","articles":[]},"previous":{"title":"network","level":"4.1","depth":1,"path":"part4_structure/network.md","ref":"part4_structure/network.md","articles":[]},"dir":"ltr"},"config":{"plugins":["advanced-emoji","theme-gestalt","-theme-default","styles-sass-fix","theme-api","mathjax"],"root":"./","styles":{"website":"website-1599634348142.css"},"pluginsConfig":{"styles-sass-fix":{},"theme-gestalt":{"showLevel":false,"styles":{"website":"styles/website.css"},"logo":"/darknet_book/assets/darknet.png","baseUrl":null,"excludeDefaultStyles":true,"doNotHideChildrenChapters":false},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"theme-api":{"languages":[],"split":true,"theme":"light"},"mathjax":{"forceSVG":false,"version":"2.6-latest"},"advanced-emoji":{"embedEmojis":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]}},"theme":"default","author":"JJM","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"DarkNet Book","output.name":"site","gitbook":"*"},"file":{"path":"part4_structure/layer.md","mtime":"2020-09-09T05:50:27.182Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-09-09T06:52:18.609Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>

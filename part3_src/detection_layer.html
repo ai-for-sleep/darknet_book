@@ -42,7 +42,7 @@
 
     
         
-        <link rel="stylesheet" href="../website-1597403756570.css">
+        <link rel="stylesheet" href="../website-1599634348142.css">
         
     
 
@@ -1966,7 +1966,7 @@
                                 
                                 <h1 id="detectionlayerc">detection_layer.c</h1>
 <h2 id="forwarddetectionlayer">forward_detection_layer</h2>
-<pre><code>void forward_detection_layer(const detection_layer l, network net)
+<pre><code class="lang-c">void forward_detection_layer(const detection_layer l, network net)
 {
     int locations = l.side*l.side;
     int i,j;
@@ -2135,17 +2135,19 @@
         //if(l.reorg) reorg(l.delta, l.w*l.h, size*l.n, l.batch, 0);
     }
 }
-</code></pre><p><code>forward</code></p>
+</code></pre>
+<p><code>forward</code></p>
 <h2 id="backwarddetectionlayer">backward_detection_layer</h2>
-<pre><code>void backward_detection_layer(const detection_layer l, network net)
-{
-    axpy_cpu(l.batch*l.inputs, 1, l.delta, 1, net.delta, 1);
+<pre><code class="lang-c"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">backward_detection_layer</span><span class="hljs-params">(<span class="hljs-keyword">const</span> detection_layer l, network net)</span>
+</span>{
+    axpy_cpu(l.batch*l.inputs, <span class="hljs-number">1</span>, l.delta, <span class="hljs-number">1</span>, net.delta, <span class="hljs-number">1</span>);
 }
-</code></pre><p><code>backward</code></p>
+</code></pre>
+<p><code>backward</code></p>
 <h2 id="makedetectionlayer">make_detection_layer</h2>
-<pre><code>detection_layer make_detection_layer(int batch, int inputs, int n, int side, int classes, int coords, int rescore)
-{
-    detection_layer l = {0};
+<pre><code class="lang-c"><span class="hljs-function">detection_layer <span class="hljs-title">make_detection_layer</span><span class="hljs-params">(<span class="hljs-keyword">int</span> batch, <span class="hljs-keyword">int</span> inputs, <span class="hljs-keyword">int</span> n, <span class="hljs-keyword">int</span> side, <span class="hljs-keyword">int</span> classes, <span class="hljs-keyword">int</span> coords, <span class="hljs-keyword">int</span> rescore)</span>
+</span>{
+    detection_layer l = {<span class="hljs-number">0</span>};
     l.type = DETECTION;
 
     l.n = n;
@@ -2157,51 +2159,54 @@
     l.side = side;
     l.w = side;
     l.h = side;
-    assert(side*side*((1 + l.coords)*l.n + l.classes) == inputs);
-    l.cost = calloc(1, sizeof(float));
+    assert(side*side*((<span class="hljs-number">1</span> + l.coords)*l.n + l.classes) == inputs);
+    l.cost = <span class="hljs-built_in">calloc</span>(<span class="hljs-number">1</span>, <span class="hljs-keyword">sizeof</span>(<span class="hljs-keyword">float</span>));
     l.outputs = l.inputs;
-    l.truths = l.side*l.side*(1+l.coords+l.classes);
-    l.output = calloc(batch*l.outputs, sizeof(float));
-    l.delta = calloc(batch*l.outputs, sizeof(float));
+    l.truths = l.side*l.side*(<span class="hljs-number">1</span>+l.coords+l.classes);
+    l.output = <span class="hljs-built_in">calloc</span>(batch*l.outputs, <span class="hljs-keyword">sizeof</span>(<span class="hljs-keyword">float</span>));
+    l.delta = <span class="hljs-built_in">calloc</span>(batch*l.outputs, <span class="hljs-keyword">sizeof</span>(<span class="hljs-keyword">float</span>));
 
     l.forward = forward_detection_layer;
     l.backward = backward_detection_layer;
 
-    fprintf(stderr, &quot;Detection Layer\n&quot;);
-    srand(0);
+    <span class="hljs-built_in">fprintf</span>(<span class="hljs-built_in">stderr</span>, <span class="hljs-string">&quot;Detection Layer\n&quot;</span>);
+    srand(<span class="hljs-number">0</span>);
 
-    return l;
+    <span class="hljs-keyword">return</span> l;
 }
-</code></pre><h2 id="getdetectiondetections">get_detection_detections</h2>
-<pre><code>void get_detection_detections(layer l, int w, int h, float thresh, detection *dets)
-{
-    int i,j,n;
-    float *predictions = l.output;
-    //int per_cell = 5*num+classes;
-    for (i = 0; i &lt; l.side*l.side; ++i){
-        int row = i / l.side;
-        int col = i % l.side;
-        for(n = 0; n &lt; l.n; ++n){
-            int index = i*l.n + n;
-            int p_index = l.side*l.side*l.classes + i*l.n + n;
-            float scale = predictions[p_index];
-            int box_index = l.side*l.side*(l.classes + l.n) + (i*l.n + n)*4;
+</code></pre>
+<p><code>make</code></p>
+<h2 id="getdetectiondetections">get_detection_detections</h2>
+<pre><code class="lang-c"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">get_detection_detections</span><span class="hljs-params">(layer l, <span class="hljs-keyword">int</span> w, <span class="hljs-keyword">int</span> h, <span class="hljs-keyword">float</span> thresh, detection *dets)</span>
+</span>{
+    <span class="hljs-keyword">int</span> i,j,n;
+    <span class="hljs-keyword">float</span> *predictions = l.output;
+    <span class="hljs-comment">//int per_cell = 5*num+classes;</span>
+    <span class="hljs-keyword">for</span> (i = <span class="hljs-number">0</span>; i &lt; l.side*l.side; ++i){
+        <span class="hljs-keyword">int</span> row = i / l.side;
+        <span class="hljs-keyword">int</span> col = i % l.side;
+        <span class="hljs-keyword">for</span>(n = <span class="hljs-number">0</span>; n &lt; l.n; ++n){
+            <span class="hljs-keyword">int</span> index = i*l.n + n;
+            <span class="hljs-keyword">int</span> p_index = l.side*l.side*l.classes + i*l.n + n;
+            <span class="hljs-keyword">float</span> scale = predictions[p_index];
+            <span class="hljs-keyword">int</span> box_index = l.side*l.side*(l.classes + l.n) + (i*l.n + n)*<span class="hljs-number">4</span>;
             box b;
-            b.x = (predictions[box_index + 0] + col) / l.side * w;
-            b.y = (predictions[box_index + 1] + row) / l.side * h;
-            b.w = pow(predictions[box_index + 2], (l.sqrt?2:1)) * w;
-            b.h = pow(predictions[box_index + 3], (l.sqrt?2:1)) * h;
+            b.x = (predictions[box_index + <span class="hljs-number">0</span>] + col) / l.side * w;
+            b.y = (predictions[box_index + <span class="hljs-number">1</span>] + row) / l.side * h;
+            b.w = <span class="hljs-built_in">pow</span>(predictions[box_index + <span class="hljs-number">2</span>], (l.<span class="hljs-built_in">sqrt</span>?<span class="hljs-number">2</span>:<span class="hljs-number">1</span>)) * w;
+            b.h = <span class="hljs-built_in">pow</span>(predictions[box_index + <span class="hljs-number">3</span>], (l.<span class="hljs-built_in">sqrt</span>?<span class="hljs-number">2</span>:<span class="hljs-number">1</span>)) * h;
             dets[index].bbox = b;
             dets[index].objectness = scale;
-            for(j = 0; j &lt; l.classes; ++j){
-                int class_index = i*l.classes;
-                float prob = scale*predictions[class_index+j];
-                dets[index].prob[j] = (prob &gt; thresh) ? prob : 0;
+            <span class="hljs-keyword">for</span>(j = <span class="hljs-number">0</span>; j &lt; l.classes; ++j){
+                <span class="hljs-keyword">int</span> class_index = i*l.classes;
+                <span class="hljs-keyword">float</span> prob = scale*predictions[class_index+j];
+                dets[index].prob[j] = (prob &gt; thresh) ? prob : <span class="hljs-number">0</span>;
             }
         }
     }
 }
 </code></pre>
+
                                 
                                 </section>
                             
@@ -2244,7 +2249,7 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"detection_layer.c","level":"5.17","depth":1,"next":{"title":"dropout_layer.c","level":"5.18","depth":1,"path":"part3_src/dropout_layer.md","ref":"part3_src/dropout_layer.md","articles":[]},"previous":{"title":"demo.c","level":"5.16","depth":1,"path":"part3_src/demo.md","ref":"part3_src/demo.md","articles":[]},"dir":"ltr"},"config":{"plugins":["advanced-emoji","theme-gestalt","-theme-default","styles-sass-fix","theme-api","mathjax"],"root":"./","styles":{"website":"website-1597403756570.css"},"pluginsConfig":{"styles-sass-fix":{},"theme-gestalt":{"showLevel":false,"styles":{"website":"styles/website.css"},"logo":"/darknet_book/assets/darknet.png","baseUrl":null,"excludeDefaultStyles":true,"doNotHideChildrenChapters":false},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"theme-api":{"languages":[],"split":true,"theme":"light"},"mathjax":{"forceSVG":false,"version":"2.6-latest"},"advanced-emoji":{"embedEmojis":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]}},"theme":"default","author":"JJM","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"DarkNet Book","output.name":"site","gitbook":"*"},"file":{"path":"part3_src/detection_layer.md","mtime":"2020-07-29T18:05:00.112Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-08-14T11:15:45.491Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"detection_layer.c","level":"5.17","depth":1,"next":{"title":"dropout_layer.c","level":"5.18","depth":1,"path":"part3_src/dropout_layer.md","ref":"part3_src/dropout_layer.md","articles":[]},"previous":{"title":"demo.c","level":"5.16","depth":1,"path":"part3_src/demo.md","ref":"part3_src/demo.md","articles":[]},"dir":"ltr"},"config":{"plugins":["advanced-emoji","theme-gestalt","-theme-default","styles-sass-fix","theme-api","mathjax"],"root":"./","styles":{"website":"website-1599634348142.css"},"pluginsConfig":{"styles-sass-fix":{},"theme-gestalt":{"showLevel":false,"styles":{"website":"styles/website.css"},"logo":"/darknet_book/assets/darknet.png","baseUrl":null,"excludeDefaultStyles":true,"doNotHideChildrenChapters":false},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"theme-api":{"languages":[],"split":true,"theme":"light"},"mathjax":{"forceSVG":false,"version":"2.6-latest"},"advanced-emoji":{"embedEmojis":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]}},"theme":"default","author":"JJM","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"DarkNet Book","output.name":"site","gitbook":"*"},"file":{"path":"part3_src/detection_layer.md","mtime":"2020-09-09T05:56:51.645Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-09-09T06:52:18.609Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>

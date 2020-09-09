@@ -42,7 +42,7 @@
 
     
         
-        <link rel="stylesheet" href="../website-1597403756570.css">
+        <link rel="stylesheet" href="../website-1599634348142.css">
         
     
 
@@ -1966,38 +1966,42 @@
                                 
                                 <h1 id="l2normlayerc">l2norm_layer.c</h1>
 <h2 id="forwardl2normlayer">forward_l2norm_layer</h2>
-<pre><code>void forward_l2norm_layer(const layer l, network net)
-{
-    copy_cpu(l.outputs*l.batch, net.input, 1, l.output, 1);
+<pre><code class="lang-c"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">forward_l2norm_layer</span><span class="hljs-params">(<span class="hljs-keyword">const</span> layer l, network net)</span>
+</span>{
+    copy_cpu(l.outputs*l.batch, net.input, <span class="hljs-number">1</span>, l.output, <span class="hljs-number">1</span>);
     l2normalize_cpu(l.output, l.scales, l.batch, l.out_c, l.out_w*l.out_h);
 }
-</code></pre><p><code>forward</code></p>
+</code></pre>
+<p><code>forward</code></p>
 <h2 id="backwardl2normlayer">backward_l2norm_layer</h2>
-<pre><code>void backward_l2norm_layer(const layer l, network net)
-{
-    //axpy_cpu(l.inputs*l.batch, 1, l.scales, 1, l.delta, 1);
-    axpy_cpu(l.inputs*l.batch, 1, l.delta, 1, net.delta, 1);
+<pre><code class="lang-c"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">backward_l2norm_layer</span><span class="hljs-params">(<span class="hljs-keyword">const</span> layer l, network net)</span>
+</span>{
+    <span class="hljs-comment">//axpy_cpu(l.inputs*l.batch, 1, l.scales, 1, l.delta, 1);</span>
+    axpy_cpu(l.inputs*l.batch, <span class="hljs-number">1</span>, l.delta, <span class="hljs-number">1</span>, net.delta, <span class="hljs-number">1</span>);
 }
-</code></pre><p><code>backward</code></p>
+</code></pre>
+<p><code>backward</code></p>
 <h2 id="makel2normlayer">make_l2norm_layer</h2>
-<pre><code>layer make_l2norm_layer(int batch, int inputs)
-{
-    fprintf(stderr, &quot;l2norm                                         %4d\n&quot;,  inputs);
-    layer l = {0};
+<pre><code class="lang-c"><span class="hljs-function">layer <span class="hljs-title">make_l2norm_layer</span><span class="hljs-params">(<span class="hljs-keyword">int</span> batch, <span class="hljs-keyword">int</span> inputs)</span>
+</span>{
+    <span class="hljs-built_in">fprintf</span>(<span class="hljs-built_in">stderr</span>, <span class="hljs-string">&quot;l2norm                                         %4d\n&quot;</span>,  inputs);
+    layer l = {<span class="hljs-number">0</span>};
     l.type = L2NORM;
     l.batch = batch;
     l.inputs = inputs;
     l.outputs = inputs;
-    l.output = calloc(inputs*batch, sizeof(float));
-    l.scales = calloc(inputs*batch, sizeof(float));
-    l.delta = calloc(inputs*batch, sizeof(float));
+    l.output = <span class="hljs-built_in">calloc</span>(inputs*batch, <span class="hljs-keyword">sizeof</span>(<span class="hljs-keyword">float</span>));
+    l.scales = <span class="hljs-built_in">calloc</span>(inputs*batch, <span class="hljs-keyword">sizeof</span>(<span class="hljs-keyword">float</span>));
+    l.delta = <span class="hljs-built_in">calloc</span>(inputs*batch, <span class="hljs-keyword">sizeof</span>(<span class="hljs-keyword">float</span>));
 
     l.forward = forward_l2norm_layer;
     l.backward = backward_l2norm_layer;
 
-    return l;
+    <span class="hljs-keyword">return</span> l;
 }
 </code></pre>
+<p><code>make</code></p>
+
                                 
                                 </section>
                             
@@ -2040,7 +2044,7 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"l2norm_layer.c","level":"5.24","depth":1,"next":{"title":"layer.c","level":"5.25","depth":1,"path":"part3_src/layer.md","ref":"part3_src/layer.md","articles":[]},"previous":{"title":"iseg_layer.c","level":"5.23","depth":1,"path":"part3_src/iseg_layer.md","ref":"part3_src/iseg_layer.md","articles":[]},"dir":"ltr"},"config":{"plugins":["advanced-emoji","theme-gestalt","-theme-default","styles-sass-fix","theme-api","mathjax"],"root":"./","styles":{"website":"website-1597403756570.css"},"pluginsConfig":{"styles-sass-fix":{},"theme-gestalt":{"showLevel":false,"styles":{"website":"styles/website.css"},"logo":"/darknet_book/assets/darknet.png","baseUrl":null,"excludeDefaultStyles":true,"doNotHideChildrenChapters":false},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"theme-api":{"languages":[],"split":true,"theme":"light"},"mathjax":{"forceSVG":false,"version":"2.6-latest"},"advanced-emoji":{"embedEmojis":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]}},"theme":"default","author":"JJM","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"DarkNet Book","output.name":"site","gitbook":"*"},"file":{"path":"part3_src/l2norm_layer.md","mtime":"2020-07-29T18:00:41.972Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-08-14T11:15:45.491Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"l2norm_layer.c","level":"5.24","depth":1,"next":{"title":"layer.c","level":"5.25","depth":1,"path":"part3_src/layer.md","ref":"part3_src/layer.md","articles":[]},"previous":{"title":"iseg_layer.c","level":"5.23","depth":1,"path":"part3_src/iseg_layer.md","ref":"part3_src/iseg_layer.md","articles":[]},"dir":"ltr"},"config":{"plugins":["advanced-emoji","theme-gestalt","-theme-default","styles-sass-fix","theme-api","mathjax"],"root":"./","styles":{"website":"website-1599634348142.css"},"pluginsConfig":{"styles-sass-fix":{},"theme-gestalt":{"showLevel":false,"styles":{"website":"styles/website.css"},"logo":"/darknet_book/assets/darknet.png","baseUrl":null,"excludeDefaultStyles":true,"doNotHideChildrenChapters":false},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"theme-api":{"languages":[],"split":true,"theme":"light"},"mathjax":{"forceSVG":false,"version":"2.6-latest"},"advanced-emoji":{"embedEmojis":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]}},"theme":"default","author":"JJM","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"DarkNet Book","output.name":"site","gitbook":"*"},"file":{"path":"part3_src/l2norm_layer.md","mtime":"2020-09-09T05:58:52.080Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-09-09T06:52:18.609Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>

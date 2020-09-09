@@ -42,7 +42,7 @@
 
     
         
-        <link rel="stylesheet" href="../website-1597403756570.css">
+        <link rel="stylesheet" href="../website-1599634348142.css">
         
     
 
@@ -1964,55 +1964,37 @@
     
                                 <section class="normal markdown-section">
                                 
-                                <h1 id="dropoutlayerc">dropout_layer.c</h1>
+                                <h1 id="dropout-layer&#xB780;">Dropout Layer&#xB780;?</h1>
+<p>Drop</p>
 <h2 id="forwarddropoutlayer">forward_dropout_layer</h2>
-<pre><code>void forward_dropout_layer(dropout_layer l, network net)
-{
-    int i;
-    if (!net.train) return;
-    for(i = 0; i &lt; l.batch * l.inputs; ++i){
-        float r = rand_uniform(0, 1);
+<pre><code class="lang-c"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">forward_dropout_layer</span><span class="hljs-params">(dropout_layer l, network net)</span>
+</span>{
+    <span class="hljs-keyword">int</span> i;
+    <span class="hljs-keyword">if</span> (!net.train) <span class="hljs-keyword">return</span>;
+    <span class="hljs-keyword">for</span>(i = <span class="hljs-number">0</span>; i &lt; l.batch * l.inputs; ++i){
+        <span class="hljs-keyword">float</span> r = rand_uniform(<span class="hljs-number">0</span>, <span class="hljs-number">1</span>);
         l.rand[i] = r;
-        if(r &lt; l.probability) net.input[i] = 0;
-        else net.input[i] *= l.scale;
+        <span class="hljs-keyword">if</span>(r &lt; l.probability) net.input[i] = <span class="hljs-number">0</span>;
+        <span class="hljs-keyword">else</span> net.input[i] *= l.scale;
     }
 }
-</code></pre><p><code>forward</code></p>
+</code></pre>
+<p><code>forward</code></p>
 <h2 id="backwarddropoutlayer">backward_dropout_layer</h2>
-<pre><code>void backward_dropout_layer(dropout_layer l, network net)
-{
-    int i;
-    if(!net.delta) return;
-    for(i = 0; i &lt; l.batch * l.inputs; ++i){
-        float r = l.rand[i];
-        if(r &lt; l.probability) net.delta[i] = 0;
-        else net.delta[i] *= l.scale;
+<pre><code class="lang-c"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">backward_dropout_layer</span><span class="hljs-params">(dropout_layer l, network net)</span>
+</span>{
+    <span class="hljs-keyword">int</span> i;
+    <span class="hljs-keyword">if</span>(!net.delta) <span class="hljs-keyword">return</span>;
+    <span class="hljs-keyword">for</span>(i = <span class="hljs-number">0</span>; i &lt; l.batch * l.inputs; ++i){
+        <span class="hljs-keyword">float</span> r = l.rand[i];
+        <span class="hljs-keyword">if</span>(r &lt; l.probability) net.delta[i] = <span class="hljs-number">0</span>;
+        <span class="hljs-keyword">else</span> net.delta[i] *= l.scale;
     }
 }
-</code></pre><p><code>backward</code></p>
-<h2 id="makedropoutlayer">make_dropout_layer</h2>
-<pre><code>dropout_layer make_dropout_layer(int batch, int inputs, float probability)
-{
-    dropout_layer l = {0};
-    l.type = DROPOUT;
-    l.probability = probability;
-    l.inputs = inputs;
-    l.outputs = inputs;
-    l.batch = batch;
-    l.rand = calloc(inputs*batch, sizeof(float));
-    l.scale = 1./(1.-probability);
-    l.forward = forward_dropout_layer;
-    l.backward = backward_dropout_layer;
-    #ifdef GPU
-    l.forward_gpu = forward_dropout_layer_gpu;
-    l.backward_gpu = backward_dropout_layer_gpu;
-    l.rand_gpu = cuda_make_array(l.rand, inputs*batch);
-    #endif
-    fprintf(stderr, &quot;dropout       p = %.2f               %4d  -&gt;  %4d\n&quot;, probability, inputs, inputs);
-    return l;
-}
-</code></pre><h2 id="resizedropoutlayer">resize_dropout_layer</h2>
-<pre><code>void resize_dropout_layer(dropout_layer *l, int inputs)
+</code></pre>
+<p><code>backward</code></p>
+<h2 id="resizedropoutlayer">resize_dropout_layer</h2>
+<pre><code class="lang-c">void resize_dropout_layer(dropout_layer *l, int inputs)
 {
     l-&gt;rand = realloc(l-&gt;rand, l-&gt;inputs*l-&gt;batch*sizeof(float));
     #ifdef GPU
@@ -2022,6 +2004,31 @@
     #endif
 }
 </code></pre>
+<p><code>resize</code></p>
+<h2 id="makedropoutlayer">make_dropout_layer</h2>
+<pre><code class="lang-c"><span class="hljs-function">dropout_layer <span class="hljs-title">make_dropout_layer</span><span class="hljs-params">(<span class="hljs-keyword">int</span> batch, <span class="hljs-keyword">int</span> inputs, <span class="hljs-keyword">float</span> probability)</span>
+</span>{
+    dropout_layer l = {<span class="hljs-number">0</span>};
+    l.type = DROPOUT;
+    l.probability = probability;
+    l.inputs = inputs;
+    l.outputs = inputs;
+    l.batch = batch;
+    l.rand = <span class="hljs-built_in">calloc</span>(inputs*batch, <span class="hljs-keyword">sizeof</span>(<span class="hljs-keyword">float</span>));
+    l.scale = <span class="hljs-number">1.</span>/(<span class="hljs-number">1.</span>-probability);
+    l.forward = forward_dropout_layer;
+    l.backward = backward_dropout_layer;
+    <span class="hljs-meta">#<span class="hljs-meta-keyword">ifdef</span> GPU</span>
+    l.forward_gpu = forward_dropout_layer_gpu;
+    l.backward_gpu = backward_dropout_layer_gpu;
+    l.rand_gpu = cuda_make_array(l.rand, inputs*batch);
+    <span class="hljs-meta">#<span class="hljs-meta-keyword">endif</span></span>
+    <span class="hljs-built_in">fprintf</span>(<span class="hljs-built_in">stderr</span>, <span class="hljs-string">&quot;dropout       p = %.2f               %4d  -&gt;  %4d\n&quot;</span>, probability, inputs, inputs);
+    <span class="hljs-keyword">return</span> l;
+}
+</code></pre>
+<p><code>make</code></p>
+
                                 
                                 </section>
                             
@@ -2064,7 +2071,7 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"dropout_layer.c","level":"5.18","depth":1,"next":{"title":"gemm.c","level":"5.19","depth":1,"path":"part3_src/gemm.md","ref":"part3_src/gemm.md","articles":[]},"previous":{"title":"detection_layer.c","level":"5.17","depth":1,"path":"part3_src/detection_layer.md","ref":"part3_src/detection_layer.md","articles":[]},"dir":"ltr"},"config":{"plugins":["advanced-emoji","theme-gestalt","-theme-default","styles-sass-fix","theme-api","mathjax"],"root":"./","styles":{"website":"website-1597403756570.css"},"pluginsConfig":{"styles-sass-fix":{},"theme-gestalt":{"showLevel":false,"styles":{"website":"styles/website.css"},"logo":"/darknet_book/assets/darknet.png","baseUrl":null,"excludeDefaultStyles":true,"doNotHideChildrenChapters":false},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"theme-api":{"languages":[],"split":true,"theme":"light"},"mathjax":{"forceSVG":false,"version":"2.6-latest"},"advanced-emoji":{"embedEmojis":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]}},"theme":"default","author":"JJM","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"DarkNet Book","output.name":"site","gitbook":"*"},"file":{"path":"part3_src/dropout_layer.md","mtime":"2020-07-29T18:02:59.140Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-08-14T11:15:45.491Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"dropout_layer.c","level":"5.18","depth":1,"next":{"title":"gemm.c","level":"5.19","depth":1,"path":"part3_src/gemm.md","ref":"part3_src/gemm.md","articles":[]},"previous":{"title":"detection_layer.c","level":"5.17","depth":1,"path":"part3_src/detection_layer.md","ref":"part3_src/detection_layer.md","articles":[]},"dir":"ltr"},"config":{"plugins":["advanced-emoji","theme-gestalt","-theme-default","styles-sass-fix","theme-api","mathjax"],"root":"./","styles":{"website":"website-1599634348142.css"},"pluginsConfig":{"styles-sass-fix":{},"theme-gestalt":{"showLevel":false,"styles":{"website":"styles/website.css"},"logo":"/darknet_book/assets/darknet.png","baseUrl":null,"excludeDefaultStyles":true,"doNotHideChildrenChapters":false},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"theme-api":{"languages":[],"split":true,"theme":"light"},"mathjax":{"forceSVG":false,"version":"2.6-latest"},"advanced-emoji":{"embedEmojis":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]}},"theme":"default","author":"JJM","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"DarkNet Book","output.name":"site","gitbook":"*"},"file":{"path":"part3_src/dropout_layer.md","mtime":"2020-09-09T05:57:28.794Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-09-09T06:52:18.609Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>

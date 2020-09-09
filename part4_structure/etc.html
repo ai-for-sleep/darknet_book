@@ -42,7 +42,7 @@
 
     
         
-        <link rel="stylesheet" href="../website-1597403756570.css">
+        <link rel="stylesheet" href="../website-1599634348142.css">
         
     
 
@@ -1971,36 +1971,48 @@
 <hr>
 <h1 id="srcincludedarkneth">src/include/darknet.h</h1>
 <h2 id="node">node</h2>
-<pre><code>typedef struct node{
-    void *val;
-    struct node *next;
-    struct node *prev;
+<pre><code class="lang-c"><span class="hljs-keyword">typedef</span> <span class="hljs-keyword">struct</span> node{
+    <span class="hljs-keyword">void</span> *val;
+    <span class="hljs-keyword">struct</span> node *next;
+    <span class="hljs-keyword">struct</span> node *prev;
 } node;
-</code></pre><h2 id="list">list</h2>
-<pre><code>typedef struct list{
-    int size;
+</code></pre>
+<h2 id="list">list</h2>
+<pre><code class="lang-c"><span class="hljs-keyword">typedef</span> <span class="hljs-keyword">struct</span> <span class="hljs-built_in">list</span>{
+    <span class="hljs-keyword">int</span> size;
     node *front;
     node *back;
-} list;
-</code></pre><h2 id="matrix">matrix</h2>
-<pre><code>typedef struct matrix{
-    int rows, cols;
-    float **vals;
+} <span class="hljs-built_in">list</span>;
+</code></pre>
+<h2 id="matrix">matrix</h2>
+<pre><code class="lang-c"><span class="hljs-keyword">typedef</span> <span class="hljs-keyword">struct</span> matrix{
+    <span class="hljs-keyword">int</span> rows, cols;
+    <span class="hljs-keyword">float</span> **vals;
 } matrix;
-</code></pre><h2 id="box">box</h2>
-<pre><code>typedef struct{
-    float x, y, w, h;
+</code></pre>
+<h2 id="box">box</h2>
+<pre><code class="lang-c"><span class="hljs-keyword">typedef</span> <span class="hljs-keyword">struct</span>{
+    <span class="hljs-keyword">float</span> x, y, w, h;
 } box;
-</code></pre><h2 id="data">data</h2>
-<pre><code>typedef struct{
-    int w, h;
-    matrix X; // X.cols = total pixel , rows = batch(64) , vals = each pixel&apos;s value (we can find information in data.c&apos;s load_data_detection)
-    matrix y; // y.cols = 5*boxes( boxes default 90 ) , y.rows = batch(64) ,
-    int shallow;
-    int *num_boxes;
+</code></pre>
+<h2 id="boxlabel">box_label</h2>
+<pre><code class="lang-c"><span class="hljs-keyword">typedef</span> <span class="hljs-keyword">struct</span>{
+    <span class="hljs-keyword">int</span> id;
+    <span class="hljs-keyword">float</span> x,y,w,h;
+    <span class="hljs-keyword">float</span> left, right, top, bottom;
+} box_label;
+</code></pre>
+<h2 id="data">data</h2>
+<pre><code class="lang-c"><span class="hljs-keyword">typedef</span> <span class="hljs-keyword">struct</span>{
+    <span class="hljs-keyword">int</span> w, h;
+    matrix X; <span class="hljs-comment">// X.cols = total pixel , rows = batch(64) , vals = each pixel&apos;s value (we can find information in data.c&apos;s load_data_detection)</span>
+    matrix y; <span class="hljs-comment">// y.cols = 5*boxes( boxes default 90 ) , y.rows = batch(64) ,</span>
+    <span class="hljs-keyword">int</span> shallow;
+    <span class="hljs-keyword">int</span> *num_boxes;
     box **boxes;
 } data;
-</code></pre><p>X : cols, rows</p>
+</code></pre>
+<p>X : cols, rows</p>
 <ul>
 <li>cols : &#xC774;&#xBBF8;&#xC9C0; &#xD55C;&#xC7A5;&#xC758; &#xD53D;&#xC140;</li>
 <li>rows : &#xC774;&#xBBF8;&#xC9C0;&#xC758; &#xAC1C;&#xC218; batch size</li>
@@ -2012,56 +2024,62 @@
 <li>rows : &#xC774;&#xBBF8;&#xC9C0;&#xC758; &#xAC1C;&#xC218; batch size</li>
 </ul>
 <h2 id="detection">detection</h2>
-<pre><code>typedef struct detection{
+<pre><code class="lang-c"><span class="hljs-keyword">typedef</span> <span class="hljs-keyword">struct</span> detection{
     box bbox;
-    int classes;
-    float *prob;
-    float *mask;
-    float objectness;
-    int sort_class;
+    <span class="hljs-keyword">int</span> classes;
+    <span class="hljs-keyword">float</span> *prob;
+    <span class="hljs-keyword">float</span> *mask;
+    <span class="hljs-keyword">float</span> objectness;
+    <span class="hljs-keyword">int</span> sort_class;
 } detection;
-</code></pre><p>&#xAC80;&#xCD9C;&#xD55C; &#xB370;&#xC774;&#xD130;&#xC5D0; &#xB300;&#xD55C; &#xC815;&#xBCF4;&#xB97C; &#xB2F4;&#xACE0; &#xC788;&#xC2B5;&#xB2C8;&#xB2E4;.</p>
+</code></pre>
+<p>&#xAC80;&#xCD9C;&#xD55C; &#xB370;&#xC774;&#xD130;&#xC5D0; &#xB300;&#xD55C; &#xC815;&#xBCF4;&#xB97C; &#xB2F4;&#xACE0; &#xC788;&#xC2B5;&#xB2C8;&#xB2E4;.</p>
 <hr>
 <h1 id="srcoptionlisth">/src/option_list.h</h1>
 <h2 id="kvp-&#xAD6C;&#xC870;&#xCCB4;">kvp &#xAD6C;&#xC870;&#xCCB4;</h2>
-<pre><code>typedef struct{
-    char *key;
-    char *val;
-    int used;
+<pre><code class="lang-c"><span class="hljs-keyword">typedef</span> <span class="hljs-keyword">struct</span>{
+    <span class="hljs-keyword">char</span> *key;
+    <span class="hljs-keyword">char</span> *val;
+    <span class="hljs-keyword">int</span> used;
 } kvp;
-</code></pre><hr>
+</code></pre>
+<hr>
 <h1 id="srcparserc">/src/parser.c</h1>
 <h2 id="section">section</h2>
-<pre><code>typedef struct{
-    char *type;
-    list *options;
+<pre><code class="lang-c"><span class="hljs-keyword">typedef</span> <span class="hljs-keyword">struct</span>{
+    <span class="hljs-keyword">char</span> *type;
+    <span class="hljs-built_in">list</span> *options;
 }section;
-</code></pre><h2 id="sizeparams">size_params</h2>
-<pre><code>typedef struct size_params{
-    int batch;
-    int inputs;
-    int h;
-    int w;
-    int c;
-    int index;
-    int time_steps;
+</code></pre>
+<h2 id="sizeparams">size_params</h2>
+<pre><code class="lang-c"><span class="hljs-keyword">typedef</span> <span class="hljs-keyword">struct</span> size_params{
+    <span class="hljs-keyword">int</span> batch;
+    <span class="hljs-keyword">int</span> inputs;
+    <span class="hljs-keyword">int</span> h;
+    <span class="hljs-keyword">int</span> w;
+    <span class="hljs-keyword">int</span> c;
+    <span class="hljs-keyword">int</span> index;
+    <span class="hljs-keyword">int</span> time_steps;
     network *net;
 } size_params;
-</code></pre><h1 id="srcboxh">/src/box.h</h1>
+</code></pre>
+<h1 id="srcboxh">/src/box.h</h1>
 <h2 id="dbox">dbox</h2>
-<pre><code>typedef struct{
-    float dx, dy, dw, dh;
+<pre><code class="lang-c"><span class="hljs-keyword">typedef</span> <span class="hljs-keyword">struct</span>{
+    <span class="hljs-keyword">float</span> dx, dy, dw, dh;
 } dbox;
-</code></pre><ul>
+</code></pre>
+<ul>
 <li>box&#xC758; &#xBBF8;&#xBD84; &#xAC12;&#xC744; &#xC800;&#xC7A5;&#xD569;&#xB2C8;&#xB2E4;.</li>
 </ul>
 <h1 id="&#xB0B4;&#xC7A5;timeh">&#xB0B4;&#xC7A5;/time.h</h1>
 <h2 id="timeval">timeval</h2>
-<pre><code>struct timeval {
-  long tv_sec;       // 1&#xCD08;
-  long tv_usec;      // 1/1000000&#xCD08;
+<pre><code class="lang-c"><span class="hljs-keyword">struct</span> timeval {
+  <span class="hljs-keyword">long</span> tv_sec;       <span class="hljs-comment">// 1&#xCD08;</span>
+  <span class="hljs-keyword">long</span> tv_usec;      <span class="hljs-comment">// 1/1000000&#xCD08;</span>
 };
 </code></pre>
+
                                 
                                 </section>
                             
@@ -2104,7 +2122,7 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"etc","level":"4.3","depth":1,"next":{"title":"activation_layer.c","level":"5.1","depth":1,"path":"part3_src/activation_layer.md","ref":"part3_src/activation_layer.md","articles":[]},"previous":{"title":"layer","level":"4.2","depth":1,"path":"part4_structure/layer.md","ref":"part4_structure/layer.md","articles":[]},"dir":"ltr"},"config":{"plugins":["advanced-emoji","theme-gestalt","-theme-default","styles-sass-fix","theme-api","mathjax"],"root":"./","styles":{"website":"website-1597403756570.css"},"pluginsConfig":{"styles-sass-fix":{},"theme-gestalt":{"showLevel":false,"styles":{"website":"styles/website.css"},"logo":"/darknet_book/assets/darknet.png","baseUrl":null,"excludeDefaultStyles":true,"doNotHideChildrenChapters":false},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"theme-api":{"languages":[],"split":true,"theme":"light"},"mathjax":{"forceSVG":false,"version":"2.6-latest"},"advanced-emoji":{"embedEmojis":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]}},"theme":"default","author":"JJM","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"DarkNet Book","output.name":"site","gitbook":"*"},"file":{"path":"part4_structure/etc.md","mtime":"2020-08-10T10:53:33.913Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-08-14T11:15:45.491Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"etc","level":"4.3","depth":1,"next":{"title":"activation_layer.c","level":"5.1","depth":1,"path":"part3_src/activation_layer.md","ref":"part3_src/activation_layer.md","articles":[]},"previous":{"title":"layer","level":"4.2","depth":1,"path":"part4_structure/layer.md","ref":"part4_structure/layer.md","articles":[]},"dir":"ltr"},"config":{"plugins":["advanced-emoji","theme-gestalt","-theme-default","styles-sass-fix","theme-api","mathjax"],"root":"./","styles":{"website":"website-1599634348142.css"},"pluginsConfig":{"styles-sass-fix":{},"theme-gestalt":{"showLevel":false,"styles":{"website":"styles/website.css"},"logo":"/darknet_book/assets/darknet.png","baseUrl":null,"excludeDefaultStyles":true,"doNotHideChildrenChapters":false},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"theme-api":{"languages":[],"split":true,"theme":"light"},"mathjax":{"forceSVG":false,"version":"2.6-latest"},"advanced-emoji":{"embedEmojis":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]}},"theme":"default","author":"JJM","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"DarkNet Book","output.name":"site","gitbook":"*"},"file":{"path":"part4_structure/etc.md","mtime":"2020-09-09T05:49:42.118Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-09-09T06:52:18.609Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>

@@ -42,7 +42,7 @@
 
     
         
-        <link rel="stylesheet" href="../website-1597403756570.css">
+        <link rel="stylesheet" href="../website-1599634348142.css">
         
     
 
@@ -1982,20 +1982,21 @@ LSTM&#xC758; <code>cell state</code>&#xB294; &#xACF5;&#xC7A5;&#xC758; &#xCEE8;&#
 <hr>
 <h1 id="lstmlayerc">lstm_layer.c</h1>
 <h2 id="incrementlayer">increment_layer</h2>
-<pre><code>static void increment_layer(layer *l, int steps)
-{
-    int num = l-&gt;outputs*l-&gt;batch*steps;
+<pre><code class="lang-c"><span class="hljs-function"><span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">increment_layer</span><span class="hljs-params">(layer *l, <span class="hljs-keyword">int</span> steps)</span>
+</span>{
+    <span class="hljs-keyword">int</span> num = l-&gt;outputs*l-&gt;batch*steps;
     l-&gt;output += num;
     l-&gt;delta += num;
     l-&gt;x += num;
     l-&gt;x_norm += num;
 }
-</code></pre><h2 id="forwardlstmlayer">forward_lstm_layer</h2>
-<pre><code>void forward_lstm_layer(layer l, network state)
-{
-    network s = { 0 };
+</code></pre>
+<h2 id="forwardlstmlayer">forward_lstm_layer</h2>
+<pre><code class="lang-c"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">forward_lstm_layer</span><span class="hljs-params">(layer l, network state)</span>
+</span>{
+    network s = { <span class="hljs-number">0</span> };
     s.train = state.train;
-    int i;
+    <span class="hljs-keyword">int</span> i;
     layer wf = *(l.wf);
     layer wi = *(l.wi);
     layer wg = *(l.wg);
@@ -2006,20 +2007,20 @@ LSTM&#xC758; <code>cell state</code>&#xB294; &#xACF5;&#xC7A5;&#xC758; &#xCEE8;&#
     layer ug = *(l.ug);
     layer uo = *(l.uo);
 
-    fill_cpu(l.outputs * l.batch * l.steps, 0, wf.delta, 1);
-    fill_cpu(l.outputs * l.batch * l.steps, 0, wi.delta, 1);
-    fill_cpu(l.outputs * l.batch * l.steps, 0, wg.delta, 1);
-    fill_cpu(l.outputs * l.batch * l.steps, 0, wo.delta, 1);
+    fill_cpu(l.outputs * l.batch * l.steps, <span class="hljs-number">0</span>, wf.delta, <span class="hljs-number">1</span>);
+    fill_cpu(l.outputs * l.batch * l.steps, <span class="hljs-number">0</span>, wi.delta, <span class="hljs-number">1</span>);
+    fill_cpu(l.outputs * l.batch * l.steps, <span class="hljs-number">0</span>, wg.delta, <span class="hljs-number">1</span>);
+    fill_cpu(l.outputs * l.batch * l.steps, <span class="hljs-number">0</span>, wo.delta, <span class="hljs-number">1</span>);
 
-    fill_cpu(l.outputs * l.batch * l.steps, 0, uf.delta, 1);
-    fill_cpu(l.outputs * l.batch * l.steps, 0, ui.delta, 1);
-    fill_cpu(l.outputs * l.batch * l.steps, 0, ug.delta, 1);
-    fill_cpu(l.outputs * l.batch * l.steps, 0, uo.delta, 1);
-    if (state.train) {
-        fill_cpu(l.outputs * l.batch * l.steps, 0, l.delta, 1);
+    fill_cpu(l.outputs * l.batch * l.steps, <span class="hljs-number">0</span>, uf.delta, <span class="hljs-number">1</span>);
+    fill_cpu(l.outputs * l.batch * l.steps, <span class="hljs-number">0</span>, ui.delta, <span class="hljs-number">1</span>);
+    fill_cpu(l.outputs * l.batch * l.steps, <span class="hljs-number">0</span>, ug.delta, <span class="hljs-number">1</span>);
+    fill_cpu(l.outputs * l.batch * l.steps, <span class="hljs-number">0</span>, uo.delta, <span class="hljs-number">1</span>);
+    <span class="hljs-keyword">if</span> (state.train) {
+        fill_cpu(l.outputs * l.batch * l.steps, <span class="hljs-number">0</span>, l.delta, <span class="hljs-number">1</span>);
     }
 
-    for (i = 0; i &lt; l.steps; ++i) {
+    <span class="hljs-keyword">for</span> (i = <span class="hljs-number">0</span>; i &lt; l.steps; ++i) {
         s.input = l.h_cpu;
         forward_connected_layer(wf, s);                            
         forward_connected_layer(wi, s);                            
@@ -2032,57 +2033,58 @@ LSTM&#xC758; <code>cell state</code>&#xB294; &#xACF5;&#xC7A5;&#xC758; &#xCEE8;&#
         forward_connected_layer(ug, s);                            
         forward_connected_layer(uo, s);                            
 
-        copy_cpu(l.outputs*l.batch, wf.output, 1, l.f_cpu, 1);
-        axpy_cpu(l.outputs*l.batch, 1, uf.output, 1, l.f_cpu, 1);
+        copy_cpu(l.outputs*l.batch, wf.output, <span class="hljs-number">1</span>, l.f_cpu, <span class="hljs-number">1</span>);
+        axpy_cpu(l.outputs*l.batch, <span class="hljs-number">1</span>, uf.output, <span class="hljs-number">1</span>, l.f_cpu, <span class="hljs-number">1</span>);
 
-        copy_cpu(l.outputs*l.batch, wi.output, 1, l.i_cpu, 1);
-        axpy_cpu(l.outputs*l.batch, 1, ui.output, 1, l.i_cpu, 1);
+        copy_cpu(l.outputs*l.batch, wi.output, <span class="hljs-number">1</span>, l.i_cpu, <span class="hljs-number">1</span>);
+        axpy_cpu(l.outputs*l.batch, <span class="hljs-number">1</span>, ui.output, <span class="hljs-number">1</span>, l.i_cpu, <span class="hljs-number">1</span>);
 
-        copy_cpu(l.outputs*l.batch, wg.output, 1, l.g_cpu, 1);
-        axpy_cpu(l.outputs*l.batch, 1, ug.output, 1, l.g_cpu, 1);
+        copy_cpu(l.outputs*l.batch, wg.output, <span class="hljs-number">1</span>, l.g_cpu, <span class="hljs-number">1</span>);
+        axpy_cpu(l.outputs*l.batch, <span class="hljs-number">1</span>, ug.output, <span class="hljs-number">1</span>, l.g_cpu, <span class="hljs-number">1</span>);
 
-        copy_cpu(l.outputs*l.batch, wo.output, 1, l.o_cpu, 1);
-        axpy_cpu(l.outputs*l.batch, 1, uo.output, 1, l.o_cpu, 1);
+        copy_cpu(l.outputs*l.batch, wo.output, <span class="hljs-number">1</span>, l.o_cpu, <span class="hljs-number">1</span>);
+        axpy_cpu(l.outputs*l.batch, <span class="hljs-number">1</span>, uo.output, <span class="hljs-number">1</span>, l.o_cpu, <span class="hljs-number">1</span>);
 
         activate_array(l.f_cpu, l.outputs*l.batch, LOGISTIC);        
         activate_array(l.i_cpu, l.outputs*l.batch, LOGISTIC);        
         activate_array(l.g_cpu, l.outputs*l.batch, TANH);            
         activate_array(l.o_cpu, l.outputs*l.batch, LOGISTIC);        
 
-        copy_cpu(l.outputs*l.batch, l.i_cpu, 1, l.temp_cpu, 1);        
-        mul_cpu(l.outputs*l.batch, l.g_cpu, 1, l.temp_cpu, 1);        
-        mul_cpu(l.outputs*l.batch, l.f_cpu, 1, l.c_cpu, 1);            
-        axpy_cpu(l.outputs*l.batch, 1, l.temp_cpu, 1, l.c_cpu, 1);
+        copy_cpu(l.outputs*l.batch, l.i_cpu, <span class="hljs-number">1</span>, l.temp_cpu, <span class="hljs-number">1</span>);        
+        mul_cpu(l.outputs*l.batch, l.g_cpu, <span class="hljs-number">1</span>, l.temp_cpu, <span class="hljs-number">1</span>);        
+        mul_cpu(l.outputs*l.batch, l.f_cpu, <span class="hljs-number">1</span>, l.c_cpu, <span class="hljs-number">1</span>);            
+        axpy_cpu(l.outputs*l.batch, <span class="hljs-number">1</span>, l.temp_cpu, <span class="hljs-number">1</span>, l.c_cpu, <span class="hljs-number">1</span>);
 
-        copy_cpu(l.outputs*l.batch, l.c_cpu, 1, l.h_cpu, 1);            
+        copy_cpu(l.outputs*l.batch, l.c_cpu, <span class="hljs-number">1</span>, l.h_cpu, <span class="hljs-number">1</span>);            
         activate_array(l.h_cpu, l.outputs*l.batch, TANH);        
-        mul_cpu(l.outputs*l.batch, l.o_cpu, 1, l.h_cpu, 1);
+        mul_cpu(l.outputs*l.batch, l.o_cpu, <span class="hljs-number">1</span>, l.h_cpu, <span class="hljs-number">1</span>);
 
-        copy_cpu(l.outputs*l.batch, l.c_cpu, 1, l.cell_cpu, 1);        
-        copy_cpu(l.outputs*l.batch, l.h_cpu, 1, l.output, 1);
+        copy_cpu(l.outputs*l.batch, l.c_cpu, <span class="hljs-number">1</span>, l.cell_cpu, <span class="hljs-number">1</span>);        
+        copy_cpu(l.outputs*l.batch, l.h_cpu, <span class="hljs-number">1</span>, l.output, <span class="hljs-number">1</span>);
 
         state.input += l.inputs*l.batch;
         l.output    += l.outputs*l.batch;
         l.cell_cpu      += l.outputs*l.batch;
 
-        increment_layer(&amp;wf, 1);
-        increment_layer(&amp;wi, 1);
-        increment_layer(&amp;wg, 1);
-        increment_layer(&amp;wo, 1);
+        increment_layer(&amp;wf, <span class="hljs-number">1</span>);
+        increment_layer(&amp;wi, <span class="hljs-number">1</span>);
+        increment_layer(&amp;wg, <span class="hljs-number">1</span>);
+        increment_layer(&amp;wo, <span class="hljs-number">1</span>);
 
-        increment_layer(&amp;uf, 1);
-        increment_layer(&amp;ui, 1);
-        increment_layer(&amp;ug, 1);
-        increment_layer(&amp;uo, 1);
+        increment_layer(&amp;uf, <span class="hljs-number">1</span>);
+        increment_layer(&amp;ui, <span class="hljs-number">1</span>);
+        increment_layer(&amp;ug, <span class="hljs-number">1</span>);
+        increment_layer(&amp;uo, <span class="hljs-number">1</span>);
     }
 }
-</code></pre><p><code>forward</code></p>
+</code></pre>
+<p><code>forward</code></p>
 <h2 id="backwardlstmlayer">backward_lstm_layer</h2>
-<pre><code>void backward_lstm_layer(layer l, network state)
-{
-    network s = { 0 };
+<pre><code class="lang-c"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">backward_lstm_layer</span><span class="hljs-params">(layer l, network state)</span>
+</span>{
+    network s = { <span class="hljs-number">0</span> };
     s.train = state.train;
-    int i;
+    <span class="hljs-keyword">int</span> i;
     layer wf = *(l.wf);
     layer wi = *(l.wi);
     layer wg = *(l.wg);
@@ -2093,137 +2095,138 @@ LSTM&#xC758; <code>cell state</code>&#xB294; &#xACF5;&#xC7A5;&#xC758; &#xCEE8;&#
     layer ug = *(l.ug);
     layer uo = *(l.uo);
 
-    increment_layer(&amp;wf, l.steps - 1);
-    increment_layer(&amp;wi, l.steps - 1);
-    increment_layer(&amp;wg, l.steps - 1);
-    increment_layer(&amp;wo, l.steps - 1);
+    increment_layer(&amp;wf, l.steps - <span class="hljs-number">1</span>);
+    increment_layer(&amp;wi, l.steps - <span class="hljs-number">1</span>);
+    increment_layer(&amp;wg, l.steps - <span class="hljs-number">1</span>);
+    increment_layer(&amp;wo, l.steps - <span class="hljs-number">1</span>);
 
-    increment_layer(&amp;uf, l.steps - 1);
-    increment_layer(&amp;ui, l.steps - 1);
-    increment_layer(&amp;ug, l.steps - 1);
-    increment_layer(&amp;uo, l.steps - 1);
+    increment_layer(&amp;uf, l.steps - <span class="hljs-number">1</span>);
+    increment_layer(&amp;ui, l.steps - <span class="hljs-number">1</span>);
+    increment_layer(&amp;ug, l.steps - <span class="hljs-number">1</span>);
+    increment_layer(&amp;uo, l.steps - <span class="hljs-number">1</span>);
 
-    state.input += l.inputs*l.batch*(l.steps - 1);
-    if (state.delta) state.delta += l.inputs*l.batch*(l.steps - 1);
+    state.input += l.inputs*l.batch*(l.steps - <span class="hljs-number">1</span>);
+    <span class="hljs-keyword">if</span> (state.delta) state.delta += l.inputs*l.batch*(l.steps - <span class="hljs-number">1</span>);
 
-    l.output += l.outputs*l.batch*(l.steps - 1);
-    l.cell_cpu += l.outputs*l.batch*(l.steps - 1);
-    l.delta += l.outputs*l.batch*(l.steps - 1);
+    l.output += l.outputs*l.batch*(l.steps - <span class="hljs-number">1</span>);
+    l.cell_cpu += l.outputs*l.batch*(l.steps - <span class="hljs-number">1</span>);
+    l.delta += l.outputs*l.batch*(l.steps - <span class="hljs-number">1</span>);
 
-    for (i = l.steps - 1; i &gt;= 0; --i) {
-        if (i != 0) copy_cpu(l.outputs*l.batch, l.cell_cpu - l.outputs*l.batch, 1, l.prev_cell_cpu, 1);
-        copy_cpu(l.outputs*l.batch, l.cell_cpu, 1, l.c_cpu, 1);
-        if (i != 0) copy_cpu(l.outputs*l.batch, l.output - l.outputs*l.batch, 1, l.prev_state_cpu, 1);
-        copy_cpu(l.outputs*l.batch, l.output, 1, l.h_cpu, 1);
+    <span class="hljs-keyword">for</span> (i = l.steps - <span class="hljs-number">1</span>; i &gt;= <span class="hljs-number">0</span>; --i) {
+        <span class="hljs-keyword">if</span> (i != <span class="hljs-number">0</span>) copy_cpu(l.outputs*l.batch, l.cell_cpu - l.outputs*l.batch, <span class="hljs-number">1</span>, l.prev_cell_cpu, <span class="hljs-number">1</span>);
+        copy_cpu(l.outputs*l.batch, l.cell_cpu, <span class="hljs-number">1</span>, l.c_cpu, <span class="hljs-number">1</span>);
+        <span class="hljs-keyword">if</span> (i != <span class="hljs-number">0</span>) copy_cpu(l.outputs*l.batch, l.output - l.outputs*l.batch, <span class="hljs-number">1</span>, l.prev_state_cpu, <span class="hljs-number">1</span>);
+        copy_cpu(l.outputs*l.batch, l.output, <span class="hljs-number">1</span>, l.h_cpu, <span class="hljs-number">1</span>);
 
-        l.dh_cpu = (i == 0) ? 0 : l.delta - l.outputs*l.batch;
+        l.dh_cpu = (i == <span class="hljs-number">0</span>) ? <span class="hljs-number">0</span> : l.delta - l.outputs*l.batch;
 
-        copy_cpu(l.outputs*l.batch, wf.output, 1, l.f_cpu, 1);            
-        axpy_cpu(l.outputs*l.batch, 1, uf.output, 1, l.f_cpu, 1);            
+        copy_cpu(l.outputs*l.batch, wf.output, <span class="hljs-number">1</span>, l.f_cpu, <span class="hljs-number">1</span>);            
+        axpy_cpu(l.outputs*l.batch, <span class="hljs-number">1</span>, uf.output, <span class="hljs-number">1</span>, l.f_cpu, <span class="hljs-number">1</span>);            
 
-        copy_cpu(l.outputs*l.batch, wi.output, 1, l.i_cpu, 1);            
-        axpy_cpu(l.outputs*l.batch, 1, ui.output, 1, l.i_cpu, 1);            
+        copy_cpu(l.outputs*l.batch, wi.output, <span class="hljs-number">1</span>, l.i_cpu, <span class="hljs-number">1</span>);            
+        axpy_cpu(l.outputs*l.batch, <span class="hljs-number">1</span>, ui.output, <span class="hljs-number">1</span>, l.i_cpu, <span class="hljs-number">1</span>);            
 
-        copy_cpu(l.outputs*l.batch, wg.output, 1, l.g_cpu, 1);            
-        axpy_cpu(l.outputs*l.batch, 1, ug.output, 1, l.g_cpu, 1);            
+        copy_cpu(l.outputs*l.batch, wg.output, <span class="hljs-number">1</span>, l.g_cpu, <span class="hljs-number">1</span>);            
+        axpy_cpu(l.outputs*l.batch, <span class="hljs-number">1</span>, ug.output, <span class="hljs-number">1</span>, l.g_cpu, <span class="hljs-number">1</span>);            
 
-        copy_cpu(l.outputs*l.batch, wo.output, 1, l.o_cpu, 1);            
-        axpy_cpu(l.outputs*l.batch, 1, uo.output, 1, l.o_cpu, 1);            
+        copy_cpu(l.outputs*l.batch, wo.output, <span class="hljs-number">1</span>, l.o_cpu, <span class="hljs-number">1</span>);            
+        axpy_cpu(l.outputs*l.batch, <span class="hljs-number">1</span>, uo.output, <span class="hljs-number">1</span>, l.o_cpu, <span class="hljs-number">1</span>);            
 
         activate_array(l.f_cpu, l.outputs*l.batch, LOGISTIC);            
         activate_array(l.i_cpu, l.outputs*l.batch, LOGISTIC);        
         activate_array(l.g_cpu, l.outputs*l.batch, TANH);            
         activate_array(l.o_cpu, l.outputs*l.batch, LOGISTIC);        
 
-        copy_cpu(l.outputs*l.batch, l.delta, 1, l.temp3_cpu, 1);        
+        copy_cpu(l.outputs*l.batch, l.delta, <span class="hljs-number">1</span>, l.temp3_cpu, <span class="hljs-number">1</span>);        
 
-        copy_cpu(l.outputs*l.batch, l.c_cpu, 1, l.temp_cpu, 1);            
+        copy_cpu(l.outputs*l.batch, l.c_cpu, <span class="hljs-number">1</span>, l.temp_cpu, <span class="hljs-number">1</span>);            
         activate_array(l.temp_cpu, l.outputs*l.batch, TANH);            
 
-        copy_cpu(l.outputs*l.batch, l.temp3_cpu, 1, l.temp2_cpu, 1);        
-        mul_cpu(l.outputs*l.batch, l.o_cpu, 1, l.temp2_cpu, 1);            
+        copy_cpu(l.outputs*l.batch, l.temp3_cpu, <span class="hljs-number">1</span>, l.temp2_cpu, <span class="hljs-number">1</span>);        
+        mul_cpu(l.outputs*l.batch, l.o_cpu, <span class="hljs-number">1</span>, l.temp2_cpu, <span class="hljs-number">1</span>);            
 
         gradient_array(l.temp_cpu, l.outputs*l.batch, TANH, l.temp2_cpu);
-        axpy_cpu(l.outputs*l.batch, 1, l.dc_cpu, 1, l.temp2_cpu, 1);        
+        axpy_cpu(l.outputs*l.batch, <span class="hljs-number">1</span>, l.dc_cpu, <span class="hljs-number">1</span>, l.temp2_cpu, <span class="hljs-number">1</span>);        
 
-        copy_cpu(l.outputs*l.batch, l.c_cpu, 1, l.temp_cpu, 1);            
+        copy_cpu(l.outputs*l.batch, l.c_cpu, <span class="hljs-number">1</span>, l.temp_cpu, <span class="hljs-number">1</span>);            
         activate_array(l.temp_cpu, l.outputs*l.batch, TANH);            
-        mul_cpu(l.outputs*l.batch, l.temp3_cpu, 1, l.temp_cpu, 1);        
+        mul_cpu(l.outputs*l.batch, l.temp3_cpu, <span class="hljs-number">1</span>, l.temp_cpu, <span class="hljs-number">1</span>);        
         gradient_array(l.o_cpu, l.outputs*l.batch, LOGISTIC, l.temp_cpu);
-        copy_cpu(l.outputs*l.batch, l.temp_cpu, 1, wo.delta, 1);
+        copy_cpu(l.outputs*l.batch, l.temp_cpu, <span class="hljs-number">1</span>, wo.delta, <span class="hljs-number">1</span>);
         s.input = l.prev_state_cpu;
         s.delta = l.dh_cpu;                                                            
         backward_connected_layer(wo, s);
 
-        copy_cpu(l.outputs*l.batch, l.temp_cpu, 1, uo.delta, 1);
+        copy_cpu(l.outputs*l.batch, l.temp_cpu, <span class="hljs-number">1</span>, uo.delta, <span class="hljs-number">1</span>);
         s.input = state.input;
         s.delta = state.delta;
         backward_connected_layer(uo, s);                                    
 
-        copy_cpu(l.outputs*l.batch, l.temp2_cpu, 1, l.temp_cpu, 1);            
-        mul_cpu(l.outputs*l.batch, l.i_cpu, 1, l.temp_cpu, 1);                
+        copy_cpu(l.outputs*l.batch, l.temp2_cpu, <span class="hljs-number">1</span>, l.temp_cpu, <span class="hljs-number">1</span>);            
+        mul_cpu(l.outputs*l.batch, l.i_cpu, <span class="hljs-number">1</span>, l.temp_cpu, <span class="hljs-number">1</span>);                
         gradient_array(l.g_cpu, l.outputs*l.batch, TANH, l.temp_cpu);        
-        copy_cpu(l.outputs*l.batch, l.temp_cpu, 1, wg.delta, 1);
+        copy_cpu(l.outputs*l.batch, l.temp_cpu, <span class="hljs-number">1</span>, wg.delta, <span class="hljs-number">1</span>);
         s.input = l.prev_state_cpu;
         s.delta = l.dh_cpu;                                                        
         backward_connected_layer(wg, s);
 
-        copy_cpu(l.outputs*l.batch, l.temp_cpu, 1, ug.delta, 1);
+        copy_cpu(l.outputs*l.batch, l.temp_cpu, <span class="hljs-number">1</span>, ug.delta, <span class="hljs-number">1</span>);
         s.input = state.input;
         s.delta = state.delta;
         backward_connected_layer(ug, s);                                                                
 
-        copy_cpu(l.outputs*l.batch, l.temp2_cpu, 1, l.temp_cpu, 1);            
-        mul_cpu(l.outputs*l.batch, l.g_cpu, 1, l.temp_cpu, 1);                
+        copy_cpu(l.outputs*l.batch, l.temp2_cpu, <span class="hljs-number">1</span>, l.temp_cpu, <span class="hljs-number">1</span>);            
+        mul_cpu(l.outputs*l.batch, l.g_cpu, <span class="hljs-number">1</span>, l.temp_cpu, <span class="hljs-number">1</span>);                
         gradient_array(l.i_cpu, l.outputs*l.batch, LOGISTIC, l.temp_cpu);
-        copy_cpu(l.outputs*l.batch, l.temp_cpu, 1, wi.delta, 1);
+        copy_cpu(l.outputs*l.batch, l.temp_cpu, <span class="hljs-number">1</span>, wi.delta, <span class="hljs-number">1</span>);
         s.input = l.prev_state_cpu;
         s.delta = l.dh_cpu;
         backward_connected_layer(wi, s);                        
 
-        copy_cpu(l.outputs*l.batch, l.temp_cpu, 1, ui.delta, 1);
+        copy_cpu(l.outputs*l.batch, l.temp_cpu, <span class="hljs-number">1</span>, ui.delta, <span class="hljs-number">1</span>);
         s.input = state.input;
         s.delta = state.delta;
         backward_connected_layer(ui, s);                                    
 
-        copy_cpu(l.outputs*l.batch, l.temp2_cpu, 1, l.temp_cpu, 1);        
-        mul_cpu(l.outputs*l.batch, l.prev_cell_cpu, 1, l.temp_cpu, 1);
+        copy_cpu(l.outputs*l.batch, l.temp2_cpu, <span class="hljs-number">1</span>, l.temp_cpu, <span class="hljs-number">1</span>);        
+        mul_cpu(l.outputs*l.batch, l.prev_cell_cpu, <span class="hljs-number">1</span>, l.temp_cpu, <span class="hljs-number">1</span>);
         gradient_array(l.f_cpu, l.outputs*l.batch, LOGISTIC, l.temp_cpu);
-        copy_cpu(l.outputs*l.batch, l.temp_cpu, 1, wf.delta, 1);
+        copy_cpu(l.outputs*l.batch, l.temp_cpu, <span class="hljs-number">1</span>, wf.delta, <span class="hljs-number">1</span>);
         s.input = l.prev_state_cpu;
         s.delta = l.dh_cpu;
         backward_connected_layer(wf, s);                        
 
-        copy_cpu(l.outputs*l.batch, l.temp_cpu, 1, uf.delta, 1);
+        copy_cpu(l.outputs*l.batch, l.temp_cpu, <span class="hljs-number">1</span>, uf.delta, <span class="hljs-number">1</span>);
         s.input = state.input;
         s.delta = state.delta;
         backward_connected_layer(uf, s);                                    
 
-        copy_cpu(l.outputs*l.batch, l.temp2_cpu, 1, l.temp_cpu, 1);            
-        mul_cpu(l.outputs*l.batch, l.f_cpu, 1, l.temp_cpu, 1);                
-        copy_cpu(l.outputs*l.batch, l.temp_cpu, 1, l.dc_cpu, 1);                
+        copy_cpu(l.outputs*l.batch, l.temp2_cpu, <span class="hljs-number">1</span>, l.temp_cpu, <span class="hljs-number">1</span>);            
+        mul_cpu(l.outputs*l.batch, l.f_cpu, <span class="hljs-number">1</span>, l.temp_cpu, <span class="hljs-number">1</span>);                
+        copy_cpu(l.outputs*l.batch, l.temp_cpu, <span class="hljs-number">1</span>, l.dc_cpu, <span class="hljs-number">1</span>);                
 
         state.input -= l.inputs*l.batch;
-        if (state.delta) state.delta -= l.inputs*l.batch;
+        <span class="hljs-keyword">if</span> (state.delta) state.delta -= l.inputs*l.batch;
         l.output -= l.outputs*l.batch;
         l.cell_cpu -= l.outputs*l.batch;
         l.delta -= l.outputs*l.batch;
 
-        increment_layer(&amp;wf, -1);
-        increment_layer(&amp;wi, -1);
-        increment_layer(&amp;wg, -1);
-        increment_layer(&amp;wo, -1);
+        increment_layer(&amp;wf, <span class="hljs-number">-1</span>);
+        increment_layer(&amp;wi, <span class="hljs-number">-1</span>);
+        increment_layer(&amp;wg, <span class="hljs-number">-1</span>);
+        increment_layer(&amp;wo, <span class="hljs-number">-1</span>);
 
-        increment_layer(&amp;uf, -1);
-        increment_layer(&amp;ui, -1);
-        increment_layer(&amp;ug, -1);
-        increment_layer(&amp;uo, -1);
+        increment_layer(&amp;uf, <span class="hljs-number">-1</span>);
+        increment_layer(&amp;ui, <span class="hljs-number">-1</span>);
+        increment_layer(&amp;ug, <span class="hljs-number">-1</span>);
+        increment_layer(&amp;uo, <span class="hljs-number">-1</span>);
     }
 }
-</code></pre><p><code>backward</code></p>
+</code></pre>
+<p><code>backward</code></p>
 <h2 id="updatelstmlayer">update_lstm_layer</h2>
-<pre><code>void update_lstm_layer(layer l, update_args a)
-{
+<pre><code class="lang-c"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">update_lstm_layer</span><span class="hljs-params">(layer l, update_args a)</span>
+</span>{
     update_connected_layer(*(l.wf), a);
     update_connected_layer(*(l.wi), a);
     update_connected_layer(*(l.wg), a);
@@ -2234,6 +2237,8 @@ LSTM&#xC758; <code>cell state</code>&#xB294; &#xACF5;&#xC7A5;&#xC758; &#xCEE8;&#
     update_connected_layer(*(l.uo), a);
 }
 </code></pre>
+<p><code>update</code></p>
+
                                 
                                 </section>
                             
@@ -2276,7 +2281,7 @@ LSTM&#xC758; <code>cell state</code>&#xB294; &#xACF5;&#xC7A5;&#xC758; &#xCEE8;&#
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"lstm_layer.c","level":"5.29","depth":1,"next":{"title":"matrix.c","level":"5.30","depth":1,"path":"part3_src/matrix.md","ref":"part3_src/matrix.md","articles":[]},"previous":{"title":"logistic_layer.c","level":"5.28","depth":1,"path":"part3_src/logistic_layer.md","ref":"part3_src/logistic_layer.md","articles":[]},"dir":"ltr"},"config":{"plugins":["advanced-emoji","theme-gestalt","-theme-default","styles-sass-fix","theme-api","mathjax"],"root":"./","styles":{"website":"website-1597403756570.css"},"pluginsConfig":{"styles-sass-fix":{},"theme-gestalt":{"showLevel":false,"styles":{"website":"styles/website.css"},"logo":"/darknet_book/assets/darknet.png","baseUrl":null,"excludeDefaultStyles":true,"doNotHideChildrenChapters":false},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"theme-api":{"languages":[],"split":true,"theme":"light"},"mathjax":{"forceSVG":false,"version":"2.6-latest"},"advanced-emoji":{"embedEmojis":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]}},"theme":"default","author":"JJM","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"DarkNet Book","output.name":"site","gitbook":"*"},"file":{"path":"part3_src/lstm_layer.md","mtime":"2020-08-13T07:15:18.770Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-08-14T11:15:45.491Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"lstm_layer.c","level":"5.29","depth":1,"next":{"title":"matrix.c","level":"5.30","depth":1,"path":"part3_src/matrix.md","ref":"part3_src/matrix.md","articles":[]},"previous":{"title":"logistic_layer.c","level":"5.28","depth":1,"path":"part3_src/logistic_layer.md","ref":"part3_src/logistic_layer.md","articles":[]},"dir":"ltr"},"config":{"plugins":["advanced-emoji","theme-gestalt","-theme-default","styles-sass-fix","theme-api","mathjax"],"root":"./","styles":{"website":"website-1599634348142.css"},"pluginsConfig":{"styles-sass-fix":{},"theme-gestalt":{"showLevel":false,"styles":{"website":"styles/website.css"},"logo":"/darknet_book/assets/darknet.png","baseUrl":null,"excludeDefaultStyles":true,"doNotHideChildrenChapters":false},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"theme-api":{"languages":[],"split":true,"theme":"light"},"mathjax":{"forceSVG":false,"version":"2.6-latest"},"advanced-emoji":{"embedEmojis":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]}},"theme":"default","author":"JJM","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"DarkNet Book","output.name":"site","gitbook":"*"},"file":{"path":"part3_src/lstm_layer.md","mtime":"2020-09-09T05:59:45.639Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-09-09T06:52:18.609Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>

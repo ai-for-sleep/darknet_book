@@ -42,7 +42,7 @@
 
     
         
-        <link rel="stylesheet" href="../website-1597403756570.css">
+        <link rel="stylesheet" href="../website-1599634348142.css">
         
     
 
@@ -1965,68 +1965,34 @@
                                 <section class="normal markdown-section">
                                 
                                 <h1 id="upsample-layer&#xB780;">Upsample Layer&#xB780;?</h1>
+<p>Upsample Layer&#xB294; Feature Maps&#xC758; &#xD06C;&#xAE30;&#xB97C; &#xD0A4;&#xC6B0;&#xB294; Layer&#xC785;&#xB2C8;&#xB2E4;.</p>
 <hr>
 <h1 id="upsamplelayerc">upsample_layer.c</h1>
 <h2 id="forwardupsamplelayer">forward_upsample_layer</h2>
-<pre><code>void forward_upsample_layer(const layer l, network net)
-{
-    fill_cpu(l.outputs*l.batch, 0, l.output, 1);
-    if(l.reverse){
-        upsample_cpu(l.output, l.out_w, l.out_h, l.c, l.batch, l.stride, 0, l.scale, net.input);
-    }else{
-        upsample_cpu(net.input, l.w, l.h, l.c, l.batch, l.stride, 1, l.scale, l.output);
+<pre><code class="lang-c"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">forward_upsample_layer</span><span class="hljs-params">(<span class="hljs-keyword">const</span> layer l, network net)</span>
+</span>{
+    fill_cpu(l.outputs*l.batch, <span class="hljs-number">0</span>, l.output, <span class="hljs-number">1</span>);
+    <span class="hljs-keyword">if</span>(l.reverse){
+        upsample_cpu(l.output, l.out_w, l.out_h, l.c, l.batch, l.stride, <span class="hljs-number">0</span>, l.scale, net.input);
+    }<span class="hljs-keyword">else</span>{
+        upsample_cpu(net.input, l.w, l.h, l.c, l.batch, l.stride, <span class="hljs-number">1</span>, l.scale, l.output);
     }
 }
-</code></pre><p><code>forward</code></p>
+</code></pre>
+<p><code>forward</code></p>
 <h2 id="backwardupsamplelayer">backward_upsample_layer</h2>
-<pre><code>void backward_upsample_layer(const layer l, network net)
-{
-    if(l.reverse){
-        upsample_cpu(l.delta, l.out_w, l.out_h, l.c, l.batch, l.stride, 1, l.scale, net.delta);
-    }else{
-        upsample_cpu(net.delta, l.w, l.h, l.c, l.batch, l.stride, 0, l.scale, l.delta);
+<pre><code class="lang-c"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">backward_upsample_layer</span><span class="hljs-params">(<span class="hljs-keyword">const</span> layer l, network net)</span>
+</span>{
+    <span class="hljs-keyword">if</span>(l.reverse){
+        upsample_cpu(l.delta, l.out_w, l.out_h, l.c, l.batch, l.stride, <span class="hljs-number">1</span>, l.scale, net.delta);
+    }<span class="hljs-keyword">else</span>{
+        upsample_cpu(net.delta, l.w, l.h, l.c, l.batch, l.stride, <span class="hljs-number">0</span>, l.scale, l.delta);
     }
 }
-</code></pre><p><code>backward</code></p>
-<h2 id="makeupsamplelayer">make_upsample_layer</h2>
-<pre><code>layer make_upsample_layer(int batch, int w, int h, int c, int stride)
-{
-    layer l = {0};
-    l.type = UPSAMPLE;
-    l.batch = batch;
-    l.w = w;
-    l.h = h;
-    l.c = c;
-    l.out_w = w*stride;
-    l.out_h = h*stride;
-    l.out_c = c;
-    if(stride &lt; 0){
-        stride = -stride;
-        l.reverse=1;
-        l.out_w = w/stride;
-        l.out_h = h/stride;
-    }
-    l.stride = stride;
-    l.outputs = l.out_w*l.out_h*l.out_c;
-    l.inputs = l.w*l.h*l.c;
-    l.delta =  calloc(l.outputs*batch, sizeof(float));
-    l.output = calloc(l.outputs*batch, sizeof(float));;
-
-    l.forward = forward_upsample_layer;
-    l.backward = backward_upsample_layer;
-    #ifdef GPU
-    l.forward_gpu = forward_upsample_layer_gpu;
-    l.backward_gpu = backward_upsample_layer_gpu;
-
-    l.delta_gpu =  cuda_make_array(l.delta, l.outputs*batch);
-    l.output_gpu = cuda_make_array(l.output, l.outputs*batch);
-    #endif
-    if(l.reverse) fprintf(stderr, &quot;downsample         %2dx  %4d x%4d x%4d   -&gt;  %4d x%4d x%4d\n&quot;, stride, w, h, c, l.out_w, l.out_h, l.out_c);
-    else fprintf(stderr, &quot;upsample           %2dx  %4d x%4d x%4d   -&gt;  %4d x%4d x%4d\n&quot;, stride, w, h, c, l.out_w, l.out_h, l.out_c);
-    return l;
-}
-</code></pre><h2 id="resizeupsamplelayer">resize_upsample_layer</h2>
-<pre><code>void resize_upsample_layer(layer *l, int w, int h)
+</code></pre>
+<p><code>backward</code></p>
+<h2 id="resizeupsamplelayer">resize_upsample_layer</h2>
+<pre><code class="lang-c">void resize_upsample_layer(layer *l, int w, int h)
 {
     l-&gt;w = w;
     l-&gt;h = h;
@@ -2042,6 +2008,41 @@
     l-&gt;output = realloc(l-&gt;output, l-&gt;outputs*l-&gt;batch*sizeof(float));  
 }
 </code></pre>
+<p><code>resize</code></p>
+<h2 id="makeupsamplelayer">make_upsample_layer</h2>
+<pre><code class="lang-c"><span class="hljs-function">layer <span class="hljs-title">make_upsample_layer</span><span class="hljs-params">(<span class="hljs-keyword">int</span> batch, <span class="hljs-keyword">int</span> w, <span class="hljs-keyword">int</span> h, <span class="hljs-keyword">int</span> c, <span class="hljs-keyword">int</span> stride)</span>
+</span>{
+    layer l = {<span class="hljs-number">0</span>};
+    l.type = UPSAMPLE;
+    l.batch = batch;
+    l.w = w;
+    l.h = h;
+    l.c = c;
+    l.out_w = w*stride;
+    l.out_h = h*stride;
+    l.out_c = c;
+    <span class="hljs-keyword">if</span>(stride &lt; <span class="hljs-number">0</span>){
+        stride = -stride;
+        l.reverse=<span class="hljs-number">1</span>;
+        l.out_w = w/stride;
+        l.out_h = h/stride;
+    }
+    l.stride = stride;
+    l.outputs = l.out_w*l.out_h*l.out_c;
+    l.inputs = l.w*l.h*l.c;
+    l.delta =  <span class="hljs-built_in">calloc</span>(l.outputs*batch, <span class="hljs-keyword">sizeof</span>(<span class="hljs-keyword">float</span>));
+    l.output = <span class="hljs-built_in">calloc</span>(l.outputs*batch, <span class="hljs-keyword">sizeof</span>(<span class="hljs-keyword">float</span>));;
+
+    l.forward = forward_upsample_layer;
+    l.backward = backward_upsample_layer;
+
+    <span class="hljs-keyword">if</span>(l.reverse) <span class="hljs-built_in">fprintf</span>(<span class="hljs-built_in">stderr</span>, <span class="hljs-string">&quot;downsample         %2dx  %4d x%4d x%4d   -&gt;  %4d x%4d x%4d\n&quot;</span>, stride, w, h, c, l.out_w, l.out_h, l.out_c);
+    <span class="hljs-keyword">else</span> <span class="hljs-built_in">fprintf</span>(<span class="hljs-built_in">stderr</span>, <span class="hljs-string">&quot;upsample           %2dx  %4d x%4d x%4d   -&gt;  %4d x%4d x%4d\n&quot;</span>, stride, w, h, c, l.out_w, l.out_h, l.out_c);
+    <span class="hljs-keyword">return</span> l;
+}
+</code></pre>
+<p><code>make</code></p>
+
                                 
                                 </section>
                             
@@ -2084,7 +2085,7 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"upsample_layer.c","level":"5.43","depth":1,"next":{"title":"utils.c","level":"5.44","depth":1,"path":"part3_src/utils.md","ref":"part3_src/utils.md","articles":[]},"previous":{"title":"tree.c","level":"5.42","depth":1,"path":"part3_src/tree.md","ref":"part3_src/tree.md","articles":[]},"dir":"ltr"},"config":{"plugins":["advanced-emoji","theme-gestalt","-theme-default","styles-sass-fix","theme-api","mathjax"],"root":"./","styles":{"website":"website-1597403756570.css"},"pluginsConfig":{"styles-sass-fix":{},"theme-gestalt":{"showLevel":false,"styles":{"website":"styles/website.css"},"logo":"/darknet_book/assets/darknet.png","baseUrl":null,"excludeDefaultStyles":true,"doNotHideChildrenChapters":false},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"theme-api":{"languages":[],"split":true,"theme":"light"},"mathjax":{"forceSVG":false,"version":"2.6-latest"},"advanced-emoji":{"embedEmojis":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]}},"theme":"default","author":"JJM","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"DarkNet Book","output.name":"site","gitbook":"*"},"file":{"path":"part3_src/upsample_layer.md","mtime":"2020-07-29T17:36:20.217Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-08-14T11:15:45.491Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"upsample_layer.c","level":"5.43","depth":1,"next":{"title":"utils.c","level":"5.44","depth":1,"path":"part3_src/utils.md","ref":"part3_src/utils.md","articles":[]},"previous":{"title":"tree.c","level":"5.42","depth":1,"path":"part3_src/tree.md","ref":"part3_src/tree.md","articles":[]},"dir":"ltr"},"config":{"plugins":["advanced-emoji","theme-gestalt","-theme-default","styles-sass-fix","theme-api","mathjax"],"root":"./","styles":{"website":"website-1599634348142.css"},"pluginsConfig":{"styles-sass-fix":{},"theme-gestalt":{"showLevel":false,"styles":{"website":"styles/website.css"},"logo":"/darknet_book/assets/darknet.png","baseUrl":null,"excludeDefaultStyles":true,"doNotHideChildrenChapters":false},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"theme-api":{"languages":[],"split":true,"theme":"light"},"mathjax":{"forceSVG":false,"version":"2.6-latest"},"advanced-emoji":{"embedEmojis":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]}},"theme":"default","author":"JJM","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"DarkNet Book","output.name":"site","gitbook":"*"},"file":{"path":"part3_src/upsample_layer.md","mtime":"2020-09-09T06:02:37.207Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-09-09T06:52:18.609Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>

@@ -42,7 +42,7 @@
 
     
         
-        <link rel="stylesheet" href="../website-1597403756570.css">
+        <link rel="stylesheet" href="../website-1599634348142.css">
         
     
 
@@ -1979,15 +1979,16 @@
 <li><code>learning_rate</code> : &#xD559;&#xC2B5;&#xB960;</li>
 <li><code>momentum</code> : learning rate&#xC758; &#xC6B4;&#xB3D9;&#xC5D0;&#xB108;&#xC9C0;&#xB97C; &#xAC10;&#xC18C;&#xC2DC;&#xD0A4;&#xAE30; &#xC704;&#xD55C; &#xAC12;</li>
 </ul>
-<pre><code># origin
+<pre><code class="lang-c"><span class="hljs-meta"># origin</span>
 
 weight = weight + learning rate * dL / dw
 
-# momentum
+<span class="hljs-meta"># momentum</span>
 
 velocity = momentum * velocity - learning rate * dL / dw
 weight = weight + velocity
-</code></pre><p>&#xB9CC;&#xC57D; momentum&#xC774; 0.9&#xC774;&#xACE0; 2&#xBC88;&#xC744; &#xD55C;&#xB2E4;&#xACE0; &#xAC00;&#xC815;&#xD558;&#xBA74;, <script type="math/tex; ">velocity = 0.9 * (-\frac{\partial L}{\partial W_1}) - \lambda \frac{\partial L}{\partial W_2}</script></p>
+</code></pre>
+<p>&#xB9CC;&#xC57D; momentum&#xC774; 0.9&#xC774;&#xACE0; 2&#xBC88;&#xC744; &#xD55C;&#xB2E4;&#xACE0; &#xAC00;&#xC815;&#xD558;&#xBA74;, <script type="math/tex; ">velocity = 0.9 * (-\frac{\partial L}{\partial W_1}) - \lambda \frac{\partial L}{\partial W_2}</script></p>
 <ul>
 <li><code>decay</code> : weight decay (L2 regularization)</li>
 </ul>
@@ -2037,66 +2038,67 @@ weight = weight + velocity
 <li><code>cost</code> :</li>
 <li><code>clip</code> :</li>
 </ul>
-<pre><code>typedef struct network{
-    int n;                            
-    int batch;                        
-    size_t *seen;
-    int *t;
-    float epoch;                     
-    int subdivisions;
+<pre><code class="lang-c"><span class="hljs-keyword">typedef</span> <span class="hljs-keyword">struct</span> network{
+    <span class="hljs-keyword">int</span> n;                            
+    <span class="hljs-keyword">int</span> batch;                        
+    <span class="hljs-keyword">size_t</span> *seen;
+    <span class="hljs-keyword">int</span> *t;
+    <span class="hljs-keyword">float</span> epoch;                     
+    <span class="hljs-keyword">int</span> subdivisions;
     layer *layers;
-    float *output;
+    <span class="hljs-keyword">float</span> *output;
     learning_rate_policy policy;
 
-    float learning_rate;
-    float momentum;
-    float decay;
-    float gamma;
-    float scale;
-    float power;
-    int time_steps;
-    int step;
-    int max_batches;
-    float *scales;
-    int   *steps;
-    int num_steps;
-    int burn_in;
+    <span class="hljs-keyword">float</span> learning_rate;
+    <span class="hljs-keyword">float</span> momentum;
+    <span class="hljs-keyword">float</span> decay;
+    <span class="hljs-keyword">float</span> gamma;
+    <span class="hljs-keyword">float</span> scale;
+    <span class="hljs-keyword">float</span> power;
+    <span class="hljs-keyword">int</span> time_steps;
+    <span class="hljs-keyword">int</span> step;
+    <span class="hljs-keyword">int</span> max_batches;
+    <span class="hljs-keyword">float</span> *scales;
+    <span class="hljs-keyword">int</span>   *steps;
+    <span class="hljs-keyword">int</span> num_steps;
+    <span class="hljs-keyword">int</span> burn_in;
 
-    int adam;
-    float B1;
-    float B2;
-    float eps;
+    <span class="hljs-keyword">int</span> adam;
+    <span class="hljs-keyword">float</span> B1;
+    <span class="hljs-keyword">float</span> B2;
+    <span class="hljs-keyword">float</span> eps;
 
-    int inputs;
-    int outputs;
-    int truths;
-    int notruth;
-    int h, w, c;
-    int max_crop;
-    int min_crop;
-    float max_ratio;
-    float min_ratio;
-    int center;
-    float angle;
-    float aspect;
-    float exposure;
-    float saturation;
-    float hue;
-    int random;
+    <span class="hljs-keyword">int</span> inputs;
+    <span class="hljs-keyword">int</span> outputs;
+    <span class="hljs-keyword">int</span> truths;
+    <span class="hljs-keyword">int</span> notruth;
+    <span class="hljs-keyword">int</span> h, w, c;
+    <span class="hljs-keyword">int</span> max_crop;
+    <span class="hljs-keyword">int</span> min_crop;
+    <span class="hljs-keyword">float</span> max_ratio;
+    <span class="hljs-keyword">float</span> min_ratio;
+    <span class="hljs-keyword">int</span> center;
+    <span class="hljs-keyword">float</span> angle;
+    <span class="hljs-keyword">float</span> aspect;
+    <span class="hljs-keyword">float</span> exposure;
+    <span class="hljs-keyword">float</span> saturation;
+    <span class="hljs-keyword">float</span> hue;
+    <span class="hljs-keyword">int</span> random;
 
-    int gpu_index;
+    <span class="hljs-keyword">int</span> gpu_index;
     tree *hierarchy;
 
-    float *input;
-    float *truth;
-    float *delta;
-    float *workspace;
-    int train;
-    int index;
-    float *cost;
-    float clip;
+    <span class="hljs-keyword">float</span> *input;
+    <span class="hljs-keyword">float</span> *truth;
+    <span class="hljs-keyword">float</span> *delta;
+    <span class="hljs-keyword">float</span> *workspace;
+    <span class="hljs-keyword">int</span> train;
+    <span class="hljs-keyword">int</span> index;
+    <span class="hljs-keyword">float</span> *cost;
+    <span class="hljs-keyword">float</span> clip;
 } network;
 </code></pre>
+
                                 
                                 </section>
                             
@@ -2139,7 +2141,7 @@ weight = weight + velocity
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"network","level":"4.1","depth":1,"next":{"title":"layer","level":"4.2","depth":1,"path":"part4_structure/layer.md","ref":"part4_structure/layer.md","articles":[]},"previous":{"title":"/src","level":"3.5","depth":1,"path":"part2_source/4_SRC.md","ref":"part2_source/4_SRC.md","articles":[]},"dir":"ltr"},"config":{"plugins":["advanced-emoji","theme-gestalt","-theme-default","styles-sass-fix","theme-api","mathjax"],"root":"./","styles":{"website":"website-1597403756570.css"},"pluginsConfig":{"styles-sass-fix":{},"theme-gestalt":{"showLevel":false,"styles":{"website":"styles/website.css"},"logo":"/darknet_book/assets/darknet.png","baseUrl":null,"excludeDefaultStyles":true,"doNotHideChildrenChapters":false},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"theme-api":{"languages":[],"split":true,"theme":"light"},"mathjax":{"forceSVG":false,"version":"2.6-latest"},"advanced-emoji":{"embedEmojis":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]}},"theme":"default","author":"JJM","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"DarkNet Book","output.name":"site","gitbook":"*"},"file":{"path":"part4_structure/network.md","mtime":"2020-08-11T12:14:53.817Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-08-14T11:15:45.491Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"network","level":"4.1","depth":1,"next":{"title":"layer","level":"4.2","depth":1,"path":"part4_structure/layer.md","ref":"part4_structure/layer.md","articles":[]},"previous":{"title":"/src","level":"3.5","depth":1,"path":"part2_source/4_SRC.md","ref":"part2_source/4_SRC.md","articles":[]},"dir":"ltr"},"config":{"plugins":["advanced-emoji","theme-gestalt","-theme-default","styles-sass-fix","theme-api","mathjax"],"root":"./","styles":{"website":"website-1599634348142.css"},"pluginsConfig":{"styles-sass-fix":{},"theme-gestalt":{"showLevel":false,"styles":{"website":"styles/website.css"},"logo":"/darknet_book/assets/darknet.png","baseUrl":null,"excludeDefaultStyles":true,"doNotHideChildrenChapters":false},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"theme-api":{"languages":[],"split":true,"theme":"light"},"mathjax":{"forceSVG":false,"version":"2.6-latest"},"advanced-emoji":{"embedEmojis":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]}},"theme":"default","author":"JJM","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"DarkNet Book","output.name":"site","gitbook":"*"},"file":{"path":"part4_structure/network.md","mtime":"2020-09-09T05:50:00.848Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-09-09T06:52:18.609Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>

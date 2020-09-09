@@ -42,7 +42,7 @@
 
     
         
-        <link rel="stylesheet" href="../website-1597403756570.css">
+        <link rel="stylesheet" href="../website-1599634348142.css">
         
     
 
@@ -1966,7 +1966,7 @@
                                 
                                 <h1 id="reorglayerc">reorg_layer.c</h1>
 <h2 id="forwardreorglayer">forward_reorg_layer</h2>
-<pre><code>void forward_reorg_layer(const layer l, network net)
+<pre><code class="lang-c">void forward_reorg_layer(const layer l, network net)
 {
     int i;
     if(l.flatten){
@@ -1986,9 +1986,10 @@
         reorg_cpu(net.input, l.w, l.h, l.c, l.batch, l.stride, 0, l.output);
     }
 }
-</code></pre><p><code>forward</code></p>
+</code></pre>
+<p><code>forward</code></p>
 <h2 id="backwardreorglayer">backward_reorg_layer</h2>
-<pre><code>void backward_reorg_layer(const layer l, network net)
+<pre><code class="lang-c">void backward_reorg_layer(const layer l, network net)
 {
     int i;
     if(l.flatten){
@@ -2008,53 +2009,10 @@
         reorg_cpu(l.delta, l.w, l.h, l.c, l.batch, l.stride, 1, net.delta);
     }
 }
-</code></pre><p><code>backward</code></p>
-<h2 id="makereorglayer">make_reorg_layer</h2>
-<pre><code>layer make_reorg_layer(int batch, int w, int h, int c, int stride, int reverse, int flatten, int extra)
-{
-    layer l = {0};
-    l.type = REORG;
-    l.batch = batch;
-    l.stride = stride;
-    l.extra = extra;
-    l.h = h;
-    l.w = w;
-    l.c = c;
-    l.flatten = flatten;
-    if(reverse){
-        l.out_w = w*stride;
-        l.out_h = h*stride;
-        l.out_c = c/(stride*stride);
-    }else{
-        l.out_w = w/stride;
-        l.out_h = h/stride;
-        l.out_c = c*(stride*stride);
-    }
-    l.reverse = reverse;
-
-    l.outputs = l.out_h * l.out_w * l.out_c;
-    l.inputs = h*w*c;
-    if(l.extra){
-        l.out_w = l.out_h = l.out_c = 0;
-        l.outputs = l.inputs + l.extra;
-    }
-
-    if(extra){
-        fprintf(stderr, &quot;reorg              %4d   -&gt;  %4d\n&quot;,  l.inputs, l.outputs);
-    } else {
-        fprintf(stderr, &quot;reorg              /%2d  %4d x%4d x%4d   -&gt;  %4d x%4d x%4d\n&quot;,  stride, w, h, c, l.out_w, l.out_h, l.out_c);
-    }
-    int output_size = l.outputs * batch;
-    l.output =  calloc(output_size, sizeof(float));
-    l.delta =   calloc(output_size, sizeof(float));
-
-    l.forward = forward_reorg_layer;
-    l.backward = backward_reorg_layer;
-
-    return l;
-}
-</code></pre><h2 id="resizereorglayer">resize_reorg_layer</h2>
-<pre><code>void resize_reorg_layer(layer *l, int w, int h)
+</code></pre>
+<p><code>backward</code></p>
+<h2 id="resizereorglayer">resize_reorg_layer</h2>
+<pre><code class="lang-c">void resize_reorg_layer(layer *l, int w, int h)
 {
     int stride = l-&gt;stride;
     int c = l-&gt;c;
@@ -2080,6 +2038,54 @@
     l-&gt;delta = realloc(l-&gt;delta, output_size * sizeof(float));
 }
 </code></pre>
+<p><code>resize</code></p>
+<h2 id="makereorglayer">make_reorg_layer</h2>
+<pre><code class="lang-c"><span class="hljs-function">layer <span class="hljs-title">make_reorg_layer</span><span class="hljs-params">(<span class="hljs-keyword">int</span> batch, <span class="hljs-keyword">int</span> w, <span class="hljs-keyword">int</span> h, <span class="hljs-keyword">int</span> c, <span class="hljs-keyword">int</span> stride, <span class="hljs-keyword">int</span> reverse, <span class="hljs-keyword">int</span> flatten, <span class="hljs-keyword">int</span> extra)</span>
+</span>{
+    layer l = {<span class="hljs-number">0</span>};
+    l.type = REORG;
+    l.batch = batch;
+    l.stride = stride;
+    l.extra = extra;
+    l.h = h;
+    l.w = w;
+    l.c = c;
+    l.flatten = flatten;
+    <span class="hljs-keyword">if</span>(reverse){
+        l.out_w = w*stride;
+        l.out_h = h*stride;
+        l.out_c = c/(stride*stride);
+    }<span class="hljs-keyword">else</span>{
+        l.out_w = w/stride;
+        l.out_h = h/stride;
+        l.out_c = c*(stride*stride);
+    }
+    l.reverse = reverse;
+
+    l.outputs = l.out_h * l.out_w * l.out_c;
+    l.inputs = h*w*c;
+    <span class="hljs-keyword">if</span>(l.extra){
+        l.out_w = l.out_h = l.out_c = <span class="hljs-number">0</span>;
+        l.outputs = l.inputs + l.extra;
+    }
+
+    <span class="hljs-keyword">if</span>(extra){
+        <span class="hljs-built_in">fprintf</span>(<span class="hljs-built_in">stderr</span>, <span class="hljs-string">&quot;reorg              %4d   -&gt;  %4d\n&quot;</span>,  l.inputs, l.outputs);
+    } <span class="hljs-keyword">else</span> {
+        <span class="hljs-built_in">fprintf</span>(<span class="hljs-built_in">stderr</span>, <span class="hljs-string">&quot;reorg              /%2d  %4d x%4d x%4d   -&gt;  %4d x%4d x%4d\n&quot;</span>,  stride, w, h, c, l.out_w, l.out_h, l.out_c);
+    }
+    <span class="hljs-keyword">int</span> output_size = l.outputs * batch;
+    l.output =  <span class="hljs-built_in">calloc</span>(output_size, <span class="hljs-keyword">sizeof</span>(<span class="hljs-keyword">float</span>));
+    l.delta =   <span class="hljs-built_in">calloc</span>(output_size, <span class="hljs-keyword">sizeof</span>(<span class="hljs-keyword">float</span>));
+
+    l.forward = forward_reorg_layer;
+    l.backward = backward_reorg_layer;
+
+    <span class="hljs-keyword">return</span> l;
+}
+</code></pre>
+<p><code>make</code></p>
+
                                 
                                 </section>
                             
@@ -2122,7 +2128,7 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"reorg_layer.c","level":"5.37","depth":1,"next":{"title":"rnn_layer.c","level":"5.38","depth":1,"path":"part3_src/rnn_layer.md","ref":"part3_src/rnn_layer.md","articles":[]},"previous":{"title":"region_layer.c","level":"5.36","depth":1,"path":"part3_src/region_layer.md","ref":"part3_src/region_layer.md","articles":[]},"dir":"ltr"},"config":{"plugins":["advanced-emoji","theme-gestalt","-theme-default","styles-sass-fix","theme-api","mathjax"],"root":"./","styles":{"website":"website-1597403756570.css"},"pluginsConfig":{"styles-sass-fix":{},"theme-gestalt":{"showLevel":false,"styles":{"website":"styles/website.css"},"logo":"/darknet_book/assets/darknet.png","baseUrl":null,"excludeDefaultStyles":true,"doNotHideChildrenChapters":false},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"theme-api":{"languages":[],"split":true,"theme":"light"},"mathjax":{"forceSVG":false,"version":"2.6-latest"},"advanced-emoji":{"embedEmojis":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]}},"theme":"default","author":"JJM","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"DarkNet Book","output.name":"site","gitbook":"*"},"file":{"path":"part3_src/reorg_layer.md","mtime":"2020-07-29T17:42:33.293Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-08-14T11:15:45.491Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"reorg_layer.c","level":"5.37","depth":1,"next":{"title":"rnn_layer.c","level":"5.38","depth":1,"path":"part3_src/rnn_layer.md","ref":"part3_src/rnn_layer.md","articles":[]},"previous":{"title":"region_layer.c","level":"5.36","depth":1,"path":"part3_src/region_layer.md","ref":"part3_src/region_layer.md","articles":[]},"dir":"ltr"},"config":{"plugins":["advanced-emoji","theme-gestalt","-theme-default","styles-sass-fix","theme-api","mathjax"],"root":"./","styles":{"website":"website-1599634348142.css"},"pluginsConfig":{"styles-sass-fix":{},"theme-gestalt":{"showLevel":false,"styles":{"website":"styles/website.css"},"logo":"/darknet_book/assets/darknet.png","baseUrl":null,"excludeDefaultStyles":true,"doNotHideChildrenChapters":false},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"theme-api":{"languages":[],"split":true,"theme":"light"},"mathjax":{"forceSVG":false,"version":"2.6-latest"},"advanced-emoji":{"embedEmojis":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]}},"theme":"default","author":"JJM","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"DarkNet Book","output.name":"site","gitbook":"*"},"file":{"path":"part3_src/reorg_layer.md","mtime":"2020-09-09T06:01:10.985Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-09-09T06:52:18.609Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>

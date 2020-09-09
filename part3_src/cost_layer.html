@@ -42,7 +42,7 @@
 
     
         
-        <link rel="stylesheet" href="../website-1597403756570.css">
+        <link rel="stylesheet" href="../website-1599634348142.css">
         
     
 
@@ -2011,42 +2011,54 @@
 <li>COST_TYPE&#xC5D0; &#xD574;&#xB2F9;&#xD558;&#xB294; &#xBB38;&#xC790;&#xC5F4;&#xC744; &#xBC18;&#xD658;&#xD569;&#xB2C8;&#xB2E4;.</li>
 </ul>
 <h2 id="forwardcostlayer">forward_cost_layer</h2>
-<pre><code>void forward_cost_layer(cost_layer l, network net)
-{
-    if (!net.truth) return;
-    if(l.cost_type == MASKED){
-        int i;
-        for(i = 0; i &lt; l.batch*l.inputs; ++i){
-            if(net.truth[i] == SECRET_NUM) net.input[i] = SECRET_NUM;
+<pre><code class="lang-c"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">forward_cost_layer</span><span class="hljs-params">(cost_layer l, network net)</span>
+</span>{
+    <span class="hljs-keyword">if</span> (!net.truth) <span class="hljs-keyword">return</span>;
+    <span class="hljs-keyword">if</span>(l.cost_type == MASKED){
+        <span class="hljs-keyword">int</span> i;
+        <span class="hljs-keyword">for</span>(i = <span class="hljs-number">0</span>; i &lt; l.batch*l.inputs; ++i){
+            <span class="hljs-keyword">if</span>(net.truth[i] == SECRET_NUM) net.input[i] = SECRET_NUM;
         }
     }
-    if(l.cost_type == SMOOTH){
+    <span class="hljs-keyword">if</span>(l.cost_type == SMOOTH){
         smooth_l1_cpu(l.batch*l.inputs, net.input, net.truth, l.delta, l.output);
-    }else if(l.cost_type == L1){
+    }<span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span>(l.cost_type == L1){
         l1_cpu(l.batch*l.inputs, net.input, net.truth, l.delta, l.output);
-    } else {
+    } <span class="hljs-keyword">else</span> {
         l2_cpu(l.batch*l.inputs, net.input, net.truth, l.delta, l.output);
     }
-    l.cost[0] = sum_array(l.output, l.batch*l.inputs);
+    l.cost[<span class="hljs-number">0</span>] = sum_array(l.output, l.batch*l.inputs);
 }
-</code></pre><p><code>forward</code></p>
+</code></pre>
+<p><code>forward</code></p>
 <ul>
 <li>loss&#xB97C; &#xAD6C;&#xD569;&#xB2C8;&#xB2E4;.</li>
 </ul>
 <h2 id="backwardcostlayer">backward_cost_layer</h2>
-<pre><code>void backward_cost_layer(const cost_layer l, network net)
-{
-    axpy_cpu(l.batch*l.inputs, l.scale, l.delta, 1, net.delta, 1);
+<pre><code class="lang-c"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">backward_cost_layer</span><span class="hljs-params">(<span class="hljs-keyword">const</span> cost_layer l, network net)</span>
+</span>{
+    axpy_cpu(l.batch*l.inputs, l.scale, l.delta, <span class="hljs-number">1</span>, net.delta, <span class="hljs-number">1</span>);
 }
-</code></pre><p><code>backward</code></p>
+</code></pre>
+<p><code>backward</code></p>
 <ul>
 <li>network delta = scale * layer delta</li>
 </ul>
-<h2 id="makecostlayer">make_cost_layer</h2>
-<pre><code>cost_layer make_cost_layer(int batch, int inputs, COST_TYPE cost_type, float scale)
+<h2 id="resizecostlayer">resize_cost_layer</h2>
+<pre><code class="lang-c">void resize_cost_layer(cost_layer *l, int inputs)
 {
-    fprintf(stderr, &quot;cost                                           %4d\n&quot;,  inputs);
-    cost_layer l = {0};
+    l-&gt;inputs = inputs;
+    l-&gt;outputs = inputs;
+    l-&gt;delta = realloc(l-&gt;delta, inputs*l-&gt;batch*sizeof(float));
+    l-&gt;output = realloc(l-&gt;output, inputs*l-&gt;batch*sizeof(float));
+}
+</code></pre>
+<p><code>resize</code></p>
+<h2 id="makecostlayer">make_cost_layer</h2>
+<pre><code class="lang-c"><span class="hljs-function">cost_layer <span class="hljs-title">make_cost_layer</span><span class="hljs-params">(<span class="hljs-keyword">int</span> batch, <span class="hljs-keyword">int</span> inputs, COST_TYPE cost_type, <span class="hljs-keyword">float</span> scale)</span>
+</span>{
+    <span class="hljs-built_in">fprintf</span>(<span class="hljs-built_in">stderr</span>, <span class="hljs-string">&quot;cost                                           %4d\n&quot;</span>,  inputs);
+    cost_layer l = {<span class="hljs-number">0</span>};
     l.type = COST;
 
     l.scale = scale;
@@ -2054,29 +2066,17 @@
     l.inputs = inputs;
     l.outputs = inputs;
     l.cost_type = cost_type;
-    l.delta = calloc(inputs*batch, sizeof(float));
-    l.output = calloc(inputs*batch, sizeof(float));
-    l.cost = calloc(1, sizeof(float));
+    l.delta = <span class="hljs-built_in">calloc</span>(inputs*batch, <span class="hljs-keyword">sizeof</span>(<span class="hljs-keyword">float</span>));
+    l.output = <span class="hljs-built_in">calloc</span>(inputs*batch, <span class="hljs-keyword">sizeof</span>(<span class="hljs-keyword">float</span>));
+    l.cost = <span class="hljs-built_in">calloc</span>(<span class="hljs-number">1</span>, <span class="hljs-keyword">sizeof</span>(<span class="hljs-keyword">float</span>));
 
     l.forward = forward_cost_layer;
     l.backward = backward_cost_layer;
 
-    return l;
+    <span class="hljs-keyword">return</span> l;
 }
-</code></pre><ul>
-<li>Loss&#xB97C; &#xAD6C;&#xD558;&#xAE30; &#xC704;&#xD55C; cost layer&#xB97C; &#xB9CC;&#xB4ED;&#xB2C8;&#xB2E4;.</li>
-</ul>
-<h2 id="resizecostlayer">resize_cost_layer</h2>
-<pre><code>void resize_cost_layer(cost_layer *l, int inputs)
-{
-    l-&gt;inputs = inputs;
-    l-&gt;outputs = inputs;
-    l-&gt;delta = realloc(l-&gt;delta, inputs*l-&gt;batch*sizeof(float));
-    l-&gt;output = realloc(l-&gt;output, inputs*l-&gt;batch*sizeof(float));
-}
-</code></pre><ul>
-<li>cost layer&#xB97C; resize&#xD569;&#xB2C8;&#xB2E4;.</li>
-</ul>
+</code></pre>
+<p><code>make</code></p>
 
                                 
                                 </section>
@@ -2120,7 +2120,7 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"cost_layer.c","level":"5.11","depth":1,"next":{"title":"crnn_layer.c","level":"5.12","depth":1,"path":"part3_src/crnn_layer.md","ref":"part3_src/crnn_layer.md","articles":[]},"previous":{"title":"convolutional_layer.c","level":"5.10","depth":1,"path":"part3_src/convolutional_layer.md","ref":"part3_src/convolutional_layer.md","articles":[]},"dir":"ltr"},"config":{"plugins":["advanced-emoji","theme-gestalt","-theme-default","styles-sass-fix","theme-api","mathjax"],"root":"./","styles":{"website":"website-1597403756570.css"},"pluginsConfig":{"styles-sass-fix":{},"theme-gestalt":{"showLevel":false,"styles":{"website":"styles/website.css"},"logo":"/darknet_book/assets/darknet.png","baseUrl":null,"excludeDefaultStyles":true,"doNotHideChildrenChapters":false},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"theme-api":{"languages":[],"split":true,"theme":"light"},"mathjax":{"forceSVG":false,"version":"2.6-latest"},"advanced-emoji":{"embedEmojis":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]}},"theme":"default","author":"JJM","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"DarkNet Book","output.name":"site","gitbook":"*"},"file":{"path":"part3_src/cost_layer.md","mtime":"2020-07-29T06:19:46.136Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-08-14T11:15:45.491Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"cost_layer.c","level":"5.11","depth":1,"next":{"title":"crnn_layer.c","level":"5.12","depth":1,"path":"part3_src/crnn_layer.md","ref":"part3_src/crnn_layer.md","articles":[]},"previous":{"title":"convolutional_layer.c","level":"5.10","depth":1,"path":"part3_src/convolutional_layer.md","ref":"part3_src/convolutional_layer.md","articles":[]},"dir":"ltr"},"config":{"plugins":["advanced-emoji","theme-gestalt","-theme-default","styles-sass-fix","theme-api","mathjax"],"root":"./","styles":{"website":"website-1599634348142.css"},"pluginsConfig":{"styles-sass-fix":{},"theme-gestalt":{"showLevel":false,"styles":{"website":"styles/website.css"},"logo":"/darknet_book/assets/darknet.png","baseUrl":null,"excludeDefaultStyles":true,"doNotHideChildrenChapters":false},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"theme-api":{"languages":[],"split":true,"theme":"light"},"mathjax":{"forceSVG":false,"version":"2.6-latest"},"advanced-emoji":{"embedEmojis":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]}},"theme":"default","author":"JJM","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"DarkNet Book","output.name":"site","gitbook":"*"},"file":{"path":"part3_src/cost_layer.md","mtime":"2020-09-09T05:54:14.775Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-09-09T06:52:18.609Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>

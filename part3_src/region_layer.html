@@ -42,7 +42,7 @@
 
     
         
-        <link rel="stylesheet" href="../website-1597403756570.css">
+        <link rel="stylesheet" href="../website-1599634348142.css">
         
     
 
@@ -1966,7 +1966,7 @@
                                 
                                 <h1 id="regionlayerc">region_layer.c</h1>
 <h2 id="forwardregionlayer">forward_region_layer</h2>
-<pre><code>void forward_region_layer(const layer l, network net)
+<pre><code class="lang-c">void forward_region_layer(const layer l, network net)
 {
     int i,j,b,t,n;
     memcpy(l.output, net.input, l.outputs*l.batch*sizeof(float));
@@ -2105,11 +2105,12 @@
     *(l.cost) = pow(mag_array(l.delta, l.outputs * l.batch), 2);
     printf(&quot;Region Avg IOU: %f, Class: %f, Obj: %f, No Obj: %f, Avg Recall: %f,  count: %d\n&quot;, avg_iou/count, avg_cat/class_count, avg_obj/count, avg_anyobj/(l.w*l.h*l.n*l.batch), recall/count, count);
 }
-</code></pre><p><code>forward</code></p>
+</code></pre>
+<p><code>forward</code></p>
 <h2 id="backwardregionlayer">backward_region_layer</h2>
-<pre><code>void backward_region_layer(const layer l, network net)
-{
-    /*
+<pre><code class="lang-c"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">backward_region_layer</span><span class="hljs-params">(<span class="hljs-keyword">const</span> layer l, network net)</span>
+</span>{
+    <span class="hljs-comment">/*
        int b;
        int size = l.coords + l.classes + 1;
        for (b = 0; b &lt; l.batch*l.n; ++b){
@@ -2117,48 +2118,12 @@
        gradient_array(l.output + index, l.w*l.h, LOGISTIC, l.delta + index);
        }
        axpy_cpu(l.batch*l.inputs, 1, l.delta, 1, net.delta, 1);
-     */
+     */</span>
 }
-</code></pre><p><code>backward</code></p>
-<h2 id="makeregionlayer">make_region_layer</h2>
-<pre><code>layer make_region_layer(int batch, int w, int h, int n, int classes, int coords)
-{
-    layer l = {0};
-    l.type = REGION;
-
-    l.n = n;
-    l.batch = batch;
-    l.h = h;
-    l.w = w;
-    l.c = n*(classes + coords + 1);
-    l.out_w = l.w;
-    l.out_h = l.h;
-    l.out_c = l.c;
-    l.classes = classes;
-    l.coords = coords;
-    l.cost = calloc(1, sizeof(float));
-    l.biases = calloc(n*2, sizeof(float));
-    l.bias_updates = calloc(n*2, sizeof(float));
-    l.outputs = h*w*n*(classes + coords + 1);
-    l.inputs = l.outputs;
-    l.truths = 30*(l.coords + 1);
-    l.delta = calloc(batch*l.outputs, sizeof(float));
-    l.output = calloc(batch*l.outputs, sizeof(float));
-    int i;
-    for(i = 0; i &lt; n*2; ++i){
-        l.biases[i] = .5;
-    }
-
-    l.forward = forward_region_layer;
-    l.backward = backward_region_layer;
-
-    fprintf(stderr, &quot;detection\n&quot;);
-    srand(0);
-
-    return l;
-}
-</code></pre><h2 id="resizereorglayer">resize_reorg_layer</h2>
-<pre><code>void resize_region_layer(layer *l, int w, int h)
+</code></pre>
+<p><code>backward</code></p>
+<h2 id="resizereorglayer">resize_reorg_layer</h2>
+<pre><code class="lang-c">void resize_region_layer(layer *l, int w, int h)
 {
     l-&gt;w = w;
     l-&gt;h = h;
@@ -2169,88 +2134,136 @@
     l-&gt;output = realloc(l-&gt;output, l-&gt;batch*l-&gt;outputs*sizeof(float));
     l-&gt;delta = realloc(l-&gt;delta, l-&gt;batch*l-&gt;outputs*sizeof(float));
 }
-</code></pre><h2 id="getregionbox">get_region_box</h2>
-<pre><code>box get_region_box(float *x, float *biases, int n, int index, int i, int j, int w, int h, int stride)
-{
+</code></pre>
+<p><code>resize</code></p>
+<h2 id="makeregionlayer">make_region_layer</h2>
+<pre><code class="lang-c"><span class="hljs-function">layer <span class="hljs-title">make_region_layer</span><span class="hljs-params">(<span class="hljs-keyword">int</span> batch, <span class="hljs-keyword">int</span> w, <span class="hljs-keyword">int</span> h, <span class="hljs-keyword">int</span> n, <span class="hljs-keyword">int</span> classes, <span class="hljs-keyword">int</span> coords)</span>
+</span>{
+    layer l = {<span class="hljs-number">0</span>};
+    l.type = REGION;
+
+    l.n = n;
+    l.batch = batch;
+    l.h = h;
+    l.w = w;
+    l.c = n*(classes + coords + <span class="hljs-number">1</span>);
+    l.out_w = l.w;
+    l.out_h = l.h;
+    l.out_c = l.c;
+    l.classes = classes;
+    l.coords = coords;
+    l.cost = <span class="hljs-built_in">calloc</span>(<span class="hljs-number">1</span>, <span class="hljs-keyword">sizeof</span>(<span class="hljs-keyword">float</span>));
+    l.biases = <span class="hljs-built_in">calloc</span>(n*<span class="hljs-number">2</span>, <span class="hljs-keyword">sizeof</span>(<span class="hljs-keyword">float</span>));
+    l.bias_updates = <span class="hljs-built_in">calloc</span>(n*<span class="hljs-number">2</span>, <span class="hljs-keyword">sizeof</span>(<span class="hljs-keyword">float</span>));
+    l.outputs = h*w*n*(classes + coords + <span class="hljs-number">1</span>);
+    l.inputs = l.outputs;
+    l.truths = <span class="hljs-number">30</span>*(l.coords + <span class="hljs-number">1</span>);
+    l.delta = <span class="hljs-built_in">calloc</span>(batch*l.outputs, <span class="hljs-keyword">sizeof</span>(<span class="hljs-keyword">float</span>));
+    l.output = <span class="hljs-built_in">calloc</span>(batch*l.outputs, <span class="hljs-keyword">sizeof</span>(<span class="hljs-keyword">float</span>));
+    <span class="hljs-keyword">int</span> i;
+    <span class="hljs-keyword">for</span>(i = <span class="hljs-number">0</span>; i &lt; n*<span class="hljs-number">2</span>; ++i){
+        l.biases[i] = <span class="hljs-number">.5</span>;
+    }
+
+    l.forward = forward_region_layer;
+    l.backward = backward_region_layer;
+
+    <span class="hljs-built_in">fprintf</span>(<span class="hljs-built_in">stderr</span>, <span class="hljs-string">&quot;detection\n&quot;</span>);
+    srand(<span class="hljs-number">0</span>);
+
+    <span class="hljs-keyword">return</span> l;
+}
+</code></pre>
+<p><code>make</code></p>
+<h2 id="getregionbox">get_region_box</h2>
+<pre><code class="lang-c"><span class="hljs-function">box <span class="hljs-title">get_region_box</span><span class="hljs-params">(<span class="hljs-keyword">float</span> *x, <span class="hljs-keyword">float</span> *biases, <span class="hljs-keyword">int</span> n, <span class="hljs-keyword">int</span> index, <span class="hljs-keyword">int</span> i, <span class="hljs-keyword">int</span> j, <span class="hljs-keyword">int</span> w, <span class="hljs-keyword">int</span> h, <span class="hljs-keyword">int</span> stride)</span>
+</span>{
     box b;
-    b.x = (i + x[index + 0*stride]) / w;
-    b.y = (j + x[index + 1*stride]) / h;
-    b.w = exp(x[index + 2*stride]) * biases[2*n]   / w;
-    b.h = exp(x[index + 3*stride]) * biases[2*n+1] / h;
-    return b;
+    b.x = (i + x[index + <span class="hljs-number">0</span>*stride]) / w;
+    b.y = (j + x[index + <span class="hljs-number">1</span>*stride]) / h;
+    b.w = <span class="hljs-built_in">exp</span>(x[index + <span class="hljs-number">2</span>*stride]) * biases[<span class="hljs-number">2</span>*n]   / w;
+    b.h = <span class="hljs-built_in">exp</span>(x[index + <span class="hljs-number">3</span>*stride]) * biases[<span class="hljs-number">2</span>*n+<span class="hljs-number">1</span>] / h;
+    <span class="hljs-keyword">return</span> b;
 }
-</code></pre><h2 id="deltaregionbox">delta_region_box</h2>
-<pre><code>float delta_region_box(box truth, float *x, float *biases, int n, int index, int i, int j, int w, int h, float *delta, float scale, int stride)
-{
+</code></pre>
+<h2 id="deltaregionbox">delta_region_box</h2>
+<pre><code class="lang-c"><span class="hljs-function"><span class="hljs-keyword">float</span> <span class="hljs-title">delta_region_box</span><span class="hljs-params">(box truth, <span class="hljs-keyword">float</span> *x, <span class="hljs-keyword">float</span> *biases, <span class="hljs-keyword">int</span> n, <span class="hljs-keyword">int</span> index, <span class="hljs-keyword">int</span> i, <span class="hljs-keyword">int</span> j, <span class="hljs-keyword">int</span> w, <span class="hljs-keyword">int</span> h, <span class="hljs-keyword">float</span> *delta, <span class="hljs-keyword">float</span> scale, <span class="hljs-keyword">int</span> stride)</span>
+</span>{
     box pred = get_region_box(x, biases, n, index, i, j, w, h, stride);
-    float iou = box_iou(pred, truth);
+    <span class="hljs-keyword">float</span> iou = box_iou(pred, truth);
 
-    float tx = (truth.x*w - i);
-    float ty = (truth.y*h - j);
-    float tw = log(truth.w*w / biases[2*n]);
-    float th = log(truth.h*h / biases[2*n + 1]);
+    <span class="hljs-keyword">float</span> tx = (truth.x*w - i);
+    <span class="hljs-keyword">float</span> ty = (truth.y*h - j);
+    <span class="hljs-keyword">float</span> tw = <span class="hljs-built_in">log</span>(truth.w*w / biases[<span class="hljs-number">2</span>*n]);
+    <span class="hljs-keyword">float</span> th = <span class="hljs-built_in">log</span>(truth.h*h / biases[<span class="hljs-number">2</span>*n + <span class="hljs-number">1</span>]);
 
-    delta[index + 0*stride] = scale * (tx - x[index + 0*stride]);
-    delta[index + 1*stride] = scale * (ty - x[index + 1*stride]);
-    delta[index + 2*stride] = scale * (tw - x[index + 2*stride]);
-    delta[index + 3*stride] = scale * (th - x[index + 3*stride]);
-    return iou;
+    delta[index + <span class="hljs-number">0</span>*stride] = scale * (tx - x[index + <span class="hljs-number">0</span>*stride]);
+    delta[index + <span class="hljs-number">1</span>*stride] = scale * (ty - x[index + <span class="hljs-number">1</span>*stride]);
+    delta[index + <span class="hljs-number">2</span>*stride] = scale * (tw - x[index + <span class="hljs-number">2</span>*stride]);
+    delta[index + <span class="hljs-number">3</span>*stride] = scale * (th - x[index + <span class="hljs-number">3</span>*stride]);
+    <span class="hljs-keyword">return</span> iou;
 }
-</code></pre><h2 id="deltaregionmask">delta_region_mask</h2>
-<pre><code>void delta_region_mask(float *truth, float *x, int n, int index, float *delta, int stride, int scale)
-{
-    int i;
-    for(i = 0; i &lt; n; ++i){
+</code></pre>
+<h2 id="deltaregionmask">delta_region_mask</h2>
+<pre><code class="lang-c"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">delta_region_mask</span><span class="hljs-params">(<span class="hljs-keyword">float</span> *truth, <span class="hljs-keyword">float</span> *x, <span class="hljs-keyword">int</span> n, <span class="hljs-keyword">int</span> index, <span class="hljs-keyword">float</span> *delta, <span class="hljs-keyword">int</span> stride, <span class="hljs-keyword">int</span> scale)</span>
+</span>{
+    <span class="hljs-keyword">int</span> i;
+    <span class="hljs-keyword">for</span>(i = <span class="hljs-number">0</span>; i &lt; n; ++i){
         delta[index + i*stride] = scale*(truth[i] - x[index + i*stride]);
     }
 }
-</code></pre><h2 id="deltaregionclass">delta_region_class</h2>
-<pre><code>void delta_region_class(float *output, float *delta, int index, int class, int classes, tree *hier, float scale, int stride, float *avg_cat, int tag)
-{
-    int i, n;
-    if(hier){
-        float pred = 1;
-        while(class &gt;= 0){
-            pred *= output[index + stride*class];
-            int g = hier-&gt;group[class];
-            int offset = hier-&gt;group_offset[g];
-            for(i = 0; i &lt; hier-&gt;group_size[g]; ++i){
-                delta[index + stride*(offset + i)] = scale * (0 - output[index + stride*(offset + i)]);
+</code></pre>
+<h2 id="deltaregionclass">delta_region_class</h2>
+<pre><code class="lang-c"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">delta_region_class</span><span class="hljs-params">(<span class="hljs-keyword">float</span> *output, <span class="hljs-keyword">float</span> *delta, <span class="hljs-keyword">int</span> index, <span class="hljs-keyword">int</span> <span class="hljs-keyword">class</span>, <span class="hljs-keyword">int</span> classes, tree *hier, <span class="hljs-keyword">float</span> scale, <span class="hljs-keyword">int</span> stride, <span class="hljs-keyword">float</span> *avg_cat, <span class="hljs-keyword">int</span> tag)</span>
+</span>{
+    <span class="hljs-keyword">int</span> i, n;
+    <span class="hljs-keyword">if</span>(hier){
+        <span class="hljs-keyword">float</span> pred = <span class="hljs-number">1</span>;
+        <span class="hljs-keyword">while</span>(<span class="hljs-keyword">class</span> &gt;= <span class="hljs-number">0</span>){
+            pred *= output[index + stride*<span class="hljs-keyword">class</span>];
+            <span class="hljs-keyword">int</span> g = hier-&gt;group[<span class="hljs-keyword">class</span>];
+            <span class="hljs-keyword">int</span> offset = hier-&gt;group_offset[g];
+            <span class="hljs-keyword">for</span>(i = <span class="hljs-number">0</span>; i &lt; hier-&gt;group_size[g]; ++i){
+                delta[index + stride*(offset + i)] = scale * (<span class="hljs-number">0</span> - output[index + stride*(offset + i)]);
             }
-            delta[index + stride*class] = scale * (1 - output[index + stride*class]);
+            delta[index + stride*<span class="hljs-keyword">class</span>] = scale * (<span class="hljs-number">1</span> - output[index + stride*<span class="hljs-keyword">class</span>]);
 
-            class = hier-&gt;parent[class];
+            <span class="hljs-keyword">class</span> = hier-&gt;parent[<span class="hljs-keyword">class</span>];
         }
         *avg_cat += pred;
-    } else {
-        if (delta[index] &amp;&amp; tag){
-            delta[index + stride*class] = scale * (1 - output[index + stride*class]);
-            return;
+    } <span class="hljs-keyword">else</span> {
+        <span class="hljs-keyword">if</span> (delta[index] &amp;&amp; tag){
+            delta[index + stride*<span class="hljs-keyword">class</span>] = scale * (<span class="hljs-number">1</span> - output[index + stride*<span class="hljs-keyword">class</span>]);
+            <span class="hljs-keyword">return</span>;
         }
-        for(n = 0; n &lt; classes; ++n){
-            delta[index + stride*n] = scale * (((n == class)?1 : 0) - output[index + stride*n]);
-            if(n == class) *avg_cat += output[index + stride*n];
+        <span class="hljs-keyword">for</span>(n = <span class="hljs-number">0</span>; n &lt; classes; ++n){
+            delta[index + stride*n] = scale * (((n == <span class="hljs-keyword">class</span>)?<span class="hljs-number">1</span> : <span class="hljs-number">0</span>) - output[index + stride*n]);
+            <span class="hljs-keyword">if</span>(n == <span class="hljs-keyword">class</span>) *avg_cat += output[index + stride*n];
         }
     }
 }
-</code></pre><h2 id="logit">logit</h2>
-<pre><code>float logit(float x)
-{
-    return log(x/(1.-x));
+</code></pre>
+<h2 id="logit">logit</h2>
+<pre><code class="lang-c"><span class="hljs-function"><span class="hljs-keyword">float</span> <span class="hljs-title">logit</span><span class="hljs-params">(<span class="hljs-keyword">float</span> x)</span>
+</span>{
+    <span class="hljs-keyword">return</span> <span class="hljs-built_in">log</span>(x/(<span class="hljs-number">1.</span>-x));
 }
-</code></pre><h2 id="tisnan">tisnan</h2>
-<pre><code>float tisnan(float x)
-{
-    return (x != x);
+</code></pre>
+<h2 id="tisnan">tisnan</h2>
+<pre><code class="lang-c"><span class="hljs-function"><span class="hljs-keyword">float</span> <span class="hljs-title">tisnan</span><span class="hljs-params">(<span class="hljs-keyword">float</span> x)</span>
+</span>{
+    <span class="hljs-keyword">return</span> (x != x);
 }
-</code></pre><h2 id="entryindex">entry_index</h2>
-<pre><code>int entry_index(layer l, int batch, int location, int entry)
-{
-    int n =   location / (l.w*l.h);
-    int loc = location % (l.w*l.h);
-    return batch*l.outputs + n*l.w*l.h*(l.coords+l.classes+1) + entry*l.w*l.h + loc;
+</code></pre>
+<h2 id="entryindex">entry_index</h2>
+<pre><code class="lang-c"><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">entry_index</span><span class="hljs-params">(layer l, <span class="hljs-keyword">int</span> batch, <span class="hljs-keyword">int</span> location, <span class="hljs-keyword">int</span> entry)</span>
+</span>{
+    <span class="hljs-keyword">int</span> n =   location / (l.w*l.h);
+    <span class="hljs-keyword">int</span> loc = location % (l.w*l.h);
+    <span class="hljs-keyword">return</span> batch*l.outputs + n*l.w*l.h*(l.coords+l.classes+<span class="hljs-number">1</span>) + entry*l.w*l.h + loc;
 }
-</code></pre><h2 id="correctregionboxes">correct_region_boxes</h2>
+</code></pre>
+<h2 id="correctregionboxes">correct_region_boxes</h2>
 <pre><code>void correct_region_boxes(detection *dets, int n, int w, int h, int netw, int neth, int relative)
 {
     int i;
@@ -2407,7 +2420,7 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"region_layer.c","level":"5.36","depth":1,"next":{"title":"reorg_layer.c","level":"5.37","depth":1,"path":"part3_src/reorg_layer.md","ref":"part3_src/reorg_layer.md","articles":[]},"previous":{"title":"+ parser.c","level":"5.35.1","depth":2,"path":"part3_src/parser_2.md","ref":"part3_src/parser_2.md","articles":[]},"dir":"ltr"},"config":{"plugins":["advanced-emoji","theme-gestalt","-theme-default","styles-sass-fix","theme-api","mathjax"],"root":"./","styles":{"website":"website-1597403756570.css"},"pluginsConfig":{"styles-sass-fix":{},"theme-gestalt":{"showLevel":false,"styles":{"website":"styles/website.css"},"logo":"/darknet_book/assets/darknet.png","baseUrl":null,"excludeDefaultStyles":true,"doNotHideChildrenChapters":false},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"theme-api":{"languages":[],"split":true,"theme":"light"},"mathjax":{"forceSVG":false,"version":"2.6-latest"},"advanced-emoji":{"embedEmojis":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]}},"theme":"default","author":"JJM","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"DarkNet Book","output.name":"site","gitbook":"*"},"file":{"path":"part3_src/region_layer.md","mtime":"2020-07-29T17:47:41.154Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-08-14T11:15:45.491Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"region_layer.c","level":"5.36","depth":1,"next":{"title":"reorg_layer.c","level":"5.37","depth":1,"path":"part3_src/reorg_layer.md","ref":"part3_src/reorg_layer.md","articles":[]},"previous":{"title":"+ parser.c","level":"5.35.1","depth":2,"path":"part3_src/parser_2.md","ref":"part3_src/parser_2.md","articles":[]},"dir":"ltr"},"config":{"plugins":["advanced-emoji","theme-gestalt","-theme-default","styles-sass-fix","theme-api","mathjax"],"root":"./","styles":{"website":"website-1599634348142.css"},"pluginsConfig":{"styles-sass-fix":{},"theme-gestalt":{"showLevel":false,"styles":{"website":"styles/website.css"},"logo":"/darknet_book/assets/darknet.png","baseUrl":null,"excludeDefaultStyles":true,"doNotHideChildrenChapters":false},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"theme-api":{"languages":[],"split":true,"theme":"light"},"mathjax":{"forceSVG":false,"version":"2.6-latest"},"advanced-emoji":{"embedEmojis":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]}},"theme":"default","author":"JJM","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"DarkNet Book","output.name":"site","gitbook":"*"},"file":{"path":"part3_src/region_layer.md","mtime":"2020-09-09T06:00:42.698Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-09-09T06:52:18.609Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>

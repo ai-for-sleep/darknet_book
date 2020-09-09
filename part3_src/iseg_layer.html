@@ -42,7 +42,7 @@
 
     
         
-        <link rel="stylesheet" href="../website-1597403756570.css">
+        <link rel="stylesheet" href="../website-1599634348142.css">
         
     
 
@@ -1967,7 +1967,7 @@
                                 <h1 id="iseglayerc">iseg_layer.c</h1>
 <p>instance segmentation&#xC744; &#xC704;&#xD55C; layer&#xC785;&#xB2C8;&#xB2E4;.</p>
 <h2 id="forwardiseglayer">forward_iseg_layer</h2>
-<pre><code>void forward_iseg_layer(const layer l, network net)
+<pre><code class="lang-c">void forward_iseg_layer(const layer l, network net)
 {
 
     double time = what_time_is_it_now();
@@ -2076,54 +2076,17 @@
     *(l.cost) = pow(mag_array(l.delta, l.outputs * l.batch), 2);
     printf(&quot;took %lf sec\n&quot;, what_time_is_it_now() - time);
 }
-</code></pre><p><code>forward</code></p>
+</code></pre>
+<p><code>forward</code></p>
 <h2 id="backwardiseglayer">backward_iseg_layer</h2>
-<pre><code>void backward_iseg_layer(const layer l, network net)
-{
-    axpy_cpu(l.batch*l.inputs, 1, l.delta, 1, net.delta, 1);
+<pre><code class="lang-c"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">backward_iseg_layer</span><span class="hljs-params">(<span class="hljs-keyword">const</span> layer l, network net)</span>
+</span>{
+    axpy_cpu(l.batch*l.inputs, <span class="hljs-number">1</span>, l.delta, <span class="hljs-number">1</span>, net.delta, <span class="hljs-number">1</span>);
 }
-</code></pre><p><code>backward</code></p>
-<h2 id="makeiseglayer">make_iseg_layer</h2>
-<pre><code>layer make_iseg_layer(int batch, int w, int h, int classes, int ids)
-{
-    layer l = {0};
-    l.type = ISEG;
-
-    l.h = h;
-    l.w = w;
-    l.c = classes + ids;
-    l.out_w = l.w;
-    l.out_h = l.h;
-    l.out_c = l.c;
-    l.classes = classes;
-    l.batch = batch;
-    l.extra = ids;
-    l.cost = calloc(1, sizeof(float));
-    l.outputs = h*w*l.c;
-    l.inputs = l.outputs;
-    l.truths = 90*(l.w*l.h+1);
-    l.delta = calloc(batch*l.outputs, sizeof(float));
-    l.output = calloc(batch*l.outputs, sizeof(float));
-
-    l.counts = calloc(90, sizeof(int));
-    l.sums = calloc(90, sizeof(float*));
-    if(ids){
-        int i;
-        for(i = 0; i &lt; 90; ++i){
-            l.sums[i] = calloc(ids, sizeof(float));
-        }
-    }
-
-    l.forward = forward_iseg_layer;
-    l.backward = backward_iseg_layer;
-
-    fprintf(stderr, &quot;iseg\n&quot;);
-    srand(0);
-
-    return l;
-}
-</code></pre><h2 id="resizeiseglayer">resize_iseg_layer</h2>
-<pre><code>void resize_iseg_layer(layer *l, int w, int h)
+</code></pre>
+<p><code>backward</code></p>
+<h2 id="resizeiseglayer">resize_iseg_layer</h2>
+<pre><code class="lang-c">void resize_iseg_layer(layer *l, int w, int h)
 {
     l-&gt;w = w;
     l-&gt;h = h;
@@ -2135,6 +2098,49 @@
     l-&gt;delta = realloc(l-&gt;delta, l-&gt;batch*l-&gt;outputs*sizeof(float));
 }
 </code></pre>
+<p><code>resize</code></p>
+<h2 id="makeiseglayer">make_iseg_layer</h2>
+<pre><code class="lang-c"><span class="hljs-function">layer <span class="hljs-title">make_iseg_layer</span><span class="hljs-params">(<span class="hljs-keyword">int</span> batch, <span class="hljs-keyword">int</span> w, <span class="hljs-keyword">int</span> h, <span class="hljs-keyword">int</span> classes, <span class="hljs-keyword">int</span> ids)</span>
+</span>{
+    layer l = {<span class="hljs-number">0</span>};
+    l.type = ISEG;
+
+    l.h = h;
+    l.w = w;
+    l.c = classes + ids;
+    l.out_w = l.w;
+    l.out_h = l.h;
+    l.out_c = l.c;
+    l.classes = classes;
+    l.batch = batch;
+    l.extra = ids;
+    l.cost = <span class="hljs-built_in">calloc</span>(<span class="hljs-number">1</span>, <span class="hljs-keyword">sizeof</span>(<span class="hljs-keyword">float</span>));
+    l.outputs = h*w*l.c;
+    l.inputs = l.outputs;
+    l.truths = <span class="hljs-number">90</span>*(l.w*l.h+<span class="hljs-number">1</span>);
+    l.delta = <span class="hljs-built_in">calloc</span>(batch*l.outputs, <span class="hljs-keyword">sizeof</span>(<span class="hljs-keyword">float</span>));
+    l.output = <span class="hljs-built_in">calloc</span>(batch*l.outputs, <span class="hljs-keyword">sizeof</span>(<span class="hljs-keyword">float</span>));
+
+    l.counts = <span class="hljs-built_in">calloc</span>(<span class="hljs-number">90</span>, <span class="hljs-keyword">sizeof</span>(<span class="hljs-keyword">int</span>));
+    l.sums = <span class="hljs-built_in">calloc</span>(<span class="hljs-number">90</span>, <span class="hljs-keyword">sizeof</span>(<span class="hljs-keyword">float</span>*));
+    <span class="hljs-keyword">if</span>(ids){
+        <span class="hljs-keyword">int</span> i;
+        <span class="hljs-keyword">for</span>(i = <span class="hljs-number">0</span>; i &lt; <span class="hljs-number">90</span>; ++i){
+            l.sums[i] = <span class="hljs-built_in">calloc</span>(ids, <span class="hljs-keyword">sizeof</span>(<span class="hljs-keyword">float</span>));
+        }
+    }
+
+    l.forward = forward_iseg_layer;
+    l.backward = backward_iseg_layer;
+
+    <span class="hljs-built_in">fprintf</span>(<span class="hljs-built_in">stderr</span>, <span class="hljs-string">&quot;iseg\n&quot;</span>);
+    srand(<span class="hljs-number">0</span>);
+
+    <span class="hljs-keyword">return</span> l;
+}
+</code></pre>
+<p><code>make</code></p>
+
                                 
                                 </section>
                             
@@ -2177,7 +2183,7 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"iseg_layer.c","level":"5.23","depth":1,"next":{"title":"l2norm_layer.c","level":"5.24","depth":1,"path":"part3_src/l2norm_layer.md","ref":"part3_src/l2norm_layer.md","articles":[]},"previous":{"title":"image.c","level":"5.22","depth":1,"path":"part3_src/image.md","ref":"part3_src/image.md","articles":[]},"dir":"ltr"},"config":{"plugins":["advanced-emoji","theme-gestalt","-theme-default","styles-sass-fix","theme-api","mathjax"],"root":"./","styles":{"website":"website-1597403756570.css"},"pluginsConfig":{"styles-sass-fix":{},"theme-gestalt":{"showLevel":false,"styles":{"website":"styles/website.css"},"logo":"/darknet_book/assets/darknet.png","baseUrl":null,"excludeDefaultStyles":true,"doNotHideChildrenChapters":false},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"theme-api":{"languages":[],"split":true,"theme":"light"},"mathjax":{"forceSVG":false,"version":"2.6-latest"},"advanced-emoji":{"embedEmojis":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]}},"theme":"default","author":"JJM","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"DarkNet Book","output.name":"site","gitbook":"*"},"file":{"path":"part3_src/iseg_layer.md","mtime":"2020-07-29T06:06:20.314Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-08-14T11:15:45.491Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"iseg_layer.c","level":"5.23","depth":1,"next":{"title":"l2norm_layer.c","level":"5.24","depth":1,"path":"part3_src/l2norm_layer.md","ref":"part3_src/l2norm_layer.md","articles":[]},"previous":{"title":"image.c","level":"5.22","depth":1,"path":"part3_src/image.md","ref":"part3_src/image.md","articles":[]},"dir":"ltr"},"config":{"plugins":["advanced-emoji","theme-gestalt","-theme-default","styles-sass-fix","theme-api","mathjax"],"root":"./","styles":{"website":"website-1599634348142.css"},"pluginsConfig":{"styles-sass-fix":{},"theme-gestalt":{"showLevel":false,"styles":{"website":"styles/website.css"},"logo":"/darknet_book/assets/darknet.png","baseUrl":null,"excludeDefaultStyles":true,"doNotHideChildrenChapters":false},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"theme-api":{"languages":[],"split":true,"theme":"light"},"mathjax":{"forceSVG":false,"version":"2.6-latest"},"advanced-emoji":{"embedEmojis":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]}},"theme":"default","author":"JJM","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"DarkNet Book","output.name":"site","gitbook":"*"},"file":{"path":"part3_src/iseg_layer.md","mtime":"2020-09-09T05:58:42.059Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-09-09T06:52:18.609Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>

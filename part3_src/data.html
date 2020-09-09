@@ -42,7 +42,7 @@
 
     
         
-        <link rel="stylesheet" href="../website-1597403756570.css">
+        <link rel="stylesheet" href="../website-1599634348142.css">
         
     
 
@@ -1980,25 +1980,10 @@ list *get_paths(char *filename)
     fclose(file);
     return lines;
 }
-</code></pre><p>-</p>
-<h2 id="getrandompathsindexes">get_random_paths_indexes</h2>
-<pre><code>/*
-char **get_random_paths_indexes(char **paths, int n, int m, int *indexes)
-{
-    char **random_paths = calloc(n, sizeof(char*));
-    int i;
-    pthread_mutex_lock(&amp;mutex);
-    for(i = 0; i &lt; n; ++i){
-        int index = rand()%m;
-        indexes[i] = index;
-        random_paths[i] = paths[index];
-        if(i == 0) printf(&quot;%s\n&quot;, paths[index]);
-    }
-    pthread_mutex_unlock(&amp;mutex);
-    return random_paths;
-}
-*/
-</code></pre><h2 id="getrandompaths">get_random_paths</h2>
+</code></pre><ul>
+<li>&#xD30C;&#xC77C;&#xC744; &#xC77D;&#xACE0; list &#xAD6C;&#xC870;&#xCCB4;&#xC5D0; &#xD55C;&#xC904; &#xC529; &#xB2F4;&#xC544;&#xC11C; &#xBC18;&#xD658;&#xD569;&#xB2C8;&#xB2E4;.</li>
+</ul>
+<h2 id="getrandompaths">get_random_paths</h2>
 <pre><code>char **get_random_paths(char **paths, int n, int m)
 {
     char **random_paths = calloc(n, sizeof(char*));
@@ -2012,7 +1997,10 @@ char **get_random_paths_indexes(char **paths, int n, int m, int *indexes)
     pthread_mutex_unlock(&amp;mutex);
     return random_paths;
 }
-</code></pre><h2 id="findreplacepaths">find_replace_paths</h2>
+</code></pre><ul>
+<li>&#xD574;&#xB2F9; &#xACBD;&#xB85C;&#xC5D0; &#xBAA8;&#xB4E0; &#xD30C;&#xC77C; &#xACBD;&#xB85C;&#xB97C; &#xBB34;&#xC791;&#xC704;&#xB85C; &#xC11E;&#xC5B4;&#xC11C; &#xBC18;&#xD658;&#xD569;&#xB2C8;&#xB2E4;.</li>
+</ul>
+<h2 id="findreplacepaths">find_replace_paths</h2>
 <pre><code>char **find_replace_paths(char **paths, int n, char *find, char *replace)
 {
     char **replace_paths = calloc(n, sizeof(char*));
@@ -2045,7 +2033,10 @@ char **get_random_paths_indexes(char **paths, int n, int m, int *indexes)
     }
     return X;
 }
-</code></pre><h2 id="loadimagepaths">load_image_paths</h2>
+</code></pre><ul>
+<li>&#xD574;&#xB2F9; &#xACBD;&#xB85C;&#xC758; &#xC774;&#xBBF8;&#xC9C0;&#xB97C; Gray&#xB85C; &#xBC18;&#xD658;&#xD569;&#xB2C8;&#xB2E4;.</li>
+</ul>
+<h2 id="loadimagepaths">load_image_paths</h2>
 <pre><code>matrix load_image_paths(char **paths, int n, int w, int h)
 {
     int i;
@@ -2062,7 +2053,7 @@ char **get_random_paths_indexes(char **paths, int n, int m, int *indexes)
     return X;
 }
 </code></pre><ul>
-<li><code>path</code>&#xC758; &#xC774;&#xBBF8;&#xC9C0;&#xB97C; &#xC77D;&#xACE0; &#xBC18;&#xD658;&#xD569;&#xB2C8;&#xB2E4;.</li>
+<li>&#xD574;&#xB2F9; &#xACBD;&#xB85C;&#xC758; &#xC774;&#xBBF8;&#xC9C0;&#xB97C; &#xBC18;&#xD658;&#xD569;&#xB2C8;&#xB2E4;.</li>
 </ul>
 <h2 id="loadimageaugmentpaths">load_image_augment_paths</h2>
 <pre><code>matrix load_image_augment_paths(char **paths, int n, int min, int max, int size, float angle, float aspect, float hue, float saturation, float exposure, int center)
@@ -2098,7 +2089,7 @@ char **get_random_paths_indexes(char **paths, int n, int m, int *indexes)
     return X;
 }
 </code></pre><ul>
-<li>crop, flip</li>
+<li>&#xD574;&#xB2F9; &#xACBD;&#xB85C;&#xC758; &#xC774;&#xBBF8;&#xC9C0;&#xB97C; crop, flip, rotation, color transform &#xD558;&#xC5EC; &#xBC18;&#xD658;&#xD569;&#xB2C8;&#xB2E4;.</li>
 </ul>
 <h2 id="readboxes">read_boxes</h2>
 <pre><code>box_label *read_boxes(char *filename, int *n)
@@ -2131,7 +2122,7 @@ char **get_random_paths_indexes(char **paths, int n, int m, int *indexes)
     return boxes;
 }
 </code></pre><ul>
-<li>box&#xC758; &#xC815;&#xBCF4;&#xAC00; &#xB4E4;&#xC5B4;&#xC788;&#xB294; &#xD30C;&#xC77C;&#xC744; &#xC77D;&#xACE0; box&#xB97C; &#xBC18;&#xD658;&#xD569;&#xB2C8;&#xB2E4;.</li>
+<li>box&#xC758; &#xC815;&#xBCF4;&#xAC00; &#xB4E4;&#xC5B4;&#xC788;&#xB294; &#xD30C;&#xC77C;&#xC744; &#xC77D;&#xACE0; <code>box_label</code>&#xC744; &#xBC18;&#xD658;&#xD569;&#xB2C8;&#xB2E4;.</li>
 </ul>
 <h2 id="randomizeboxes">randomize_boxes</h2>
 <pre><code>void randomize_boxes(box_label *b, int n)
@@ -2144,7 +2135,10 @@ char **get_random_paths_indexes(char **paths, int n, int m, int *indexes)
         b[index] = swap;
     }
 }
-</code></pre><h2 id="correctboxes">correct_boxes</h2>
+</code></pre><ul>
+<li><code>box_label</code>&#xC911; &#xB79C;&#xB364;&#xD55C; &#xBC15;&#xC2A4;&#xB97C; &#xBC18;&#xD658;&#xD569;&#xB2C8;&#xB2E4;.</li>
+</ul>
+<h2 id="correctboxes">correct_boxes</h2>
 <pre><code>void correct_boxes(box_label *boxes, int n, float dx, float dy, float sx, float sy, int flip)
 {
     int i;
@@ -3692,7 +3686,7 @@ void randomize_data(data d)
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"data.c","level":"5.14","depth":1,"next":{"title":"deconvolutional_layer.c","level":"5.15","depth":1,"path":"part3_src/deconvolutional_layer.md","ref":"part3_src/deconvolutional_layer.md","articles":[]},"previous":{"title":"crop_layer.c","level":"5.13","depth":1,"path":"part3_src/crop_layer.md","ref":"part3_src/crop_layer.md","articles":[]},"dir":"ltr"},"config":{"plugins":["advanced-emoji","theme-gestalt","-theme-default","styles-sass-fix","theme-api","mathjax"],"root":"./","styles":{"website":"website-1597403756570.css"},"pluginsConfig":{"styles-sass-fix":{},"theme-gestalt":{"showLevel":false,"styles":{"website":"styles/website.css"},"logo":"/darknet_book/assets/darknet.png","baseUrl":null,"excludeDefaultStyles":true,"doNotHideChildrenChapters":false},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"theme-api":{"languages":[],"split":true,"theme":"light"},"mathjax":{"forceSVG":false,"version":"2.6-latest"},"advanced-emoji":{"embedEmojis":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]}},"theme":"default","author":"JJM","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"DarkNet Book","output.name":"site","gitbook":"*"},"file":{"path":"part3_src/data.md","mtime":"2020-08-10T07:21:12.230Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-08-14T11:15:45.491Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"data.c","level":"5.14","depth":1,"next":{"title":"deconvolutional_layer.c","level":"5.15","depth":1,"path":"part3_src/deconvolutional_layer.md","ref":"part3_src/deconvolutional_layer.md","articles":[]},"previous":{"title":"crop_layer.c","level":"5.13","depth":1,"path":"part3_src/crop_layer.md","ref":"part3_src/crop_layer.md","articles":[]},"dir":"ltr"},"config":{"plugins":["advanced-emoji","theme-gestalt","-theme-default","styles-sass-fix","theme-api","mathjax"],"root":"./","styles":{"website":"website-1599634348142.css"},"pluginsConfig":{"styles-sass-fix":{},"theme-gestalt":{"showLevel":false,"styles":{"website":"styles/website.css"},"logo":"/darknet_book/assets/darknet.png","baseUrl":null,"excludeDefaultStyles":true,"doNotHideChildrenChapters":false},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"theme-api":{"languages":[],"split":true,"theme":"light"},"mathjax":{"forceSVG":false,"version":"2.6-latest"},"advanced-emoji":{"embedEmojis":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]}},"theme":"default","author":"JJM","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"DarkNet Book","output.name":"site","gitbook":"*"},"file":{"path":"part3_src/data.md","mtime":"2020-09-09T03:21:33.323Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-09-09T06:52:18.609Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>

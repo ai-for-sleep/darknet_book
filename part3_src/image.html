@@ -42,7 +42,7 @@
 
     
         
-        <link rel="stylesheet" href="../website-1597403756570.css">
+        <link rel="stylesheet" href="../website-1599634348142.css">
         
     
 
@@ -1966,85 +1966,93 @@
                                 
                                 <h1 id="imagec">image.c</h1>
 <h2 id="getcolor">get_color</h2>
-<pre><code>float colors[6][3] = { {1,0,1}, {0,0,1},{0,1,1},{0,1,0},{1,1,0},{1,0,0} }; // BGR&#xC21C;&#xC11C;
+<pre><code class="lang-c"><span class="hljs-keyword">float</span> colors[<span class="hljs-number">6</span>][<span class="hljs-number">3</span>] = { {<span class="hljs-number">1</span>,<span class="hljs-number">0</span>,<span class="hljs-number">1</span>}, {<span class="hljs-number">0</span>,<span class="hljs-number">0</span>,<span class="hljs-number">1</span>},{<span class="hljs-number">0</span>,<span class="hljs-number">1</span>,<span class="hljs-number">1</span>},{<span class="hljs-number">0</span>,<span class="hljs-number">1</span>,<span class="hljs-number">0</span>},{<span class="hljs-number">1</span>,<span class="hljs-number">1</span>,<span class="hljs-number">0</span>},{<span class="hljs-number">1</span>,<span class="hljs-number">0</span>,<span class="hljs-number">0</span>} }; <span class="hljs-comment">// BGR&#xC21C;&#xC11C;</span>
 
 
-float get_color(int c, int x, int max)
-{
-    float ratio = ((float)x/max)*5;
-    int i = floor(ratio);
-    int j = ceil(ratio);
+<span class="hljs-function"><span class="hljs-keyword">float</span> <span class="hljs-title">get_color</span><span class="hljs-params">(<span class="hljs-keyword">int</span> c, <span class="hljs-keyword">int</span> x, <span class="hljs-keyword">int</span> max)</span>
+</span>{
+    <span class="hljs-keyword">float</span> ratio = ((<span class="hljs-keyword">float</span>)x/max)*<span class="hljs-number">5</span>;
+    <span class="hljs-keyword">int</span> i = <span class="hljs-built_in">floor</span>(ratio);
+    <span class="hljs-keyword">int</span> j = <span class="hljs-built_in">ceil</span>(ratio);
     ratio -= i;
-    float r = (1-ratio) * colors[i][c] + ratio*colors[j][c];
-    //printf(&quot;%f\n&quot;, r);
-    return r;
+    <span class="hljs-keyword">float</span> r = (<span class="hljs-number">1</span>-ratio) * colors[i][c] + ratio*colors[j][c];
+    <span class="hljs-comment">//printf(&quot;%f\n&quot;, r);</span>
+    <span class="hljs-keyword">return</span> r;
 }
-</code></pre><ul>
-<li>???</li>
+</code></pre>
+<ul>
+<li>&#xC0C9;&#xC744; &#xC5BB;&#xC2B5;&#xB2C8;&#xB2E4;.</li>
+<li>++</li>
 </ul>
 <h2 id="masktorgb">mask_to_rgb</h2>
-<pre><code>image mask_to_rgb(image mask)
-{
-    int n = mask.c;
-    image im = make_image(mask.w, mask.h, 3);
-    int i, j;
-    for(j = 0; j &lt; n; ++j){
-        int offset = j*123457 % n;
-        float red = get_color(2,offset,n);
-        float green = get_color(1,offset,n);
-        float blue = get_color(0,offset,n);
-        for(i = 0; i &lt; im.w*im.h; ++i){
-            im.data[i + 0*im.w*im.h] += mask.data[j*im.h*im.w + i]*red;
-            im.data[i + 1*im.w*im.h] += mask.data[j*im.h*im.w + i]*green;
-            im.data[i + 2*im.w*im.h] += mask.data[j*im.h*im.w + i]*blue;
+<pre><code class="lang-c"><span class="hljs-function">image <span class="hljs-title">mask_to_rgb</span><span class="hljs-params">(image mask)</span>
+</span>{
+    <span class="hljs-keyword">int</span> n = mask.c;
+    image im = make_image(mask.w, mask.h, <span class="hljs-number">3</span>);
+    <span class="hljs-keyword">int</span> i, j;
+    <span class="hljs-keyword">for</span>(j = <span class="hljs-number">0</span>; j &lt; n; ++j){
+        <span class="hljs-keyword">int</span> offset = j*<span class="hljs-number">123457</span> % n;
+        <span class="hljs-keyword">float</span> red = get_color(<span class="hljs-number">2</span>,offset,n);
+        <span class="hljs-keyword">float</span> green = get_color(<span class="hljs-number">1</span>,offset,n);
+        <span class="hljs-keyword">float</span> blue = get_color(<span class="hljs-number">0</span>,offset,n);
+        <span class="hljs-keyword">for</span>(i = <span class="hljs-number">0</span>; i &lt; im.w*im.h; ++i){
+            im.data[i + <span class="hljs-number">0</span>*im.w*im.h] += mask.data[j*im.h*im.w + i]*red;
+            im.data[i + <span class="hljs-number">1</span>*im.w*im.h] += mask.data[j*im.h*im.w + i]*green;
+            im.data[i + <span class="hljs-number">2</span>*im.w*im.h] += mask.data[j*im.h*im.w + i]*blue;
         }
     }
-    return im;
+    <span class="hljs-keyword">return</span> im;
 }
-</code></pre><ul>
-<li>???</li>
+</code></pre>
+<ul>
+<li>image&#xC5D0; rgb color&#xB97C; &#xC90D;&#xB2C8;&#xB2E4;.</li>
+<li>++</li>
 </ul>
 <h2 id="getpixel">get_pixel</h2>
-<pre><code>static float get_pixel(image m, int x, int y, int c)
-{
+<pre><code class="lang-c"><span class="hljs-function"><span class="hljs-keyword">static</span> <span class="hljs-keyword">float</span> <span class="hljs-title">get_pixel</span><span class="hljs-params">(image m, <span class="hljs-keyword">int</span> x, <span class="hljs-keyword">int</span> y, <span class="hljs-keyword">int</span> c)</span>
+</span>{
     assert(x &lt; m.w &amp;&amp; y &lt; m.h &amp;&amp; c &lt; m.c);
-    return m.data[c*m.h*m.w + y*m.w + x];
+    <span class="hljs-keyword">return</span> m.data[c*m.h*m.w + y*m.w + x];
 }
-</code></pre><ul>
+</code></pre>
+<ul>
 <li>c&#xBC88;&#xC9F8; &#xCC44;&#xB110;&#xC758; (x, y)&#xC88C;&#xD45C;&#xB97C; &#xAC00;&#xC9C0;&#xB294; pixel&#xC744; &#xAC00;&#xC838;&#xC635;&#xB2C8;&#xB2E4;.</li>
 </ul>
 <h2 id="getpixelextend">get_pixel_extend</h2>
-<pre><code>static float get_pixel_extend(image m, int x, int y, int c)
-{
-    if(x &lt; 0 || x &gt;= m.w || y &lt; 0 || y &gt;= m.h) return 0;
+<pre><code class="lang-c"><span class="hljs-function"><span class="hljs-keyword">static</span> <span class="hljs-keyword">float</span> <span class="hljs-title">get_pixel_extend</span><span class="hljs-params">(image m, <span class="hljs-keyword">int</span> x, <span class="hljs-keyword">int</span> y, <span class="hljs-keyword">int</span> c)</span>
+</span>{
+    <span class="hljs-keyword">if</span>(x &lt; <span class="hljs-number">0</span> || x &gt;= m.w || y &lt; <span class="hljs-number">0</span> || y &gt;= m.h) <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
 
-    if(c &lt; 0 || c &gt;= m.c) return 0;
-    return get_pixel(m, x, y, c);
+    <span class="hljs-keyword">if</span>(c &lt; <span class="hljs-number">0</span> || c &gt;= m.c) <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+    <span class="hljs-keyword">return</span> get_pixel(m, x, y, c);
 }
-</code></pre><ul>
+</code></pre>
+<ul>
 <li>&#xAC00;&#xC838;&#xC62C; &#xC218; &#xC5C6;&#xB294; pixel&#xC744; 0&#xC73C;&#xB85C; &#xCC98;&#xB9AC;&#xD569;&#xB2C8;&#xB2E4;.</li>
 </ul>
 <h2 id="setpixel">set_pixel</h2>
-<pre><code>static void set_pixel(image m, int x, int y, int c, float val)
-{
-    if (x &lt; 0 || y &lt; 0 || c &lt; 0 || x &gt;= m.w || y &gt;= m.h || c &gt;= m.c) return;
+<pre><code class="lang-c"><span class="hljs-function"><span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">set_pixel</span><span class="hljs-params">(image m, <span class="hljs-keyword">int</span> x, <span class="hljs-keyword">int</span> y, <span class="hljs-keyword">int</span> c, <span class="hljs-keyword">float</span> val)</span>
+</span>{
+    <span class="hljs-keyword">if</span> (x &lt; <span class="hljs-number">0</span> || y &lt; <span class="hljs-number">0</span> || c &lt; <span class="hljs-number">0</span> || x &gt;= m.w || y &gt;= m.h || c &gt;= m.c) <span class="hljs-keyword">return</span>;
     assert(x &lt; m.w &amp;&amp; y &lt; m.h &amp;&amp; c &lt; m.c);
     m.data[c*m.h*m.w + y*m.w + x] = val;
 }
-</code></pre><ul>
+</code></pre>
+<ul>
 <li>c&#xBC88;&#xC9F8; &#xCC44;&#xB110;&#xC758; (x, y)&#xC88C;&#xD45C;&#xB97C; &#xAC00;&#xC9C0;&#xB294; pixel&#xC744; val&#xB85C; &#xC124;&#xC815;&#xD569;&#xB2C8;&#xB2E4;.</li>
 </ul>
 <h2 id="addpixel">add_pixel</h2>
-<pre><code>static void add_pixel(image m, int x, int y, int c, float val)
-{
+<pre><code class="lang-c"><span class="hljs-function"><span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">add_pixel</span><span class="hljs-params">(image m, <span class="hljs-keyword">int</span> x, <span class="hljs-keyword">int</span> y, <span class="hljs-keyword">int</span> c, <span class="hljs-keyword">float</span> val)</span>
+</span>{
     assert(x &lt; m.w &amp;&amp; y &lt; m.h &amp;&amp; c &lt; m.c);
     m.data[c*m.h*m.w + y*m.w + x] += val;
 }
-</code></pre><ul>
+</code></pre>
+<ul>
 <li>c&#xBC88;&#xC9F8; &#xCC44;&#xB110;&#xC758; (x, y)&#xC88C;&#xD45C;&#xB97C; &#xAC00;&#xC9C0;&#xB294; pixel&#xC5D0; add&#xB97C; &#xB354;&#xD569;&#xB2C8;&#xB2E4;.</li>
 </ul>
 <h2 id="bilinearinterpolate">bilinear_interpolate</h2>
-<pre><code>static float bilinear_interpolate(image im, float x, float y, int c)
+<pre><code class="lang-c">static float bilinear_interpolate(image im, float x, float y, int c)
 {
     int ix = (int) floorf(x);
     int iy = (int) floorf(y);
@@ -2058,247 +2066,263 @@ float get_color(int c, int x, int max)
         dy     *   dx   * get_pixel_extend(im, ix+1, iy+1, c);
     return val;
 }
-</code></pre><ul>
+</code></pre>
+<ul>
 <li>&#xC30D;&#xC120;&#xD615; &#xBCF4;&#xAC04;&#xBC95; &#xC785;&#xB2C8;&#xB2E4;.</li>
 </ul>
 <p>&#xBAA8;&#xB974;&#xB294; &#xAC12; val&#xC744; 4&#xAC1C;&#xC758; &#xC778;&#xC811;&#xD55C; &#xC810;&#xB4E4;&#xC758; &#xAC12;&#xACFC; &#xBA74;&#xC801;&#xC744; &#xAC00;&#xC911;&#xCE58;&#xB85C; &#xD574;&#xC11C; &#xC720;&#xCD94;&#xD569;&#xB2C8;&#xB2E4;.</p>
 <p><img src="../figure/bilinear.PNG" alt="bilinear"></p>
 <h2 id="compositeimage">composite_image</h2>
-<pre><code>void composite_image(image source, image dest, int dx, int dy)
-{
-    int x,y,k;
-    for(k = 0; k &lt; source.c; ++k){
-        for(y = 0; y &lt; source.h; ++y){
-            for(x = 0; x &lt; source.w; ++x){
-                float val = get_pixel(source, x, y, k);
-                float val2 = get_pixel_extend(dest, dx+x, dy+y, k);
+<pre><code class="lang-c"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">composite_image</span><span class="hljs-params">(image source, image dest, <span class="hljs-keyword">int</span> dx, <span class="hljs-keyword">int</span> dy)</span>
+</span>{
+    <span class="hljs-keyword">int</span> x,y,k;
+    <span class="hljs-keyword">for</span>(k = <span class="hljs-number">0</span>; k &lt; source.c; ++k){
+        <span class="hljs-keyword">for</span>(y = <span class="hljs-number">0</span>; y &lt; source.h; ++y){
+            <span class="hljs-keyword">for</span>(x = <span class="hljs-number">0</span>; x &lt; source.w; ++x){
+                <span class="hljs-keyword">float</span> val = get_pixel(source, x, y, k);
+                <span class="hljs-keyword">float</span> val2 = get_pixel_extend(dest, dx+x, dy+y, k);
                 set_pixel(dest, dx+x, dy+y, k, val * val2);
             }
         }
     }
 }
-</code></pre><ul>
+</code></pre>
+<ul>
 <li>&#xC774;&#xBBF8;&#xC9C0;&#xB97C; &#xD569;&#xC131;&#xD569;&#xB2C8;&#xB2E4;.</li>
 </ul>
 <h2 id="borderimage">border_image</h2>
-<pre><code>
-image border_image(image a, int border)
-{
-    image b = make_image(a.w + 2*border, a.h + 2*border, a.c);
-    int x,y,k;
-    for(k = 0; k &lt; b.c; ++k){
-        for(y = 0; y &lt; b.h; ++y){
-            for(x = 0; x &lt; b.w; ++x){
-                float val = get_pixel_extend(a, x - border, y - border, k);
-                if(x - border &lt; 0 || x - border &gt;= a.w || y - border &lt; 0 || y - border &gt;= a.h) val = 1;
+<pre><code class="lang-c">
+<span class="hljs-function">image <span class="hljs-title">border_image</span><span class="hljs-params">(image a, <span class="hljs-keyword">int</span> border)</span>
+</span>{
+    image b = make_image(a.w + <span class="hljs-number">2</span>*border, a.h + <span class="hljs-number">2</span>*border, a.c);
+    <span class="hljs-keyword">int</span> x,y,k;
+    <span class="hljs-keyword">for</span>(k = <span class="hljs-number">0</span>; k &lt; b.c; ++k){
+        <span class="hljs-keyword">for</span>(y = <span class="hljs-number">0</span>; y &lt; b.h; ++y){
+            <span class="hljs-keyword">for</span>(x = <span class="hljs-number">0</span>; x &lt; b.w; ++x){
+                <span class="hljs-keyword">float</span> val = get_pixel_extend(a, x - border, y - border, k);
+                <span class="hljs-keyword">if</span>(x - border &lt; <span class="hljs-number">0</span> || x - border &gt;= a.w || y - border &lt; <span class="hljs-number">0</span> || y - border &gt;= a.h) val = <span class="hljs-number">1</span>;
                 set_pixel(b, x, y, k, val);
             }
         }
     }
-    return b;
+    <span class="hljs-keyword">return</span> b;
 }
-</code></pre><ul>
+</code></pre>
+<ul>
 <li>&#xC774;&#xBBF8;&#xC9C0;&#xC758; &#xD14C;&#xB450;&#xB9AC;&#xB97C; border&#xB9CC;&#xD07C; 1&#xB85C; &#xB9CC;&#xB4ED;&#xB2C8;&#xB2E4;.</li>
 </ul>
 <h2 id="tileimages">tile_images</h2>
-<pre><code>image tile_images(image a, image b, int dx)
-{
-    if(a.w == 0) return copy_image(b);
+<pre><code class="lang-c"><span class="hljs-function">image <span class="hljs-title">tile_images</span><span class="hljs-params">(image a, image b, <span class="hljs-keyword">int</span> dx)</span>
+</span>{
+    <span class="hljs-keyword">if</span>(a.w == <span class="hljs-number">0</span>) <span class="hljs-keyword">return</span> copy_image(b);
     image c = make_image(a.w + b.w + dx, (a.h &gt; b.h) ? a.h : b.h, (a.c &gt; b.c) ? a.c : b.c);
-    fill_cpu(c.w*c.h*c.c, 1, c.data, 1);
-    embed_image(a, c, 0, 0);
-    composite_image(b, c, a.w + dx, 0);
-    return c;
+    fill_cpu(c.w*c.h*c.c, <span class="hljs-number">1</span>, c.data, <span class="hljs-number">1</span>);
+    embed_image(a, c, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>);
+    composite_image(b, c, a.w + dx, <span class="hljs-number">0</span>);
+    <span class="hljs-keyword">return</span> c;
 }
-</code></pre><h2 id="getlabel">get_label</h2>
-<pre><code>image get_label(image **characters, char *string, int size)
-{
-    size = size/10;
-    if(size &gt; 7) size = 7;
-    image label = make_empty_image(0,0,0);
-    while(*string){
-        image l = characters[size][(int)*string];
-        image n = tile_images(label, l, -size - 1 + (size+1)/2);
+</code></pre>
+<ul>
+<li>&#xC774;&#xBBF8;&#xC9C0;&#xAC00; &#xD0C0;&#xC77C;&#xAC19;&#xC774; &#xD45C;&#xD604; &#xB429;&#xB2C8;&#xB2E4;.</li>
+</ul>
+<h2 id="getlabel">get_label</h2>
+<pre><code class="lang-c"><span class="hljs-function">image <span class="hljs-title">get_label</span><span class="hljs-params">(image **characters, <span class="hljs-keyword">char</span> *<span class="hljs-built_in">string</span>, <span class="hljs-keyword">int</span> size)</span>
+</span>{
+    size = size/<span class="hljs-number">10</span>;
+    <span class="hljs-keyword">if</span>(size &gt; <span class="hljs-number">7</span>) size = <span class="hljs-number">7</span>;
+    image label = make_empty_image(<span class="hljs-number">0</span>,<span class="hljs-number">0</span>,<span class="hljs-number">0</span>);
+    <span class="hljs-keyword">while</span>(*<span class="hljs-built_in">string</span>){
+        image l = characters[size][(<span class="hljs-keyword">int</span>)*<span class="hljs-built_in">string</span>];
+        image n = tile_images(label, l, -size - <span class="hljs-number">1</span> + (size+<span class="hljs-number">1</span>)/<span class="hljs-number">2</span>);
         free_image(label);
         label = n;
-        ++string;
+        ++<span class="hljs-built_in">string</span>;
     }
-    image b = border_image(label, label.h*.25);
+    image b = border_image(label, label.h*<span class="hljs-number">.25</span>);
     free_image(label);
-    return b;
+    <span class="hljs-keyword">return</span> b;
 }
-</code></pre><h2 id="drawlabel">draw_label</h2>
-<pre><code>void draw_label(image a, int r, int c, image label, const float *rgb)
-{
-    int w = label.w;
-    int h = label.h;
-    if (r - h &gt;= 0) r = r - h;
+</code></pre>
+<ul>
+<li>label&#xC744; &#xBC18;&#xD658;&#xD569;&#xB2C8;&#xB2E4;.</li>
+</ul>
+<h2 id="drawlabel">draw_label</h2>
+<pre><code class="lang-c"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">draw_label</span><span class="hljs-params">(image a, <span class="hljs-keyword">int</span> r, <span class="hljs-keyword">int</span> c, image label, <span class="hljs-keyword">const</span> <span class="hljs-keyword">float</span> *rgb)</span>
+</span>{
+    <span class="hljs-keyword">int</span> w = label.w;
+    <span class="hljs-keyword">int</span> h = label.h;
+    <span class="hljs-keyword">if</span> (r - h &gt;= <span class="hljs-number">0</span>) r = r - h;
 
-    int i, j, k;
-    for(j = 0; j &lt; h &amp;&amp; j + r &lt; a.h; ++j){
-        for(i = 0; i &lt; w &amp;&amp; i + c &lt; a.w; ++i){
-            for(k = 0; k &lt; label.c; ++k){
-                float val = get_pixel(label, i, j, k);
+    <span class="hljs-keyword">int</span> i, j, k;
+    <span class="hljs-keyword">for</span>(j = <span class="hljs-number">0</span>; j &lt; h &amp;&amp; j + r &lt; a.h; ++j){
+        <span class="hljs-keyword">for</span>(i = <span class="hljs-number">0</span>; i &lt; w &amp;&amp; i + c &lt; a.w; ++i){
+            <span class="hljs-keyword">for</span>(k = <span class="hljs-number">0</span>; k &lt; label.c; ++k){
+                <span class="hljs-keyword">float</span> val = get_pixel(label, i, j, k);
                 set_pixel(a, i+c, j+r, k, rgb[k] * val);
             }
         }
     }
 }
-</code></pre><ul>
+</code></pre>
+<ul>
 <li>label&#xC744; &#xADF8;&#xB9BD;&#xB2C8;&#xB2E4;.</li>
 </ul>
 <h2 id="drawbox">draw_box</h2>
-<pre><code>void draw_box(image a, int x1, int y1, int x2, int y2, float r, float g, float b)
-{
-    //normalize_image(a);
-    int i;
-    if(x1 &lt; 0) x1 = 0;
-    if(x1 &gt;= a.w) x1 = a.w-1;
-    if(x2 &lt; 0) x2 = 0;
-    if(x2 &gt;= a.w) x2 = a.w-1;
+<pre><code class="lang-c"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">draw_box</span><span class="hljs-params">(image a, <span class="hljs-keyword">int</span> x1, <span class="hljs-keyword">int</span> y1, <span class="hljs-keyword">int</span> x2, <span class="hljs-keyword">int</span> y2, <span class="hljs-keyword">float</span> r, <span class="hljs-keyword">float</span> g, <span class="hljs-keyword">float</span> b)</span>
+</span>{
+    <span class="hljs-comment">//normalize_image(a);</span>
+    <span class="hljs-keyword">int</span> i;
+    <span class="hljs-keyword">if</span>(x1 &lt; <span class="hljs-number">0</span>) x1 = <span class="hljs-number">0</span>;
+    <span class="hljs-keyword">if</span>(x1 &gt;= a.w) x1 = a.w<span class="hljs-number">-1</span>;
+    <span class="hljs-keyword">if</span>(x2 &lt; <span class="hljs-number">0</span>) x2 = <span class="hljs-number">0</span>;
+    <span class="hljs-keyword">if</span>(x2 &gt;= a.w) x2 = a.w<span class="hljs-number">-1</span>;
 
-    if(y1 &lt; 0) y1 = 0;
-    if(y1 &gt;= a.h) y1 = a.h-1;
-    if(y2 &lt; 0) y2 = 0;
-    if(y2 &gt;= a.h) y2 = a.h-1;
+    <span class="hljs-keyword">if</span>(y1 &lt; <span class="hljs-number">0</span>) y1 = <span class="hljs-number">0</span>;
+    <span class="hljs-keyword">if</span>(y1 &gt;= a.h) y1 = a.h<span class="hljs-number">-1</span>;
+    <span class="hljs-keyword">if</span>(y2 &lt; <span class="hljs-number">0</span>) y2 = <span class="hljs-number">0</span>;
+    <span class="hljs-keyword">if</span>(y2 &gt;= a.h) y2 = a.h<span class="hljs-number">-1</span>;
 
-    for(i = x1; i &lt;= x2; ++i){
-        a.data[i + y1*a.w + 0*a.w*a.h] = r;
-        a.data[i + y2*a.w + 0*a.w*a.h] = r;
+    <span class="hljs-keyword">for</span>(i = x1; i &lt;= x2; ++i){
+        a.data[i + y1*a.w + <span class="hljs-number">0</span>*a.w*a.h] = r;
+        a.data[i + y2*a.w + <span class="hljs-number">0</span>*a.w*a.h] = r;
 
-        a.data[i + y1*a.w + 1*a.w*a.h] = g;
-        a.data[i + y2*a.w + 1*a.w*a.h] = g;
+        a.data[i + y1*a.w + <span class="hljs-number">1</span>*a.w*a.h] = g;
+        a.data[i + y2*a.w + <span class="hljs-number">1</span>*a.w*a.h] = g;
 
-        a.data[i + y1*a.w + 2*a.w*a.h] = b;
-        a.data[i + y2*a.w + 2*a.w*a.h] = b;
+        a.data[i + y1*a.w + <span class="hljs-number">2</span>*a.w*a.h] = b;
+        a.data[i + y2*a.w + <span class="hljs-number">2</span>*a.w*a.h] = b;
     }
-    for(i = y1; i &lt;= y2; ++i){
-        a.data[x1 + i*a.w + 0*a.w*a.h] = r;
-        a.data[x2 + i*a.w + 0*a.w*a.h] = r;
+    <span class="hljs-keyword">for</span>(i = y1; i &lt;= y2; ++i){
+        a.data[x1 + i*a.w + <span class="hljs-number">0</span>*a.w*a.h] = r;
+        a.data[x2 + i*a.w + <span class="hljs-number">0</span>*a.w*a.h] = r;
 
-        a.data[x1 + i*a.w + 1*a.w*a.h] = g;
-        a.data[x2 + i*a.w + 1*a.w*a.h] = g;
+        a.data[x1 + i*a.w + <span class="hljs-number">1</span>*a.w*a.h] = g;
+        a.data[x2 + i*a.w + <span class="hljs-number">1</span>*a.w*a.h] = g;
 
-        a.data[x1 + i*a.w + 2*a.w*a.h] = b;
-        a.data[x2 + i*a.w + 2*a.w*a.h] = b;
+        a.data[x1 + i*a.w + <span class="hljs-number">2</span>*a.w*a.h] = b;
+        a.data[x2 + i*a.w + <span class="hljs-number">2</span>*a.w*a.h] = b;
     }
 }
-</code></pre><ul>
+</code></pre>
+<ul>
 <li>&#xC774;&#xBBF8;&#xC9C0;&#xC5D0; box&#xB97C; &#xADF8;&#xB9BD;&#xB2C8;&#xB2E4;.</li>
 <li>&#xC88C;&#xC0C1;&#xB2E8;(x1, y1)</li>
 <li>&#xC6B0;&#xD558;&#xB2E8;(x2, y2)</li>
 </ul>
 <h2 id="drawboxwidth">draw_box_width</h2>
-<pre><code>void draw_box_width(image a, int x1, int y1, int x2, int y2, int w, float r, float g, float b)
-{
-    int i;
-    for(i = 0; i &lt; w; ++i){
+<pre><code class="lang-c"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">draw_box_width</span><span class="hljs-params">(image a, <span class="hljs-keyword">int</span> x1, <span class="hljs-keyword">int</span> y1, <span class="hljs-keyword">int</span> x2, <span class="hljs-keyword">int</span> y2, <span class="hljs-keyword">int</span> w, <span class="hljs-keyword">float</span> r, <span class="hljs-keyword">float</span> g, <span class="hljs-keyword">float</span> b)</span>
+</span>{
+    <span class="hljs-keyword">int</span> i;
+    <span class="hljs-keyword">for</span>(i = <span class="hljs-number">0</span>; i &lt; w; ++i){
         draw_box(a, x1+i, y1+i, x2-i, y2-i, r, g, b);
     }
 }
-</code></pre><ul>
+</code></pre>
+<ul>
 <li>&#xC774;&#xBBF8;&#xC9C0;&#xC5D0; &#xC724;&#xACFD;&#xC120; &#xB450;&#xAED8;&#xAC00; w&#xC778; box&#xB97C; &#xADF8;&#xB9BD;&#xB2C8;&#xB2E4;.</li>
 </ul>
 <h2 id="drawbbox">draw_bbox</h2>
-<pre><code>void draw_bbox(image a, box bbox, int w, float r, float g, float b)
-{
-    int left  = (bbox.x-bbox.w/2)*a.w;
-    int right = (bbox.x+bbox.w/2)*a.w;
-    int top   = (bbox.y-bbox.h/2)*a.h;
-    int bot   = (bbox.y+bbox.h/2)*a.h;
+<pre><code class="lang-c"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">draw_bbox</span><span class="hljs-params">(image a, box bbox, <span class="hljs-keyword">int</span> w, <span class="hljs-keyword">float</span> r, <span class="hljs-keyword">float</span> g, <span class="hljs-keyword">float</span> b)</span>
+</span>{
+    <span class="hljs-keyword">int</span> left  = (bbox.x-bbox.w/<span class="hljs-number">2</span>)*a.w;
+    <span class="hljs-keyword">int</span> right = (bbox.x+bbox.w/<span class="hljs-number">2</span>)*a.w;
+    <span class="hljs-keyword">int</span> top   = (bbox.y-bbox.h/<span class="hljs-number">2</span>)*a.h;
+    <span class="hljs-keyword">int</span> bot   = (bbox.y+bbox.h/<span class="hljs-number">2</span>)*a.h;
 
-    int i;
-    for(i = 0; i &lt; w; ++i){
+    <span class="hljs-keyword">int</span> i;
+    <span class="hljs-keyword">for</span>(i = <span class="hljs-number">0</span>; i &lt; w; ++i){
         draw_box(a, left+i, top+i, right-i, bot-i, r, g, b);
     }
 }
-</code></pre><ul>
+</code></pre>
+<ul>
 <li>&#xC774;&#xBBF8;&#xC9C0;&#xC5D0; box&#xB97C; &#xADF8;&#xB9BD;&#xB2C8;&#xB2E4;. &#xC778;&#xC790;&#xAC12;&#xC73C;&#xB85C; box &#xD0C0;&#xC785;&#xC744; &#xBC1B;&#xC2B5;&#xB2C8;&#xB2E4;.</li>
 </ul>
 <h2 id="loadalphabet">load_alphabet</h2>
-<pre><code>image **load_alphabet()
-{
-    int i, j;
-    const int nsize = 8;
-    image **alphabets = calloc(nsize, sizeof(image));
-    for(j = 0; j &lt; nsize; ++j){
-        alphabets[j] = calloc(128, sizeof(image));
-        for(i = 32; i &lt; 127; ++i){
-            char buff[256];
-            sprintf(buff, &quot;data/labels/%d_%d.png&quot;, i, j);
-            alphabets[j][i] = load_image_color(buff, 0, 0);
+<pre><code class="lang-c"><span class="hljs-function">image **<span class="hljs-title">load_alphabet</span><span class="hljs-params">()</span>
+</span>{
+    <span class="hljs-keyword">int</span> i, j;
+    <span class="hljs-keyword">const</span> <span class="hljs-keyword">int</span> nsize = <span class="hljs-number">8</span>;
+    image **alphabets = <span class="hljs-built_in">calloc</span>(nsize, <span class="hljs-keyword">sizeof</span>(image));
+    <span class="hljs-keyword">for</span>(j = <span class="hljs-number">0</span>; j &lt; nsize; ++j){
+        alphabets[j] = <span class="hljs-built_in">calloc</span>(<span class="hljs-number">128</span>, <span class="hljs-keyword">sizeof</span>(image));
+        <span class="hljs-keyword">for</span>(i = <span class="hljs-number">32</span>; i &lt; <span class="hljs-number">127</span>; ++i){
+            <span class="hljs-keyword">char</span> buff[<span class="hljs-number">256</span>];
+            <span class="hljs-built_in">sprintf</span>(buff, <span class="hljs-string">&quot;data/labels/%d_%d.png&quot;</span>, i, j);
+            alphabets[j][i] = load_image_color(buff, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>);
         }
     }
-    return alphabets;
+    <span class="hljs-keyword">return</span> alphabets;
 }
-</code></pre><ul>
+</code></pre>
+<ul>
 <li><code>data/labels/</code>&#xD3F4;&#xB354;&#xC5D0; &#xC788;&#xB294; &#xBAA8;&#xB4E0; alphabet &#xC774;&#xBBF8;&#xC9C0;&#xB97C; &#xC77D;&#xC5B4;&#xB4E4;&#xC785;&#xB2C8;&#xB2E4;.</li>
 </ul>
 <h2 id="drawdetections">draw_detections</h2>
-<pre><code>void draw_detections(image im, detection *dets, int num, float thresh, char **names, image **alphabet, int classes)
-{
-    int i,j;
+<pre><code class="lang-c"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">draw_detections</span><span class="hljs-params">(image im, detection *dets, <span class="hljs-keyword">int</span> num, <span class="hljs-keyword">float</span> thresh, <span class="hljs-keyword">char</span> **names, image **alphabet, <span class="hljs-keyword">int</span> classes)</span>
+</span>{
+    <span class="hljs-keyword">int</span> i,j;
 
-    for(i = 0; i &lt; num; ++i){
-        char labelstr[4096] = {0};
-        int class = -1;
-        for(j = 0; j &lt; classes; ++j){                                       
-            if (dets[i].prob[j] &gt; thresh){                                      // probability&#xAC00; thresh&#xBCF4;&#xB2E4; &#xD070; &#xACBD;&#xC6B0;&#xC758; &#xD074;&#xB798;&#xC2A4;&#xB97C; &#xCD9C;&#xB825;&#xD569;&#xB2C8;&#xB2E4;.
-                if (class &lt; 0) {
-                    strcat(labelstr, names[j]);
-                    class = j;
-                } else {
-                    strcat(labelstr, &quot;, &quot;);
-                    strcat(labelstr, names[j]);
+    <span class="hljs-keyword">for</span>(i = <span class="hljs-number">0</span>; i &lt; num; ++i){
+        <span class="hljs-keyword">char</span> labelstr[<span class="hljs-number">4096</span>] = {<span class="hljs-number">0</span>};
+        <span class="hljs-keyword">int</span> <span class="hljs-keyword">class</span> = <span class="hljs-number">-1</span>;
+        <span class="hljs-keyword">for</span>(j = <span class="hljs-number">0</span>; j &lt; classes; ++j){                                       
+            <span class="hljs-keyword">if</span> (dets[i].prob[j] &gt; thresh){                                      <span class="hljs-comment">// probability&#xAC00; thresh&#xBCF4;&#xB2E4; &#xD070; &#xACBD;&#xC6B0;&#xC758; &#xD074;&#xB798;&#xC2A4;&#xB97C; &#xCD9C;&#xB825;&#xD569;&#xB2C8;&#xB2E4;.</span>
+                <span class="hljs-keyword">if</span> (<span class="hljs-keyword">class</span> &lt; <span class="hljs-number">0</span>) {
+                    <span class="hljs-built_in">strcat</span>(labelstr, names[j]);
+                    <span class="hljs-keyword">class</span> = j;
+                } <span class="hljs-keyword">else</span> {
+                    <span class="hljs-built_in">strcat</span>(labelstr, <span class="hljs-string">&quot;, &quot;</span>);
+                    <span class="hljs-built_in">strcat</span>(labelstr, names[j]);
                 }
-                printf(&quot;%s: %.0f%%\n&quot;, names[j], dets[i].prob[j]*100);
+                <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;%s: %.0f%%\n&quot;</span>, names[j], dets[i].prob[j]*<span class="hljs-number">100</span>);
             }
         }
-        if(class &gt;= 0){
-            int width = im.h * .006;
+        <span class="hljs-keyword">if</span>(<span class="hljs-keyword">class</span> &gt;= <span class="hljs-number">0</span>){
+            <span class="hljs-keyword">int</span> width = im.h * <span class="hljs-number">.006</span>;
 
-            /*
+            <span class="hljs-comment">/*
                if(0){
                width = pow(prob, 1./2.)*10+1;
                alphabet = 0;
                }
-             */
+             */</span>
 
-            //printf(&quot;%d %s: %.0f%%\n&quot;, i, names[class], prob*100);
-            int offset = class*123457 % classes;
-            float red = get_color(2,offset,classes);
-            float green = get_color(1,offset,classes);
-            float blue = get_color(0,offset,classes);
-            float rgb[3];
+            <span class="hljs-comment">//printf(&quot;%d %s: %.0f%%\n&quot;, i, names[class], prob*100);</span>
+            <span class="hljs-keyword">int</span> offset = <span class="hljs-keyword">class</span>*<span class="hljs-number">123457</span> % classes;
+            <span class="hljs-keyword">float</span> red = get_color(<span class="hljs-number">2</span>,offset,classes);
+            <span class="hljs-keyword">float</span> green = get_color(<span class="hljs-number">1</span>,offset,classes);
+            <span class="hljs-keyword">float</span> blue = get_color(<span class="hljs-number">0</span>,offset,classes);
+            <span class="hljs-keyword">float</span> rgb[<span class="hljs-number">3</span>];
 
-            //width = prob*20+2;
+            <span class="hljs-comment">//width = prob*20+2;</span>
 
-            rgb[0] = red;
-            rgb[1] = green;
-            rgb[2] = blue;
+            rgb[<span class="hljs-number">0</span>] = red;
+            rgb[<span class="hljs-number">1</span>] = green;
+            rgb[<span class="hljs-number">2</span>] = blue;
             box b = dets[i].bbox;
-            //printf(&quot;%f %f %f %f\n&quot;, b.x, b.y, b.w, b.h);
+            <span class="hljs-comment">//printf(&quot;%f %f %f %f\n&quot;, b.x, b.y, b.w, b.h);</span>
 
-            int left  = (b.x-b.w/2.)*im.w;
-            int right = (b.x+b.w/2.)*im.w;
-            int top   = (b.y-b.h/2.)*im.h;
-            int bot   = (b.y+b.h/2.)*im.h;
+            <span class="hljs-keyword">int</span> left  = (b.x-b.w/<span class="hljs-number">2.</span>)*im.w;
+            <span class="hljs-keyword">int</span> right = (b.x+b.w/<span class="hljs-number">2.</span>)*im.w;
+            <span class="hljs-keyword">int</span> top   = (b.y-b.h/<span class="hljs-number">2.</span>)*im.h;
+            <span class="hljs-keyword">int</span> bot   = (b.y+b.h/<span class="hljs-number">2.</span>)*im.h;
 
-            if(left &lt; 0) left = 0;
-            if(right &gt; im.w-1) right = im.w-1;
-            if(top &lt; 0) top = 0;
-            if(bot &gt; im.h-1) bot = im.h-1;
+            <span class="hljs-keyword">if</span>(left &lt; <span class="hljs-number">0</span>) left = <span class="hljs-number">0</span>;
+            <span class="hljs-keyword">if</span>(right &gt; im.w<span class="hljs-number">-1</span>) right = im.w<span class="hljs-number">-1</span>;
+            <span class="hljs-keyword">if</span>(top &lt; <span class="hljs-number">0</span>) top = <span class="hljs-number">0</span>;
+            <span class="hljs-keyword">if</span>(bot &gt; im.h<span class="hljs-number">-1</span>) bot = im.h<span class="hljs-number">-1</span>;
 
-            draw_box_width(im, left, top, right, bot, width, red, green, blue); // box&#xB97C; &#xADF8;&#xB9BD;&#xB2C8;&#xB2E4;.
-            if (alphabet) {                                                     // label&#xC744; &#xD45C;&#xC2DC;&#xD569;&#xB2C8;&#xB2E4;.
-                image label = get_label(alphabet, labelstr, (im.h*.03));
+            draw_box_width(im, left, top, right, bot, width, red, green, blue); <span class="hljs-comment">// box&#xB97C; &#xADF8;&#xB9BD;&#xB2C8;&#xB2E4;.</span>
+            <span class="hljs-keyword">if</span> (alphabet) {                                                     <span class="hljs-comment">// label&#xC744; &#xD45C;&#xC2DC;&#xD569;&#xB2C8;&#xB2E4;.</span>
+                image label = get_label(alphabet, labelstr, (im.h*<span class="hljs-number">.03</span>));
                 draw_label(im, top + width, left, label, rgb);
                 free_image(label);
             }
-            if (dets[i].mask){                                                  //
-                image mask = float_to_image(14, 14, 1, dets[i].mask);
+            <span class="hljs-keyword">if</span> (dets[i].mask){                                                  <span class="hljs-comment">//</span>
+                image mask = float_to_image(<span class="hljs-number">14</span>, <span class="hljs-number">14</span>, <span class="hljs-number">1</span>, dets[i].mask);
                 image resized_mask = resize_image(mask, b.w*im.w, b.h*im.h);
-                image tmask = threshold_image(resized_mask, .5);
+                image tmask = threshold_image(resized_mask, <span class="hljs-number">.5</span>);
                 embed_image(tmask, im, left, top);
                 free_image(mask);
                 free_image(resized_mask);
@@ -2307,23 +2331,25 @@ image border_image(image a, int border)
         }
     }
 }
-</code></pre><h2 id="transposeimage">transpose_image</h2>
-<pre><code>void transpose_image(image im)
-{
+</code></pre>
+<h2 id="transposeimage">transpose_image</h2>
+<pre><code class="lang-c"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">transpose_image</span><span class="hljs-params">(image im)</span>
+</span>{
     assert(im.w == im.h);
-    int n, m;
-    int c;
-    for(c = 0; c &lt; im.c; ++c){
-        for(n = 0; n &lt; im.w-1; ++n){
-            for(m = n + 1; m &lt; im.w; ++m){
-                float swap = im.data[m + im.w*(n + im.h*c)];
+    <span class="hljs-keyword">int</span> n, m;
+    <span class="hljs-keyword">int</span> c;
+    <span class="hljs-keyword">for</span>(c = <span class="hljs-number">0</span>; c &lt; im.c; ++c){
+        <span class="hljs-keyword">for</span>(n = <span class="hljs-number">0</span>; n &lt; im.w<span class="hljs-number">-1</span>; ++n){
+            <span class="hljs-keyword">for</span>(m = n + <span class="hljs-number">1</span>; m &lt; im.w; ++m){
+                <span class="hljs-keyword">float</span> swap = im.data[m + im.w*(n + im.h*c)];
                 im.data[m + im.w*(n + im.h*c)] = im.data[n + im.w*(m + im.h*c)];
                 im.data[n + im.w*(m + im.h*c)] = swap;
             }
         }
     }
 }
-</code></pre><ul>
+</code></pre>
+<ul>
 <li>&#xC774;&#xBBF8;&#xC9C0;&#xB97C; &#xC804;&#xCE58; &#xC2DC;&#xD0B5;&#xB2C8;&#xB2E4;.</li>
 </ul>
 <pre><code>-------------                   -------------
@@ -2334,22 +2360,23 @@ image border_image(image a, int border)
 | 7 | 8 | 9 |                   | 3 | 6 | 9 |
 -------------                   -------------
 </code></pre><h2 id="flipimages">flip_images</h2>
-<pre><code>void flip_image(image a)
-{
-    int i,j,k;
-    for(k = 0; k &lt; a.c; ++k){
-        for(i = 0; i &lt; a.h; ++i){
-            for(j = 0; j &lt; a.w/2; ++j){
-                int index = j + a.w*(i + a.h*(k));
-                int flip = (a.w - j - 1) + a.w*(i + a.h*(k));
-                float swap = a.data[flip];
+<pre><code class="lang-c"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">flip_image</span><span class="hljs-params">(image a)</span>
+</span>{
+    <span class="hljs-keyword">int</span> i,j,k;
+    <span class="hljs-keyword">for</span>(k = <span class="hljs-number">0</span>; k &lt; a.c; ++k){
+        <span class="hljs-keyword">for</span>(i = <span class="hljs-number">0</span>; i &lt; a.h; ++i){
+            <span class="hljs-keyword">for</span>(j = <span class="hljs-number">0</span>; j &lt; a.w/<span class="hljs-number">2</span>; ++j){
+                <span class="hljs-keyword">int</span> index = j + a.w*(i + a.h*(k));
+                <span class="hljs-keyword">int</span> flip = (a.w - j - <span class="hljs-number">1</span>) + a.w*(i + a.h*(k));
+                <span class="hljs-keyword">float</span> swap = a.data[flip];
                 a.data[flip] = a.data[index];
                 a.data[index] = swap;
             }
         }
     }
 }
-</code></pre><ul>
+</code></pre>
+<ul>
 <li>&#xC774;&#xBBF8;&#xC9C0;&#xB97C; &#xC218;&#xC9C1;&#xC744; &#xAE30;&#xC900;&#xC73C;&#xB85C; &#xB4A4;&#xC9D1;&#xC2B5;&#xB2C8;&#xB2E4;.</li>
 </ul>
 <h2 id="rotateimagecw">rotate_image_cw</h2>
@@ -2407,25 +2434,26 @@ image border_image(image a, int border)
 </li>
 </ul>
 <h2 id="ghostimage">ghost_image</h2>
-<pre><code>void ghost_image(image source, image dest, int dx, int dy)
-{
-    int x,y,k;
-    float max_dist = sqrt((-source.w/2. + .5)*(-source.w/2. + .5));
-    for(k = 0; k &lt; source.c; ++k){
-        for(y = 0; y &lt; source.h; ++y){
-            for(x = 0; x &lt; source.w; ++x){
-                float dist = sqrt((x - source.w/2. + .5)*(x - source.w/2. + .5) + (y - source.h/2. + .5)*(y - source.h/2. + .5));
-                float alpha = (1 - dist/max_dist);
-                if(alpha &lt; 0) alpha = 0;
-                float v1 = get_pixel(source, x,y,k);
-                float v2 = get_pixel(dest, dx+x,dy+y,k);
-                float val = alpha*v1 + (1-alpha)*v2;
+<pre><code class="lang-c"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">ghost_image</span><span class="hljs-params">(image source, image dest, <span class="hljs-keyword">int</span> dx, <span class="hljs-keyword">int</span> dy)</span>
+</span>{
+    <span class="hljs-keyword">int</span> x,y,k;
+    <span class="hljs-keyword">float</span> max_dist = <span class="hljs-built_in">sqrt</span>((-source.w/<span class="hljs-number">2.</span> + <span class="hljs-number">.5</span>)*(-source.w/<span class="hljs-number">2.</span> + <span class="hljs-number">.5</span>));
+    <span class="hljs-keyword">for</span>(k = <span class="hljs-number">0</span>; k &lt; source.c; ++k){
+        <span class="hljs-keyword">for</span>(y = <span class="hljs-number">0</span>; y &lt; source.h; ++y){
+            <span class="hljs-keyword">for</span>(x = <span class="hljs-number">0</span>; x &lt; source.w; ++x){
+                <span class="hljs-keyword">float</span> dist = <span class="hljs-built_in">sqrt</span>((x - source.w/<span class="hljs-number">2.</span> + <span class="hljs-number">.5</span>)*(x - source.w/<span class="hljs-number">2.</span> + <span class="hljs-number">.5</span>) + (y - source.h/<span class="hljs-number">2.</span> + <span class="hljs-number">.5</span>)*(y - source.h/<span class="hljs-number">2.</span> + <span class="hljs-number">.5</span>));
+                <span class="hljs-keyword">float</span> alpha = (<span class="hljs-number">1</span> - dist/max_dist);
+                <span class="hljs-keyword">if</span>(alpha &lt; <span class="hljs-number">0</span>) alpha = <span class="hljs-number">0</span>;
+                <span class="hljs-keyword">float</span> v1 = get_pixel(source, x,y,k);
+                <span class="hljs-keyword">float</span> v2 = get_pixel(dest, dx+x,dy+y,k);
+                <span class="hljs-keyword">float</span> val = alpha*v1 + (<span class="hljs-number">1</span>-alpha)*v2;
                 set_pixel(dest, dx+x, dy+y, k, val);
             }
         }
     }
 }
-</code></pre><ul>
+</code></pre>
+<ul>
 <li>&#xC774;&#xBBF8;&#xC9C0;&#xB97C; &#xB450;&#xAC1C; &#xACB0;&#xD569;&#xD569;&#xB2C8;&#xB2E4;. source image&#xC5D0;&#xB294; &#xB9C8;&#xCE58; &#xC720;&#xB839;&#xCC98;&#xB7FC; &#xD76C;&#xBBF8;&#xD55C; &#xD615;&#xD0DC;&#xC758; dest &#xC774;&#xBBF8;&#xC9C0;&#xAC00; &#xBCF4;&#xC774;&#xAC8C; &#xB429;&#xB2C8;&#xB2E4;.</li>
 </ul>
 <h2 id="blockyimage">blocky_image</h2>
@@ -2449,72 +2477,79 @@ image border_image(image a, int border)
 </ul>
 <p><img src="../figure/blocky.PNG" alt="im2col"></p>
 <h2 id="censorimage">censor_image</h2>
-<pre><code>void censor_image(image im, int dx, int dy, int w, int h)
-{
-    int i,j,k;
-    int s = 32;
-    if(dx &lt; 0) dx = 0;
-    if(dy &lt; 0) dy = 0;
+<pre><code class="lang-c"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">censor_image</span><span class="hljs-params">(image im, <span class="hljs-keyword">int</span> dx, <span class="hljs-keyword">int</span> dy, <span class="hljs-keyword">int</span> w, <span class="hljs-keyword">int</span> h)</span>
+</span>{
+    <span class="hljs-keyword">int</span> i,j,k;
+    <span class="hljs-keyword">int</span> s = <span class="hljs-number">32</span>;
+    <span class="hljs-keyword">if</span>(dx &lt; <span class="hljs-number">0</span>) dx = <span class="hljs-number">0</span>;
+    <span class="hljs-keyword">if</span>(dy &lt; <span class="hljs-number">0</span>) dy = <span class="hljs-number">0</span>;
 
-    for(k = 0; k &lt; im.c; ++k){
-        for(j = dy; j &lt; dy + h &amp;&amp; j &lt; im.h; ++j){
-            for(i = dx; i &lt; dx + w &amp;&amp; i &lt; im.w; ++i){
+    <span class="hljs-keyword">for</span>(k = <span class="hljs-number">0</span>; k &lt; im.c; ++k){
+        <span class="hljs-keyword">for</span>(j = dy; j &lt; dy + h &amp;&amp; j &lt; im.h; ++j){
+            <span class="hljs-keyword">for</span>(i = dx; i &lt; dx + w &amp;&amp; i &lt; im.w; ++i){
                 im.data[i + im.w*(j + im.h*k)] = im.data[i/s*s + im.w*(j/s*s + im.h*k)];
-                //im.data[i + j*im.w + k*im.w*im.h] = 0;
+                <span class="hljs-comment">//im.data[i + j*im.w + k*im.w*im.h] = 0;</span>
             }
         }
     }
 }
-</code></pre><ul>
+</code></pre>
+<ul>
 <li><p>blocky&#xC5D0; crop&#xC774; &#xC788;&#xB294; &#xD568;&#xC218; &#xC785;&#xB2C8;&#xB2E4;.</p>
 </li>
 <li><p>&#xC2E4;&#xC81C; &#xC0AC;&#xC6A9;&#xC740; &#xB418;&#xC9C0; &#xC54A;&#xC2B5;&#xB2C8;&#xB2E4;.</p>
 </li>
 </ul>
 <h2 id="embedimage">embed_image</h2>
-<pre><code>void embed_image(image source, image dest, int dx, int dy)
-{
-    int x,y,k;
-    for(k = 0; k &lt; source.c; ++k){
-        for(y = 0; y &lt; source.h; ++y){
-            for(x = 0; x &lt; source.w; ++x){
-                float val = get_pixel(source, x,y,k);
+<pre><code class="lang-c"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">embed_image</span><span class="hljs-params">(image source, image dest, <span class="hljs-keyword">int</span> dx, <span class="hljs-keyword">int</span> dy)</span>
+</span>{
+    <span class="hljs-keyword">int</span> x,y,k;
+    <span class="hljs-keyword">for</span>(k = <span class="hljs-number">0</span>; k &lt; source.c; ++k){
+        <span class="hljs-keyword">for</span>(y = <span class="hljs-number">0</span>; y &lt; source.h; ++y){
+            <span class="hljs-keyword">for</span>(x = <span class="hljs-number">0</span>; x &lt; source.w; ++x){
+                <span class="hljs-keyword">float</span> val = get_pixel(source, x,y,k);
                 set_pixel(dest, dx+x, dy+y, k, val);
             }
         }
     }
 }
-</code></pre><ul>
+</code></pre>
+<ul>
 <li><p>dest&#xC5D0; source image&#xB97C; &#xB123;&#xC2B5;&#xB2C8;&#xB2E4;.</p>
 </li>
 <li><p>dx, dy&#xAC00; &#xC774;&#xBBF8;&#xC9C0;&#xB97C; &#xB123;&#xC744; &#xC704;&#xCE58;&#xB97C; &#xC870;&#xC808;&#xD574; &#xC90D;&#xB2C8;&#xB2E4;.</p>
 </li>
 </ul>
 <h2 id="collapseimagelayers">collapse_image_layers</h2>
-<pre><code>image collapse_image_layers(image source, int border)
-{
-    int h = source.h;
+<pre><code class="lang-c"><span class="hljs-function">image <span class="hljs-title">collapse_image_layers</span><span class="hljs-params">(image source, <span class="hljs-keyword">int</span> border)</span>
+</span>{
+    <span class="hljs-keyword">int</span> h = source.h;
     h = (h+border)*source.c - border;
-    image dest = make_image(source.w, h, 1);
-    int i;
-    for(i = 0; i &lt; source.c; ++i){
+    image dest = make_image(source.w, h, <span class="hljs-number">1</span>);
+    <span class="hljs-keyword">int</span> i;
+    <span class="hljs-keyword">for</span>(i = <span class="hljs-number">0</span>; i &lt; source.c; ++i){
         image layer = get_image_layer(source, i);
-        int h_offset = i*(source.h+border);
-        embed_image(layer, dest, 0, h_offset);
+        <span class="hljs-keyword">int</span> h_offset = i*(source.h+border);
+        embed_image(layer, dest, <span class="hljs-number">0</span>, h_offset);
         free_image(layer);
     }
-    return dest;
+    <span class="hljs-keyword">return</span> dest;
 }
-</code></pre><h2 id="constrainimage">constrain_image</h2>
-<pre><code>void constrain_image(image im)
-{
-    int i;
-    for(i = 0; i &lt; im.w*im.h*im.c; ++i){
-        if(im.data[i] &lt; 0) im.data[i] = 0;
-        if(im.data[i] &gt; 1) im.data[i] = 1;
+</code></pre>
+<ul>
+<li>&#xC774;&#xBBF8;&#xC9C0;&#xC758; &#xAC01; &#xCC44;&#xB110;&#xC744; &#xACB0;&#xD569;&#xD569;&#xB2C8;&#xB2E4;.</li>
+</ul>
+<h2 id="constrainimage">constrain_image</h2>
+<pre><code class="lang-c"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">constrain_image</span><span class="hljs-params">(image im)</span>
+</span>{
+    <span class="hljs-keyword">int</span> i;
+    <span class="hljs-keyword">for</span>(i = <span class="hljs-number">0</span>; i &lt; im.w*im.h*im.c; ++i){
+        <span class="hljs-keyword">if</span>(im.data[i] &lt; <span class="hljs-number">0</span>) im.data[i] = <span class="hljs-number">0</span>;
+        <span class="hljs-keyword">if</span>(im.data[i] &gt; <span class="hljs-number">1</span>) im.data[i] = <span class="hljs-number">1</span>;
     }
 }
-</code></pre><ul>
+</code></pre>
+<ul>
 <li>&#xC774;&#xBBF8;&#xC9C0;&#xB97C; &#xC774;&#xC9C4;&#xD654; &#xD569;&#xB2C8;&#xB2E4;.<ul>
 <li>0&#xBCF4;&#xB2E4; &#xC791;&#xC740; &#xAC12;&#xC740; 0</li>
 <li>1&#xBCF4;&#xB2E4; &#xD070; &#xAC12;&#xC740; 1</li>
@@ -2522,484 +2557,537 @@ image border_image(image a, int border)
 </li>
 </ul>
 <h2 id="normalizeimage">normalize_image</h2>
-<pre><code>void normalize_image(image p)
-{
-    int i;
-    float min = 9999999;
-    float max = -999999;
+<pre><code class="lang-c"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">normalize_image</span><span class="hljs-params">(image p)</span>
+</span>{
+    <span class="hljs-keyword">int</span> i;
+    <span class="hljs-keyword">float</span> min = <span class="hljs-number">9999999</span>;
+    <span class="hljs-keyword">float</span> max = <span class="hljs-number">-999999</span>;
 
-    for(i = 0; i &lt; p.h*p.w*p.c; ++i){
-        float v = p.data[i];
-        if(v &lt; min) min = v;
-        if(v &gt; max) max = v;
+    <span class="hljs-keyword">for</span>(i = <span class="hljs-number">0</span>; i &lt; p.h*p.w*p.c; ++i){
+        <span class="hljs-keyword">float</span> v = p.data[i];
+        <span class="hljs-keyword">if</span>(v &lt; min) min = v;
+        <span class="hljs-keyword">if</span>(v &gt; max) max = v;
     }
-    if(max - min &lt; .000000001){
-        min = 0;
-        max = 1;
+    <span class="hljs-keyword">if</span>(max - min &lt; <span class="hljs-number">.000000001</span>){
+        min = <span class="hljs-number">0</span>;
+        max = <span class="hljs-number">1</span>;
     }
-    for(i = 0; i &lt; p.c*p.w*p.h; ++i){
+    <span class="hljs-keyword">for</span>(i = <span class="hljs-number">0</span>; i &lt; p.c*p.w*p.h; ++i){
         p.data[i] = (p.data[i] - min)/(max-min);
     }
 }
-</code></pre><ul>
+</code></pre>
+<ul>
 <li><p>&#xC774;&#xBBF8;&#xC9C0;&#xB97C; min max scaling &#xD569;&#xB2C8;&#xB2E4;.</p>
 </li>
 <li><p><script type="math/tex; ">\frac{x_i - min(x)}{max(x) - min(x)}</script></p>
 </li>
 </ul>
 <h2 id="normalizeimage2">normalize_image2</h2>
-<pre><code>void normalize_image2(image p)
-{
-    float *min = calloc(p.c, sizeof(float));
-    float *max = calloc(p.c, sizeof(float));
-    int i,j;
-    for(i = 0; i &lt; p.c; ++i) min[i] = max[i] = p.data[i*p.h*p.w];
+<pre><code class="lang-c"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">normalize_image2</span><span class="hljs-params">(image p)</span>
+</span>{
+    <span class="hljs-keyword">float</span> *min = <span class="hljs-built_in">calloc</span>(p.c, <span class="hljs-keyword">sizeof</span>(<span class="hljs-keyword">float</span>));
+    <span class="hljs-keyword">float</span> *max = <span class="hljs-built_in">calloc</span>(p.c, <span class="hljs-keyword">sizeof</span>(<span class="hljs-keyword">float</span>));
+    <span class="hljs-keyword">int</span> i,j;
+    <span class="hljs-keyword">for</span>(i = <span class="hljs-number">0</span>; i &lt; p.c; ++i) min[i] = max[i] = p.data[i*p.h*p.w];
 
-    for(j = 0; j &lt; p.c; ++j){
-        for(i = 0; i &lt; p.h*p.w; ++i){
-            float v = p.data[i+j*p.h*p.w];
-            if(v &lt; min[j]) min[j] = v;
-            if(v &gt; max[j]) max[j] = v;
+    <span class="hljs-keyword">for</span>(j = <span class="hljs-number">0</span>; j &lt; p.c; ++j){
+        <span class="hljs-keyword">for</span>(i = <span class="hljs-number">0</span>; i &lt; p.h*p.w; ++i){
+            <span class="hljs-keyword">float</span> v = p.data[i+j*p.h*p.w];
+            <span class="hljs-keyword">if</span>(v &lt; min[j]) min[j] = v;
+            <span class="hljs-keyword">if</span>(v &gt; max[j]) max[j] = v;
         }
     }
-    for(i = 0; i &lt; p.c; ++i){
-        if(max[i] - min[i] &lt; .000000001){
-            min[i] = 0;
-            max[i] = 1;
+    <span class="hljs-keyword">for</span>(i = <span class="hljs-number">0</span>; i &lt; p.c; ++i){
+        <span class="hljs-keyword">if</span>(max[i] - min[i] &lt; <span class="hljs-number">.000000001</span>){
+            min[i] = <span class="hljs-number">0</span>;
+            max[i] = <span class="hljs-number">1</span>;
         }
     }
-    for(j = 0; j &lt; p.c; ++j){
-        for(i = 0; i &lt; p.w*p.h; ++i){
+    <span class="hljs-keyword">for</span>(j = <span class="hljs-number">0</span>; j &lt; p.c; ++j){
+        <span class="hljs-keyword">for</span>(i = <span class="hljs-number">0</span>; i &lt; p.w*p.h; ++i){
             p.data[i+j*p.h*p.w] = (p.data[i+j*p.h*p.w] - min[j])/(max[j]-min[j]);
         }
     }
-    free(min);
-    free(max);
+    <span class="hljs-built_in">free</span>(min);
+    <span class="hljs-built_in">free</span>(max);
 }
-</code></pre><h2 id="copyimageinto">copy_image_into</h2>
-<pre><code>void copy_image_into(image src, image dest)
+</code></pre>
+<ul>
+<li><p>&#xC774;&#xBBF8;&#xC9C0;&#xB97C; min max scaling &#xD569;&#xB2C8;&#xB2E4;.</p>
+</li>
+<li><p><script type="math/tex; ">\frac{x_i - min(x)}{max(x) - min(x)}</script></p>
+</li>
+<li><p><code>normalize_image</code> &#xD568;&#xC218;&#xB791; for&#xBB38; &#xB3D9;&#xC791; &#xBC29;&#xC2DD;&#xB9CC; &#xB2E4;&#xB978; &#xAC83; &#xAC19;&#xC2B5;&#xB2C8;&#xB2E4;.</p>
+</li>
+</ul>
+<h2 id="copyimageinto">copy_image_into</h2>
+<pre><code class="lang-c">void copy_image_into(image src, image dest)
 {
     memcpy(dest.data, src.data, src.h*src.w*src.c*sizeof(float));
 }
-</code></pre><ul>
+</code></pre>
+<ul>
 <li>&#xC774;&#xBBF8;&#xC9C0;&#xB97C; &#xBCF5;&#xC0AC;&#xD569;&#xB2C8;&#xB2E4;.</li>
 </ul>
 <h2 id="copyimage">copy_image</h2>
-<pre><code>image copy_image(image p)
+<pre><code class="lang-c">image copy_image(image p)
 {
     image copy = p;
     copy.data = calloc(p.h*p.w*p.c, sizeof(float));
     memcpy(copy.data, p.data, p.h*p.w*p.c*sizeof(float));
     return copy;
 }
-</code></pre><ul>
+</code></pre>
+<ul>
 <li>&#xC774;&#xBBF8;&#xC9C0;&#xB97C; &#xBCF5;&#xC0AC;&#xD569;&#xB2C8;&#xB2E4;.</li>
 </ul>
 <h2 id="rgbgrimage">rgbgr_image</h2>
-<pre><code>void rgbgr_image(image im)
-{
-    int i;
-    for(i = 0; i &lt; im.w*im.h; ++i){
-        float swap = im.data[i];
-        im.data[i] = im.data[i+im.w*im.h*2];
-        im.data[i+im.w*im.h*2] = swap;
+<pre><code class="lang-c"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">rgbgr_image</span><span class="hljs-params">(image im)</span>
+</span>{
+    <span class="hljs-keyword">int</span> i;
+    <span class="hljs-keyword">for</span>(i = <span class="hljs-number">0</span>; i &lt; im.w*im.h; ++i){
+        <span class="hljs-keyword">float</span> swap = im.data[i];
+        im.data[i] = im.data[i+im.w*im.h*<span class="hljs-number">2</span>];
+        im.data[i+im.w*im.h*<span class="hljs-number">2</span>] = swap;
     }
 }
-</code></pre><ul>
+</code></pre>
+<ul>
 <li>RGB&#xB97C; BGR&#xB85C; BGR&#xC744; RGB&#xB85C; &#xBC14;&#xAFC9;&#xB2C8;&#xB2E4;.</li>
 </ul>
 <h2 id="showimage">show_image</h2>
-<pre><code>int show_image(image p, const char *name, int ms)
-{
-#ifdef OPENCV
-    int c = show_image_cv(p, name, ms);
-    return c;
-#else
-    fprintf(stderr, &quot;Not compiled with OpenCV, saving to %s.png instead\n&quot;, name);
+<pre><code class="lang-c"><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">show_image</span><span class="hljs-params">(image p, <span class="hljs-keyword">const</span> <span class="hljs-keyword">char</span> *name, <span class="hljs-keyword">int</span> ms)</span>
+</span>{
+<span class="hljs-meta">#<span class="hljs-meta-keyword">ifdef</span> OPENCV</span>
+    <span class="hljs-keyword">int</span> c = show_image_cv(p, name, ms);
+    <span class="hljs-keyword">return</span> c;
+<span class="hljs-meta">#<span class="hljs-meta-keyword">else</span></span>
+    <span class="hljs-built_in">fprintf</span>(<span class="hljs-built_in">stderr</span>, <span class="hljs-string">&quot;Not compiled with OpenCV, saving to %s.png instead\n&quot;</span>, name);
     save_image(p, name);
-    return -1;
-#endif
+    <span class="hljs-keyword">return</span> <span class="hljs-number">-1</span>;
+<span class="hljs-meta">#<span class="hljs-meta-keyword">endif</span></span>
 }
-</code></pre><ul>
+</code></pre>
+<ul>
 <li>&#xC774;&#xBBF8;&#xC9C0;&#xB97C; &#xBCF4;&#xC5EC;&#xC90D;&#xB2C8;&#xB2E4;.</li>
 </ul>
 <h2 id="saveimageoptions">save_image_options</h2>
-<pre><code>void save_image_options(image im, const char *name, IMTYPE f, int quality)
-{
-    char buff[256];
-    //sprintf(buff, &quot;%s (%d)&quot;, name, windows);
-    if(f == PNG)       sprintf(buff, &quot;%s.png&quot;, name);
-    else if (f == BMP) sprintf(buff, &quot;%s.bmp&quot;, name);
-    else if (f == TGA) sprintf(buff, &quot;%s.tga&quot;, name);
-    else if (f == JPG) sprintf(buff, &quot;%s.jpg&quot;, name);
-    else               sprintf(buff, &quot;%s.png&quot;, name);
-    unsigned char *data = calloc(im.w*im.h*im.c, sizeof(char));
-    int i,k;
-    for(k = 0; k &lt; im.c; ++k){
-        for(i = 0; i &lt; im.w*im.h; ++i){
-            data[i*im.c+k] = (unsigned char) (255*im.data[i + k*im.w*im.h]);
+<pre><code class="lang-c"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">save_image_options</span><span class="hljs-params">(image im, <span class="hljs-keyword">const</span> <span class="hljs-keyword">char</span> *name, IMTYPE f, <span class="hljs-keyword">int</span> quality)</span>
+</span>{
+    <span class="hljs-keyword">char</span> buff[<span class="hljs-number">256</span>];
+    <span class="hljs-comment">//sprintf(buff, &quot;%s (%d)&quot;, name, windows);</span>
+    <span class="hljs-keyword">if</span>(f == PNG)       <span class="hljs-built_in">sprintf</span>(buff, <span class="hljs-string">&quot;%s.png&quot;</span>, name);
+    <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (f == BMP) <span class="hljs-built_in">sprintf</span>(buff, <span class="hljs-string">&quot;%s.bmp&quot;</span>, name);
+    <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (f == TGA) <span class="hljs-built_in">sprintf</span>(buff, <span class="hljs-string">&quot;%s.tga&quot;</span>, name);
+    <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (f == JPG) <span class="hljs-built_in">sprintf</span>(buff, <span class="hljs-string">&quot;%s.jpg&quot;</span>, name);
+    <span class="hljs-keyword">else</span>               <span class="hljs-built_in">sprintf</span>(buff, <span class="hljs-string">&quot;%s.png&quot;</span>, name);
+    <span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">char</span> *data = <span class="hljs-built_in">calloc</span>(im.w*im.h*im.c, <span class="hljs-keyword">sizeof</span>(<span class="hljs-keyword">char</span>));
+    <span class="hljs-keyword">int</span> i,k;
+    <span class="hljs-keyword">for</span>(k = <span class="hljs-number">0</span>; k &lt; im.c; ++k){
+        <span class="hljs-keyword">for</span>(i = <span class="hljs-number">0</span>; i &lt; im.w*im.h; ++i){
+            data[i*im.c+k] = (<span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">char</span>) (<span class="hljs-number">255</span>*im.data[i + k*im.w*im.h]);
         }
     }
-    int success = 0;
-    if(f == PNG)       success = stbi_write_png(buff, im.w, im.h, im.c, data, im.w*im.c);
-    else if (f == BMP) success = stbi_write_bmp(buff, im.w, im.h, im.c, data);
-    else if (f == TGA) success = stbi_write_tga(buff, im.w, im.h, im.c, data);
-    else if (f == JPG) success = stbi_write_jpg(buff, im.w, im.h, im.c, data, quality);
-    free(data);
-    if(!success) fprintf(stderr, &quot;Failed to write image %s\n&quot;, buff);
+    <span class="hljs-keyword">int</span> success = <span class="hljs-number">0</span>;
+    <span class="hljs-keyword">if</span>(f == PNG)       success = stbi_write_png(buff, im.w, im.h, im.c, data, im.w*im.c);
+    <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (f == BMP) success = stbi_write_bmp(buff, im.w, im.h, im.c, data);
+    <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (f == TGA) success = stbi_write_tga(buff, im.w, im.h, im.c, data);
+    <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (f == JPG) success = stbi_write_jpg(buff, im.w, im.h, im.c, data, quality);
+    <span class="hljs-built_in">free</span>(data);
+    <span class="hljs-keyword">if</span>(!success) <span class="hljs-built_in">fprintf</span>(<span class="hljs-built_in">stderr</span>, <span class="hljs-string">&quot;Failed to write image %s\n&quot;</span>, buff);
 }
-</code></pre><ul>
+</code></pre>
+<ul>
 <li>&#xC774;&#xBBF8;&#xC9C0;&#xB97C; &#xB2E4;&#xC591;&#xD55C; &#xD655;&#xC7A5;&#xC790;(PNG, BMP, TGA, JPG)&#xB85C; &#xC800;&#xC7A5;&#xD558;&#xAE30; &#xC704;&#xD55C; &#xD568;&#xC218; &#xC785;&#xB2C8;&#xB2E4;.</li>
 </ul>
 <h2 id="saveimage">save_image</h2>
-<pre><code>void save_image(image im, const char *name)
-{
-    save_image_options(im, name, JPG, 80);
+<pre><code class="lang-c"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">save_image</span><span class="hljs-params">(image im, <span class="hljs-keyword">const</span> <span class="hljs-keyword">char</span> *name)</span>
+</span>{
+    save_image_options(im, name, JPG, <span class="hljs-number">80</span>);
 }
-</code></pre><ul>
+</code></pre>
+<ul>
 <li>&#xC774;&#xBBF8;&#xC9C0;&#xB97C; &#xC800;&#xC7A5;&#xD569;&#xB2C8;&#xB2E4;.</li>
 </ul>
 <h2 id="showimagelayers">show_image_layers</h2>
-<pre><code>void show_image_layers(image p, char *name)
-{
-    int i;
-    char buff[256];
-    for(i = 0; i &lt; p.c; ++i){
-        sprintf(buff, &quot;%s - Layer %d&quot;, name, i);
+<pre><code class="lang-c"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">show_image_layers</span><span class="hljs-params">(image p, <span class="hljs-keyword">char</span> *name)</span>
+</span>{
+    <span class="hljs-keyword">int</span> i;
+    <span class="hljs-keyword">char</span> buff[<span class="hljs-number">256</span>];
+    <span class="hljs-keyword">for</span>(i = <span class="hljs-number">0</span>; i &lt; p.c; ++i){
+        <span class="hljs-built_in">sprintf</span>(buff, <span class="hljs-string">&quot;%s - Layer %d&quot;</span>, name, i);
         image layer = get_image_layer(p, i);
-        show_image(layer, buff, 1);
+        show_image(layer, buff, <span class="hljs-number">1</span>);
         free_image(layer);
     }
 }
-</code></pre><ul>
+</code></pre>
+<ul>
 <li>&#xD2B9;&#xC815; layer&#xC758; &#xC774;&#xBBF8;&#xC9C0;&#xB97C; &#xBCF4;&#xC5EC;&#xC90D;&#xB2C8;&#xB2E4;.</li>
 </ul>
 <h2 id="showimagecollapsed">show_image_collapsed</h2>
-<pre><code>void show_image_collapsed(image p, char *name)
-{
-    image c = collapse_image_layers(p, 1);
-    show_image(c, name, 1);
+<pre><code class="lang-c"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">show_image_collapsed</span><span class="hljs-params">(image p, <span class="hljs-keyword">char</span> *name)</span>
+</span>{
+    image c = collapse_image_layers(p, <span class="hljs-number">1</span>);
+    show_image(c, name, <span class="hljs-number">1</span>);
     free_image(c);
 }
-</code></pre><p>-</p>
+</code></pre>
+<ul>
+<li>&#xAC01; &#xCC44;&#xB110;&#xC744; &#xACB0;&#xD569;&#xD55C; &#xC774;&#xBBF8;&#xC9C0;&#xB97C; &#xC2DC;&#xAC01;&#xD654; &#xD569;&#xB2C8;&#xB2E4;.</li>
+</ul>
 <h2 id="makeemptyimage">make_empty_image</h2>
-<pre><code>image make_empty_image(int w, int h, int c)
-{
+<pre><code class="lang-c"><span class="hljs-function">image <span class="hljs-title">make_empty_image</span><span class="hljs-params">(<span class="hljs-keyword">int</span> w, <span class="hljs-keyword">int</span> h, <span class="hljs-keyword">int</span> c)</span>
+</span>{
     image out;
-    out.data = 0;
+    out.data = <span class="hljs-number">0</span>;
     out.h = h;
     out.w = w;
     out.c = c;
-    return out;
+    <span class="hljs-keyword">return</span> out;
 }
-</code></pre><ul>
+</code></pre>
+<ul>
 <li>&#xBE44;&#xC5B4;&#xC788;&#xB294; image&#xB97C; &#xC0DD;&#xC131;&#xD569;&#xB2C8;&#xB2E4;.</li>
 </ul>
 <h2 id="makeimage">make_image</h2>
-<pre><code>image make_image(int w, int h, int c)
-{
+<pre><code class="lang-c"><span class="hljs-function">image <span class="hljs-title">make_image</span><span class="hljs-params">(<span class="hljs-keyword">int</span> w, <span class="hljs-keyword">int</span> h, <span class="hljs-keyword">int</span> c)</span>
+</span>{
     image out = make_empty_image(w,h,c);
-    out.data = calloc(h*w*c, sizeof(float));
-    return out;
+    out.data = <span class="hljs-built_in">calloc</span>(h*w*c, <span class="hljs-keyword">sizeof</span>(<span class="hljs-keyword">float</span>));
+    <span class="hljs-keyword">return</span> out;
 }
-</code></pre><ul>
+</code></pre>
+<ul>
 <li>&#xBE44;&#xC5B4;&#xC788;&#xB294; image&#xB97C; &#xC0DD;&#xC131;&#xD569;&#xB2C8;&#xB2E4;.(&#xBA54;&#xBAA8;&#xB9AC; &#xD560;&#xB2F9;, &#xBAA8;&#xB4E0; &#xAC12; 0)</li>
 </ul>
 <h2 id="makerandomimage">make_random_image</h2>
-<pre><code>image make_random_image(int w, int h, int c)
-{
+<pre><code class="lang-c"><span class="hljs-function">image <span class="hljs-title">make_random_image</span><span class="hljs-params">(<span class="hljs-keyword">int</span> w, <span class="hljs-keyword">int</span> h, <span class="hljs-keyword">int</span> c)</span>
+</span>{
     image out = make_empty_image(w,h,c);
-    out.data = calloc(h*w*c, sizeof(float));
-    int i;
-    for(i = 0; i &lt; w*h*c; ++i){
-        out.data[i] = (rand_normal() * .25) + .5;
+    out.data = <span class="hljs-built_in">calloc</span>(h*w*c, <span class="hljs-keyword">sizeof</span>(<span class="hljs-keyword">float</span>));
+    <span class="hljs-keyword">int</span> i;
+    <span class="hljs-keyword">for</span>(i = <span class="hljs-number">0</span>; i &lt; w*h*c; ++i){
+        out.data[i] = (rand_normal() * <span class="hljs-number">.25</span>) + <span class="hljs-number">.5</span>;
     }
-    return out;
+    <span class="hljs-keyword">return</span> out;
 }
-</code></pre><ul>
+</code></pre>
+<ul>
 <li>&#xB79C;&#xB364;&#xD55C; &#xC774;&#xBBF8;&#xC9C0;&#xB97C; &#xC0DD;&#xC131;&#xD569;&#xB2C8;&#xB2E4;.</li>
 </ul>
 <h2 id="floattoimage">float_to_image</h2>
-<pre><code>image float_to_image(int w, int h, int c, float *data)
-{
+<pre><code class="lang-c"><span class="hljs-function">image <span class="hljs-title">float_to_image</span><span class="hljs-params">(<span class="hljs-keyword">int</span> w, <span class="hljs-keyword">int</span> h, <span class="hljs-keyword">int</span> c, <span class="hljs-keyword">float</span> *data)</span>
+</span>{
     image out = make_empty_image(w,h,c);
     out.data = data;
-    return out;
+    <span class="hljs-keyword">return</span> out;
 }
-</code></pre><ul>
+</code></pre>
+<ul>
 <li>float &#xB370;&#xC774;&#xD130;&#xB97C; &#xC774;&#xBBF8;&#xC9C0;&#xB85C; &#xB9CC;&#xB4ED;&#xB2C8;&#xB2E4;.</li>
 </ul>
 <h2 id="placeimage">place_image</h2>
-<pre><code>void place_image(image im, int w, int h, int dx, int dy, image canvas)
-{
-    int x, y, c;
-    for(c = 0; c &lt; im.c; ++c){
-        for(y = 0; y &lt; h; ++y){
-            for(x = 0; x &lt; w; ++x){
-                float rx = ((float)x / w) * im.w;
-                float ry = ((float)y / h) * im.h;
-                float val = bilinear_interpolate(im, rx, ry, c);
+<pre><code class="lang-c"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">place_image</span><span class="hljs-params">(image im, <span class="hljs-keyword">int</span> w, <span class="hljs-keyword">int</span> h, <span class="hljs-keyword">int</span> dx, <span class="hljs-keyword">int</span> dy, image canvas)</span>
+</span>{
+    <span class="hljs-keyword">int</span> x, y, c;
+    <span class="hljs-keyword">for</span>(c = <span class="hljs-number">0</span>; c &lt; im.c; ++c){
+        <span class="hljs-keyword">for</span>(y = <span class="hljs-number">0</span>; y &lt; h; ++y){
+            <span class="hljs-keyword">for</span>(x = <span class="hljs-number">0</span>; x &lt; w; ++x){
+                <span class="hljs-keyword">float</span> rx = ((<span class="hljs-keyword">float</span>)x / w) * im.w;
+                <span class="hljs-keyword">float</span> ry = ((<span class="hljs-keyword">float</span>)y / h) * im.h;
+                <span class="hljs-keyword">float</span> val = bilinear_interpolate(im, rx, ry, c);
                 set_pixel(canvas, x + dx, y + dy, c, val);
             }
         }
     }
 }
-</code></pre><h2 id="centercropimage">center_crop_image</h2>
-<pre><code>image center_crop_image(image im, int w, int h)
-{
-    int m = (im.w &lt; im.h) ? im.w : im.h;   
-    image c = crop_image(im, (im.w - m) / 2, (im.h - m)/2, m, m);
+</code></pre>
+<h2 id="centercropimage">center_crop_image</h2>
+<pre><code class="lang-c"><span class="hljs-function">image <span class="hljs-title">center_crop_image</span><span class="hljs-params">(image im, <span class="hljs-keyword">int</span> w, <span class="hljs-keyword">int</span> h)</span>
+</span>{
+    <span class="hljs-keyword">int</span> m = (im.w &lt; im.h) ? im.w : im.h;   
+    image c = crop_image(im, (im.w - m) / <span class="hljs-number">2</span>, (im.h - m)/<span class="hljs-number">2</span>, m, m);
     image r = resize_image(c, w, h);
     free_image(c);
-    return r;
+    <span class="hljs-keyword">return</span> r;
 }
-</code></pre><ul>
+</code></pre>
+<ul>
 <li>&#xC911;&#xC2EC; &#xC601;&#xC5ED;&#xC744; crop&#xD569;&#xB2C8;&#xB2E4;.</li>
 </ul>
 <h2 id="rotatecropimage">rotate_crop_image</h2>
-<pre><code>image rotate_crop_image(image im, float rad, float s, int w, int h, float dx, float dy, float aspect)
-{
-    int x, y, c;
-    float cx = im.w/2.;
-    float cy = im.h/2.;
+<pre><code class="lang-c"><span class="hljs-function">image <span class="hljs-title">rotate_crop_image</span><span class="hljs-params">(image im, <span class="hljs-keyword">float</span> rad, <span class="hljs-keyword">float</span> s, <span class="hljs-keyword">int</span> w, <span class="hljs-keyword">int</span> h, <span class="hljs-keyword">float</span> dx, <span class="hljs-keyword">float</span> dy, <span class="hljs-keyword">float</span> aspect)</span>
+</span>{
+    <span class="hljs-keyword">int</span> x, y, c;
+    <span class="hljs-keyword">float</span> cx = im.w/<span class="hljs-number">2.</span>;
+    <span class="hljs-keyword">float</span> cy = im.h/<span class="hljs-number">2.</span>;
     image rot = make_image(w, h, im.c);
-    for(c = 0; c &lt; im.c; ++c){
-        for(y = 0; y &lt; h; ++y){
-            for(x = 0; x &lt; w; ++x){
-                float rx = cos(rad)*((x - w/2.)/s*aspect + dx/s*aspect) - sin(rad)*((y - h/2.)/s + dy/s) + cx;
-                float ry = sin(rad)*((x - w/2.)/s*aspect + dx/s*aspect) + cos(rad)*((y - h/2.)/s + dy/s) + cy;
-                float val = bilinear_interpolate(im, rx, ry, c);
+    <span class="hljs-keyword">for</span>(c = <span class="hljs-number">0</span>; c &lt; im.c; ++c){
+        <span class="hljs-keyword">for</span>(y = <span class="hljs-number">0</span>; y &lt; h; ++y){
+            <span class="hljs-keyword">for</span>(x = <span class="hljs-number">0</span>; x &lt; w; ++x){
+                <span class="hljs-keyword">float</span> rx = <span class="hljs-built_in">cos</span>(rad)*((x - w/<span class="hljs-number">2.</span>)/s*aspect + dx/s*aspect) - <span class="hljs-built_in">sin</span>(rad)*((y - h/<span class="hljs-number">2.</span>)/s + dy/s) + cx;
+                <span class="hljs-keyword">float</span> ry = <span class="hljs-built_in">sin</span>(rad)*((x - w/<span class="hljs-number">2.</span>)/s*aspect + dx/s*aspect) + <span class="hljs-built_in">cos</span>(rad)*((y - h/<span class="hljs-number">2.</span>)/s + dy/s) + cy;
+                <span class="hljs-keyword">float</span> val = bilinear_interpolate(im, rx, ry, c);
                 set_pixel(rot, x, y, c, val);
             }
         }
     }
-    return rot;
+    <span class="hljs-keyword">return</span> rot;
 }
-</code></pre><h2 id="rotateimage">rotate_image</h2>
-<pre><code>image rotate_image(image im, float rad)
-{
-    int x, y, c;
-    float cx = im.w/2.;
-    float cy = im.h/2.;
+</code></pre>
+<h2 id="rotateimage">rotate_image</h2>
+<pre><code class="lang-c"><span class="hljs-function">image <span class="hljs-title">rotate_image</span><span class="hljs-params">(image im, <span class="hljs-keyword">float</span> rad)</span>
+</span>{
+    <span class="hljs-keyword">int</span> x, y, c;
+    <span class="hljs-keyword">float</span> cx = im.w/<span class="hljs-number">2.</span>;
+    <span class="hljs-keyword">float</span> cy = im.h/<span class="hljs-number">2.</span>;
     image rot = make_image(im.w, im.h, im.c);
-    for(c = 0; c &lt; im.c; ++c){
-        for(y = 0; y &lt; im.h; ++y){
-            for(x = 0; x &lt; im.w; ++x){
-                float rx = cos(rad)*(x-cx) - sin(rad)*(y-cy) + cx;
-                float ry = sin(rad)*(x-cx) + cos(rad)*(y-cy) + cy;
-                float val = bilinear_interpolate(im, rx, ry, c);
+    <span class="hljs-keyword">for</span>(c = <span class="hljs-number">0</span>; c &lt; im.c; ++c){
+        <span class="hljs-keyword">for</span>(y = <span class="hljs-number">0</span>; y &lt; im.h; ++y){
+            <span class="hljs-keyword">for</span>(x = <span class="hljs-number">0</span>; x &lt; im.w; ++x){
+                <span class="hljs-keyword">float</span> rx = <span class="hljs-built_in">cos</span>(rad)*(x-cx) - <span class="hljs-built_in">sin</span>(rad)*(y-cy) + cx;
+                <span class="hljs-keyword">float</span> ry = <span class="hljs-built_in">sin</span>(rad)*(x-cx) + <span class="hljs-built_in">cos</span>(rad)*(y-cy) + cy;
+                <span class="hljs-keyword">float</span> val = bilinear_interpolate(im, rx, ry, c);
                 set_pixel(rot, x, y, c, val);
             }
         }
     }
-    return rot;
+    <span class="hljs-keyword">return</span> rot;
 }
-</code></pre><ul>
+</code></pre>
+<ul>
 <li>&#xC774;&#xBBF8;&#xC9C0;&#xB97C; radius&#xB9CC;&#xD07C; &#xD68C;&#xC804; &#xC2DC;&#xD0B5;&#xB2C8;&#xB2E4;.</li>
 </ul>
 <h2 id="fillimage">fill_image</h2>
-<pre><code>void fill_image(image m, float s)
-{
-    int i;
-    for(i = 0; i &lt; m.h*m.w*m.c; ++i) m.data[i] = s;
+<pre><code class="lang-c"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">fill_image</span><span class="hljs-params">(image m, <span class="hljs-keyword">float</span> s)</span>
+</span>{
+    <span class="hljs-keyword">int</span> i;
+    <span class="hljs-keyword">for</span>(i = <span class="hljs-number">0</span>; i &lt; m.h*m.w*m.c; ++i) m.data[i] = s;
 }
-</code></pre><ul>
+</code></pre>
+<ul>
 <li>&#xC774;&#xBBF8;&#xC9C0;&#xB97C; s&#xAC12;&#xC73C;&#xB85C; &#xCC44;&#xC6C1;&#xB2C8;&#xB2E4;.</li>
 </ul>
 <h2 id="translateimage">translate_image</h2>
-<pre><code>void translate_image(image m, float s)
-{
-    int i;
-    for(i = 0; i &lt; m.h*m.w*m.c; ++i) m.data[i] += s;
+<pre><code class="lang-c"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">translate_image</span><span class="hljs-params">(image m, <span class="hljs-keyword">float</span> s)</span>
+</span>{
+    <span class="hljs-keyword">int</span> i;
+    <span class="hljs-keyword">for</span>(i = <span class="hljs-number">0</span>; i &lt; m.h*m.w*m.c; ++i) m.data[i] += s;
 }
-</code></pre><ul>
+</code></pre>
+<ul>
 <li>&#xC774;&#xBBF8;&#xC9C0;&#xC758; &#xBAA8;&#xB4E0; &#xAC12;&#xC5D0; s&#xB97C; &#xB354;&#xD569;&#xB2C8;&#xB2E4;.</li>
 </ul>
 <h2 id="scaleimage">scale_image</h2>
-<pre><code>void scale_image(image m, float s)
-{
-    int i;
-    for(i = 0; i &lt; m.h*m.w*m.c; ++i) m.data[i] *= s;
+<pre><code class="lang-c"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">scale_image</span><span class="hljs-params">(image m, <span class="hljs-keyword">float</span> s)</span>
+</span>{
+    <span class="hljs-keyword">int</span> i;
+    <span class="hljs-keyword">for</span>(i = <span class="hljs-number">0</span>; i &lt; m.h*m.w*m.c; ++i) m.data[i] *= s;
 }
-</code></pre><ul>
+</code></pre>
+<ul>
 <li>&#xC774;&#xBBF8;&#xC9C0;&#xC758; scale&#xC744; &#xACF1;&#xD569;&#xB2C8;&#xB2E4;.</li>
 </ul>
 <h2 id="cropimage">crop_image</h2>
-<pre><code>image crop_image(image im, int dx, int dy, int w, int h)
-{
+<pre><code class="lang-c"><span class="hljs-function">image <span class="hljs-title">crop_image</span><span class="hljs-params">(image im, <span class="hljs-keyword">int</span> dx, <span class="hljs-keyword">int</span> dy, <span class="hljs-keyword">int</span> w, <span class="hljs-keyword">int</span> h)</span>
+</span>{
     image cropped = make_image(w, h, im.c);
-    int i, j, k;
-    for(k = 0; k &lt; im.c; ++k){
-        for(j = 0; j &lt; h; ++j){
-            for(i = 0; i &lt; w; ++i){
-                int r = j + dy;
-                int c = i + dx;
-                float val = 0;
-                r = constrain_int(r, 0, im.h-1);
-                c = constrain_int(c, 0, im.w-1);
+    <span class="hljs-keyword">int</span> i, j, k;
+    <span class="hljs-keyword">for</span>(k = <span class="hljs-number">0</span>; k &lt; im.c; ++k){
+        <span class="hljs-keyword">for</span>(j = <span class="hljs-number">0</span>; j &lt; h; ++j){
+            <span class="hljs-keyword">for</span>(i = <span class="hljs-number">0</span>; i &lt; w; ++i){
+                <span class="hljs-keyword">int</span> r = j + dy;
+                <span class="hljs-keyword">int</span> c = i + dx;
+                <span class="hljs-keyword">float</span> val = <span class="hljs-number">0</span>;
+                r = constrain_int(r, <span class="hljs-number">0</span>, im.h<span class="hljs-number">-1</span>);
+                c = constrain_int(c, <span class="hljs-number">0</span>, im.w<span class="hljs-number">-1</span>);
                 val = get_pixel(im, c, r, k);
                 set_pixel(cropped, i, j, k, val);
             }
         }
     }
-    return cropped;
+    <span class="hljs-keyword">return</span> cropped;
 }
-</code></pre><p>-</p>
+</code></pre>
+<ul>
+<li>&#xC774;&#xBBF8;&#xC9C0;&#xB97C; crop &#xD569;&#xB2C8;&#xB2E4;.</li>
+</ul>
 <h2 id="best3dshiftr">best_3d_shift_r</h2>
-<pre><code>int best_3d_shift_r(image a, image b, int min, int max)
-{
-    if(min == max) return min;
-    int mid = floor((min + max) / 2.);
-    image c1 = crop_image(b, 0, mid, b.w, b.h);
-    image c2 = crop_image(b, 0, mid+1, b.w, b.h);
-    float d1 = dist_array(c1.data, a.data, a.w*a.h*a.c, 10);
-    float d2 = dist_array(c2.data, a.data, a.w*a.h*a.c, 10);
+<pre><code class="lang-c"><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">best_3d_shift_r</span><span class="hljs-params">(image a, image b, <span class="hljs-keyword">int</span> min, <span class="hljs-keyword">int</span> max)</span>
+</span>{
+    <span class="hljs-keyword">if</span>(min == max) <span class="hljs-keyword">return</span> min;
+    <span class="hljs-keyword">int</span> mid = <span class="hljs-built_in">floor</span>((min + max) / <span class="hljs-number">2.</span>);
+    image c1 = crop_image(b, <span class="hljs-number">0</span>, mid, b.w, b.h);
+    image c2 = crop_image(b, <span class="hljs-number">0</span>, mid+<span class="hljs-number">1</span>, b.w, b.h);
+    <span class="hljs-keyword">float</span> d1 = dist_array(c1.data, a.data, a.w*a.h*a.c, <span class="hljs-number">10</span>);
+    <span class="hljs-keyword">float</span> d2 = dist_array(c2.data, a.data, a.w*a.h*a.c, <span class="hljs-number">10</span>);
     free_image(c1);
     free_image(c2);
-    if(d1 &lt; d2) return best_3d_shift_r(a, b, min, mid);
-    else return best_3d_shift_r(a, b, mid+1, max);
+    <span class="hljs-keyword">if</span>(d1 &lt; d2) <span class="hljs-keyword">return</span> best_3d_shift_r(a, b, min, mid);
+    <span class="hljs-keyword">else</span> <span class="hljs-keyword">return</span> best_3d_shift_r(a, b, mid+<span class="hljs-number">1</span>, max);
 }
-</code></pre><h2 id="best3dshift">best_3d_shift</h2>
-<pre><code>int best_3d_shift(image a, image b, int min, int max)
-{
-    int i;
-    int best = 0;
-    float best_distance = FLT_MAX;
-    for(i = min; i &lt;= max; i += 2){
-        image c = crop_image(b, 0, i, b.w, b.h);
-        float d = dist_array(c.data, a.data, a.w*a.h*a.c, 100);
-        if(d &lt; best_distance){
+</code></pre>
+<p>-</p>
+<h2 id="best3dshift">best_3d_shift</h2>
+<pre><code class="lang-c"><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">best_3d_shift</span><span class="hljs-params">(image a, image b, <span class="hljs-keyword">int</span> min, <span class="hljs-keyword">int</span> max)</span>
+</span>{
+    <span class="hljs-keyword">int</span> i;
+    <span class="hljs-keyword">int</span> best = <span class="hljs-number">0</span>;
+    <span class="hljs-keyword">float</span> best_distance = FLT_MAX;
+    <span class="hljs-keyword">for</span>(i = min; i &lt;= max; i += <span class="hljs-number">2</span>){
+        image c = crop_image(b, <span class="hljs-number">0</span>, i, b.w, b.h);
+        <span class="hljs-keyword">float</span> d = dist_array(c.data, a.data, a.w*a.h*a.c, <span class="hljs-number">100</span>);
+        <span class="hljs-keyword">if</span>(d &lt; best_distance){
             best_distance = d;
             best = i;
         }
-        printf(&quot;%d %f\n&quot;, i, d);
+        <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;%d %f\n&quot;</span>, i, d);
         free_image(c);
     }
-    return best;
+    <span class="hljs-keyword">return</span> best;
 }
-</code></pre><h2 id="composite3d">composite_3d</h2>
-<pre><code>void composite_3d(char *f1, char *f2, char *out, int delta)
-{
-    if(!out) out = &quot;out&quot;;
-    image a = load_image(f1, 0,0,0);
-    image b = load_image(f2, 0,0,0);
-    int shift = best_3d_shift_r(a, b, -a.h/100, a.h/100);
+</code></pre>
+<p>-</p>
+<h2 id="composite3d">composite_3d</h2>
+<pre><code class="lang-c"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">composite_3d</span><span class="hljs-params">(<span class="hljs-keyword">char</span> *f1, <span class="hljs-keyword">char</span> *f2, <span class="hljs-keyword">char</span> *out, <span class="hljs-keyword">int</span> delta)</span>
+</span>{
+    <span class="hljs-keyword">if</span>(!out) out = <span class="hljs-string">&quot;out&quot;</span>;
+    image a = load_image(f1, <span class="hljs-number">0</span>,<span class="hljs-number">0</span>,<span class="hljs-number">0</span>);
+    image b = load_image(f2, <span class="hljs-number">0</span>,<span class="hljs-number">0</span>,<span class="hljs-number">0</span>);
+    <span class="hljs-keyword">int</span> shift = best_3d_shift_r(a, b, -a.h/<span class="hljs-number">100</span>, a.h/<span class="hljs-number">100</span>);
 
-    image c1 = crop_image(b, 10, shift, b.w, b.h);
-    float d1 = dist_array(c1.data, a.data, a.w*a.h*a.c, 100);
-    image c2 = crop_image(b, -10, shift, b.w, b.h);
-    float d2 = dist_array(c2.data, a.data, a.w*a.h*a.c, 100);
+    image c1 = crop_image(b, <span class="hljs-number">10</span>, shift, b.w, b.h);
+    <span class="hljs-keyword">float</span> d1 = dist_array(c1.data, a.data, a.w*a.h*a.c, <span class="hljs-number">100</span>);
+    image c2 = crop_image(b, <span class="hljs-number">-10</span>, shift, b.w, b.h);
+    <span class="hljs-keyword">float</span> d2 = dist_array(c2.data, a.data, a.w*a.h*a.c, <span class="hljs-number">100</span>);
 
-    if(d2 &lt; d1 &amp;&amp; 0){
+    <span class="hljs-keyword">if</span>(d2 &lt; d1 &amp;&amp; <span class="hljs-number">0</span>){
         image swap = a;
         a = b;
         b = swap;
         shift = -shift;
-        printf(&quot;swapped, %d\n&quot;, shift);
+        <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;swapped, %d\n&quot;</span>, shift);
     }
-    else{
-        printf(&quot;%d\n&quot;, shift);
+    <span class="hljs-keyword">else</span>{
+        <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;%d\n&quot;</span>, shift);
     }
 
     image c = crop_image(b, delta, shift, a.w, a.h);
-    int i;
-    for(i = 0; i &lt; c.w*c.h; ++i){
+    <span class="hljs-keyword">int</span> i;
+    <span class="hljs-keyword">for</span>(i = <span class="hljs-number">0</span>; i &lt; c.w*c.h; ++i){
         c.data[i] = a.data[i];
     }
     save_image(c, out);
 }
-</code></pre><h2 id="letterboximageinto">letterbox_image_into</h2>
-<pre><code>void letterbox_image_into(image im, int w, int h, image boxed)
-{
-    int new_w = im.w;
-    int new_h = im.h;
-    if (((float)w/im.w) &lt; ((float)h/im.h)) {
+</code></pre>
+<h2 id="letterboximageinto">letterbox_image_into</h2>
+<pre><code class="lang-c"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">letterbox_image_into</span><span class="hljs-params">(image im, <span class="hljs-keyword">int</span> w, <span class="hljs-keyword">int</span> h, image boxed)</span>
+</span>{
+    <span class="hljs-keyword">int</span> new_w = im.w;
+    <span class="hljs-keyword">int</span> new_h = im.h;
+    <span class="hljs-keyword">if</span> (((<span class="hljs-keyword">float</span>)w/im.w) &lt; ((<span class="hljs-keyword">float</span>)h/im.h)) {
         new_w = w;
         new_h = (im.h * w)/im.w;
-    } else {
+    } <span class="hljs-keyword">else</span> {
         new_h = h;
         new_w = (im.w * h)/im.h;
     }
     image resized = resize_image(im, new_w, new_h);
-    embed_image(resized, boxed, (w-new_w)/2, (h-new_h)/2);
+    embed_image(resized, boxed, (w-new_w)/<span class="hljs-number">2</span>, (h-new_h)/<span class="hljs-number">2</span>);
     free_image(resized);
 }
-</code></pre><h2 id="letterboximage">letterbox_image</h2>
-<pre><code>image letterbox_image(image im, int w, int h)
-{
-    int new_w = im.w;
-    int new_h = im.h;
-    if (((float)w/im.w) &lt; ((float)h/im.h)) {
+</code></pre>
+<h2 id="letterboximage">letterbox_image</h2>
+<pre><code class="lang-c"><span class="hljs-function">image <span class="hljs-title">letterbox_image</span><span class="hljs-params">(image im, <span class="hljs-keyword">int</span> w, <span class="hljs-keyword">int</span> h)</span>
+</span>{
+    <span class="hljs-keyword">int</span> new_w = im.w;
+    <span class="hljs-keyword">int</span> new_h = im.h;
+    <span class="hljs-keyword">if</span> (((<span class="hljs-keyword">float</span>)w/im.w) &lt; ((<span class="hljs-keyword">float</span>)h/im.h)) {
         new_w = w;
         new_h = (im.h * w)/im.w;
-    } else {
+    } <span class="hljs-keyword">else</span> {
         new_h = h;
         new_w = (im.w * h)/im.h;
     }
     image resized = resize_image(im, new_w, new_h);
     image boxed = make_image(w, h, im.c);
-    fill_image(boxed, .5);
-    //int i;
-    //for(i = 0; i &lt; boxed.w*boxed.h*boxed.c; ++i) boxed.data[i] = 0;
-    embed_image(resized, boxed, (w-new_w)/2, (h-new_h)/2);
+    fill_image(boxed, <span class="hljs-number">.5</span>);
+    <span class="hljs-comment">//int i;</span>
+    <span class="hljs-comment">//for(i = 0; i &lt; boxed.w*boxed.h*boxed.c; ++i) boxed.data[i] = 0;</span>
+    embed_image(resized, boxed, (w-new_w)/<span class="hljs-number">2</span>, (h-new_h)/<span class="hljs-number">2</span>);
     free_image(resized);
-    return boxed;
+    <span class="hljs-keyword">return</span> boxed;
 }
-</code></pre><h2 id="resizemax">resize_max</h2>
-<pre><code>image resize_max(image im, int max)
-{
-    int w = im.w;
-    int h = im.h;
-    if(w &gt; h){
+</code></pre>
+<h2 id="resizemax">resize_max</h2>
+<pre><code class="lang-c"><span class="hljs-function">image <span class="hljs-title">resize_max</span><span class="hljs-params">(image im, <span class="hljs-keyword">int</span> max)</span>
+</span>{
+    <span class="hljs-keyword">int</span> w = im.w;
+    <span class="hljs-keyword">int</span> h = im.h;
+    <span class="hljs-keyword">if</span>(w &gt; h){
         h = (h * max) / w;
         w = max;
-    } else {
+    } <span class="hljs-keyword">else</span> {
         w = (w * max) / h;
         h = max;
     }
-    if(w == im.w &amp;&amp; h == im.h) return im;
+    <span class="hljs-keyword">if</span>(w == im.w &amp;&amp; h == im.h) <span class="hljs-keyword">return</span> im;
     image resized = resize_image(im, w, h);
-    return resized;
+    <span class="hljs-keyword">return</span> resized;
 }
-</code></pre><h2 id="resizemin">resize_min</h2>
-<pre><code>image resize_min(image im, int min)
-{
-    int w = im.w;
-    int h = im.h;
-    if(w &lt; h){
+</code></pre>
+<ul>
+<li>&#xC774;&#xBBF8;&#xC9C0;&#xB97C; resize&#xD569;&#xB2C8;&#xB2E4;.</li>
+</ul>
+<h2 id="resizemin">resize_min</h2>
+<pre><code class="lang-c"><span class="hljs-function">image <span class="hljs-title">resize_min</span><span class="hljs-params">(image im, <span class="hljs-keyword">int</span> min)</span>
+</span>{
+    <span class="hljs-keyword">int</span> w = im.w;
+    <span class="hljs-keyword">int</span> h = im.h;
+    <span class="hljs-keyword">if</span>(w &lt; h){
         h = (h * min) / w;
         w = min;
-    } else {
+    } <span class="hljs-keyword">else</span> {
         w = (w * min) / h;
         h = min;
     }
-    if(w == im.w &amp;&amp; h == im.h) return im;
+    <span class="hljs-keyword">if</span>(w == im.w &amp;&amp; h == im.h) <span class="hljs-keyword">return</span> im;
     image resized = resize_image(im, w, h);
-    return resized;
+    <span class="hljs-keyword">return</span> resized;
 }
-</code></pre><h2 id="randomcropimage">random_crop_image</h2>
-<pre><code>image random_crop_image(image im, int w, int h)
-{
-    int dx = rand_int(0, im.w - w);
-    int dy = rand_int(0, im.h - h);
+</code></pre>
+<ul>
+<li>&#xC774;&#xBBF8;&#xC9C0;&#xB97C; resize&#xD569;&#xB2C8;&#xB2E4;.</li>
+</ul>
+<h2 id="randomcropimage">random_crop_image</h2>
+<pre><code class="lang-c"><span class="hljs-function">image <span class="hljs-title">random_crop_image</span><span class="hljs-params">(image im, <span class="hljs-keyword">int</span> w, <span class="hljs-keyword">int</span> h)</span>
+</span>{
+    <span class="hljs-keyword">int</span> dx = rand_int(<span class="hljs-number">0</span>, im.w - w);
+    <span class="hljs-keyword">int</span> dy = rand_int(<span class="hljs-number">0</span>, im.h - h);
     image crop = crop_image(im, dx, dy, w, h);
-    return crop;
+    <span class="hljs-keyword">return</span> crop;
 }
-</code></pre><h2 id="randomaugmentargs">random_augment_args</h2>
-<pre><code>augment_args random_augment_args(image im, float angle, float aspect, int low, int high, int w, int h)
-{
-    augment_args a = {0};
+</code></pre>
+<ul>
+<li>&#xC774;&#xBBF8;&#xC9C0;&#xC5D0;&#xC11C; &#xB79C;&#xB364;&#xD55C; &#xC601;&#xC5ED;&#xC744; crop&#xD569;&#xB2C8;&#xB2E4;.</li>
+</ul>
+<h2 id="randomaugmentargs">random_augment_args</h2>
+<pre><code class="lang-c"><span class="hljs-function">augment_args <span class="hljs-title">random_augment_args</span><span class="hljs-params">(image im, <span class="hljs-keyword">float</span> angle, <span class="hljs-keyword">float</span> aspect, <span class="hljs-keyword">int</span> low, <span class="hljs-keyword">int</span> high, <span class="hljs-keyword">int</span> w, <span class="hljs-keyword">int</span> h)</span>
+</span>{
+    augment_args a = {<span class="hljs-number">0</span>};
     aspect = rand_scale(aspect);
-    int r = rand_int(low, high);
-    int min = (im.h &lt; im.w*aspect) ? im.h : im.w*aspect;
-    float scale = (float)r / min;
+    <span class="hljs-keyword">int</span> r = rand_int(low, high);
+    <span class="hljs-keyword">int</span> min = (im.h &lt; im.w*aspect) ? im.h : im.w*aspect;
+    <span class="hljs-keyword">float</span> scale = (<span class="hljs-keyword">float</span>)r / min;
 
-    float rad = rand_uniform(-angle, angle) * TWO_PI / 360.;
+    <span class="hljs-keyword">float</span> rad = rand_uniform(-angle, angle) * TWO_PI / <span class="hljs-number">360.</span>;
 
-    float dx = (im.w*scale/aspect - w) / 2.;
-    float dy = (im.h*scale - w) / 2.;
-    //if(dx &lt; 0) dx = 0;
-    //if(dy &lt; 0) dy = 0;
+    <span class="hljs-keyword">float</span> dx = (im.w*scale/aspect - w) / <span class="hljs-number">2.</span>;
+    <span class="hljs-keyword">float</span> dy = (im.h*scale - w) / <span class="hljs-number">2.</span>;
+    <span class="hljs-comment">//if(dx &lt; 0) dx = 0;</span>
+    <span class="hljs-comment">//if(dy &lt; 0) dy = 0;</span>
     dx = rand_uniform(-dx, dx);
     dy = rand_uniform(-dy, dy);
 
@@ -3010,209 +3098,235 @@ image border_image(image a, int border)
     a.dx = dx;
     a.dy = dy;
     a.aspect = aspect;
-    return a;
+    <span class="hljs-keyword">return</span> a;
 }
-</code></pre><h2 id="randomaugmentimage">random_augment_image</h2>
-<pre><code>image random_augment_image(image im, float angle, float aspect, int low, int high, int w, int h)
-{
+</code></pre>
+<ul>
+<li>&#xC774;&#xBBF8;&#xC9C0;&#xC5D0; &#xBCC0;&#xD658;&#xC5D0; &#xD544;&#xC694;&#xD55C; &#xC778;&#xC790;&#xAC12;&#xC744; &#xBC1B;&#xC544; &#xB79C;&#xB364;&#xD558;&#xAC8C; &#xBCC0;&#xD658;&#xD55C; &#xB4A4; &#xBC18;&#xD658;&#xD569;&#xB2C8;&#xB2E4;.</li>
+</ul>
+<h2 id="randomaugmentimage">random_augment_image</h2>
+<pre><code class="lang-c"><span class="hljs-function">image <span class="hljs-title">random_augment_image</span><span class="hljs-params">(image im, <span class="hljs-keyword">float</span> angle, <span class="hljs-keyword">float</span> aspect, <span class="hljs-keyword">int</span> low, <span class="hljs-keyword">int</span> high, <span class="hljs-keyword">int</span> w, <span class="hljs-keyword">int</span> h)</span>
+</span>{
     augment_args a = random_augment_args(im, angle, aspect, low, high, w, h);
     image crop = rotate_crop_image(im, a.rad, a.scale, a.w, a.h, a.dx, a.dy, a.aspect);
-    return crop;
+    <span class="hljs-keyword">return</span> crop;
 }
-</code></pre><h2 id="threewaymax">three_way_max</h2>
-<pre><code>float three_way_max(float a, float b, float c)
-{
-    return (a &gt; b) ? ( (a &gt; c) ? a : c) : ( (b &gt; c) ? b : c) ;
+</code></pre>
+<ul>
+<li>&#xC774;&#xBBF8;&#xC9C0;&#xC5D0; &#xB79C;&#xB364;&#xD55C; &#xBCC0;&#xD658;&#xC744; &#xC8FC;&#xC5B4;&#xC11C; &#xBC18;&#xD658;&#xD569;&#xB2C8;&#xB2E4;.</li>
+</ul>
+<h2 id="threewaymax">three_way_max</h2>
+<pre><code class="lang-c"><span class="hljs-function"><span class="hljs-keyword">float</span> <span class="hljs-title">three_way_max</span><span class="hljs-params">(<span class="hljs-keyword">float</span> a, <span class="hljs-keyword">float</span> b, <span class="hljs-keyword">float</span> c)</span>
+</span>{
+    <span class="hljs-keyword">return</span> (a &gt; b) ? ( (a &gt; c) ? a : c) : ( (b &gt; c) ? b : c) ;
 }
-</code></pre><h2 id="threewaymin">three_way_min</h2>
-<pre><code>float three_way_min(float a, float b, float c)
-{
-    return (a &lt; b) ? ( (a &lt; c) ? a : c) : ( (b &lt; c) ? b : c) ;
+</code></pre>
+<ul>
+<li>3&#xAC1C;&#xC758; &#xAC12; &#xC911; &#xCD5C;&#xB313;&#xAC12;&#xC744; &#xBC18;&#xD658;&#xD569;&#xB2C8;&#xB2E4;.</li>
+</ul>
+<h2 id="threewaymin">three_way_min</h2>
+<pre><code class="lang-c"><span class="hljs-function"><span class="hljs-keyword">float</span> <span class="hljs-title">three_way_min</span><span class="hljs-params">(<span class="hljs-keyword">float</span> a, <span class="hljs-keyword">float</span> b, <span class="hljs-keyword">float</span> c)</span>
+</span>{
+    <span class="hljs-keyword">return</span> (a &lt; b) ? ( (a &lt; c) ? a : c) : ( (b &lt; c) ? b : c) ;
 }
-</code></pre><h2 id="yuvtorgb">yuv_to_rgb</h2>
-<pre><code>void yuv_to_rgb(image im)
-{
-    assert(im.c == 3);
-    int i, j;
-    float r, g, b;
-    float y, u, v;
-    for(j = 0; j &lt; im.h; ++j){
-        for(i = 0; i &lt; im.w; ++i){
-            y = get_pixel(im, i , j, 0);
-            u = get_pixel(im, i , j, 1);
-            v = get_pixel(im, i , j, 2);
+</code></pre>
+<ul>
+<li>3&#xAC1C;&#xC758; &#xAC12; &#xC911; &#xCD5C;&#xC19F;&#xAC12;&#xC744; &#xBC18;&#xD658;&#xD569;&#xB2C8;&#xB2E4;.</li>
+</ul>
+<h2 id="yuvtorgb">yuv_to_rgb</h2>
+<pre><code class="lang-c"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">yuv_to_rgb</span><span class="hljs-params">(image im)</span>
+</span>{
+    assert(im.c == <span class="hljs-number">3</span>);
+    <span class="hljs-keyword">int</span> i, j;
+    <span class="hljs-keyword">float</span> r, g, b;
+    <span class="hljs-keyword">float</span> y, u, v;
+    <span class="hljs-keyword">for</span>(j = <span class="hljs-number">0</span>; j &lt; im.h; ++j){
+        <span class="hljs-keyword">for</span>(i = <span class="hljs-number">0</span>; i &lt; im.w; ++i){
+            y = get_pixel(im, i , j, <span class="hljs-number">0</span>);
+            u = get_pixel(im, i , j, <span class="hljs-number">1</span>);
+            v = get_pixel(im, i , j, <span class="hljs-number">2</span>);
 
-            r = y + 1.13983*v;
-            g = y + -.39465*u + -.58060*v;
-            b = y + 2.03211*u;
+            r = y + <span class="hljs-number">1.13983</span>*v;
+            g = y + <span class="hljs-number">-.39465</span>*u + <span class="hljs-number">-.58060</span>*v;
+            b = y + <span class="hljs-number">2.03211</span>*u;
 
-            set_pixel(im, i, j, 0, r);
-            set_pixel(im, i, j, 1, g);
-            set_pixel(im, i, j, 2, b);
+            set_pixel(im, i, j, <span class="hljs-number">0</span>, r);
+            set_pixel(im, i, j, <span class="hljs-number">1</span>, g);
+            set_pixel(im, i, j, <span class="hljs-number">2</span>, b);
         }
     }
 }
-</code></pre><h2 id="rgbtoyuv">rgb_to_yuv</h2>
-<pre><code>void rgb_to_yuv(image im)
-{
-    assert(im.c == 3);
-    int i, j;
-    float r, g, b;
-    float y, u, v;
-    for(j = 0; j &lt; im.h; ++j){
-        for(i = 0; i &lt; im.w; ++i){
-            r = get_pixel(im, i , j, 0);
-            g = get_pixel(im, i , j, 1);
-            b = get_pixel(im, i , j, 2);
+</code></pre>
+<ul>
+<li><code>YUV</code> -&gt; <code>RGB</code></li>
+</ul>
+<h2 id="rgbtoyuv">rgb_to_yuv</h2>
+<pre><code class="lang-c"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">rgb_to_yuv</span><span class="hljs-params">(image im)</span>
+</span>{
+    assert(im.c == <span class="hljs-number">3</span>);
+    <span class="hljs-keyword">int</span> i, j;
+    <span class="hljs-keyword">float</span> r, g, b;
+    <span class="hljs-keyword">float</span> y, u, v;
+    <span class="hljs-keyword">for</span>(j = <span class="hljs-number">0</span>; j &lt; im.h; ++j){
+        <span class="hljs-keyword">for</span>(i = <span class="hljs-number">0</span>; i &lt; im.w; ++i){
+            r = get_pixel(im, i , j, <span class="hljs-number">0</span>);
+            g = get_pixel(im, i , j, <span class="hljs-number">1</span>);
+            b = get_pixel(im, i , j, <span class="hljs-number">2</span>);
 
-            y = .299*r + .587*g + .114*b;
-            u = -.14713*r + -.28886*g + .436*b;
-            v = .615*r + -.51499*g + -.10001*b;
+            y = <span class="hljs-number">.299</span>*r + <span class="hljs-number">.587</span>*g + <span class="hljs-number">.114</span>*b;
+            u = <span class="hljs-number">-.14713</span>*r + <span class="hljs-number">-.28886</span>*g + <span class="hljs-number">.436</span>*b;
+            v = <span class="hljs-number">.615</span>*r + <span class="hljs-number">-.51499</span>*g + <span class="hljs-number">-.10001</span>*b;
 
-            set_pixel(im, i, j, 0, y);
-            set_pixel(im, i, j, 1, u);
-            set_pixel(im, i, j, 2, v);
+            set_pixel(im, i, j, <span class="hljs-number">0</span>, y);
+            set_pixel(im, i, j, <span class="hljs-number">1</span>, u);
+            set_pixel(im, i, j, <span class="hljs-number">2</span>, v);
         }
     }
 }
-</code></pre><ul>
-<li>RGB -&gt; YUV</li>
+</code></pre>
+<ul>
+<li><code>RGB</code> -&gt; <code>YUV</code></li>
 </ul>
 <h2 id="rgbtohsv">rgb_to_hsv</h2>
-<pre><code>void rgb_to_hsv(image im)
-{
-    assert(im.c == 3);
-    int i, j;
-    float r, g, b;
-    float h, s, v;
-    for(j = 0; j &lt; im.h; ++j){
-        for(i = 0; i &lt; im.w; ++i){
-            r = get_pixel(im, i , j, 0);
-            g = get_pixel(im, i , j, 1);
-            b = get_pixel(im, i , j, 2);
-            float max = three_way_max(r,g,b);
-            float min = three_way_min(r,g,b);
-            float delta = max - min;
+<pre><code class="lang-c"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">rgb_to_hsv</span><span class="hljs-params">(image im)</span>
+</span>{
+    assert(im.c == <span class="hljs-number">3</span>);
+    <span class="hljs-keyword">int</span> i, j;
+    <span class="hljs-keyword">float</span> r, g, b;
+    <span class="hljs-keyword">float</span> h, s, v;
+    <span class="hljs-keyword">for</span>(j = <span class="hljs-number">0</span>; j &lt; im.h; ++j){
+        <span class="hljs-keyword">for</span>(i = <span class="hljs-number">0</span>; i &lt; im.w; ++i){
+            r = get_pixel(im, i , j, <span class="hljs-number">0</span>);
+            g = get_pixel(im, i , j, <span class="hljs-number">1</span>);
+            b = get_pixel(im, i , j, <span class="hljs-number">2</span>);
+            <span class="hljs-keyword">float</span> max = three_way_max(r,g,b);
+            <span class="hljs-keyword">float</span> min = three_way_min(r,g,b);
+            <span class="hljs-keyword">float</span> delta = max - min;
             v = max;
-            if(max == 0){
-                s = 0;
-                h = 0;
-            }else{
+            <span class="hljs-keyword">if</span>(max == <span class="hljs-number">0</span>){
+                s = <span class="hljs-number">0</span>;
+                h = <span class="hljs-number">0</span>;
+            }<span class="hljs-keyword">else</span>{
                 s = delta/max;
-                if(r == max){
+                <span class="hljs-keyword">if</span>(r == max){
                     h = (g - b) / delta;
-                } else if (g == max) {
-                    h = 2 + (b - r) / delta;
-                } else {
-                    h = 4 + (r - g) / delta;
+                } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (g == max) {
+                    h = <span class="hljs-number">2</span> + (b - r) / delta;
+                } <span class="hljs-keyword">else</span> {
+                    h = <span class="hljs-number">4</span> + (r - g) / delta;
                 }
-                if (h &lt; 0) h += 6;
-                h = h/6.;
+                <span class="hljs-keyword">if</span> (h &lt; <span class="hljs-number">0</span>) h += <span class="hljs-number">6</span>;
+                h = h/<span class="hljs-number">6.</span>;
             }
-            set_pixel(im, i, j, 0, h);
-            set_pixel(im, i, j, 1, s);
-            set_pixel(im, i, j, 2, v);
+            set_pixel(im, i, j, <span class="hljs-number">0</span>, h);
+            set_pixel(im, i, j, <span class="hljs-number">1</span>, s);
+            set_pixel(im, i, j, <span class="hljs-number">2</span>, v);
         }
     }
 }
-</code></pre><ul>
+</code></pre>
+<ul>
 <li>RGB -&gt; HSV</li>
 </ul>
 <h2 id="hsvtorgb">hsv_to_rgb</h2>
-<pre><code>void hsv_to_rgb(image im)
-{
-    assert(im.c == 3);
-    int i, j;
-    float r, g, b;
-    float h, s, v;
-    float f, p, q, t;
-    for(j = 0; j &lt; im.h; ++j){
-        for(i = 0; i &lt; im.w; ++i){
-            h = 6 * get_pixel(im, i , j, 0);
-            s = get_pixel(im, i , j, 1);
-            v = get_pixel(im, i , j, 2);
-            if (s == 0) {
+<pre><code class="lang-c"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">hsv_to_rgb</span><span class="hljs-params">(image im)</span>
+</span>{
+    assert(im.c == <span class="hljs-number">3</span>);
+    <span class="hljs-keyword">int</span> i, j;
+    <span class="hljs-keyword">float</span> r, g, b;
+    <span class="hljs-keyword">float</span> h, s, v;
+    <span class="hljs-keyword">float</span> f, p, q, t;
+    <span class="hljs-keyword">for</span>(j = <span class="hljs-number">0</span>; j &lt; im.h; ++j){
+        <span class="hljs-keyword">for</span>(i = <span class="hljs-number">0</span>; i &lt; im.w; ++i){
+            h = <span class="hljs-number">6</span> * get_pixel(im, i , j, <span class="hljs-number">0</span>);
+            s = get_pixel(im, i , j, <span class="hljs-number">1</span>);
+            v = get_pixel(im, i , j, <span class="hljs-number">2</span>);
+            <span class="hljs-keyword">if</span> (s == <span class="hljs-number">0</span>) {
                 r = g = b = v;
-            } else {
-                int index = floor(h);
+            } <span class="hljs-keyword">else</span> {
+                <span class="hljs-keyword">int</span> index = <span class="hljs-built_in">floor</span>(h);
                 f = h - index;
-                p = v*(1-s);
-                q = v*(1-s*f);
-                t = v*(1-s*(1-f));
-                if(index == 0){
+                p = v*(<span class="hljs-number">1</span>-s);
+                q = v*(<span class="hljs-number">1</span>-s*f);
+                t = v*(<span class="hljs-number">1</span>-s*(<span class="hljs-number">1</span>-f));
+                <span class="hljs-keyword">if</span>(index == <span class="hljs-number">0</span>){
                     r = v; g = t; b = p;
-                } else if(index == 1){
+                } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span>(index == <span class="hljs-number">1</span>){
                     r = q; g = v; b = p;
-                } else if(index == 2){
+                } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span>(index == <span class="hljs-number">2</span>){
                     r = p; g = v; b = t;
-                } else if(index == 3){
+                } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span>(index == <span class="hljs-number">3</span>){
                     r = p; g = q; b = v;
-                } else if(index == 4){
+                } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span>(index == <span class="hljs-number">4</span>){
                     r = t; g = p; b = v;
-                } else {
+                } <span class="hljs-keyword">else</span> {
                     r = v; g = p; b = q;
                 }
             }
-            set_pixel(im, i, j, 0, r);
-            set_pixel(im, i, j, 1, g);
-            set_pixel(im, i, j, 2, b);
+            set_pixel(im, i, j, <span class="hljs-number">0</span>, r);
+            set_pixel(im, i, j, <span class="hljs-number">1</span>, g);
+            set_pixel(im, i, j, <span class="hljs-number">2</span>, b);
         }
     }
 }
-</code></pre><ul>
+</code></pre>
+<ul>
 <li>HSV -&gt; RGB</li>
 </ul>
 <h2 id="grayscaleimage3c">grayscale_image_3c</h2>
-<pre><code>void grayscale_image_3c(image im)
-{
-    assert(im.c == 3);
-    int i, j, k;
-    float scale[] = {0.299, 0.587, 0.114};
-    for(j = 0; j &lt; im.h; ++j){
-        for(i = 0; i &lt; im.w; ++i){
-            float val = 0;
-            for(k = 0; k &lt; 3; ++k){
+<pre><code class="lang-c"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">grayscale_image_3c</span><span class="hljs-params">(image im)</span>
+</span>{
+    assert(im.c == <span class="hljs-number">3</span>);
+    <span class="hljs-keyword">int</span> i, j, k;
+    <span class="hljs-keyword">float</span> scale[] = {<span class="hljs-number">0.299</span>, <span class="hljs-number">0.587</span>, <span class="hljs-number">0.114</span>};
+    <span class="hljs-keyword">for</span>(j = <span class="hljs-number">0</span>; j &lt; im.h; ++j){
+        <span class="hljs-keyword">for</span>(i = <span class="hljs-number">0</span>; i &lt; im.w; ++i){
+            <span class="hljs-keyword">float</span> val = <span class="hljs-number">0</span>;
+            <span class="hljs-keyword">for</span>(k = <span class="hljs-number">0</span>; k &lt; <span class="hljs-number">3</span>; ++k){
                 val += scale[k]*get_pixel(im, i, j, k);
             }
-            im.data[0*im.h*im.w + im.w*j + i] = val;
-            im.data[1*im.h*im.w + im.w*j + i] = val;
-            im.data[2*im.h*im.w + im.w*j + i] = val;
+            im.data[<span class="hljs-number">0</span>*im.h*im.w + im.w*j + i] = val;
+            im.data[<span class="hljs-number">1</span>*im.h*im.w + im.w*j + i] = val;
+            im.data[<span class="hljs-number">2</span>*im.h*im.w + im.w*j + i] = val;
         }
     }
 }
-</code></pre><ul>
+</code></pre>
+<ul>
 <li>&#xCC44;&#xB110;&#xC744; 3&#xAC1C; &#xAC00;&#xC9C0;&#xB294; &#xC774;&#xBBF8;&#xC9C0;&#xB97C; grayscaling&#xD569;&#xB2C8;&#xB2E4;.</li>
 </ul>
 <h2 id="grayscaleimage">grayscale_image</h2>
-<pre><code>image grayscale_image(image im)
-{
-    assert(im.c == 3);
-    int i, j, k;
-    image gray = make_image(im.w, im.h, 1);
-    float scale[] = {0.299, 0.587, 0.114};
-    for(k = 0; k &lt; im.c; ++k){
-        for(j = 0; j &lt; im.h; ++j){
-            for(i = 0; i &lt; im.w; ++i){
+<pre><code class="lang-c"><span class="hljs-function">image <span class="hljs-title">grayscale_image</span><span class="hljs-params">(image im)</span>
+</span>{
+    assert(im.c == <span class="hljs-number">3</span>);
+    <span class="hljs-keyword">int</span> i, j, k;
+    image gray = make_image(im.w, im.h, <span class="hljs-number">1</span>);
+    <span class="hljs-keyword">float</span> scale[] = {<span class="hljs-number">0.299</span>, <span class="hljs-number">0.587</span>, <span class="hljs-number">0.114</span>};
+    <span class="hljs-keyword">for</span>(k = <span class="hljs-number">0</span>; k &lt; im.c; ++k){
+        <span class="hljs-keyword">for</span>(j = <span class="hljs-number">0</span>; j &lt; im.h; ++j){
+            <span class="hljs-keyword">for</span>(i = <span class="hljs-number">0</span>; i &lt; im.w; ++i){
                 gray.data[i+im.w*j] += scale[k]*get_pixel(im, i, j, k);
             }
         }
     }
-    return gray;
+    <span class="hljs-keyword">return</span> gray;
 }
-</code></pre><ul>
+</code></pre>
+<ul>
 <li>&#xCC44;&#xB110;&#xC744; 1&#xAC1C; &#xAC00;&#xC9C0;&#xB294; &#xC774;&#xBBF8;&#xC9C0;&#xB97C; grayscaling&#xD569;&#xB2C8;&#xB2E4;.</li>
 </ul>
 <h2 id="thresholdimage">threshold_image</h2>
-<pre><code>image threshold_image(image im, float thresh)
-{
-    int i;
+<pre><code class="lang-c"><span class="hljs-function">image <span class="hljs-title">threshold_image</span><span class="hljs-params">(image im, <span class="hljs-keyword">float</span> thresh)</span>
+</span>{
+    <span class="hljs-keyword">int</span> i;
     image t = make_image(im.w, im.h, im.c);
-    for(i = 0; i &lt; im.w*im.h*im.c; ++i){
-        t.data[i] = im.data[i]&gt;thresh ? 1 : 0;
+    <span class="hljs-keyword">for</span>(i = <span class="hljs-number">0</span>; i &lt; im.w*im.h*im.c; ++i){
+        t.data[i] = im.data[i]&gt;thresh ? <span class="hljs-number">1</span> : <span class="hljs-number">0</span>;
     }
-    return t;
+    <span class="hljs-keyword">return</span> t;
 }
-</code></pre><ul>
+</code></pre>
+<ul>
 <li>&#xC774;&#xBBF8;&#xC9C0;&#xB97C; &#xC774;&#xC9C4;&#xD654; &#xD569;&#xB2C8;&#xB2E4;.<ul>
 <li>thresh &#xCD08;&#xACFC;&#xC77C; &#xB54C; 1</li>
 <li>thresh &#xC774;&#xD558;&#xC77C; &#xB54C; 0</li>
@@ -3220,7 +3334,7 @@ image border_image(image a, int border)
 </li>
 </ul>
 <h2 id="blendimage">blend_image</h2>
-<pre><code>image blend_image(image fore, image back, float alpha)
+<pre><code class="lang-c">image blend_image(image fore, image back, float alpha)
 {
     assert(fore.w == back.w &amp;&amp; fore.h == back.h &amp;&amp; fore.c == back.c);
     image blend = make_image(fore.w, fore.h, fore.c);
@@ -3236,51 +3350,55 @@ image border_image(image a, int border)
     }
     return blend;
 }
-</code></pre><ul>
+</code></pre>
+<ul>
 <li>&#xC774;&#xBBF8;&#xC9C0; 2&#xAC1C;&#xB97C; blending &#xD569;&#xB2C8;&#xB2E4;.</li>
 </ul>
 <h2 id="scaleimagechannel">scale_image_channel</h2>
-<pre><code>void scale_image_channel(image im, int c, float v)
-{
-    int i, j;
-    for(j = 0; j &lt; im.h; ++j){
-        for(i = 0; i &lt; im.w; ++i){
-            float pix = get_pixel(im, i, j, c);
+<pre><code class="lang-c"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">scale_image_channel</span><span class="hljs-params">(image im, <span class="hljs-keyword">int</span> c, <span class="hljs-keyword">float</span> v)</span>
+</span>{
+    <span class="hljs-keyword">int</span> i, j;
+    <span class="hljs-keyword">for</span>(j = <span class="hljs-number">0</span>; j &lt; im.h; ++j){
+        <span class="hljs-keyword">for</span>(i = <span class="hljs-number">0</span>; i &lt; im.w; ++i){
+            <span class="hljs-keyword">float</span> pix = get_pixel(im, i, j, c);
             pix = pix*v;
             set_pixel(im, i, j, c, pix);
         }
     }
 }
-</code></pre><ul>
+</code></pre>
+<ul>
 <li>&#xC774;&#xBBF8;&#xC9C0;&#xC758; &#xD2B9;&#xC815; &#xCC44;&#xB110; c&#xC5D0; v&#xB97C; &#xACF1;&#xD569;&#xB2C8;&#xB2E4;.</li>
 </ul>
 <h2 id="translateimagechannel">translate_image_channel</h2>
-<pre><code>void translate_image_channel(image im, int c, float v)
-{
-    int i, j;
-    for(j = 0; j &lt; im.h; ++j){
-        for(i = 0; i &lt; im.w; ++i){
-            float pix = get_pixel(im, i, j, c);
+<pre><code class="lang-c"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">translate_image_channel</span><span class="hljs-params">(image im, <span class="hljs-keyword">int</span> c, <span class="hljs-keyword">float</span> v)</span>
+</span>{
+    <span class="hljs-keyword">int</span> i, j;
+    <span class="hljs-keyword">for</span>(j = <span class="hljs-number">0</span>; j &lt; im.h; ++j){
+        <span class="hljs-keyword">for</span>(i = <span class="hljs-number">0</span>; i &lt; im.w; ++i){
+            <span class="hljs-keyword">float</span> pix = get_pixel(im, i, j, c);
             pix = pix+v;
             set_pixel(im, i, j, c, pix);
         }
     }
 }
-</code></pre><ul>
+</code></pre>
+<ul>
 <li>&#xC774;&#xBBF8;&#xC9C0;&#xC758; &#xD2B9;&#xC815; &#xCC44;&#xB110;&#xC5D0; v&#xB97C; &#xB354;&#xD569;&#xB2C8;&#xB2E4;.</li>
 </ul>
 <h2 id="binarizeimage">binarize_image</h2>
-<pre><code>image binarize_image(image im)
-{
+<pre><code class="lang-c"><span class="hljs-function">image <span class="hljs-title">binarize_image</span><span class="hljs-params">(image im)</span>
+</span>{
     image c = copy_image(im);
-    int i;
-    for(i = 0; i &lt; im.w * im.h * im.c; ++i){
-        if(c.data[i] &gt; .5) c.data[i] = 1;
-        else c.data[i] = 0;
+    <span class="hljs-keyword">int</span> i;
+    <span class="hljs-keyword">for</span>(i = <span class="hljs-number">0</span>; i &lt; im.w * im.h * im.c; ++i){
+        <span class="hljs-keyword">if</span>(c.data[i] &gt; <span class="hljs-number">.5</span>) c.data[i] = <span class="hljs-number">1</span>;
+        <span class="hljs-keyword">else</span> c.data[i] = <span class="hljs-number">0</span>;
     }
-    return c;
+    <span class="hljs-keyword">return</span> c;
 }
-</code></pre><ul>
+</code></pre>
+<ul>
 <li>&#xC774;&#xBBF8;&#xC9C0;&#xB97C; &#xC774;&#xC9C4;&#xD654; &#xD569;&#xB2C8;&#xB2E4;.<ul>
 <li>0.5 &#xCD08;&#xACFC;&#xC77C; &#xB54C; 1</li>
 <li>0.5 &#xC774;&#xD558;&#xC77C; &#xB54C; 0</li>
@@ -3288,44 +3406,47 @@ image border_image(image a, int border)
 </li>
 </ul>
 <h2 id="saturateimage">saturate_image</h2>
-<pre><code>void saturate_image(image im, float sat)
-{
+<pre><code class="lang-c"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">saturate_image</span><span class="hljs-params">(image im, <span class="hljs-keyword">float</span> sat)</span>
+</span>{
     rgb_to_hsv(im);
-    scale_image_channel(im, 1, sat);
+    scale_image_channel(im, <span class="hljs-number">1</span>, sat);
     hsv_to_rgb(im);
     constrain_image(im);
 }
-</code></pre><ul>
+</code></pre>
+<ul>
 <li><p>HSV&#xC758; 1&#xBC88;&#xC9F8; &#xCC44;&#xB110;&#xC744; scaling&#xD558;&#xBA74; &#xCC44;&#xB3C4;(saturation)&#xB97C; &#xC870;&#xC808;&#xD560; &#xC218; &#xC788;&#xC2B5;&#xB2C8;&#xB2E4;.</p>
 </li>
 <li><p>&#xC0C9;&#xC774; &#xC120;&#xBA85;&#xD55C; &#xC815;&#xB3C4;&#xB97C; &#xB098;&#xD0C0;&#xB0C5;&#xB2C8;&#xB2E4;.</p>
 </li>
 </ul>
 <h2 id="hueimage">hue_image</h2>
-<pre><code>void hue_image(image im, float hue)
-{
+<pre><code class="lang-c"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">hue_image</span><span class="hljs-params">(image im, <span class="hljs-keyword">float</span> hue)</span>
+</span>{
     rgb_to_hsv(im);
-    int i;
-    for(i = 0; i &lt; im.w*im.h; ++i){
+    <span class="hljs-keyword">int</span> i;
+    <span class="hljs-keyword">for</span>(i = <span class="hljs-number">0</span>; i &lt; im.w*im.h; ++i){
         im.data[i] = im.data[i] + hue;
-        if (im.data[i] &gt; 1) im.data[i] -= 1;
-        if (im.data[i] &lt; 0) im.data[i] += 1;
+        <span class="hljs-keyword">if</span> (im.data[i] &gt; <span class="hljs-number">1</span>) im.data[i] -= <span class="hljs-number">1</span>;
+        <span class="hljs-keyword">if</span> (im.data[i] &lt; <span class="hljs-number">0</span>) im.data[i] += <span class="hljs-number">1</span>;
     }
     hsv_to_rgb(im);
     constrain_image(im);
 }
-</code></pre><ul>
+</code></pre>
+<ul>
 <li>HSV&#xC758; 0&#xBC88;&#xC9F8; &#xCC44;&#xB110;&#xC744; &#xC870;&#xC808;&#xD558;&#xBA74; &#xC0C9;&#xC0C1;(hue)&#xC744; &#xC870;&#xC808;&#xD569;&#xB2C8;&#xB2E4;.</li>
 </ul>
 <h2 id="exposureimage">exposure_image</h2>
-<pre><code>void exposure_image(image im, float sat)
-{
+<pre><code class="lang-c"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">exposure_image</span><span class="hljs-params">(image im, <span class="hljs-keyword">float</span> sat)</span>
+</span>{
     rgb_to_hsv(im);
-    scale_image_channel(im, 2, sat);
+    scale_image_channel(im, <span class="hljs-number">2</span>, sat);
     hsv_to_rgb(im);
     constrain_image(im);
 }
-</code></pre><ul>
+</code></pre>
+<ul>
 <li><p>HSV&#xC758; 2&#xBC88;&#xC9F8; &#xCC44;&#xB110;&#xC744; scaling&#xD558;&#xBA74; &#xB178;&#xCD9C;(exposure)&#xB97C; &#xC870;&#xC808;&#xD560; &#xC218; &#xC788;&#xC2B5;&#xB2C8;&#xB2E4;.</p>
 </li>
 <li><p>exposure&#xB294; brightness&#xC640; &#xBC1D;&#xAE30;&#xB97C; &#xBC1D;&#xAC8C; &#xD558;&#xAC70;&#xB098; &#xC5B4;&#xB461;&#xAC8C; &#xD558;&#xB294; &#xC5ED;&#xD560;&#xC744; &#xD569;&#xB2C8;&#xB2E4;.</p>
@@ -3336,245 +3457,255 @@ image border_image(image a, int border)
 </li>
 </ul>
 <h2 id="distortimage">distort_image</h2>
-<pre><code>void distort_image(image im, float hue, float sat, float val)
-{
+<pre><code class="lang-c"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">distort_image</span><span class="hljs-params">(image im, <span class="hljs-keyword">float</span> hue, <span class="hljs-keyword">float</span> sat, <span class="hljs-keyword">float</span> val)</span>
+</span>{
     rgb_to_hsv(im);
-    scale_image_channel(im, 1, sat);
-    scale_image_channel(im, 2, val);
-    int i;
-    for(i = 0; i &lt; im.w*im.h; ++i){
+    scale_image_channel(im, <span class="hljs-number">1</span>, sat);
+    scale_image_channel(im, <span class="hljs-number">2</span>, val);
+    <span class="hljs-keyword">int</span> i;
+    <span class="hljs-keyword">for</span>(i = <span class="hljs-number">0</span>; i &lt; im.w*im.h; ++i){
         im.data[i] = im.data[i] + hue;
-        if (im.data[i] &gt; 1) im.data[i] -= 1;
-        if (im.data[i] &lt; 0) im.data[i] += 1;
+        <span class="hljs-keyword">if</span> (im.data[i] &gt; <span class="hljs-number">1</span>) im.data[i] -= <span class="hljs-number">1</span>;
+        <span class="hljs-keyword">if</span> (im.data[i] &lt; <span class="hljs-number">0</span>) im.data[i] += <span class="hljs-number">1</span>;
     }
     hsv_to_rgb(im);
     constrain_image(im);
 }
-</code></pre><h2 id="randomdistortimage">random_distort_image</h2>
-<pre><code>void random_distort_image(image im, float hue, float saturation, float exposure)
-{
-    float dhue = rand_uniform(-hue, hue);
-    float dsat = rand_scale(saturation);
-    float dexp = rand_scale(exposure);
+</code></pre>
+<h2 id="randomdistortimage">random_distort_image</h2>
+<pre><code class="lang-c"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">random_distort_image</span><span class="hljs-params">(image im, <span class="hljs-keyword">float</span> hue, <span class="hljs-keyword">float</span> saturation, <span class="hljs-keyword">float</span> exposure)</span>
+</span>{
+    <span class="hljs-keyword">float</span> dhue = rand_uniform(-hue, hue);
+    <span class="hljs-keyword">float</span> dsat = rand_scale(saturation);
+    <span class="hljs-keyword">float</span> dexp = rand_scale(exposure);
     distort_image(im, dhue, dsat, dexp);
 }
-</code></pre><h2 id="saturateexposureimage">saturate_exposure_image</h2>
-<pre><code>void saturate_exposure_image(image im, float sat, float exposure)
-{
+</code></pre>
+<h2 id="saturateexposureimage">saturate_exposure_image</h2>
+<pre><code class="lang-c"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">saturate_exposure_image</span><span class="hljs-params">(image im, <span class="hljs-keyword">float</span> sat, <span class="hljs-keyword">float</span> exposure)</span>
+</span>{
     rgb_to_hsv(im);
-    scale_image_channel(im, 1, sat);
-    scale_image_channel(im, 2, exposure);
+    scale_image_channel(im, <span class="hljs-number">1</span>, sat);
+    scale_image_channel(im, <span class="hljs-number">2</span>, exposure);
     hsv_to_rgb(im);
     constrain_image(im);
 }
-</code></pre><ul>
+</code></pre>
+<ul>
 <li>saturate&#xC640; exposure&#xB97C; &#xD568;&#xAED8; &#xC870;&#xC808;&#xD569;&#xB2C8;&#xB2E4;.</li>
 </ul>
 <h2 id="resizeimage">resize_image</h2>
-<pre><code>image resize_image(image im, int w, int h)
-{
+<pre><code class="lang-c"><span class="hljs-function">image <span class="hljs-title">resize_image</span><span class="hljs-params">(image im, <span class="hljs-keyword">int</span> w, <span class="hljs-keyword">int</span> h)</span>
+</span>{
     image resized = make_image(w, h, im.c);   
     image part = make_image(w, im.h, im.c);
-    int r, c, k;
-    float w_scale = (float)(im.w - 1) / (w - 1);
-    float h_scale = (float)(im.h - 1) / (h - 1);
-    for(k = 0; k &lt; im.c; ++k){
-        for(r = 0; r &lt; im.h; ++r){
-            for(c = 0; c &lt; w; ++c){
-                float val = 0;
-                if(c == w-1 || im.w == 1){
-                    val = get_pixel(im, im.w-1, r, k);
-                } else {
-                    float sx = c*w_scale;
-                    int ix = (int) sx;
-                    float dx = sx - ix;
-                    val = (1 - dx) * get_pixel(im, ix, r, k) + dx * get_pixel(im, ix+1, r, k);
+    <span class="hljs-keyword">int</span> r, c, k;
+    <span class="hljs-keyword">float</span> w_scale = (<span class="hljs-keyword">float</span>)(im.w - <span class="hljs-number">1</span>) / (w - <span class="hljs-number">1</span>);
+    <span class="hljs-keyword">float</span> h_scale = (<span class="hljs-keyword">float</span>)(im.h - <span class="hljs-number">1</span>) / (h - <span class="hljs-number">1</span>);
+    <span class="hljs-keyword">for</span>(k = <span class="hljs-number">0</span>; k &lt; im.c; ++k){
+        <span class="hljs-keyword">for</span>(r = <span class="hljs-number">0</span>; r &lt; im.h; ++r){
+            <span class="hljs-keyword">for</span>(c = <span class="hljs-number">0</span>; c &lt; w; ++c){
+                <span class="hljs-keyword">float</span> val = <span class="hljs-number">0</span>;
+                <span class="hljs-keyword">if</span>(c == w<span class="hljs-number">-1</span> || im.w == <span class="hljs-number">1</span>){
+                    val = get_pixel(im, im.w<span class="hljs-number">-1</span>, r, k);
+                } <span class="hljs-keyword">else</span> {
+                    <span class="hljs-keyword">float</span> sx = c*w_scale;
+                    <span class="hljs-keyword">int</span> ix = (<span class="hljs-keyword">int</span>) sx;
+                    <span class="hljs-keyword">float</span> dx = sx - ix;
+                    val = (<span class="hljs-number">1</span> - dx) * get_pixel(im, ix, r, k) + <span class="hljs-function">dx * <span class="hljs-title">get_pixel</span><span class="hljs-params">(im, ix+<span class="hljs-number">1</span>, r, k)</span></span>;
                 }
                 set_pixel(part, c, r, k, val);
             }
         }
     }
-    for(k = 0; k &lt; im.c; ++k){
-        for(r = 0; r &lt; h; ++r){
-            float sy = r*h_scale;
-            int iy = (int) sy;
-            float dy = sy - iy;
-            for(c = 0; c &lt; w; ++c){
-                float val = (1-dy) * get_pixel(part, c, iy, k);
+    <span class="hljs-keyword">for</span>(k = <span class="hljs-number">0</span>; k &lt; im.c; ++k){
+        <span class="hljs-keyword">for</span>(r = <span class="hljs-number">0</span>; r &lt; h; ++r){
+            <span class="hljs-keyword">float</span> sy = r*h_scale;
+            <span class="hljs-keyword">int</span> iy = (<span class="hljs-keyword">int</span>) sy;
+            <span class="hljs-keyword">float</span> dy = sy - iy;
+            <span class="hljs-keyword">for</span>(c = <span class="hljs-number">0</span>; c &lt; w; ++c){
+                <span class="hljs-keyword">float</span> val = (<span class="hljs-number">1</span>-dy) * get_pixel(part, c, iy, k);
                 set_pixel(resized, c, r, k, val);
             }
-            if(r == h-1 || im.h == 1) continue;
-            for(c = 0; c &lt; w; ++c){
-                float val = dy * get_pixel(part, c, iy+1, k);
+            <span class="hljs-keyword">if</span>(r == h<span class="hljs-number">-1</span> || im.h == <span class="hljs-number">1</span>) <span class="hljs-keyword">continue</span>;
+            <span class="hljs-keyword">for</span>(c = <span class="hljs-number">0</span>; c &lt; w; ++c){
+                <span class="hljs-keyword">float</span> val = <span class="hljs-function">dy * <span class="hljs-title">get_pixel</span><span class="hljs-params">(part, c, iy+<span class="hljs-number">1</span>, k)</span></span>;
                 add_pixel(resized, c, r, k, val);
             }
         }
     }
 
     free_image(part);
-    return resized;
+    <span class="hljs-keyword">return</span> resized;
 }
-</code></pre><h2 id="testresize">test_resize</h2>
-<pre><code>void test_resize(char *filename)
-{
-    image im = load_image(filename, 0,0, 3);
-    float mag = mag_array(im.data, im.w*im.h*im.c);
-    printf(&quot;L2 Norm: %f\n&quot;, mag);
+</code></pre>
+<h2 id="testresize">test_resize</h2>
+<pre><code class="lang-c"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">test_resize</span><span class="hljs-params">(<span class="hljs-keyword">char</span> *filename)</span>
+</span>{
+    image im = load_image(filename, <span class="hljs-number">0</span>,<span class="hljs-number">0</span>, <span class="hljs-number">3</span>);
+    <span class="hljs-keyword">float</span> mag = mag_array(im.data, im.w*im.h*im.c);
+    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;L2 Norm: %f\n&quot;</span>, mag);
     image gray = grayscale_image(im);
 
     image c1 = copy_image(im);
     image c2 = copy_image(im);
     image c3 = copy_image(im);
     image c4 = copy_image(im);
-    distort_image(c1, .1, 1.5, 1.5);
-    distort_image(c2, -.1, .66666, .66666);
-    distort_image(c3, .1, 1.5, .66666);
-    distort_image(c4, .1, .66666, 1.5);
+    distort_image(c1, <span class="hljs-number">.1</span>, <span class="hljs-number">1.5</span>, <span class="hljs-number">1.5</span>);
+    distort_image(c2, <span class="hljs-number">-.1</span>, <span class="hljs-number">.66666</span>, <span class="hljs-number">.66666</span>);
+    distort_image(c3, <span class="hljs-number">.1</span>, <span class="hljs-number">1.5</span>, <span class="hljs-number">.66666</span>);
+    distort_image(c4, <span class="hljs-number">.1</span>, <span class="hljs-number">.66666</span>, <span class="hljs-number">1.5</span>);
 
 
-    show_image(im,   &quot;Original&quot;, 1);
-    show_image(gray, &quot;Gray&quot;, 1);
-    show_image(c1, &quot;C1&quot;, 1);
-    show_image(c2, &quot;C2&quot;, 1);
-    show_image(c3, &quot;C3&quot;, 1);
-    show_image(c4, &quot;C4&quot;, 1);
-#ifdef OPENCV
-    while(1){
-        image aug = random_augment_image(im, 0, .75, 320, 448, 320, 320);
-        show_image(aug, &quot;aug&quot;, 1);
+    show_image(im,   <span class="hljs-string">&quot;Original&quot;</span>, <span class="hljs-number">1</span>);
+    show_image(gray, <span class="hljs-string">&quot;Gray&quot;</span>, <span class="hljs-number">1</span>);
+    show_image(c1, <span class="hljs-string">&quot;C1&quot;</span>, <span class="hljs-number">1</span>);
+    show_image(c2, <span class="hljs-string">&quot;C2&quot;</span>, <span class="hljs-number">1</span>);
+    show_image(c3, <span class="hljs-string">&quot;C3&quot;</span>, <span class="hljs-number">1</span>);
+    show_image(c4, <span class="hljs-string">&quot;C4&quot;</span>, <span class="hljs-number">1</span>);
+<span class="hljs-meta">#<span class="hljs-meta-keyword">ifdef</span> OPENCV</span>
+    <span class="hljs-keyword">while</span>(<span class="hljs-number">1</span>){
+        image aug = random_augment_image(im, <span class="hljs-number">0</span>, <span class="hljs-number">.75</span>, <span class="hljs-number">320</span>, <span class="hljs-number">448</span>, <span class="hljs-number">320</span>, <span class="hljs-number">320</span>);
+        show_image(aug, <span class="hljs-string">&quot;aug&quot;</span>, <span class="hljs-number">1</span>);
         free_image(aug);
 
 
-        float exposure = 1.15;
-        float saturation = 1.15;
-        float hue = .05;
+        <span class="hljs-keyword">float</span> exposure = <span class="hljs-number">1.15</span>;
+        <span class="hljs-keyword">float</span> saturation = <span class="hljs-number">1.15</span>;
+        <span class="hljs-keyword">float</span> hue = <span class="hljs-number">.05</span>;
 
         image c = copy_image(im);
 
-        float dexp = rand_scale(exposure);
-        float dsat = rand_scale(saturation);
-        float dhue = rand_uniform(-hue, hue);
+        <span class="hljs-keyword">float</span> dexp = rand_scale(exposure);
+        <span class="hljs-keyword">float</span> dsat = rand_scale(saturation);
+        <span class="hljs-keyword">float</span> dhue = rand_uniform(-hue, hue);
 
         distort_image(c, dhue, dsat, dexp);
-        show_image(c, &quot;rand&quot;, 1);
-        printf(&quot;%f %f %f\n&quot;, dhue, dsat, dexp);
+        show_image(c, <span class="hljs-string">&quot;rand&quot;</span>, <span class="hljs-number">1</span>);
+        <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;%f %f %f\n&quot;</span>, dhue, dsat, dexp);
         free_image(c);
     }
-#endif
+<span class="hljs-meta">#<span class="hljs-meta-keyword">endif</span></span>
 }
-</code></pre><h2 id="loadimagestb">load_image_stb</h2>
-<pre><code>image load_image_stb(char *filename, int channels)
-{
-    int w, h, c;
-    unsigned char *data = stbi_load(filename, &amp;w, &amp;h, &amp;c, channels);
-    if (!data) {
-        fprintf(stderr, &quot;Cannot load image \&quot;%s\&quot;\nSTB Reason: %s\n&quot;, filename, stbi_failure_reason());
-        exit(0);
+</code></pre>
+<h2 id="loadimagestb">load_image_stb</h2>
+<pre><code class="lang-c"><span class="hljs-function">image <span class="hljs-title">load_image_stb</span><span class="hljs-params">(<span class="hljs-keyword">char</span> *filename, <span class="hljs-keyword">int</span> channels)</span>
+</span>{
+    <span class="hljs-keyword">int</span> w, h, c;
+    <span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">char</span> *data = stbi_load(filename, &amp;w, &amp;h, &amp;c, channels);
+    <span class="hljs-keyword">if</span> (!data) {
+        <span class="hljs-built_in">fprintf</span>(<span class="hljs-built_in">stderr</span>, <span class="hljs-string">&quot;Cannot load image \&quot;%s\&quot;\nSTB Reason: %s\n&quot;</span>, filename, stbi_failure_reason());
+        <span class="hljs-built_in">exit</span>(<span class="hljs-number">0</span>);
     }
-    if(channels) c = channels;
-    int i,j,k;
+    <span class="hljs-keyword">if</span>(channels) c = channels;
+    <span class="hljs-keyword">int</span> i,j,k;
     image im = make_image(w, h, c);
-    for(k = 0; k &lt; c; ++k){
-        for(j = 0; j &lt; h; ++j){
-            for(i = 0; i &lt; w; ++i){
-                int dst_index = i + w*j + w*h*k;
-                int src_index = k + c*i + c*w*j;
-                im.data[dst_index] = (float)data[src_index]/255.;
+    <span class="hljs-keyword">for</span>(k = <span class="hljs-number">0</span>; k &lt; c; ++k){
+        <span class="hljs-keyword">for</span>(j = <span class="hljs-number">0</span>; j &lt; h; ++j){
+            <span class="hljs-keyword">for</span>(i = <span class="hljs-number">0</span>; i &lt; w; ++i){
+                <span class="hljs-keyword">int</span> dst_index = i + w*j + w*h*k;
+                <span class="hljs-keyword">int</span> src_index = k + c*i + c*w*j;
+                im.data[dst_index] = (<span class="hljs-keyword">float</span>)data[src_index]/<span class="hljs-number">255.</span>;
             }
         }
     }
-    free(data);
-    return im;
+    <span class="hljs-built_in">free</span>(data);
+    <span class="hljs-keyword">return</span> im;
 }
-</code></pre><ul>
+</code></pre>
+<ul>
 <li>OPENCV&#xC5C6;&#xC774; &#xC774;&#xBBF8;&#xC9C0; &#xD30C;&#xC77C;&#xC744; &#xC77D;&#xB294; &#xD568;&#xC218;&#xC785;&#xB2C8;&#xB2E4;.</li>
 </ul>
 <h2 id="loadimage">load_image</h2>
-<pre><code>image load_image(char *filename, int w, int h, int c)
-{
-#ifdef OPENCV
+<pre><code class="lang-c"><span class="hljs-function">image <span class="hljs-title">load_image</span><span class="hljs-params">(<span class="hljs-keyword">char</span> *filename, <span class="hljs-keyword">int</span> w, <span class="hljs-keyword">int</span> h, <span class="hljs-keyword">int</span> c)</span>
+</span>{
+<span class="hljs-meta">#<span class="hljs-meta-keyword">ifdef</span> OPENCV</span>
     image out = load_image_cv(filename, c);
-#else
+<span class="hljs-meta">#<span class="hljs-meta-keyword">else</span></span>
     image out = load_image_stb(filename, c);
-#endif
+<span class="hljs-meta">#<span class="hljs-meta-keyword">endif</span></span>
 
-    if((h &amp;&amp; w) &amp;&amp; (h != out.h || w != out.w)){
+    <span class="hljs-keyword">if</span>((h &amp;&amp; w) &amp;&amp; (h != out.h || w != out.w)){
         image resized = resize_image(out, w, h);
         free_image(out);
         out = resized;
     }
-    return out;
+    <span class="hljs-keyword">return</span> out;
 }
-</code></pre><ul>
+</code></pre>
+<ul>
 <li>&#xC774;&#xBBF8;&#xC9C0; &#xD30C;&#xC77C;&#xC744; &#xC77D;&#xC5B4;&#xB4E4;&#xC785;&#xB2C8;&#xB2E4;.</li>
 </ul>
 <h2 id="loadimagecolor">load_image_color</h2>
-<pre><code>image load_image_color(char *filename, int w, int h)
-{
-    return load_image(filename, w, h, 3);
+<pre><code class="lang-c"><span class="hljs-function">image <span class="hljs-title">load_image_color</span><span class="hljs-params">(<span class="hljs-keyword">char</span> *filename, <span class="hljs-keyword">int</span> w, <span class="hljs-keyword">int</span> h)</span>
+</span>{
+    <span class="hljs-keyword">return</span> load_image(filename, w, h, <span class="hljs-number">3</span>);
 }
-</code></pre><ul>
+</code></pre>
+<ul>
 <li>COLOR &#xC774;&#xBBF8;&#xC9C0;&#xB97C; &#xBD88;&#xB7EC;&#xC635;&#xB2C8;&#xB2E4;.</li>
 </ul>
 <h2 id="getimagelayer">get_image_layer</h2>
-<pre><code>image get_image_layer(image m, int l)
-{
-    image out = make_image(m.w, m.h, 1);
-    int i;
-    for(i = 0; i &lt; m.h*m.w; ++i){
+<pre><code class="lang-c"><span class="hljs-function">image <span class="hljs-title">get_image_layer</span><span class="hljs-params">(image m, <span class="hljs-keyword">int</span> l)</span>
+</span>{
+    image out = make_image(m.w, m.h, <span class="hljs-number">1</span>);
+    <span class="hljs-keyword">int</span> i;
+    <span class="hljs-keyword">for</span>(i = <span class="hljs-number">0</span>; i &lt; m.h*m.w; ++i){
         out.data[i] = m.data[i+l*m.h*m.w];
     }
-    return out;
+    <span class="hljs-keyword">return</span> out;
 }
-</code></pre><ul>
+</code></pre>
+<ul>
 <li>&#xC778;&#xC790; &#xAC12; l&#xC5D0; &#xB530;&#xB77C;&#xC11C; &#xD2B9;&#xC815; &#xCC44;&#xB110; &#xC774;&#xBBF8;&#xC9C0;&#xB97C; &#xC120;&#xD0DD;&#xD569;&#xB2C8;&#xB2E4;.</li>
 </ul>
 <h2 id="printimage">print_image</h2>
-<pre><code>void print_image(image m)
-{
-    int i, j, k;
-    for(i =0 ; i &lt; m.c; ++i){
-        for(j =0 ; j &lt; m.h; ++j){
-            for(k = 0; k &lt; m.w; ++k){
-                printf(&quot;%.2lf, &quot;, m.data[i*m.h*m.w + j*m.w + k]);
-                if(k &gt; 30) break;
+<pre><code class="lang-c"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">print_image</span><span class="hljs-params">(image m)</span>
+</span>{
+    <span class="hljs-keyword">int</span> i, j, k;
+    <span class="hljs-keyword">for</span>(i =<span class="hljs-number">0</span> ; i &lt; m.c; ++i){
+        <span class="hljs-keyword">for</span>(j =<span class="hljs-number">0</span> ; j &lt; m.h; ++j){
+            <span class="hljs-keyword">for</span>(k = <span class="hljs-number">0</span>; k &lt; m.w; ++k){
+                <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;%.2lf, &quot;</span>, m.data[i*m.h*m.w + j*m.w + k]);
+                <span class="hljs-keyword">if</span>(k &gt; <span class="hljs-number">30</span>) <span class="hljs-keyword">break</span>;
             }
-            printf(&quot;\n&quot;);
-            if(j &gt; 30) break;
+            <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;\n&quot;</span>);
+            <span class="hljs-keyword">if</span>(j &gt; <span class="hljs-number">30</span>) <span class="hljs-keyword">break</span>;
         }
-        printf(&quot;\n&quot;);
+        <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;\n&quot;</span>);
     }
-    printf(&quot;\n&quot;);
+    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;\n&quot;</span>);
 }
-</code></pre><ul>
+</code></pre>
+<ul>
 <li>&#xC774;&#xBBF8;&#xC9C0; &#xD53D;&#xC140; &#xAC12;&#xB4E4;&#xC744; &#xCD9C;&#xB825;&#xD569;&#xB2C8;&#xB2E4;.</li>
 </ul>
 <h2 id="collapseimagesvert">collapse_images_vert</h2>
-<pre><code>image collapse_images_vert(image *ims, int n)
-{
-    int color = 1;
-    int border = 1;
-    int h,w,c;
-    w = ims[0].w;
-    h = (ims[0].h + border) * n - border;
-    c = ims[0].c;
-    if(c != 3 || !color){
+<pre><code class="lang-c"><span class="hljs-function">image <span class="hljs-title">collapse_images_vert</span><span class="hljs-params">(image *ims, <span class="hljs-keyword">int</span> n)</span>
+</span>{
+    <span class="hljs-keyword">int</span> color = <span class="hljs-number">1</span>;
+    <span class="hljs-keyword">int</span> border = <span class="hljs-number">1</span>;
+    <span class="hljs-keyword">int</span> h,w,c;
+    w = ims[<span class="hljs-number">0</span>].w;
+    h = (ims[<span class="hljs-number">0</span>].h + border) * n - border;
+    c = ims[<span class="hljs-number">0</span>].c;
+    <span class="hljs-keyword">if</span>(c != <span class="hljs-number">3</span> || !color){
         w = (w+border)*c - border;
-        c = 1;
+        c = <span class="hljs-number">1</span>;
     }
 
     image filters = make_image(w, h, c);
-    int i,j;
-    for(i = 0; i &lt; n; ++i){
-        int h_offset = i*(ims[0].h+border);
+    <span class="hljs-keyword">int</span> i,j;
+    <span class="hljs-keyword">for</span>(i = <span class="hljs-number">0</span>; i &lt; n; ++i){
+        <span class="hljs-keyword">int</span> h_offset = i*(ims[<span class="hljs-number">0</span>].h+border);
         image copy = copy_image(ims[i]);
-        //normalize_image(copy);
-        if(c == 3 &amp;&amp; color){
-            embed_image(copy, filters, 0, h_offset);
+        <span class="hljs-comment">//normalize_image(copy);</span>
+        <span class="hljs-keyword">if</span>(c == <span class="hljs-number">3</span> &amp;&amp; color){
+            embed_image(copy, filters, <span class="hljs-number">0</span>, h_offset);
         }
-        else{
-            for(j = 0; j &lt; copy.c; ++j){
-                int w_offset = j*(ims[0].w+border);
+        <span class="hljs-keyword">else</span>{
+            <span class="hljs-keyword">for</span>(j = <span class="hljs-number">0</span>; j &lt; copy.c; ++j){
+                <span class="hljs-keyword">int</span> w_offset = j*(ims[<span class="hljs-number">0</span>].w+border);
                 image layer = get_image_layer(copy, j);
                 embed_image(layer, filters, w_offset, h_offset);
                 free_image(layer);
@@ -3582,38 +3713,39 @@ image border_image(image a, int border)
         }
         free_image(copy);
     }
-    return filters;
+    <span class="hljs-keyword">return</span> filters;
 }
-</code></pre><ul>
+</code></pre>
+<ul>
 <li>&#xC5EC;&#xB7EC;&#xC7A5;&#xC758; &#xC774;&#xBBF8;&#xC9C0;&#xB97C; &#xC218;&#xC9C1;&#xC73C;&#xB85C; &#xC5F0;&#xACB0;&#xD569;&#xB2C8;&#xB2E4;.</li>
 </ul>
 <h2 id="collapseimageshorz">collapse_images_horz</h2>
-<pre><code>image collapse_images_horz(image *ims, int n)
-{
-    int color = 1;
-    int border = 1;
-    int h,w,c;
-    int size = ims[0].h;
+<pre><code class="lang-c"><span class="hljs-function">image <span class="hljs-title">collapse_images_horz</span><span class="hljs-params">(image *ims, <span class="hljs-keyword">int</span> n)</span>
+</span>{
+    <span class="hljs-keyword">int</span> color = <span class="hljs-number">1</span>;
+    <span class="hljs-keyword">int</span> border = <span class="hljs-number">1</span>;
+    <span class="hljs-keyword">int</span> h,w,c;
+    <span class="hljs-keyword">int</span> size = ims[<span class="hljs-number">0</span>].h;
     h = size;
-    w = (ims[0].w + border) * n - border;
-    c = ims[0].c;
-    if(c != 3 || !color){
+    w = (ims[<span class="hljs-number">0</span>].w + border) * n - border;
+    c = ims[<span class="hljs-number">0</span>].c;
+    <span class="hljs-keyword">if</span>(c != <span class="hljs-number">3</span> || !color){
         h = (h+border)*c - border;
-        c = 1;
+        c = <span class="hljs-number">1</span>;
     }
 
     image filters = make_image(w, h, c);
-    int i,j;
-    for(i = 0; i &lt; n; ++i){
-        int w_offset = i*(size+border);
+    <span class="hljs-keyword">int</span> i,j;
+    <span class="hljs-keyword">for</span>(i = <span class="hljs-number">0</span>; i &lt; n; ++i){
+        <span class="hljs-keyword">int</span> w_offset = i*(size+border);
         image copy = copy_image(ims[i]);
-        //normalize_image(copy);
-        if(c == 3 &amp;&amp; color){
-            embed_image(copy, filters, w_offset, 0);
+        <span class="hljs-comment">//normalize_image(copy);</span>
+        <span class="hljs-keyword">if</span>(c == <span class="hljs-number">3</span> &amp;&amp; color){
+            embed_image(copy, filters, w_offset, <span class="hljs-number">0</span>);
         }
-        else{
-            for(j = 0; j &lt; copy.c; ++j){
-                int h_offset = j*(size+border);
+        <span class="hljs-keyword">else</span>{
+            <span class="hljs-keyword">for</span>(j = <span class="hljs-number">0</span>; j &lt; copy.c; ++j){
+                <span class="hljs-keyword">int</span> h_offset = j*(size+border);
                 image layer = get_image_layer(copy, j);
                 embed_image(layer, filters, w_offset, h_offset);
                 free_image(layer);
@@ -3621,43 +3753,47 @@ image border_image(image a, int border)
         }
         free_image(copy);
     }
-    return filters;
+    <span class="hljs-keyword">return</span> filters;
 }
-</code></pre><ul>
+</code></pre>
+<ul>
 <li>&#xC5EC;&#xB7EC;&#xC7A5;&#xC758; &#xC774;&#xBBF8;&#xC9C0;&#xB97C; &#xC218;&#xD3C9;&#xC73C;&#xB85C; &#xC5F0;&#xACB0;&#xD569;&#xB2C8;&#xB2E4;.</li>
 </ul>
 <h2 id="showimagenormalized">show_image_normalized</h2>
-<pre><code>void show_image_normalized(image im, const char *name)
-{
+<pre><code class="lang-c"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">show_image_normalized</span><span class="hljs-params">(image im, <span class="hljs-keyword">const</span> <span class="hljs-keyword">char</span> *name)</span>
+</span>{
     image c = copy_image(im);
     normalize_image(c);
-    show_image(c, name, 1);
+    show_image(c, name, <span class="hljs-number">1</span>);
     free_image(c);
 }
-</code></pre><ul>
+</code></pre>
+<ul>
 <li>&#xC815;&#xADDC;&#xD654;&#xD55C; &#xC774;&#xBBF8;&#xC9C0;&#xB97C; &#xBCF4;&#xC5EC;&#xC90D;&#xB2C8;&#xB2E4;.</li>
 </ul>
 <h2 id="showimages">show_images</h2>
-<pre><code>void show_images(image *ims, int n, char *window)
-{
+<pre><code class="lang-c"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">show_images</span><span class="hljs-params">(image *ims, <span class="hljs-keyword">int</span> n, <span class="hljs-keyword">char</span> *window)</span>
+</span>{
     image m = collapse_images_vert(ims, n);
 
     normalize_image(m);
     save_image(m, window);
-    show_image(m, window, 1);
+    show_image(m, window, <span class="hljs-number">1</span>);
     free_image(m);
 }
-</code></pre><ul>
+</code></pre>
+<ul>
 <li>&#xC5EC;&#xB7EC;&#xC7A5;&#xC758; &#xC774;&#xBBF8;&#xC9C0;&#xB97C; &#xC218;&#xC9C1;&#xC73C;&#xB85C; &#xC5F0;&#xACB0;&#xD55C; &#xB4A4; &#xC815;&#xADDC;&#xD654;&#xD558;&#xACE0; &#xC800;&#xC7A5;&#xD558;&#xACE0; &#xBCF4;&#xC5EC;&#xC90D;&#xB2C8;&#xB2E4;.</li>
 </ul>
 <h2 id="freeimage">free_image</h2>
-<pre><code>void free_image(image m)
-{
-    if(m.data){
-        free(m.data);
+<pre><code class="lang-c"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">free_image</span><span class="hljs-params">(image m)</span>
+</span>{
+    <span class="hljs-keyword">if</span>(m.data){
+        <span class="hljs-built_in">free</span>(m.data);
     }
 }
-</code></pre><ul>
+</code></pre>
+<ul>
 <li>&#xC774;&#xBBF8;&#xC9C0;&#xC758; &#xBA54;&#xBAA8;&#xB9AC; &#xD560;&#xB2F9;&#xC744; &#xD574;&#xC81C;&#xD569;&#xB2C8;&#xB2E4;.</li>
 </ul>
 
@@ -3703,7 +3839,7 @@ image border_image(image a, int border)
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"image.c","level":"5.22","depth":1,"next":{"title":"iseg_layer.c","level":"5.23","depth":1,"path":"part3_src/iseg_layer.md","ref":"part3_src/iseg_layer.md","articles":[]},"previous":{"title":"im2col.c","level":"5.21","depth":1,"path":"part3_src/im2col.md","ref":"part3_src/im2col.md","articles":[]},"dir":"ltr"},"config":{"plugins":["advanced-emoji","theme-gestalt","-theme-default","styles-sass-fix","theme-api","mathjax"],"root":"./","styles":{"website":"website-1597403756570.css"},"pluginsConfig":{"styles-sass-fix":{},"theme-gestalt":{"showLevel":false,"styles":{"website":"styles/website.css"},"logo":"/darknet_book/assets/darknet.png","baseUrl":null,"excludeDefaultStyles":true,"doNotHideChildrenChapters":false},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"theme-api":{"languages":[],"split":true,"theme":"light"},"mathjax":{"forceSVG":false,"version":"2.6-latest"},"advanced-emoji":{"embedEmojis":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]}},"theme":"default","author":"JJM","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"DarkNet Book","output.name":"site","gitbook":"*"},"file":{"path":"part3_src/image.md","mtime":"2020-08-10T10:42:52.479Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-08-14T11:15:45.491Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"image.c","level":"5.22","depth":1,"next":{"title":"iseg_layer.c","level":"5.23","depth":1,"path":"part3_src/iseg_layer.md","ref":"part3_src/iseg_layer.md","articles":[]},"previous":{"title":"im2col.c","level":"5.21","depth":1,"path":"part3_src/im2col.md","ref":"part3_src/im2col.md","articles":[]},"dir":"ltr"},"config":{"plugins":["advanced-emoji","theme-gestalt","-theme-default","styles-sass-fix","theme-api","mathjax"],"root":"./","styles":{"website":"website-1599634348142.css"},"pluginsConfig":{"styles-sass-fix":{},"theme-gestalt":{"showLevel":false,"styles":{"website":"styles/website.css"},"logo":"/darknet_book/assets/darknet.png","baseUrl":null,"excludeDefaultStyles":true,"doNotHideChildrenChapters":false},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"theme-api":{"languages":[],"split":true,"theme":"light"},"mathjax":{"forceSVG":false,"version":"2.6-latest"},"advanced-emoji":{"embedEmojis":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]}},"theme":"default","author":"JJM","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"DarkNet Book","output.name":"site","gitbook":"*"},"file":{"path":"part3_src/image.md","mtime":"2020-09-09T05:02:45.218Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-09-09T06:52:18.609Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>

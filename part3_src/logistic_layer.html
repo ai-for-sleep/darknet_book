@@ -42,7 +42,7 @@
 
     
         
-        <link rel="stylesheet" href="../website-1597403756570.css">
+        <link rel="stylesheet" href="../website-1599634348142.css">
         
     
 
@@ -1966,47 +1966,53 @@
                                 
                                 <h1 id="logisticc">logistic.c</h1>
 <h2 id="forwardlogisticlayer">forward_logistic_layer</h2>
-<pre><code>void forward_logistic_layer(const layer l, network net)
-{
-    copy_cpu(l.outputs*l.batch, net.input, 1, l.output, 1);
+<pre><code class="lang-c"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">forward_logistic_layer</span><span class="hljs-params">(<span class="hljs-keyword">const</span> layer l, network net)</span>
+</span>{
+    copy_cpu(l.outputs*l.batch, net.input, <span class="hljs-number">1</span>, l.output, <span class="hljs-number">1</span>);
     activate_array(l.output, l.outputs*l.batch, LOGISTIC);
-    if(net.truth){
+    <span class="hljs-keyword">if</span>(net.truth){
         logistic_x_ent_cpu(l.batch*l.inputs, l.output, net.truth, l.delta, l.loss);
-        l.cost[0] = sum_array(l.loss, l.batch*l.inputs);
+        l.cost[<span class="hljs-number">0</span>] = sum_array(l.loss, l.batch*l.inputs);
     }
 }
-</code></pre><h2 id="backwardlogisticlayer">backward_logistic_layer</h2>
-<pre><code>void backward_logistic_layer(const layer l, network net)
-{
-    axpy_cpu(l.inputs*l.batch, 1, l.delta, 1, net.delta, 1);
+</code></pre>
+<p><code>forward</code></p>
+<h2 id="backwardlogisticlayer">backward_logistic_layer</h2>
+<pre><code class="lang-c"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">backward_logistic_layer</span><span class="hljs-params">(<span class="hljs-keyword">const</span> layer l, network net)</span>
+</span>{
+    axpy_cpu(l.inputs*l.batch, <span class="hljs-number">1</span>, l.delta, <span class="hljs-number">1</span>, net.delta, <span class="hljs-number">1</span>);
 }
-</code></pre><h2 id="makelogisticlayer">make_logistic_layer</h2>
-<pre><code>layer make_logistic_layer(int batch, int inputs)
-{
-    fprintf(stderr, &quot;logistic x entropy                             %4d\n&quot;,  inputs);
-    layer l = {0};
+</code></pre>
+<p><code>backward</code></p>
+<h2 id="makelogisticlayer">make_logistic_layer</h2>
+<pre><code class="lang-c"><span class="hljs-function">layer <span class="hljs-title">make_logistic_layer</span><span class="hljs-params">(<span class="hljs-keyword">int</span> batch, <span class="hljs-keyword">int</span> inputs)</span>
+</span>{
+    <span class="hljs-built_in">fprintf</span>(<span class="hljs-built_in">stderr</span>, <span class="hljs-string">&quot;logistic x entropy                             %4d\n&quot;</span>,  inputs);
+    layer l = {<span class="hljs-number">0</span>};
     l.type = LOGXENT;
     l.batch = batch;
     l.inputs = inputs;
     l.outputs = inputs;
-    l.loss = calloc(inputs*batch, sizeof(float));
-    l.output = calloc(inputs*batch, sizeof(float));
-    l.delta = calloc(inputs*batch, sizeof(float));
-    l.cost = calloc(1, sizeof(float));
+    l.loss = <span class="hljs-built_in">calloc</span>(inputs*batch, <span class="hljs-keyword">sizeof</span>(<span class="hljs-keyword">float</span>));
+    l.output = <span class="hljs-built_in">calloc</span>(inputs*batch, <span class="hljs-keyword">sizeof</span>(<span class="hljs-keyword">float</span>));
+    l.delta = <span class="hljs-built_in">calloc</span>(inputs*batch, <span class="hljs-keyword">sizeof</span>(<span class="hljs-keyword">float</span>));
+    l.cost = <span class="hljs-built_in">calloc</span>(<span class="hljs-number">1</span>, <span class="hljs-keyword">sizeof</span>(<span class="hljs-keyword">float</span>));
 
     l.forward = forward_logistic_layer;
     l.backward = backward_logistic_layer;
-    #ifdef GPU
+    <span class="hljs-meta">#<span class="hljs-meta-keyword">ifdef</span> GPU</span>
     l.forward_gpu = forward_logistic_layer_gpu;
     l.backward_gpu = backward_logistic_layer_gpu;
 
     l.output_gpu = cuda_make_array(l.output, inputs*batch);
     l.loss_gpu = cuda_make_array(l.loss, inputs*batch);
     l.delta_gpu = cuda_make_array(l.delta, inputs*batch);
-    #endif
-    return l;
+    <span class="hljs-meta">#<span class="hljs-meta-keyword">endif</span></span>
+    <span class="hljs-keyword">return</span> l;
 }
 </code></pre>
+<p><code>make</code></p>
+
                                 
                                 </section>
                             
@@ -2049,7 +2055,7 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"logistic_layer.c","level":"5.28","depth":1,"next":{"title":"lstm_layer.c","level":"5.29","depth":1,"path":"part3_src/lstm_layer.md","ref":"part3_src/lstm_layer.md","articles":[]},"previous":{"title":"local_layer.c","level":"5.27","depth":1,"path":"part3_src/local_layer.md","ref":"part3_src/local_layer.md","articles":[]},"dir":"ltr"},"config":{"plugins":["advanced-emoji","theme-gestalt","-theme-default","styles-sass-fix","theme-api","mathjax"],"root":"./","styles":{"website":"website-1597403756570.css"},"pluginsConfig":{"styles-sass-fix":{},"theme-gestalt":{"showLevel":false,"styles":{"website":"styles/website.css"},"logo":"/darknet_book/assets/darknet.png","baseUrl":null,"excludeDefaultStyles":true,"doNotHideChildrenChapters":false},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"theme-api":{"languages":[],"split":true,"theme":"light"},"mathjax":{"forceSVG":false,"version":"2.6-latest"},"advanced-emoji":{"embedEmojis":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]}},"theme":"default","author":"JJM","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"DarkNet Book","output.name":"site","gitbook":"*"},"file":{"path":"part3_src/logistic_layer.md","mtime":"2020-07-29T17:56:51.457Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-08-14T11:15:45.491Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"logistic_layer.c","level":"5.28","depth":1,"next":{"title":"lstm_layer.c","level":"5.29","depth":1,"path":"part3_src/lstm_layer.md","ref":"part3_src/lstm_layer.md","articles":[]},"previous":{"title":"local_layer.c","level":"5.27","depth":1,"path":"part3_src/local_layer.md","ref":"part3_src/local_layer.md","articles":[]},"dir":"ltr"},"config":{"plugins":["advanced-emoji","theme-gestalt","-theme-default","styles-sass-fix","theme-api","mathjax"],"root":"./","styles":{"website":"website-1599634348142.css"},"pluginsConfig":{"styles-sass-fix":{},"theme-gestalt":{"showLevel":false,"styles":{"website":"styles/website.css"},"logo":"/darknet_book/assets/darknet.png","baseUrl":null,"excludeDefaultStyles":true,"doNotHideChildrenChapters":false},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"theme-api":{"languages":[],"split":true,"theme":"light"},"mathjax":{"forceSVG":false,"version":"2.6-latest"},"advanced-emoji":{"embedEmojis":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]}},"theme":"default","author":"JJM","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"DarkNet Book","output.name":"site","gitbook":"*"},"file":{"path":"part3_src/logistic_layer.md","mtime":"2020-09-09T05:59:33.181Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-09-09T06:52:18.609Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>

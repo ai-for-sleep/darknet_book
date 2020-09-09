@@ -42,7 +42,7 @@
 
     
         
-        <link rel="stylesheet" href="../website-1597403756570.css">
+        <link rel="stylesheet" href="../website-1599634348142.css">
         
     
 
@@ -1964,135 +1964,144 @@
                                 
                                 <h1 id="imageopencvc">image_opencv.c</h1>
 <h2 id="imagetoipl">image_to_ipl</h2>
-<pre><code>#ifdef OPENCV
+<pre><code class="lang-c"><span class="hljs-meta">#<span class="hljs-meta-keyword">ifdef</span> OPENCV</span>
 
-using namespace cv;
+<span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> cv;
 
-extern &quot;C&quot; {
+<span class="hljs-keyword">extern</span> <span class="hljs-string">&quot;C&quot;</span> {
 
-IplImage *image_to_ipl(image im)
-{
-    int x,y,c;
+<span class="hljs-function">IplImage *<span class="hljs-title">image_to_ipl</span><span class="hljs-params">(image im)</span>
+</span>{
+    <span class="hljs-keyword">int</span> x,y,c;
     IplImage *disp = cvCreateImage(cvSize(im.w,im.h), IPL_DEPTH_8U, im.c);
-    int step = disp-&gt;widthStep;
-    for(y = 0; y &lt; im.h; ++y){
-        for(x = 0; x &lt; im.w; ++x){
-            for(c= 0; c &lt; im.c; ++c){
-                float val = im.data[c*im.h*im.w + y*im.w + x];
-                disp-&gt;imageData[y*step + x*im.c + c] = (unsigned char)(val*255);
+    <span class="hljs-keyword">int</span> step = disp-&gt;widthStep;
+    <span class="hljs-keyword">for</span>(y = <span class="hljs-number">0</span>; y &lt; im.h; ++y){
+        <span class="hljs-keyword">for</span>(x = <span class="hljs-number">0</span>; x &lt; im.w; ++x){
+            <span class="hljs-keyword">for</span>(c= <span class="hljs-number">0</span>; c &lt; im.c; ++c){
+                <span class="hljs-keyword">float</span> val = im.data[c*im.h*im.w + y*im.w + x];
+                disp-&gt;imageData[y*step + x*im.c + c] = (<span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">char</span>)(val*<span class="hljs-number">255</span>);
             }
         }
     }
-    return disp;
+    <span class="hljs-keyword">return</span> disp;
 }
-</code></pre><h2 id="ipltoimage">ipl_to_image</h2>
-<pre><code>image ipl_to_image(IplImage* src)
-{
-    int h = src-&gt;height;
-    int w = src-&gt;width;
-    int c = src-&gt;nChannels;
+</code></pre>
+<h2 id="ipltoimage">ipl_to_image</h2>
+<pre><code class="lang-c"><span class="hljs-function">image <span class="hljs-title">ipl_to_image</span><span class="hljs-params">(IplImage* src)</span>
+</span>{
+    <span class="hljs-keyword">int</span> h = src-&gt;height;
+    <span class="hljs-keyword">int</span> w = src-&gt;width;
+    <span class="hljs-keyword">int</span> c = src-&gt;nChannels;
     image im = make_image(w, h, c);
-    unsigned char *data = (unsigned char *)src-&gt;imageData;
-    int step = src-&gt;widthStep;
-    int i, j, k;
+    <span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">char</span> *data = (<span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">char</span> *)src-&gt;imageData;
+    <span class="hljs-keyword">int</span> step = src-&gt;widthStep;
+    <span class="hljs-keyword">int</span> i, j, k;
 
-    for(i = 0; i &lt; h; ++i){
-        for(k= 0; k &lt; c; ++k){
-            for(j = 0; j &lt; w; ++j){
-                im.data[k*w*h + i*w + j] = data[i*step + j*c + k]/255.;
+    <span class="hljs-keyword">for</span>(i = <span class="hljs-number">0</span>; i &lt; h; ++i){
+        <span class="hljs-keyword">for</span>(k= <span class="hljs-number">0</span>; k &lt; c; ++k){
+            <span class="hljs-keyword">for</span>(j = <span class="hljs-number">0</span>; j &lt; w; ++j){
+                im.data[k*w*h + i*w + j] = data[i*step + j*c + k]/<span class="hljs-number">255.</span>;
             }
         }
     }
-    return im;
+    <span class="hljs-keyword">return</span> im;
 }
-</code></pre><h2 id="imagetomat">image_to_mat</h2>
-<pre><code>Mat image_to_mat(image im)
-{
+</code></pre>
+<h2 id="imagetomat">image_to_mat</h2>
+<pre><code class="lang-c"><span class="hljs-function">Mat <span class="hljs-title">image_to_mat</span><span class="hljs-params">(image im)</span>
+</span>{
     image copy = copy_image(im);
     constrain_image(copy);
-    if(im.c == 3) rgbgr_image(copy);
+    <span class="hljs-keyword">if</span>(im.c == <span class="hljs-number">3</span>) rgbgr_image(copy);
 
     IplImage *ipl = image_to_ipl(copy);
-    Mat m = cvarrToMat(ipl, true);
+    Mat m = cvarrToMat(ipl, <span class="hljs-literal">true</span>);
     cvReleaseImage(&amp;ipl);
     free_image(copy);
-    return m;
+    <span class="hljs-keyword">return</span> m;
 }
-</code></pre><h2 id="mattoimage">mat_to_image</h2>
-<pre><code>image mat_to_image(Mat m)
-{
+</code></pre>
+<h2 id="mattoimage">mat_to_image</h2>
+<pre><code class="lang-c"><span class="hljs-function">image <span class="hljs-title">mat_to_image</span><span class="hljs-params">(Mat m)</span>
+</span>{
     IplImage ipl = m;
     image im = ipl_to_image(&amp;ipl);
     rgbgr_image(im);
-    return im;
+    <span class="hljs-keyword">return</span> im;
 }
-</code></pre><h2 id="openvideostream">open_video_stream</h2>
-<pre><code>void *open_video_stream(const char *f, int c, int w, int h, int fps)
-{
+</code></pre>
+<h2 id="openvideostream">open_video_stream</h2>
+<pre><code class="lang-c"><span class="hljs-function"><span class="hljs-keyword">void</span> *<span class="hljs-title">open_video_stream</span><span class="hljs-params">(<span class="hljs-keyword">const</span> <span class="hljs-keyword">char</span> *f, <span class="hljs-keyword">int</span> c, <span class="hljs-keyword">int</span> w, <span class="hljs-keyword">int</span> h, <span class="hljs-keyword">int</span> fps)</span>
+</span>{
     VideoCapture *cap;
-    if(f) cap = new VideoCapture(f);
-    else cap = new VideoCapture(c);
-    if(!cap-&gt;isOpened()) return 0;
-    if(w) cap-&gt;set(CV_CAP_PROP_FRAME_WIDTH, w);
-    if(h) cap-&gt;set(CV_CAP_PROP_FRAME_HEIGHT, w);
-    if(fps) cap-&gt;set(CV_CAP_PROP_FPS, w);
-    return (void *) cap;
+    <span class="hljs-keyword">if</span>(f) cap = <span class="hljs-keyword">new</span> VideoCapture(f);
+    <span class="hljs-keyword">else</span> cap = <span class="hljs-keyword">new</span> VideoCapture(c);
+    <span class="hljs-keyword">if</span>(!cap-&gt;isOpened()) <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+    <span class="hljs-keyword">if</span>(w) cap-&gt;<span class="hljs-built_in">set</span>(CV_CAP_PROP_FRAME_WIDTH, w);
+    <span class="hljs-keyword">if</span>(h) cap-&gt;<span class="hljs-built_in">set</span>(CV_CAP_PROP_FRAME_HEIGHT, w);
+    <span class="hljs-keyword">if</span>(fps) cap-&gt;<span class="hljs-built_in">set</span>(CV_CAP_PROP_FPS, w);
+    <span class="hljs-keyword">return</span> (<span class="hljs-keyword">void</span> *) cap;
 }
-</code></pre><h2 id="getimagefromstream">get_image_from_stream</h2>
-<pre><code>image get_image_from_stream(void *p)
-{
+</code></pre>
+<h2 id="getimagefromstream">get_image_from_stream</h2>
+<pre><code class="lang-c"><span class="hljs-function">image <span class="hljs-title">get_image_from_stream</span><span class="hljs-params">(<span class="hljs-keyword">void</span> *p)</span>
+</span>{
     VideoCapture *cap = (VideoCapture *)p;
     Mat m;
     *cap &gt;&gt; m;
-    if(m.empty()) return make_empty_image(0,0,0);
-    return mat_to_image(m);
+    <span class="hljs-keyword">if</span>(m.empty()) <span class="hljs-keyword">return</span> make_empty_image(<span class="hljs-number">0</span>,<span class="hljs-number">0</span>,<span class="hljs-number">0</span>);
+    <span class="hljs-keyword">return</span> mat_to_image(m);
 }
-</code></pre><h2 id="loadimagecv">load_image_cv</h2>
-<pre><code>image load_image_cv(char *filename, int channels)
-{
-    int flag = -1;
-    if (channels == 0) flag = -1;
-    else if (channels == 1) flag = 0;
-    else if (channels == 3) flag = 1;
-    else {
-        fprintf(stderr, &quot;OpenCV can&apos;t force load with %d channels\n&quot;, channels);
+</code></pre>
+<h2 id="loadimagecv">load_image_cv</h2>
+<pre><code class="lang-c"><span class="hljs-function">image <span class="hljs-title">load_image_cv</span><span class="hljs-params">(<span class="hljs-keyword">char</span> *filename, <span class="hljs-keyword">int</span> channels)</span>
+</span>{
+    <span class="hljs-keyword">int</span> flag = <span class="hljs-number">-1</span>;
+    <span class="hljs-keyword">if</span> (channels == <span class="hljs-number">0</span>) flag = <span class="hljs-number">-1</span>;
+    <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (channels == <span class="hljs-number">1</span>) flag = <span class="hljs-number">0</span>;
+    <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (channels == <span class="hljs-number">3</span>) flag = <span class="hljs-number">1</span>;
+    <span class="hljs-keyword">else</span> {
+        <span class="hljs-built_in">fprintf</span>(<span class="hljs-built_in">stderr</span>, <span class="hljs-string">&quot;OpenCV can&apos;t force load with %d channels\n&quot;</span>, channels);
     }
     Mat m;
     m = imread(filename, flag);
-    if(!m.data){
-        fprintf(stderr, &quot;Cannot load image \&quot;%s\&quot;\n&quot;, filename);
-        char buff[256];
-        sprintf(buff, &quot;echo %s &gt;&gt; bad.list&quot;, filename);
+    <span class="hljs-keyword">if</span>(!m.data){
+        <span class="hljs-built_in">fprintf</span>(<span class="hljs-built_in">stderr</span>, <span class="hljs-string">&quot;Cannot load image \&quot;%s\&quot;\n&quot;</span>, filename);
+        <span class="hljs-keyword">char</span> buff[<span class="hljs-number">256</span>];
+        <span class="hljs-built_in">sprintf</span>(buff, <span class="hljs-string">&quot;echo %s &gt;&gt; bad.list&quot;</span>, filename);
         system(buff);
-        return make_image(10,10,3);
-        //exit(0);
+        <span class="hljs-keyword">return</span> make_image(<span class="hljs-number">10</span>,<span class="hljs-number">10</span>,<span class="hljs-number">3</span>);
+        <span class="hljs-comment">//exit(0);</span>
     }
     image im = mat_to_image(m);
-    return im;
+    <span class="hljs-keyword">return</span> im;
 }
-</code></pre><h2 id="showimagecv">show_image_cv</h2>
-<pre><code>int show_image_cv(image im, const char* name, int ms)
-{
+</code></pre>
+<h2 id="showimagecv">show_image_cv</h2>
+<pre><code class="lang-c"><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">show_image_cv</span><span class="hljs-params">(image im, <span class="hljs-keyword">const</span> <span class="hljs-keyword">char</span>* name, <span class="hljs-keyword">int</span> ms)</span>
+</span>{
     Mat m = image_to_mat(im);
     imshow(name, m);
-    int c = waitKey(ms);
-    if (c != -1) c = c%256;
-    return c;
+    <span class="hljs-keyword">int</span> c = waitKey(ms);
+    <span class="hljs-keyword">if</span> (c != <span class="hljs-number">-1</span>) c = c%<span class="hljs-number">256</span>;
+    <span class="hljs-keyword">return</span> c;
 }
-</code></pre><h2 id="makewindow">make_window</h2>
-<pre><code>void make_window(char *name, int w, int h, int fullscreen)
-{
+</code></pre>
+<h2 id="makewindow">make_window</h2>
+<pre><code class="lang-c"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">make_window</span><span class="hljs-params">(<span class="hljs-keyword">char</span> *name, <span class="hljs-keyword">int</span> w, <span class="hljs-keyword">int</span> h, <span class="hljs-keyword">int</span> fullscreen)</span>
+</span>{
     namedWindow(name, WINDOW_NORMAL);
-    if (fullscreen) {
+    <span class="hljs-keyword">if</span> (fullscreen) {
         setWindowProperty(name, CV_WND_PROP_FULLSCREEN, CV_WINDOW_FULLSCREEN);
-    } else {
+    } <span class="hljs-keyword">else</span> {
         resizeWindow(name, w, h);
-        if(strcmp(name, &quot;Demo&quot;) == 0) moveWindow(name, 0, 0);
+        <span class="hljs-keyword">if</span>(<span class="hljs-built_in">strcmp</span>(name, <span class="hljs-string">&quot;Demo&quot;</span>) == <span class="hljs-number">0</span>) moveWindow(name, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>);
     }
 }
 
 }
 </code></pre>
+
                                 
                                 </section>
                             
@@ -2131,7 +2140,7 @@ IplImage *image_to_ipl(image im)
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"image_opencv.cpp","level":"5.46","depth":1,"next":{"title":"cuda.c","level":"6.1","depth":1,"ref":"","articles":[]},"previous":{"title":"yolo_layer.c","level":"5.45","depth":1,"path":"part3_src/yolo_layer.md","ref":"part3_src/yolo_layer.md","articles":[]},"dir":"ltr"},"config":{"plugins":["advanced-emoji","theme-gestalt","-theme-default","styles-sass-fix","theme-api","mathjax"],"root":"./","styles":{"website":"website-1597403756570.css"},"pluginsConfig":{"styles-sass-fix":{},"theme-gestalt":{"showLevel":false,"styles":{"website":"styles/website.css"},"logo":"/darknet_book/assets/darknet.png","baseUrl":null,"excludeDefaultStyles":true,"doNotHideChildrenChapters":false},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"theme-api":{"languages":[],"split":true,"theme":"light"},"mathjax":{"forceSVG":false,"version":"2.6-latest"},"advanced-emoji":{"embedEmojis":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]}},"theme":"default","author":"JJM","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"DarkNet Book","output.name":"site","gitbook":"*"},"file":{"path":"part3_src/image_opencv.md","mtime":"2020-07-29T18:53:33.769Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-08-14T11:15:45.491Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"image_opencv.cpp","level":"5.46","depth":1,"next":{"title":"cuda.c","level":"6.1","depth":1,"ref":"","articles":[]},"previous":{"title":"yolo_layer.c","level":"5.45","depth":1,"path":"part3_src/yolo_layer.md","ref":"part3_src/yolo_layer.md","articles":[]},"dir":"ltr"},"config":{"plugins":["advanced-emoji","theme-gestalt","-theme-default","styles-sass-fix","theme-api","mathjax"],"root":"./","styles":{"website":"website-1599634348142.css"},"pluginsConfig":{"styles-sass-fix":{},"theme-gestalt":{"showLevel":false,"styles":{"website":"styles/website.css"},"logo":"/darknet_book/assets/darknet.png","baseUrl":null,"excludeDefaultStyles":true,"doNotHideChildrenChapters":false},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"theme-api":{"languages":[],"split":true,"theme":"light"},"mathjax":{"forceSVG":false,"version":"2.6-latest"},"advanced-emoji":{"embedEmojis":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]}},"theme":"default","author":"JJM","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"DarkNet Book","output.name":"site","gitbook":"*"},"file":{"path":"part3_src/image_opencv.md","mtime":"2020-09-09T05:58:15.723Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-09-09T06:52:18.609Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>

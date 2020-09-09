@@ -42,7 +42,7 @@
 
     
         
-        <link rel="stylesheet" href="../website-1597403756570.css">
+        <link rel="stylesheet" href="../website-1599634348142.css">
         
     
 
@@ -2124,9 +2124,32 @@
     scal_cpu(l.nweights, momentum, l.weight_updates, <span class="hljs-number">1</span>);
 }
 </code></pre>
-<ul>
-<li>convolutional layer&#xC758; &#xD559;&#xC2B5; &#xD30C;&#xB77C;&#xBBF8;&#xD130;&#xB97C; &#xC5C5;&#xB370;&#xC774;&#xD2B8; &#xD558;&#xB294; &#xD568;&#xC218;&#xC785;&#xB2C8;&#xB2E4;.</li>
-</ul>
+<p><code>update</code></p>
+<h2 id="resizeconvolutionallayer">resize_convolutional_layer</h2>
+<pre><code class="lang-c">void resize_convolutional_layer(convolutional_layer *l, int w, int h)
+{
+    l-&gt;w = w;
+    l-&gt;h = h;
+    int out_w = convolutional_out_width(*l);
+    int out_h = convolutional_out_height(*l);
+
+    l-&gt;out_w = out_w;
+    l-&gt;out_h = out_h;
+
+    l-&gt;outputs = l-&gt;out_h * l-&gt;out_w * l-&gt;out_c;
+    l-&gt;inputs = l-&gt;w * l-&gt;h * l-&gt;c;
+
+    l-&gt;output = realloc(l-&gt;output, l-&gt;batch*l-&gt;outputs*sizeof(float));
+    l-&gt;delta  = realloc(l-&gt;delta,  l-&gt;batch*l-&gt;outputs*sizeof(float));
+    if(l-&gt;batch_normalize){
+        l-&gt;x = realloc(l-&gt;x, l-&gt;batch*l-&gt;outputs*sizeof(float));
+        l-&gt;x_norm  = realloc(l-&gt;x_norm, l-&gt;batch*l-&gt;outputs*sizeof(float));
+    }
+
+    l-&gt;workspace_size = get_workspace_size(*l);
+}
+</code></pre>
+<p><code>resize</code></p>
 <h2 id="makeconvolutionallayer">make_convolutional_layer</h2>
 <pre><code class="lang-c"><span class="hljs-function">convolutional_layer <span class="hljs-title">make_convolutional_layer</span><span class="hljs-params">(<span class="hljs-keyword">int</span> batch, <span class="hljs-keyword">int</span> h, <span class="hljs-keyword">int</span> w, <span class="hljs-keyword">int</span> c, <span class="hljs-keyword">int</span> n, <span class="hljs-keyword">int</span> groups, <span class="hljs-keyword">int</span> size, <span class="hljs-keyword">int</span> stride, <span class="hljs-keyword">int</span> padding, ACTIVATION activation, <span class="hljs-keyword">int</span> batch_normalize, <span class="hljs-keyword">int</span> binary, <span class="hljs-keyword">int</span> xnor, <span class="hljs-keyword">int</span> adam)</span>
 </span>{
@@ -2221,9 +2244,7 @@
     <span class="hljs-keyword">return</span> l;
 }
 </code></pre>
-<ul>
-<li>convolution layer&#xB97C; &#xB9CC;&#xB4DC;&#xB294; &#xD568;&#xC218; &#xC785;&#xB2C8;&#xB2E4;.</li>
-</ul>
+<p><code>make</code></p>
 <h2 id="denormalizeconvolutionallayer">denormalize_convolutional_layer</h2>
 <pre><code class="lang-c"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">denormalize_convolutional_layer</span><span class="hljs-params">(convolutional_layer l)</span>
 </span>{
@@ -2242,33 +2263,6 @@
 </code></pre>
 <ul>
 <li>&#xC5ED;&#xC815;&#xADDC;&#xD654;&#xB97C; &#xD558;&#xB294; &#xD568;&#xC218;&#xC785;&#xB2C8;&#xB2E4;.</li>
-</ul>
-<h2 id="resizeconvolutionallayer">resize_convolutional_layer</h2>
-<pre><code class="lang-c">void resize_convolutional_layer(convolutional_layer *l, int w, int h)
-{
-    l-&gt;w = w;
-    l-&gt;h = h;
-    int out_w = convolutional_out_width(*l);
-    int out_h = convolutional_out_height(*l);
-
-    l-&gt;out_w = out_w;
-    l-&gt;out_h = out_h;
-
-    l-&gt;outputs = l-&gt;out_h * l-&gt;out_w * l-&gt;out_c;
-    l-&gt;inputs = l-&gt;w * l-&gt;h * l-&gt;c;
-
-    l-&gt;output = realloc(l-&gt;output, l-&gt;batch*l-&gt;outputs*sizeof(float));
-    l-&gt;delta  = realloc(l-&gt;delta,  l-&gt;batch*l-&gt;outputs*sizeof(float));
-    if(l-&gt;batch_normalize){
-        l-&gt;x = realloc(l-&gt;x, l-&gt;batch*l-&gt;outputs*sizeof(float));
-        l-&gt;x_norm  = realloc(l-&gt;x_norm, l-&gt;batch*l-&gt;outputs*sizeof(float));
-    }
-
-    l-&gt;workspace_size = get_workspace_size(*l);
-}
-</code></pre>
-<ul>
-<li>convolutional layer&#xB97C; resize&#xC2DC;&#xD0B5;&#xB2C8;&#xB2E4;.</li>
 </ul>
 <h2 id="addbias">add_bias</h2>
 <pre><code class="lang-c"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">add_bias</span><span class="hljs-params">(<span class="hljs-keyword">float</span> *output, <span class="hljs-keyword">float</span> *biases, <span class="hljs-keyword">int</span> batch, <span class="hljs-keyword">int</span> n, <span class="hljs-keyword">int</span> size)</span>
@@ -2546,7 +2540,7 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"convolutional_layer.c","level":"5.10","depth":1,"next":{"title":"cost_layer.c","level":"5.11","depth":1,"path":"part3_src/cost_layer.md","ref":"part3_src/cost_layer.md","articles":[]},"previous":{"title":"connected_layer.c","level":"5.9","depth":1,"path":"part3_src/connected_layer.md","ref":"part3_src/connected_layer.md","articles":[]},"dir":"ltr"},"config":{"plugins":["advanced-emoji","theme-gestalt","-theme-default","styles-sass-fix","theme-api","mathjax"],"root":"./","styles":{"website":"website-1597403756570.css"},"pluginsConfig":{"styles-sass-fix":{},"theme-gestalt":{"showLevel":false,"styles":{"website":"styles/website.css"},"logo":"/darknet_book/assets/darknet.png","baseUrl":null,"excludeDefaultStyles":true,"doNotHideChildrenChapters":false},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"theme-api":{"languages":[],"split":true,"theme":"light"},"mathjax":{"forceSVG":false,"version":"2.6-latest"},"advanced-emoji":{"embedEmojis":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]}},"theme":"default","author":"JJM","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"DarkNet Book","output.name":"site","gitbook":"*"},"file":{"path":"part3_src/convolutional_layer.md","mtime":"2020-08-13T07:16:30.121Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-08-14T11:15:45.491Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"convolutional_layer.c","level":"5.10","depth":1,"next":{"title":"cost_layer.c","level":"5.11","depth":1,"path":"part3_src/cost_layer.md","ref":"part3_src/cost_layer.md","articles":[]},"previous":{"title":"connected_layer.c","level":"5.9","depth":1,"path":"part3_src/connected_layer.md","ref":"part3_src/connected_layer.md","articles":[]},"dir":"ltr"},"config":{"plugins":["advanced-emoji","theme-gestalt","-theme-default","styles-sass-fix","theme-api","mathjax"],"root":"./","styles":{"website":"website-1599634348142.css"},"pluginsConfig":{"styles-sass-fix":{},"theme-gestalt":{"showLevel":false,"styles":{"website":"styles/website.css"},"logo":"/darknet_book/assets/darknet.png","baseUrl":null,"excludeDefaultStyles":true,"doNotHideChildrenChapters":false},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"theme-api":{"languages":[],"split":true,"theme":"light"},"mathjax":{"forceSVG":false,"version":"2.6-latest"},"advanced-emoji":{"embedEmojis":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]}},"theme":"default","author":"JJM","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"DarkNet Book","output.name":"site","gitbook":"*"},"file":{"path":"part3_src/convolutional_layer.md","mtime":"2020-09-09T05:54:54.533Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-09-09T06:52:18.609Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>

@@ -42,7 +42,7 @@
 
     
         
-        <link rel="stylesheet" href="../website-1597403756570.css">
+        <link rel="stylesheet" href="../website-1599634348142.css">
         
     
 
@@ -1975,133 +1975,145 @@
 <hr>
 <h1 id="rnnlayerc">rnn_layer.c</h1>
 <h2 id="incrementlayer">increment_layer</h2>
-<pre><code>static void increment_layer(layer *l, int steps)
-{
-    int num = l-&gt;outputs*l-&gt;batch*steps;
+<pre><code class="lang-c"><span class="hljs-function"><span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">increment_layer</span><span class="hljs-params">(layer *l, <span class="hljs-keyword">int</span> steps)</span>
+</span>{
+    <span class="hljs-keyword">int</span> num = l-&gt;outputs*l-&gt;batch*steps;
     l-&gt;output += num;
     l-&gt;delta += num;
     l-&gt;x += num;
     l-&gt;x_norm += num;
 }
-</code></pre><h2 id="forwardrnnlayer">forward_rnn_layer</h2>
-<pre><code>void forward_rnn_layer(layer l, network net)
-{
+</code></pre>
+<h2 id="forwardrnnlayer">forward_rnn_layer</h2>
+<pre><code class="lang-c"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">forward_rnn_layer</span><span class="hljs-params">(layer l, network net)</span>
+</span>{
     network s = net;
     s.train = net.train;
-    int i;
+    <span class="hljs-keyword">int</span> i;
     layer input_layer = *(l.input_layer);
     layer self_layer = *(l.self_layer);
     layer output_layer = *(l.output_layer);
 
-    fill_cpu(l.outputs * l.batch * l.steps, 0, output_layer.delta, 1);
-    fill_cpu(l.outputs * l.batch * l.steps, 0, self_layer.delta, 1);
-    fill_cpu(l.outputs * l.batch * l.steps, 0, input_layer.delta, 1);
-    if(net.train) fill_cpu(l.outputs * l.batch, 0, l.state, 1);
+    fill_cpu(l.outputs * l.batch * l.steps, <span class="hljs-number">0</span>, output_layer.delta, <span class="hljs-number">1</span>);
+    fill_cpu(l.outputs * l.batch * l.steps, <span class="hljs-number">0</span>, self_layer.delta, <span class="hljs-number">1</span>);
+    fill_cpu(l.outputs * l.batch * l.steps, <span class="hljs-number">0</span>, input_layer.delta, <span class="hljs-number">1</span>);
+    <span class="hljs-keyword">if</span>(net.train) fill_cpu(l.outputs * l.batch, <span class="hljs-number">0</span>, l.state, <span class="hljs-number">1</span>);
 
-    for (i = 0; i &lt; l.steps; ++i) {
+    <span class="hljs-keyword">for</span> (i = <span class="hljs-number">0</span>; i &lt; l.steps; ++i) {
         s.input = net.input;
         forward_connected_layer(input_layer, s);
 
         s.input = l.state;
         forward_connected_layer(self_layer, s);
 
-        float *old_state = l.state;
-        if(net.train) l.state += l.outputs*l.batch;
-        if(l.shortcut){
-            copy_cpu(l.outputs * l.batch, old_state, 1, l.state, 1);
-        }else{
-            fill_cpu(l.outputs * l.batch, 0, l.state, 1);
+        <span class="hljs-keyword">float</span> *old_state = l.state;
+        <span class="hljs-keyword">if</span>(net.train) l.state += l.outputs*l.batch;
+        <span class="hljs-keyword">if</span>(l.shortcut){
+            copy_cpu(l.outputs * l.batch, old_state, <span class="hljs-number">1</span>, l.state, <span class="hljs-number">1</span>);
+        }<span class="hljs-keyword">else</span>{
+            fill_cpu(l.outputs * l.batch, <span class="hljs-number">0</span>, l.state, <span class="hljs-number">1</span>);
         }
-        axpy_cpu(l.outputs * l.batch, 1, input_layer.output, 1, l.state, 1);
-        axpy_cpu(l.outputs * l.batch, 1, self_layer.output, 1, l.state, 1);
+        axpy_cpu(l.outputs * l.batch, <span class="hljs-number">1</span>, input_layer.output, <span class="hljs-number">1</span>, l.state, <span class="hljs-number">1</span>);
+        axpy_cpu(l.outputs * l.batch, <span class="hljs-number">1</span>, self_layer.output, <span class="hljs-number">1</span>, l.state, <span class="hljs-number">1</span>);
 
         s.input = l.state;
         forward_connected_layer(output_layer, s);
 
         net.input += l.inputs*l.batch;
-        increment_layer(&amp;input_layer, 1);
-        increment_layer(&amp;self_layer, 1);
-        increment_layer(&amp;output_layer, 1);
+        increment_layer(&amp;input_layer, <span class="hljs-number">1</span>);
+        increment_layer(&amp;self_layer, <span class="hljs-number">1</span>);
+        increment_layer(&amp;output_layer, <span class="hljs-number">1</span>);
     }
 }
-</code></pre><p><code>forward</code></p>
+</code></pre>
+<p><code>forward</code></p>
 <h2 id="backwardrnnlayer">backward_rnn_layer</h2>
-<pre><code>void backward_rnn_layer(layer l, network net)
-{
+<pre><code class="lang-c"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">backward_rnn_layer</span><span class="hljs-params">(layer l, network net)</span>
+</span>{
     network s = net;
     s.train = net.train;
-    int i;
+    <span class="hljs-keyword">int</span> i;
     layer input_layer = *(l.input_layer);
     layer self_layer = *(l.self_layer);
     layer output_layer = *(l.output_layer);
 
-    increment_layer(&amp;input_layer, l.steps-1);
-    increment_layer(&amp;self_layer, l.steps-1);
-    increment_layer(&amp;output_layer, l.steps-1);
+    increment_layer(&amp;input_layer, l.steps<span class="hljs-number">-1</span>);
+    increment_layer(&amp;self_layer, l.steps<span class="hljs-number">-1</span>);
+    increment_layer(&amp;output_layer, l.steps<span class="hljs-number">-1</span>);
 
     l.state += l.outputs*l.batch*l.steps;
-    for (i = l.steps-1; i &gt;= 0; --i) {
-        copy_cpu(l.outputs * l.batch, input_layer.output, 1, l.state, 1);
-        axpy_cpu(l.outputs * l.batch, 1, self_layer.output, 1, l.state, 1);
+    <span class="hljs-keyword">for</span> (i = l.steps<span class="hljs-number">-1</span>; i &gt;= <span class="hljs-number">0</span>; --i) {
+        copy_cpu(l.outputs * l.batch, input_layer.output, <span class="hljs-number">1</span>, l.state, <span class="hljs-number">1</span>);
+        axpy_cpu(l.outputs * l.batch, <span class="hljs-number">1</span>, self_layer.output, <span class="hljs-number">1</span>, l.state, <span class="hljs-number">1</span>);
 
         s.input = l.state;
         s.delta = self_layer.delta;
         backward_connected_layer(output_layer, s);
 
         l.state -= l.outputs*l.batch;
-        /*
+        <span class="hljs-comment">/*
            if(i &gt; 0){
            copy_cpu(l.outputs * l.batch, input_layer.output - l.outputs*l.batch, 1, l.state, 1);
            axpy_cpu(l.outputs * l.batch, 1, self_layer.output - l.outputs*l.batch, 1, l.state, 1);
            }else{
            fill_cpu(l.outputs * l.batch, 0, l.state, 1);
            }
-         */
+         */</span>
 
         s.input = l.state;
         s.delta = self_layer.delta - l.outputs*l.batch;
-        if (i == 0) s.delta = 0;
+        <span class="hljs-keyword">if</span> (i == <span class="hljs-number">0</span>) s.delta = <span class="hljs-number">0</span>;
         backward_connected_layer(self_layer, s);
 
-        copy_cpu(l.outputs*l.batch, self_layer.delta, 1, input_layer.delta, 1);
-        if (i &gt; 0 &amp;&amp; l.shortcut) axpy_cpu(l.outputs*l.batch, 1, self_layer.delta, 1, self_layer.delta - l.outputs*l.batch, 1);
+        copy_cpu(l.outputs*l.batch, self_layer.delta, <span class="hljs-number">1</span>, input_layer.delta, <span class="hljs-number">1</span>);
+        <span class="hljs-keyword">if</span> (i &gt; <span class="hljs-number">0</span> &amp;&amp; l.shortcut) axpy_cpu(l.outputs*l.batch, <span class="hljs-number">1</span>, self_layer.delta, <span class="hljs-number">1</span>, self_layer.delta - l.outputs*l.batch, <span class="hljs-number">1</span>);
         s.input = net.input + i*l.inputs*l.batch;
-        if(net.delta) s.delta = net.delta + i*l.inputs*l.batch;
-        else s.delta = 0;
+        <span class="hljs-keyword">if</span>(net.delta) s.delta = net.delta + i*l.inputs*l.batch;
+        <span class="hljs-keyword">else</span> s.delta = <span class="hljs-number">0</span>;
         backward_connected_layer(input_layer, s);
 
-        increment_layer(&amp;input_layer, -1);
-        increment_layer(&amp;self_layer, -1);
-        increment_layer(&amp;output_layer, -1);
+        increment_layer(&amp;input_layer, <span class="hljs-number">-1</span>);
+        increment_layer(&amp;self_layer, <span class="hljs-number">-1</span>);
+        increment_layer(&amp;output_layer, <span class="hljs-number">-1</span>);
     }
 }
-</code></pre><p><code>backward</code></p>
+</code></pre>
+<p><code>backward</code></p>
+<h2 id="updaternnlayer">update_rnn_layer</h2>
+<pre><code class="lang-c"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">update_rnn_layer</span><span class="hljs-params">(layer l, update_args a)</span>
+</span>{
+    update_connected_layer(*(l.input_layer),  a);
+    update_connected_layer(*(l.self_layer),   a);
+    update_connected_layer(*(l.output_layer), a);
+}
+</code></pre>
+<p><code>update</code></p>
 <h2 id="makernnlayer">make_rnn_layer</h2>
-<pre><code>layer make_rnn_layer(int batch, int inputs, int outputs, int steps, ACTIVATION activation, int batch_normalize, int adam)
-{
-    fprintf(stderr, &quot;RNN Layer: %d inputs, %d outputs\n&quot;, inputs, outputs);
+<pre><code class="lang-c"><span class="hljs-function">layer <span class="hljs-title">make_rnn_layer</span><span class="hljs-params">(<span class="hljs-keyword">int</span> batch, <span class="hljs-keyword">int</span> inputs, <span class="hljs-keyword">int</span> outputs, <span class="hljs-keyword">int</span> steps, ACTIVATION activation, <span class="hljs-keyword">int</span> batch_normalize, <span class="hljs-keyword">int</span> adam)</span>
+</span>{
+    <span class="hljs-built_in">fprintf</span>(<span class="hljs-built_in">stderr</span>, <span class="hljs-string">&quot;RNN Layer: %d inputs, %d outputs\n&quot;</span>, inputs, outputs);
     batch = batch / steps;
-    layer l = {0};
+    layer l = {<span class="hljs-number">0</span>};
     l.batch = batch;
     l.type = RNN;
     l.steps = steps;
     l.inputs = inputs;
 
-    l.state = calloc(batch*outputs, sizeof(float));
-    l.prev_state = calloc(batch*outputs, sizeof(float));
+    l.state = <span class="hljs-built_in">calloc</span>(batch*outputs, <span class="hljs-keyword">sizeof</span>(<span class="hljs-keyword">float</span>));
+    l.prev_state = <span class="hljs-built_in">calloc</span>(batch*outputs, <span class="hljs-keyword">sizeof</span>(<span class="hljs-keyword">float</span>));
 
-    l.input_layer = malloc(sizeof(layer));
-    fprintf(stderr, &quot;\t\t&quot;);
+    l.input_layer = <span class="hljs-built_in">malloc</span>(<span class="hljs-keyword">sizeof</span>(layer));
+    <span class="hljs-built_in">fprintf</span>(<span class="hljs-built_in">stderr</span>, <span class="hljs-string">&quot;\t\t&quot;</span>);
     *(l.input_layer) = make_connected_layer(batch*steps, inputs, outputs, activation, batch_normalize, adam);
     l.input_layer-&gt;batch = batch;
 
-    l.self_layer = malloc(sizeof(layer));
-    fprintf(stderr, &quot;\t\t&quot;);
+    l.self_layer = <span class="hljs-built_in">malloc</span>(<span class="hljs-keyword">sizeof</span>(layer));
+    <span class="hljs-built_in">fprintf</span>(<span class="hljs-built_in">stderr</span>, <span class="hljs-string">&quot;\t\t&quot;</span>);
     *(l.self_layer) = make_connected_layer(batch*steps, outputs, outputs, activation, batch_normalize, adam);
     l.self_layer-&gt;batch = batch;
 
-    l.output_layer = malloc(sizeof(layer));
-    fprintf(stderr, &quot;\t\t&quot;);
+    l.output_layer = <span class="hljs-built_in">malloc</span>(<span class="hljs-keyword">sizeof</span>(layer));
+    <span class="hljs-built_in">fprintf</span>(<span class="hljs-built_in">stderr</span>, <span class="hljs-string">&quot;\t\t&quot;</span>);
     *(l.output_layer) = make_connected_layer(batch*steps, outputs, outputs, activation, batch_normalize, adam);
     l.output_layer-&gt;batch = batch;
 
@@ -2113,16 +2125,10 @@
     l.backward = backward_rnn_layer;
     l.update = update_rnn_layer;
 
-    return l;
-}
-</code></pre><h2 id="updaternnlayer">update_rnn_layer</h2>
-<pre><code>void update_rnn_layer(layer l, update_args a)
-{
-    update_connected_layer(*(l.input_layer),  a);
-    update_connected_layer(*(l.self_layer),   a);
-    update_connected_layer(*(l.output_layer), a);
+    <span class="hljs-keyword">return</span> l;
 }
 </code></pre>
+
                                 
                                 </section>
                             
@@ -2165,7 +2171,7 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"rnn_layer.c","level":"5.38","depth":1,"next":{"title":"route_layer.c","level":"5.39","depth":1,"path":"part3_src/route_layer.md","ref":"part3_src/route_layer.md","articles":[]},"previous":{"title":"reorg_layer.c","level":"5.37","depth":1,"path":"part3_src/reorg_layer.md","ref":"part3_src/reorg_layer.md","articles":[]},"dir":"ltr"},"config":{"plugins":["advanced-emoji","theme-gestalt","-theme-default","styles-sass-fix","theme-api","mathjax"],"root":"./","styles":{"website":"website-1597403756570.css"},"pluginsConfig":{"styles-sass-fix":{},"theme-gestalt":{"showLevel":false,"styles":{"website":"styles/website.css"},"logo":"/darknet_book/assets/darknet.png","baseUrl":null,"excludeDefaultStyles":true,"doNotHideChildrenChapters":false},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"theme-api":{"languages":[],"split":true,"theme":"light"},"mathjax":{"forceSVG":false,"version":"2.6-latest"},"advanced-emoji":{"embedEmojis":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]}},"theme":"default","author":"JJM","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"DarkNet Book","output.name":"site","gitbook":"*"},"file":{"path":"part3_src/rnn_layer.md","mtime":"2020-07-29T05:47:22.922Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-08-14T11:15:45.491Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"rnn_layer.c","level":"5.38","depth":1,"next":{"title":"route_layer.c","level":"5.39","depth":1,"path":"part3_src/route_layer.md","ref":"part3_src/route_layer.md","articles":[]},"previous":{"title":"reorg_layer.c","level":"5.37","depth":1,"path":"part3_src/reorg_layer.md","ref":"part3_src/reorg_layer.md","articles":[]},"dir":"ltr"},"config":{"plugins":["advanced-emoji","theme-gestalt","-theme-default","styles-sass-fix","theme-api","mathjax"],"root":"./","styles":{"website":"website-1599634348142.css"},"pluginsConfig":{"styles-sass-fix":{},"theme-gestalt":{"showLevel":false,"styles":{"website":"styles/website.css"},"logo":"/darknet_book/assets/darknet.png","baseUrl":null,"excludeDefaultStyles":true,"doNotHideChildrenChapters":false},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"theme-api":{"languages":[],"split":true,"theme":"light"},"mathjax":{"forceSVG":false,"version":"2.6-latest"},"advanced-emoji":{"embedEmojis":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]}},"theme":"default","author":"JJM","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"DarkNet Book","output.name":"site","gitbook":"*"},"file":{"path":"part3_src/rnn_layer.md","mtime":"2020-09-09T06:01:28.305Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-09-09T06:52:18.609Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>

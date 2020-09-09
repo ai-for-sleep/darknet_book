@@ -42,7 +42,7 @@
 
     
         
-        <link rel="stylesheet" href="../website-1597403756570.css">
+        <link rel="stylesheet" href="../website-1599634348142.css">
         
     
 
@@ -1983,43 +1983,45 @@
 <li>X -&gt; Y &#xB85C; &#xAC12;&#xC744; &#xBCF5;&#xC0AC;&#xD558;&#xB294; &#xD568;&#xC218;&#xC785;&#xB2C8;&#xB2E4;.</li>
 </ul>
 <h2 id="meancpu">mean_cpu</h2>
-<pre><code>void mean_cpu(float *x, int batch, int filters, int spatial, float *mean)
-{
-    float scale = 1./(batch * spatial);
-    int i,j,k;
-    for(i = 0; i &lt; filters; ++i){
-        mean[i] = 0;
-        for(j = 0; j &lt; batch; ++j){
-            for(k = 0; k &lt; spatial; ++k){
-                int index = j*filters*spatial + i*spatial + k;
+<pre><code class="lang-c"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">mean_cpu</span><span class="hljs-params">(<span class="hljs-keyword">float</span> *x, <span class="hljs-keyword">int</span> batch, <span class="hljs-keyword">int</span> filters, <span class="hljs-keyword">int</span> spatial, <span class="hljs-keyword">float</span> *mean)</span>
+</span>{
+    <span class="hljs-keyword">float</span> scale = <span class="hljs-number">1.</span>/(batch * spatial);
+    <span class="hljs-keyword">int</span> i,j,k;
+    <span class="hljs-keyword">for</span>(i = <span class="hljs-number">0</span>; i &lt; filters; ++i){
+        mean[i] = <span class="hljs-number">0</span>;
+        <span class="hljs-keyword">for</span>(j = <span class="hljs-number">0</span>; j &lt; batch; ++j){
+            <span class="hljs-keyword">for</span>(k = <span class="hljs-number">0</span>; k &lt; spatial; ++k){
+                <span class="hljs-keyword">int</span> index = j*filters*spatial + i*spatial + k;
                 mean[i] += x[index];
             }
         }
         mean[i] *= scale;
     }
 }
-</code></pre><ul>
+</code></pre>
+<ul>
 <li>&#xAC01; &#xD544;&#xD130;&#xC758; &#xD3C9;&#xADE0;&#xC744; &#xAD6C;&#xD558;&#xB294; &#xD568;&#xC218; &#xC785;&#xB2C8;&#xB2E4;.</li>
 </ul>
 <p><script type="math/tex; ">mean = \frac{1}{m} \sum_{i=0}^{m} X[i]</script></p>
 <p>&#xAC01; &#xD544;&#xD130;&#xB9C8;&#xB2E4; &#xC704;&#xC640; &#xAC19;&#xC740; &#xC5F0;&#xC0B0;&#xC744; &#xD569;&#xB2C8;&#xB2E4;.</p>
 <h2 id="variancecpu">variance_cpu</h2>
-<pre><code>void variance_cpu(float *x, float *mean, int batch, int filters, int spatial, float *variance)
-{
-    float scale = 1./(batch * spatial - 1);
-    int i,j,k;
-    for(i = 0; i &lt; filters; ++i){
-        variance[i] = 0;
-        for(j = 0; j &lt; batch; ++j){
-            for(k = 0; k &lt; spatial; ++k){
-                int index = j*filters*spatial + i*spatial + k;
-                variance[i] += pow((x[index] - mean[i]), 2);
+<pre><code class="lang-c"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">variance_cpu</span><span class="hljs-params">(<span class="hljs-keyword">float</span> *x, <span class="hljs-keyword">float</span> *mean, <span class="hljs-keyword">int</span> batch, <span class="hljs-keyword">int</span> filters, <span class="hljs-keyword">int</span> spatial, <span class="hljs-keyword">float</span> *variance)</span>
+</span>{
+    <span class="hljs-keyword">float</span> scale = <span class="hljs-number">1.</span>/(batch * spatial - <span class="hljs-number">1</span>);
+    <span class="hljs-keyword">int</span> i,j,k;
+    <span class="hljs-keyword">for</span>(i = <span class="hljs-number">0</span>; i &lt; filters; ++i){
+        variance[i] = <span class="hljs-number">0</span>;
+        <span class="hljs-keyword">for</span>(j = <span class="hljs-number">0</span>; j &lt; batch; ++j){
+            <span class="hljs-keyword">for</span>(k = <span class="hljs-number">0</span>; k &lt; spatial; ++k){
+                <span class="hljs-keyword">int</span> index = j*filters*spatial + i*spatial + k;
+                variance[i] += <span class="hljs-built_in">pow</span>((x[index] - mean[i]), <span class="hljs-number">2</span>);
             }
         }
         variance[i] *= scale;
     }
 }
-</code></pre><ul>
+</code></pre>
+<ul>
 <li>&#xAC01; &#xD544;&#xD130;&#xC758; &#xBD84;&#xC0B0;&#xC744; &#xAD6C;&#xD558;&#xB294; &#xD568;&#xC218; &#xC785;&#xB2C8;&#xB2E4;.</li>
 </ul>
 <p><script type="math/tex; ">variance = \frac{1}{m - 1} \sum_{i=0}^{m} (X[i] - mean)^2 </script></p>
@@ -2053,12 +2055,13 @@
 <li><script type="math/tex; ">Y = Y + alpha * X</script></li>
 </ul>
 <h2 id="scalcpu">scal_cpu</h2>
-<pre><code>void scal_cpu(int N, float ALPHA, float *X, int INCX)
-{
-    int i;
-    for(i = 0; i &lt; N; ++i) X[i*INCX] *= ALPHA;
+<pre><code class="lang-c"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">scal_cpu</span><span class="hljs-params">(<span class="hljs-keyword">int</span> N, <span class="hljs-keyword">float</span> ALPHA, <span class="hljs-keyword">float</span> *X, <span class="hljs-keyword">int</span> INCX)</span>
+</span>{
+    <span class="hljs-keyword">int</span> i;
+    <span class="hljs-keyword">for</span>(i = <span class="hljs-number">0</span>; i &lt; N; ++i) X[i*INCX] *= ALPHA;
 }
-</code></pre><ul>
+</code></pre>
+<ul>
 <li><script type="math/tex; ">X = X * alpha</script></li>
 </ul>
 <h2 id="fillcpu">fill_cpu</h2>
@@ -2072,12 +2075,13 @@
 <li>X&#xC5D0; alpha&#xB85C; &#xAC12;&#xC744; &#xCD08;&#xAE30;&#xD654; &#xD569;&#xB2C8;&#xB2E4;.</li>
 </ul>
 <h2 id="mulcpu">mul_cpu</h2>
-<pre><code>void mul_cpu(int N, float *X, int INCX, float *Y, int INCY)
-{
-    int i;
-    for(i = 0; i &lt; N; ++i) Y[i*INCY] *= X[i*INCX];
+<pre><code class="lang-c"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">mul_cpu</span><span class="hljs-params">(<span class="hljs-keyword">int</span> N, <span class="hljs-keyword">float</span> *X, <span class="hljs-keyword">int</span> INCX, <span class="hljs-keyword">float</span> *Y, <span class="hljs-keyword">int</span> INCY)</span>
+</span>{
+    <span class="hljs-keyword">int</span> i;
+    <span class="hljs-keyword">for</span>(i = <span class="hljs-number">0</span>; i &lt; N; ++i) Y[i*INCY] *= X[i*INCX];
 }
-</code></pre><ul>
+</code></pre>
+<ul>
 <li><script type="math/tex; ">Y = Y * X</script></li>
 </ul>
 <h2 id="powcpu">pow_cpu</h2>
@@ -2129,12 +2133,13 @@
 <li>&#xBC30;&#xC5F4; X&#xC640; Y&#xB97C; &#xC5F0;&#xACB0;&#xD569;&#xB2C8;&#xB2E4;.</li>
 </ul>
 <h2 id="multaddintocpu">mult_add_into_cpu</h2>
-<pre><code>void mult_add_into_cpu(int N, float *X, float *Y, float *Z)
-{
-    int i;
-    for(i = 0; i &lt; N; ++i) Z[i] += X[i]*Y[i];
+<pre><code class="lang-c"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">mult_add_into_cpu</span><span class="hljs-params">(<span class="hljs-keyword">int</span> N, <span class="hljs-keyword">float</span> *X, <span class="hljs-keyword">float</span> *Y, <span class="hljs-keyword">float</span> *Z)</span>
+</span>{
+    <span class="hljs-keyword">int</span> i;
+    <span class="hljs-keyword">for</span>(i = <span class="hljs-number">0</span>; i &lt; N; ++i) Z[i] += X[i]*Y[i];
 }
-</code></pre><p><script type="math/tex; ">Z = Z + X*Y</script></p>
+</code></pre>
+<p><script type="math/tex; ">Z = Z + X*Y</script></p>
 <h2 id="smoothl1cpu">smooth_l1_cpu</h2>
 <pre><code class="lang-c"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">smooth_l1_cpu</span><span class="hljs-params">(<span class="hljs-keyword">int</span> n, <span class="hljs-keyword">float</span> *pred, <span class="hljs-keyword">float</span> *truth, <span class="hljs-keyword">float</span> *delta, <span class="hljs-keyword">float</span> *error)</span>
 </span>{
@@ -2201,7 +2206,7 @@
 <li>delta : <script type="math/tex; ">truth - pred</script></li>
 </ul>
 <h2 id="logisticxentcpu">logistic_x_ent_cpu</h2>
-<pre><code>void logistic_x_ent_cpu(int n, float *pred, float *truth, float *delta, float *error)
+<pre><code class="lang-c">void logistic_x_ent_cpu(int n, float *pred, float *truth, float *delta, float *error)
 {
     int i;
     for(i = 0; i &lt; n; ++i){
@@ -2211,7 +2216,8 @@
         delta[i] = t-p;
     }
 }
-</code></pre><ul>
+</code></pre>
+<ul>
 <li>error : <script type="math/tex; ">-truth * \log(pred) - (1 - truth) * \log(1 - pred)</script></li>
 <li>delta : <script type="math/tex; ">truth - pred</script></li>
 </ul>
@@ -2283,52 +2289,69 @@
 <li>softmax &#xC2E4;&#xD589;&#xD568;&#xC218;</li>
 </ul>
 <h2 id="upsamplecpu">upsample_cpu</h2>
-<pre><code>void upsample_cpu(float *in, int w, int h, int c, int batch, int stride, int forward, float scale, float *out)
-{
-    int i, j, k, b;
-    for(b = 0; b &lt; batch; ++b){
-        for(k = 0; k &lt; c; ++k){
-            for(j = 0; j &lt; h*stride; ++j){
-                for(i = 0; i &lt; w*stride; ++i){
-                    int in_index = b*w*h*c + k*w*h + (j/stride)*w + i/stride;
-                    int out_index = b*w*h*c*stride*stride + k*w*h*stride*stride + j*w*stride + i;
-                    if(forward) out[out_index] = scale*in[in_index];
-                    else in[in_index] += scale*out[out_index];
+<pre><code class="lang-c"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">upsample_cpu</span><span class="hljs-params">(<span class="hljs-keyword">float</span> *in, <span class="hljs-keyword">int</span> w, <span class="hljs-keyword">int</span> h, <span class="hljs-keyword">int</span> c, <span class="hljs-keyword">int</span> batch, <span class="hljs-keyword">int</span> stride, <span class="hljs-keyword">int</span> forward, <span class="hljs-keyword">float</span> scale, <span class="hljs-keyword">float</span> *out)</span>
+</span>{
+    <span class="hljs-keyword">int</span> i, j, k, b;
+    <span class="hljs-keyword">for</span>(b = <span class="hljs-number">0</span>; b &lt; batch; ++b){
+        <span class="hljs-keyword">for</span>(k = <span class="hljs-number">0</span>; k &lt; c; ++k){
+            <span class="hljs-keyword">for</span>(j = <span class="hljs-number">0</span>; j &lt; h*stride; ++j){
+                <span class="hljs-keyword">for</span>(i = <span class="hljs-number">0</span>; i &lt; w*stride; ++i){
+                    <span class="hljs-keyword">int</span> in_index = b*w*h*c + k*w*h + (j/stride)*w + i/stride;
+                    <span class="hljs-keyword">int</span> out_index = b*w*h*c*stride*stride + k*w*h*stride*stride + j*w*stride + i;
+                    <span class="hljs-keyword">if</span>(forward) out[out_index] = scale*in[in_index];
+                    <span class="hljs-keyword">else</span> in[in_index] += scale*out[out_index];
                 }
             }
         }
     }
 }
-</code></pre><ul>
-<li>upsampling layer</li>
+</code></pre>
+<ul>
+<li><p>upsampling layer</p>
+</li>
+<li><p>&#xAC00;&#xC7A5; &#xADFC;&#xC811;&#xD55C; &#xAC12;&#xC73C;&#xB85C; &#xAC12;&#xC744; &#xCC44;&#xC6CC;&#xC11C; upsampling &#xD569;&#xB2C8;&#xB2E4;.</p>
+</li>
 </ul>
-<h2 id="reorgcpu">reorg_cpu</h2>
-<pre><code>void reorg_cpu(float *x, int w, int h, int c, int batch, int stride, int forward, float *out)
-{
-    int b,i,j,k;
-    int out_c = c/(stride*stride);
+<pre><code>if stride : 2
 
-    for(b = 0; b &lt; batch; ++b){
-        for(k = 0; k &lt; c; ++k){
-            for(j = 0; j &lt; h; ++j){
-                for(i = 0; i &lt; w; ++i){
-                    int in_index  = i + w*(j + h*(k + c*b));
-                    int c2 = k % out_c;
-                    int offset = k / out_c;
-                    int w2 = i*stride + offset % stride;
-                    int h2 = j*stride + offset / stride;
-                    int out_index = w2 + w*stride*(h2 + h*stride*(c2 + out_c*b));
-                    if(forward) out[out_index] = x[in_index];
-                    else out[in_index] = x[out_index];
+[1, 2, 3, 4]  --&gt;  [1, 1, 2, 2, 3, 3, 4, 4]
+</code></pre><h2 id="reorgcpu">reorg_cpu</h2>
+<pre><code class="lang-c"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">reorg_cpu</span><span class="hljs-params">(<span class="hljs-keyword">float</span> *x, <span class="hljs-keyword">int</span> w, <span class="hljs-keyword">int</span> h, <span class="hljs-keyword">int</span> c, <span class="hljs-keyword">int</span> batch, <span class="hljs-keyword">int</span> stride, <span class="hljs-keyword">int</span> forward, <span class="hljs-keyword">float</span> *out)</span>
+</span>{
+    <span class="hljs-keyword">int</span> b,i,j,k;
+    <span class="hljs-keyword">int</span> out_c = c/(stride*stride);
+
+    <span class="hljs-keyword">for</span>(b = <span class="hljs-number">0</span>; b &lt; batch; ++b){
+        <span class="hljs-keyword">for</span>(k = <span class="hljs-number">0</span>; k &lt; c; ++k){
+            <span class="hljs-keyword">for</span>(j = <span class="hljs-number">0</span>; j &lt; h; ++j){
+                <span class="hljs-keyword">for</span>(i = <span class="hljs-number">0</span>; i &lt; w; ++i){
+                    <span class="hljs-keyword">int</span> in_index  = i + w*(j + h*(k + c*b));
+                    <span class="hljs-keyword">int</span> c2 = k % out_c;
+                    <span class="hljs-keyword">int</span> offset = k / out_c;
+                    <span class="hljs-keyword">int</span> w2 = i*stride + offset % stride;
+                    <span class="hljs-keyword">int</span> h2 = j*stride + offset / stride;
+                    <span class="hljs-keyword">int</span> out_index = w2 + w*stride*(h2 + h*stride*(c2 + out_c*b));
+                    <span class="hljs-keyword">if</span>(forward) out[out_index] = x[in_index];
+                    <span class="hljs-keyword">else</span> out[in_index] = x[out_index];
                 }
             }
         }
     }
 }
-</code></pre><ul>
-<li>reorg layer</li>
+</code></pre>
+<ul>
+<li><p>reorg layer</p>
+</li>
+<li><p>&#xC7AC;&#xAD6C;&#xC131;&#xD569;&#xB2C8;&#xB2E4;.</p>
+</li>
 </ul>
-<h2 id="flatten">flatten</h2>
+<pre><code>if | w : 2 | h : 2 | c : 4 | stride : 2 |
+
+[ 1,  2,  3,  4]            [ 1,  5,  2,  6]
+[ 5,  6,  7,  8]     --     [ 9, 13, 10, 14]
+[ 9, 10, 11, 12]     --     [ 3,  7,  4,  8]
+[13, 14, 15, 16]            [11, 15, 12, 16]
+</code></pre><h2 id="flatten">flatten</h2>
 <pre><code class="lang-c">void flatten(float *x, int size, int layers, int batch, int forward)
 {
     float *swap = calloc(size*layers*batch, sizeof(float));
@@ -2476,7 +2499,7 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"blas.c","level":"5.5","depth":1,"next":{"title":"box.c","level":"5.6","depth":1,"path":"part3_src/box.md","ref":"part3_src/box.md","articles":[]},"previous":{"title":"batchnorm_layer.c","level":"5.4","depth":1,"path":"part3_src/batchnorm_layer.md","ref":"part3_src/batchnorm_layer.md","articles":[]},"dir":"ltr"},"config":{"plugins":["advanced-emoji","theme-gestalt","-theme-default","styles-sass-fix","theme-api","mathjax"],"root":"./","styles":{"website":"website-1597403756570.css"},"pluginsConfig":{"styles-sass-fix":{},"theme-gestalt":{"showLevel":false,"styles":{"website":"styles/website.css"},"logo":"/darknet_book/assets/darknet.png","baseUrl":null,"excludeDefaultStyles":true,"doNotHideChildrenChapters":false},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"theme-api":{"languages":[],"split":true,"theme":"light"},"mathjax":{"forceSVG":false,"version":"2.6-latest"},"advanced-emoji":{"embedEmojis":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]}},"theme":"default","author":"JJM","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"DarkNet Book","output.name":"site","gitbook":"*"},"file":{"path":"part3_src/blas.md","mtime":"2020-08-04T06:21:31.488Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-08-14T11:15:45.491Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"blas.c","level":"5.5","depth":1,"next":{"title":"box.c","level":"5.6","depth":1,"path":"part3_src/box.md","ref":"part3_src/box.md","articles":[]},"previous":{"title":"batchnorm_layer.c","level":"5.4","depth":1,"path":"part3_src/batchnorm_layer.md","ref":"part3_src/batchnorm_layer.md","articles":[]},"dir":"ltr"},"config":{"plugins":["advanced-emoji","theme-gestalt","-theme-default","styles-sass-fix","theme-api","mathjax"],"root":"./","styles":{"website":"website-1599634348142.css"},"pluginsConfig":{"styles-sass-fix":{},"theme-gestalt":{"showLevel":false,"styles":{"website":"styles/website.css"},"logo":"/darknet_book/assets/darknet.png","baseUrl":null,"excludeDefaultStyles":true,"doNotHideChildrenChapters":false},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"theme-api":{"languages":[],"split":true,"theme":"light"},"mathjax":{"forceSVG":false,"version":"2.6-latest"},"advanced-emoji":{"embedEmojis":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]}},"theme":"default","author":"JJM","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"DarkNet Book","output.name":"site","gitbook":"*"},"file":{"path":"part3_src/blas.md","mtime":"2020-09-02T07:09:17.312Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-09-09T06:52:18.609Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>

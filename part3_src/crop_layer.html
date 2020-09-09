@@ -42,7 +42,7 @@
 
     
         
-        <link rel="stylesheet" href="../website-1597403756570.css">
+        <link rel="stylesheet" href="../website-1599634348142.css">
         
     
 
@@ -1967,18 +1967,19 @@
                                 <h1 id="croplayerc">crop_layer.c</h1>
 <p>input(image, feature map)&#xC744; crop&#xD558;&#xAE30; &#xC704;&#xD55C; layer&#xC785;&#xB2C8;&#xB2E4;.</p>
 <h2 id="getcropimage">get_crop_image</h2>
-<pre><code>image get_crop_image(crop_layer l)
-{
-    int h = l.out_h;
-    int w = l.out_w;
-    int c = l.out_c;
-    return float_to_image(w,h,c,l.output);
+<pre><code class="lang-c"><span class="hljs-function">image <span class="hljs-title">get_crop_image</span><span class="hljs-params">(crop_layer l)</span>
+</span>{
+    <span class="hljs-keyword">int</span> h = l.out_h;
+    <span class="hljs-keyword">int</span> w = l.out_w;
+    <span class="hljs-keyword">int</span> c = l.out_c;
+    <span class="hljs-keyword">return</span> float_to_image(w,h,c,l.output);
 }
-</code></pre><ul>
+</code></pre>
+<ul>
 <li>crop&#xB41C; &#xC774;&#xBBF8;&#xC9C0;&#xB97C; &#xBC18;&#xD658;&#xD569;&#xB2C8;&#xB2E4;.</li>
 </ul>
 <h2 id="forwardcroplayer">forward_crop_layer</h2>
-<pre><code>void forward_crop_layer(const crop_layer l, network net)
+<pre><code class="lang-c">void forward_crop_layer(const crop_layer l, network net)
 {
     int i,j,c,b,row,col;
     int index;
@@ -2014,11 +2015,28 @@
         }
     }
 }
-</code></pre><p><code>forward</code></p>
+</code></pre>
+<p><code>forward</code></p>
 <h2 id="backwardcroplayer">backward_crop_layer</h2>
 <pre><code class="lang-c"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">backward_crop_layer</span><span class="hljs-params">(<span class="hljs-keyword">const</span> crop_layer l, network net)</span></span>{}
 </code></pre>
 <p><code>backward</code></p>
+<h2 id="resizecroplayer">resize_crop_layer</h2>
+<pre><code class="lang-c">void resize_crop_layer(layer *l, int w, int h)
+{
+    l-&gt;w = w;
+    l-&gt;h = h;
+
+    l-&gt;out_w =  l-&gt;scale*w;
+    l-&gt;out_h =  l-&gt;scale*h;
+
+    l-&gt;inputs = l-&gt;w * l-&gt;h * l-&gt;c;
+    l-&gt;outputs = l-&gt;out_h * l-&gt;out_w * l-&gt;out_c;
+
+    l-&gt;output = realloc(l-&gt;output, l-&gt;batch*l-&gt;outputs*sizeof(float));
+}
+</code></pre>
+<p><code>resize</code></p>
 <h2 id="makecroplayer">make_crop_layer</h2>
 <pre><code class="lang-c"><span class="hljs-function">crop_layer <span class="hljs-title">make_crop_layer</span><span class="hljs-params">(<span class="hljs-keyword">int</span> batch, <span class="hljs-keyword">int</span> h, <span class="hljs-keyword">int</span> w, <span class="hljs-keyword">int</span> c, <span class="hljs-keyword">int</span> crop_height, <span class="hljs-keyword">int</span> crop_width, <span class="hljs-keyword">int</span> flip, <span class="hljs-keyword">float</span> angle, <span class="hljs-keyword">float</span> saturation, <span class="hljs-keyword">float</span> exposure)</span>
 </span>{
@@ -2046,21 +2064,7 @@
     <span class="hljs-keyword">return</span> l;
 }
 </code></pre>
-<h2 id="resizecroplayer">resize_crop_layer</h2>
-<pre><code class="lang-c">void resize_crop_layer(layer *l, int w, int h)
-{
-    l-&gt;w = w;
-    l-&gt;h = h;
-
-    l-&gt;out_w =  l-&gt;scale*w;
-    l-&gt;out_h =  l-&gt;scale*h;
-
-    l-&gt;inputs = l-&gt;w * l-&gt;h * l-&gt;c;
-    l-&gt;outputs = l-&gt;out_h * l-&gt;out_w * l-&gt;out_c;
-
-    l-&gt;output = realloc(l-&gt;output, l-&gt;batch*l-&gt;outputs*sizeof(float));
-}
-</code></pre>
+<p><code>make</code></p>
 
                                 
                                 </section>
@@ -2104,7 +2108,7 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"crop_layer.c","level":"5.13","depth":1,"next":{"title":"data.c","level":"5.14","depth":1,"path":"part3_src/data.md","ref":"part3_src/data.md","articles":[]},"previous":{"title":"crnn_layer.c","level":"5.12","depth":1,"path":"part3_src/crnn_layer.md","ref":"part3_src/crnn_layer.md","articles":[]},"dir":"ltr"},"config":{"plugins":["advanced-emoji","theme-gestalt","-theme-default","styles-sass-fix","theme-api","mathjax"],"root":"./","styles":{"website":"website-1597403756570.css"},"pluginsConfig":{"styles-sass-fix":{},"theme-gestalt":{"showLevel":false,"styles":{"website":"styles/website.css"},"logo":"/darknet_book/assets/darknet.png","baseUrl":null,"excludeDefaultStyles":true,"doNotHideChildrenChapters":false},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"theme-api":{"languages":[],"split":true,"theme":"light"},"mathjax":{"forceSVG":false,"version":"2.6-latest"},"advanced-emoji":{"embedEmojis":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]}},"theme":"default","author":"JJM","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"DarkNet Book","output.name":"site","gitbook":"*"},"file":{"path":"part3_src/crop_layer.md","mtime":"2020-07-29T06:15:45.066Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-08-14T11:15:45.491Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"crop_layer.c","level":"5.13","depth":1,"next":{"title":"data.c","level":"5.14","depth":1,"path":"part3_src/data.md","ref":"part3_src/data.md","articles":[]},"previous":{"title":"crnn_layer.c","level":"5.12","depth":1,"path":"part3_src/crnn_layer.md","ref":"part3_src/crnn_layer.md","articles":[]},"dir":"ltr"},"config":{"plugins":["advanced-emoji","theme-gestalt","-theme-default","styles-sass-fix","theme-api","mathjax"],"root":"./","styles":{"website":"website-1599634348142.css"},"pluginsConfig":{"styles-sass-fix":{},"theme-gestalt":{"showLevel":false,"styles":{"website":"styles/website.css"},"logo":"/darknet_book/assets/darknet.png","baseUrl":null,"excludeDefaultStyles":true,"doNotHideChildrenChapters":false},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"theme-api":{"languages":[],"split":true,"theme":"light"},"mathjax":{"forceSVG":false,"version":"2.6-latest"},"advanced-emoji":{"embedEmojis":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]}},"theme":"default","author":"JJM","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"DarkNet Book","output.name":"site","gitbook":"*"},"file":{"path":"part3_src/crop_layer.md","mtime":"2020-09-09T05:55:35.127Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-09-09T06:52:18.609Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>

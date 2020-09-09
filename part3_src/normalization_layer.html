@@ -42,7 +42,7 @@
 
     
         
-        <link rel="stylesheet" href="../website-1597403756570.css">
+        <link rel="stylesheet" href="../website-1599634348142.css">
         
     
 
@@ -1966,78 +1966,54 @@
                                 
                                 <h1 id="normalize-layerc">normalize layer.c</h1>
 <h2 id="forwardnormalizationlayer">forward_normalization_layer</h2>
-<pre><code>void forward_normalization_layer(const layer layer, network net)
-{
-    int k,b;
-    int w = layer.w;
-    int h = layer.h;
-    int c = layer.c;
-    scal_cpu(w*h*c*layer.batch, 0, layer.squared, 1);
+<pre><code class="lang-c"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">forward_normalization_layer</span><span class="hljs-params">(<span class="hljs-keyword">const</span> layer layer, network net)</span>
+</span>{
+    <span class="hljs-keyword">int</span> k,b;
+    <span class="hljs-keyword">int</span> w = layer.w;
+    <span class="hljs-keyword">int</span> h = layer.h;
+    <span class="hljs-keyword">int</span> c = layer.c;
+    scal_cpu(w*h*c*layer.batch, <span class="hljs-number">0</span>, layer.squared, <span class="hljs-number">1</span>);
 
-    for(b = 0; b &lt; layer.batch; ++b){
-        float *squared = layer.squared + w*h*c*b;
-        float *norms   = layer.norms + w*h*c*b;
-        float *input   = net.input + w*h*c*b;
-        pow_cpu(w*h*c, 2, input, 1, squared, 1);
+    <span class="hljs-keyword">for</span>(b = <span class="hljs-number">0</span>; b &lt; layer.batch; ++b){
+        <span class="hljs-keyword">float</span> *squared = layer.squared + w*h*c*b;
+        <span class="hljs-keyword">float</span> *norms   = layer.norms + w*h*c*b;
+        <span class="hljs-keyword">float</span> *input   = net.input + w*h*c*b;
+        pow_cpu(w*h*c, <span class="hljs-number">2</span>, input, <span class="hljs-number">1</span>, squared, <span class="hljs-number">1</span>);
 
-        const_cpu(w*h, layer.kappa, norms, 1);
-        for(k = 0; k &lt; layer.size/2; ++k){
-            axpy_cpu(w*h, layer.alpha, squared + w*h*k, 1, norms, 1);
+        const_cpu(w*h, layer.kappa, norms, <span class="hljs-number">1</span>);
+        <span class="hljs-keyword">for</span>(k = <span class="hljs-number">0</span>; k &lt; layer.size/<span class="hljs-number">2</span>; ++k){
+            axpy_cpu(w*h, layer.alpha, squared + w*h*k, <span class="hljs-number">1</span>, norms, <span class="hljs-number">1</span>);
         }
 
-        for(k = 1; k &lt; layer.c; ++k){
-            copy_cpu(w*h, norms + w*h*(k-1), 1, norms + w*h*k, 1);
-            int prev = k - ((layer.size-1)/2) - 1;
-            int next = k + (layer.size/2);
-            if(prev &gt;= 0)      axpy_cpu(w*h, -layer.alpha, squared + w*h*prev, 1, norms + w*h*k, 1);
-            if(next &lt; layer.c) axpy_cpu(w*h,  layer.alpha, squared + w*h*next, 1, norms + w*h*k, 1);
+        <span class="hljs-keyword">for</span>(k = <span class="hljs-number">1</span>; k &lt; layer.c; ++k){
+            copy_cpu(w*h, norms + w*h*(k<span class="hljs-number">-1</span>), <span class="hljs-number">1</span>, norms + w*h*k, <span class="hljs-number">1</span>);
+            <span class="hljs-keyword">int</span> prev = k - ((layer.size<span class="hljs-number">-1</span>)/<span class="hljs-number">2</span>) - <span class="hljs-number">1</span>;
+            <span class="hljs-keyword">int</span> next = k + (layer.size/<span class="hljs-number">2</span>);
+            <span class="hljs-keyword">if</span>(prev &gt;= <span class="hljs-number">0</span>)      axpy_cpu(w*h, -layer.alpha, squared + w*h*prev, <span class="hljs-number">1</span>, norms + w*h*k, <span class="hljs-number">1</span>);
+            <span class="hljs-keyword">if</span>(next &lt; layer.c) axpy_cpu(w*h,  layer.alpha, squared + w*h*next, <span class="hljs-number">1</span>, norms + w*h*k, <span class="hljs-number">1</span>);
         }
     }
-    pow_cpu(w*h*c*layer.batch, -layer.beta, layer.norms, 1, layer.output, 1);
-    mul_cpu(w*h*c*layer.batch, net.input, 1, layer.output, 1);
+    pow_cpu(w*h*c*layer.batch, -layer.beta, layer.norms, <span class="hljs-number">1</span>, layer.output, <span class="hljs-number">1</span>);
+    mul_cpu(w*h*c*layer.batch, net.input, <span class="hljs-number">1</span>, layer.output, <span class="hljs-number">1</span>);
 }
-</code></pre><p><code>forward</code></p>
+</code></pre>
+<p><code>forward</code></p>
 <h2 id="backwardnormalizationlayer">backward_normalization_layer</h2>
-<pre><code>void backward_normalization_layer(const layer layer, network net)
-{
-    // TODO This is approximate ;-)
-    // Also this should add in to delta instead of overwritting.
+<pre><code class="lang-c"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">backward_normalization_layer</span><span class="hljs-params">(<span class="hljs-keyword">const</span> layer layer, network net)</span>
+</span>{
+    <span class="hljs-comment">// TODO This is approximate ;-)</span>
+    <span class="hljs-comment">// Also this should add in to delta instead of overwritting.</span>
 
-    int w = layer.w;
-    int h = layer.h;
-    int c = layer.c;
-    pow_cpu(w*h*c*layer.batch, -layer.beta, layer.norms, 1, net.delta, 1);
-    mul_cpu(w*h*c*layer.batch, layer.delta, 1, net.delta, 1);
+    <span class="hljs-keyword">int</span> w = layer.w;
+    <span class="hljs-keyword">int</span> h = layer.h;
+    <span class="hljs-keyword">int</span> c = layer.c;
+    pow_cpu(w*h*c*layer.batch, -layer.beta, layer.norms, <span class="hljs-number">1</span>, net.delta, <span class="hljs-number">1</span>);
+    mul_cpu(w*h*c*layer.batch, layer.delta, <span class="hljs-number">1</span>, net.delta, <span class="hljs-number">1</span>);
 }
-</code></pre><p><code>backward</code></p>
-<h2 id="makenormalizationlayer">make_normalization_layer</h2>
-<pre><code>layer make_normalization_layer(int batch, int w, int h, int c, int size, float alpha, float beta, float kappa)
-{
-    fprintf(stderr, &quot;Local Response Normalization Layer: %d x %d x %d image, %d size\n&quot;, w,h,c,size);
-    layer layer = {0};
-    layer.type = NORMALIZATION;
-    layer.batch = batch;
-    layer.h = layer.out_h = h;
-    layer.w = layer.out_w = w;
-    layer.c = layer.out_c = c;
-    layer.kappa = kappa;
-    layer.size = size;
-    layer.alpha = alpha;
-    layer.beta = beta;
-    layer.output = calloc(h * w * c * batch, sizeof(float));
-    layer.delta = calloc(h * w * c * batch, sizeof(float));
-    layer.squared = calloc(h * w * c * batch, sizeof(float));
-    layer.norms = calloc(h * w * c * batch, sizeof(float));
-    layer.inputs = w*h*c;
-    layer.outputs = layer.inputs;
-
-    layer.forward = forward_normalization_layer;
-    layer.backward = backward_normalization_layer;
-
-    return layer;
-}
-</code></pre><h2 id="resizenormalizationlayer">resize_normalization_layer</h2>
-<pre><code>void resize_normalization_layer(layer *layer, int w, int h)
+</code></pre>
+<p><code>backward</code></p>
+<h2 id="resizenormalizationlayer">resize_normalization_layer</h2>
+<pre><code class="lang-c">void resize_normalization_layer(layer *layer, int w, int h)
 {
     int c = layer-&gt;c;
     int batch = layer-&gt;batch;
@@ -2053,6 +2029,36 @@
     layer-&gt;norms = realloc(layer-&gt;norms, h * w * c * batch * sizeof(float));
 }
 </code></pre>
+<p><code>resize</code></p>
+<h2 id="makenormalizationlayer">make_normalization_layer</h2>
+<pre><code class="lang-c"><span class="hljs-function">layer <span class="hljs-title">make_normalization_layer</span><span class="hljs-params">(<span class="hljs-keyword">int</span> batch, <span class="hljs-keyword">int</span> w, <span class="hljs-keyword">int</span> h, <span class="hljs-keyword">int</span> c, <span class="hljs-keyword">int</span> size, <span class="hljs-keyword">float</span> alpha, <span class="hljs-keyword">float</span> beta, <span class="hljs-keyword">float</span> kappa)</span>
+</span>{
+    <span class="hljs-built_in">fprintf</span>(<span class="hljs-built_in">stderr</span>, <span class="hljs-string">&quot;Local Response Normalization Layer: %d x %d x %d image, %d size\n&quot;</span>, w,h,c,size);
+    layer layer = {<span class="hljs-number">0</span>};
+    layer.type = NORMALIZATION;
+    layer.batch = batch;
+    layer.h = layer.out_h = h;
+    layer.w = layer.out_w = w;
+    layer.c = layer.out_c = c;
+    layer.kappa = kappa;
+    layer.size = size;
+    layer.alpha = alpha;
+    layer.beta = beta;
+    layer.output = <span class="hljs-built_in">calloc</span>(h * w * c * batch, <span class="hljs-keyword">sizeof</span>(<span class="hljs-keyword">float</span>));
+    layer.delta = <span class="hljs-built_in">calloc</span>(h * w * c * batch, <span class="hljs-keyword">sizeof</span>(<span class="hljs-keyword">float</span>));
+    layer.squared = <span class="hljs-built_in">calloc</span>(h * w * c * batch, <span class="hljs-keyword">sizeof</span>(<span class="hljs-keyword">float</span>));
+    layer.norms = <span class="hljs-built_in">calloc</span>(h * w * c * batch, <span class="hljs-keyword">sizeof</span>(<span class="hljs-keyword">float</span>));
+    layer.inputs = w*h*c;
+    layer.outputs = layer.inputs;
+
+    layer.forward = forward_normalization_layer;
+    layer.backward = backward_normalization_layer;
+
+    <span class="hljs-keyword">return</span> layer;
+}
+</code></pre>
+<p><code>make</code></p>
+
                                 
                                 </section>
                             
@@ -2095,7 +2101,7 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"normalization_layer.c","level":"5.33","depth":1,"next":{"title":"option_list.c","level":"5.34","depth":1,"path":"part3_src/option_list.md","ref":"part3_src/option_list.md","articles":[]},"previous":{"title":"network.c","level":"5.32","depth":1,"path":"part3_src/network.md","ref":"part3_src/network.md","articles":[]},"dir":"ltr"},"config":{"plugins":["advanced-emoji","theme-gestalt","-theme-default","styles-sass-fix","theme-api","mathjax"],"root":"./","styles":{"website":"website-1597403756570.css"},"pluginsConfig":{"styles-sass-fix":{},"theme-gestalt":{"showLevel":false,"styles":{"website":"styles/website.css"},"logo":"/darknet_book/assets/darknet.png","baseUrl":null,"excludeDefaultStyles":true,"doNotHideChildrenChapters":false},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"theme-api":{"languages":[],"split":true,"theme":"light"},"mathjax":{"forceSVG":false,"version":"2.6-latest"},"advanced-emoji":{"embedEmojis":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]}},"theme":"default","author":"JJM","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"DarkNet Book","output.name":"site","gitbook":"*"},"file":{"path":"part3_src/normalization_layer.md","mtime":"2020-07-29T17:52:19.800Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-08-14T11:15:45.491Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"normalization_layer.c","level":"5.33","depth":1,"next":{"title":"option_list.c","level":"5.34","depth":1,"path":"part3_src/option_list.md","ref":"part3_src/option_list.md","articles":[]},"previous":{"title":"network.c","level":"5.32","depth":1,"path":"part3_src/network.md","ref":"part3_src/network.md","articles":[]},"dir":"ltr"},"config":{"plugins":["advanced-emoji","theme-gestalt","-theme-default","styles-sass-fix","theme-api","mathjax"],"root":"./","styles":{"website":"website-1599634348142.css"},"pluginsConfig":{"styles-sass-fix":{},"theme-gestalt":{"showLevel":false,"styles":{"website":"styles/website.css"},"logo":"/darknet_book/assets/darknet.png","baseUrl":null,"excludeDefaultStyles":true,"doNotHideChildrenChapters":false},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"theme-api":{"languages":[],"split":true,"theme":"light"},"mathjax":{"forceSVG":false,"version":"2.6-latest"},"advanced-emoji":{"embedEmojis":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]}},"theme":"default","author":"JJM","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"DarkNet Book","output.name":"site","gitbook":"*"},"file":{"path":"part3_src/normalization_layer.md","mtime":"2020-09-09T06:00:06.966Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-09-09T06:52:18.609Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>

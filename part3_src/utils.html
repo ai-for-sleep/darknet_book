@@ -42,7 +42,7 @@
 
     
         
-        <link rel="stylesheet" href="../website-1597403756570.css">
+        <link rel="stylesheet" href="../website-1599634348142.css">
         
     
 
@@ -1969,42 +1969,44 @@
 <li><code>rand()</code> : 0 ~ 32767 &#xC0AC;&#xC774;&#xC758; &#xB79C;&#xB364;&#xD55C; &#xAC12;&#xC744; &#xBC18;&#xD658;&#xD569;&#xB2C8;&#xB2E4;.</li>
 </ul>
 <h2 id="whattimeisitnow">what_time_is_it_now</h2>
-<pre><code>double what_time_is_it_now()
-{
-    struct timeval time;
-    if (gettimeofday(&amp;time,NULL)){
-        return 0;
+<pre><code class="lang-c"><span class="hljs-function"><span class="hljs-keyword">double</span> <span class="hljs-title">what_time_is_it_now</span><span class="hljs-params">()</span>
+</span>{
+    <span class="hljs-keyword">struct</span> timeval time;
+    <span class="hljs-keyword">if</span> (gettimeofday(&amp;time,<span class="hljs-literal">NULL</span>)){
+        <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
     }
-    return (double)time.tv_sec + (double)time.tv_usec * .000001;
+    <span class="hljs-keyword">return</span> (<span class="hljs-keyword">double</span>)time.tv_sec + (<span class="hljs-keyword">double</span>)time.tv_usec * <span class="hljs-number">.000001</span>;
 }
-</code></pre><ul>
+</code></pre>
+<ul>
 <li>&#xD604;&#xC7AC; &#xC2DC;&#xAC04;&#xC744; &#xCD08;&#xB2E8;&#xC704;&#xB85C; &#xAD6C;&#xD569;&#xB2C8;&#xB2E4;.</li>
 </ul>
 <h2 id="readintlist">read_intlist</h2>
-<pre><code>int *read_intlist(char *gpu_list, int *ngpus, int d)
-{
-    int *gpus = 0;
-    if(gpu_list){
-        int len = strlen(gpu_list);
-        *ngpus = 1;
-        int i;
-        for(i = 0; i &lt; len; ++i){
-            if (gpu_list[i] == &apos;,&apos;) ++*ngpus;
+<pre><code class="lang-c"><span class="hljs-function"><span class="hljs-keyword">int</span> *<span class="hljs-title">read_intlist</span><span class="hljs-params">(<span class="hljs-keyword">char</span> *gpu_list, <span class="hljs-keyword">int</span> *ngpus, <span class="hljs-keyword">int</span> d)</span>
+</span>{
+    <span class="hljs-keyword">int</span> *gpus = <span class="hljs-number">0</span>;
+    <span class="hljs-keyword">if</span>(gpu_list){
+        <span class="hljs-keyword">int</span> len = <span class="hljs-built_in">strlen</span>(gpu_list);
+        *ngpus = <span class="hljs-number">1</span>;
+        <span class="hljs-keyword">int</span> i;
+        <span class="hljs-keyword">for</span>(i = <span class="hljs-number">0</span>; i &lt; len; ++i){
+            <span class="hljs-keyword">if</span> (gpu_list[i] == <span class="hljs-string">&apos;,&apos;</span>) ++*ngpus;
         }
-        gpus = calloc(*ngpus, sizeof(int));
-        for(i = 0; i &lt; *ngpus; ++i){
+        gpus = <span class="hljs-built_in">calloc</span>(*ngpus, <span class="hljs-keyword">sizeof</span>(<span class="hljs-keyword">int</span>));
+        <span class="hljs-keyword">for</span>(i = <span class="hljs-number">0</span>; i &lt; *ngpus; ++i){
             gpus[i] = atoi(gpu_list);
-            gpu_list = strchr(gpu_list, &apos;,&apos;)+1;
+            gpu_list = <span class="hljs-built_in">strchr</span>(gpu_list, <span class="hljs-string">&apos;,&apos;</span>)+<span class="hljs-number">1</span>;
         }
-    } else {
-        gpus = calloc(1, sizeof(float));
+    } <span class="hljs-keyword">else</span> {
+        gpus = <span class="hljs-built_in">calloc</span>(<span class="hljs-number">1</span>, <span class="hljs-keyword">sizeof</span>(<span class="hljs-keyword">float</span>));
         *gpus = d;
-        *ngpus = 1;
+        *ngpus = <span class="hljs-number">1</span>;
     }
-    return gpus;
+    <span class="hljs-keyword">return</span> gpus;
 }
-</code></pre><h2 id="readmap">read_map</h2>
-<pre><code>int *read_map(char *filename)
+</code></pre>
+<h2 id="readmap">read_map</h2>
+<pre><code class="lang-c">int *read_map(char *filename)
 {
     int n = 0;
     int *map = 0;
@@ -2018,319 +2020,347 @@
     }
     return map;
 }
-</code></pre><h2 id="sortashuffle">sorta_shuffle</h2>
-<pre><code>void sorta_shuffle(void *arr, size_t n, size_t size, size_t sections)
-{
-    size_t i;
-    for(i = 0; i &lt; sections; ++i){
-        size_t start = n*i/sections;
-        size_t end = n*(i+1)/sections;
-        size_t num = end-start;
+</code></pre>
+<h2 id="sortashuffle">sorta_shuffle</h2>
+<pre><code class="lang-c"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">sorta_shuffle</span><span class="hljs-params">(<span class="hljs-keyword">void</span> *arr, size_t n, size_t size, size_t sections)</span>
+</span>{
+    <span class="hljs-keyword">size_t</span> i;
+    <span class="hljs-keyword">for</span>(i = <span class="hljs-number">0</span>; i &lt; sections; ++i){
+        <span class="hljs-keyword">size_t</span> start = n*i/sections;
+        <span class="hljs-keyword">size_t</span> end = n*(i+<span class="hljs-number">1</span>)/sections;
+        <span class="hljs-keyword">size_t</span> num = end-start;
         shuffle(arr+(start*size), num, size);
     }
 }
-</code></pre><h2 id="shuffle">shuffle</h2>
-<pre><code>void shuffle(void *arr, size_t n, size_t size)
-{
-    size_t i;
-    void *swp = calloc(1, size);
-    for(i = 0; i &lt; n-1; ++i){
-        size_t j = i + rand()/(RAND_MAX / (n-i)+1);
-        memcpy(swp,          arr+(j*size), size);
-        memcpy(arr+(j*size), arr+(i*size), size);
-        memcpy(arr+(i*size), swp,          size);
+</code></pre>
+<h2 id="shuffle">shuffle</h2>
+<pre><code class="lang-c"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">shuffle</span><span class="hljs-params">(<span class="hljs-keyword">void</span> *arr, size_t n, size_t size)</span>
+</span>{
+    <span class="hljs-keyword">size_t</span> i;
+    <span class="hljs-keyword">void</span> *swp = <span class="hljs-built_in">calloc</span>(<span class="hljs-number">1</span>, size);
+    <span class="hljs-keyword">for</span>(i = <span class="hljs-number">0</span>; i &lt; n<span class="hljs-number">-1</span>; ++i){
+        <span class="hljs-keyword">size_t</span> j = i + rand()/(RAND_MAX / (n-i)+<span class="hljs-number">1</span>);
+        <span class="hljs-built_in">memcpy</span>(swp,          arr+(j*size), size);
+        <span class="hljs-built_in">memcpy</span>(arr+(j*size), arr+(i*size), size);
+        <span class="hljs-built_in">memcpy</span>(arr+(i*size), swp,          size);
     }
 }
-</code></pre><ul>
+</code></pre>
+<ul>
 <li>array&#xB97C; shuffle &#xD569;&#xB2C8;&#xB2E4;.</li>
 </ul>
 <h2 id="randomindexorder">random_index_order</h2>
-<pre><code>int *random_index_order(int min, int max)
-{
-    int *inds = calloc(max-min, sizeof(int));
-    int i;
-    for(i = min; i &lt; max; ++i){
+<pre><code class="lang-c"><span class="hljs-function"><span class="hljs-keyword">int</span> *<span class="hljs-title">random_index_order</span><span class="hljs-params">(<span class="hljs-keyword">int</span> min, <span class="hljs-keyword">int</span> max)</span>
+</span>{
+    <span class="hljs-keyword">int</span> *inds = <span class="hljs-built_in">calloc</span>(max-min, <span class="hljs-keyword">sizeof</span>(<span class="hljs-keyword">int</span>));
+    <span class="hljs-keyword">int</span> i;
+    <span class="hljs-keyword">for</span>(i = min; i &lt; max; ++i){
         inds[i] = i;
     }
-    for(i = min; i &lt; max-1; ++i){
-        int swap = inds[i];
-        int index = i + rand()%(max-i);
+    <span class="hljs-keyword">for</span>(i = min; i &lt; max<span class="hljs-number">-1</span>; ++i){
+        <span class="hljs-keyword">int</span> swap = inds[i];
+        <span class="hljs-keyword">int</span> index = i + rand()%(max-i);
         inds[i] = inds[index];
         inds[index] = swap;
     }
-    return inds;
+    <span class="hljs-keyword">return</span> inds;
 }
-</code></pre><ul>
+</code></pre>
+<ul>
 <li>min ~ max&#xC0AC;&#xC774;&#xC758; index&#xB97C; shuffle &#xD569;&#xB2C8;&#xB2E4;.</li>
 </ul>
 <h2 id="delarg">del_arg</h2>
-<pre><code>void del_arg(int argc, char **argv, int index)
-{
-    int i;
-    for(i = index; i &lt; argc-1; ++i) argv[i] = argv[i+1];
-    argv[i] = 0;
+<pre><code class="lang-c"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">del_arg</span><span class="hljs-params">(<span class="hljs-keyword">int</span> argc, <span class="hljs-keyword">char</span> **argv, <span class="hljs-keyword">int</span> index)</span>
+</span>{
+    <span class="hljs-keyword">int</span> i;
+    <span class="hljs-keyword">for</span>(i = index; i &lt; argc<span class="hljs-number">-1</span>; ++i) argv[i] = argv[i+<span class="hljs-number">1</span>];
+    argv[i] = <span class="hljs-number">0</span>;
 }
-</code></pre><ul>
+</code></pre>
+<ul>
 <li>index&#xBC88;&#xC9F8; argument&#xB97C; &#xC81C;&#xAC70; &#xD569;&#xB2C8;&#xB2E4;.</li>
 </ul>
 <h2 id="findarg">find_arg</h2>
-<pre><code>int find_arg(int argc, char* argv[], char *arg)
-{
-    int i;
-    for(i = 0; i &lt; argc; ++i) {
-        if(!argv[i]) continue;
-        if(0==strcmp(argv[i], arg)) {
+<pre><code class="lang-c"><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">find_arg</span><span class="hljs-params">(<span class="hljs-keyword">int</span> argc, <span class="hljs-keyword">char</span>* argv[], <span class="hljs-keyword">char</span> *arg)</span>
+</span>{
+    <span class="hljs-keyword">int</span> i;
+    <span class="hljs-keyword">for</span>(i = <span class="hljs-number">0</span>; i &lt; argc; ++i) {
+        <span class="hljs-keyword">if</span>(!argv[i]) <span class="hljs-keyword">continue</span>;
+        <span class="hljs-keyword">if</span>(<span class="hljs-number">0</span>==<span class="hljs-built_in">strcmp</span>(argv[i], arg)) {
             del_arg(argc, argv, i);
-            return 1;
+            <span class="hljs-keyword">return</span> <span class="hljs-number">1</span>;
         }
     }
-    return 0;
+    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
 }
-</code></pre><ul>
+</code></pre>
+<ul>
 <li>arguments&#xC5D0; &#xAC12;&#xC774; &#xC788;&#xB294; &#xACBD;&#xC6B0; 1 &#xC5C6;&#xB294; &#xACBD;&#xC6B0; 0&#xC744; &#xBC18;&#xD658;&#xD569;&#xB2C8;&#xB2E4;.</li>
 </ul>
 <h2 id="findintarg">find_int_arg</h2>
-<pre><code>int find_int_arg(int argc, char **argv, char *arg, int def)
-{
-    int i;
-    for(i = 0; i &lt; argc-1; ++i){
-        if(!argv[i]) continue;
-        if(0==strcmp(argv[i], arg)){
-            def = atoi(argv[i+1]);
+<pre><code class="lang-c"><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">find_int_arg</span><span class="hljs-params">(<span class="hljs-keyword">int</span> argc, <span class="hljs-keyword">char</span> **argv, <span class="hljs-keyword">char</span> *arg, <span class="hljs-keyword">int</span> def)</span>
+</span>{
+    <span class="hljs-keyword">int</span> i;
+    <span class="hljs-keyword">for</span>(i = <span class="hljs-number">0</span>; i &lt; argc<span class="hljs-number">-1</span>; ++i){
+        <span class="hljs-keyword">if</span>(!argv[i]) <span class="hljs-keyword">continue</span>;
+        <span class="hljs-keyword">if</span>(<span class="hljs-number">0</span>==<span class="hljs-built_in">strcmp</span>(argv[i], arg)){
+            def = atoi(argv[i+<span class="hljs-number">1</span>]);
             del_arg(argc, argv, i);
             del_arg(argc, argv, i);
-            break;
+            <span class="hljs-keyword">break</span>;
         }
     }
-    return def;
+    <span class="hljs-keyword">return</span> def;
 }
-</code></pre><ul>
+</code></pre>
+<ul>
 <li>argument&#xC5D0; &#xD574;&#xB2F9;&#xD558;&#xB294; int&#xD615; &#xC778;&#xC790;&#xAC12;&#xC744; &#xBC18;&#xD658;&#xD569;&#xB2C8;&#xB2E4;.</li>
 </ul>
 <h2 id="findfloatarg">find_float_arg</h2>
-<pre><code>float find_float_arg(int argc, char **argv, char *arg, float def)
-{
-    int i;
-    for(i = 0; i &lt; argc-1; ++i){
-        if(!argv[i]) continue;
-        if(0==strcmp(argv[i], arg)){
-            def = atof(argv[i+1]);
+<pre><code class="lang-c"><span class="hljs-function"><span class="hljs-keyword">float</span> <span class="hljs-title">find_float_arg</span><span class="hljs-params">(<span class="hljs-keyword">int</span> argc, <span class="hljs-keyword">char</span> **argv, <span class="hljs-keyword">char</span> *arg, <span class="hljs-keyword">float</span> def)</span>
+</span>{
+    <span class="hljs-keyword">int</span> i;
+    <span class="hljs-keyword">for</span>(i = <span class="hljs-number">0</span>; i &lt; argc<span class="hljs-number">-1</span>; ++i){
+        <span class="hljs-keyword">if</span>(!argv[i]) <span class="hljs-keyword">continue</span>;
+        <span class="hljs-keyword">if</span>(<span class="hljs-number">0</span>==<span class="hljs-built_in">strcmp</span>(argv[i], arg)){
+            def = atof(argv[i+<span class="hljs-number">1</span>]);
             del_arg(argc, argv, i);
             del_arg(argc, argv, i);
-            break;
+            <span class="hljs-keyword">break</span>;
         }
     }
-    return def;
+    <span class="hljs-keyword">return</span> def;
 }
-</code></pre><ul>
+</code></pre>
+<ul>
 <li>argument&#xC5D0; &#xD574;&#xB2F9;&#xD558;&#xB294; float&#xD615; &#xC778;&#xC790;&#xAC12;&#xC744; &#xBC18;&#xD658;&#xD569;&#xB2C8;&#xB2E4;.</li>
 </ul>
 <h2 id="findchararg">find_char_arg</h2>
-<pre><code>char *find_char_arg(int argc, char **argv, char *arg, char *def)
-{
-    int i;
-    for(i = 0; i &lt; argc-1; ++i){
-        if(!argv[i]) continue;
-        if(0==strcmp(argv[i], arg)){
-            def = argv[i+1];
+<pre><code class="lang-c"><span class="hljs-function"><span class="hljs-keyword">char</span> *<span class="hljs-title">find_char_arg</span><span class="hljs-params">(<span class="hljs-keyword">int</span> argc, <span class="hljs-keyword">char</span> **argv, <span class="hljs-keyword">char</span> *arg, <span class="hljs-keyword">char</span> *def)</span>
+</span>{
+    <span class="hljs-keyword">int</span> i;
+    <span class="hljs-keyword">for</span>(i = <span class="hljs-number">0</span>; i &lt; argc<span class="hljs-number">-1</span>; ++i){
+        <span class="hljs-keyword">if</span>(!argv[i]) <span class="hljs-keyword">continue</span>;
+        <span class="hljs-keyword">if</span>(<span class="hljs-number">0</span>==<span class="hljs-built_in">strcmp</span>(argv[i], arg)){
+            def = argv[i+<span class="hljs-number">1</span>];
             del_arg(argc, argv, i);
             del_arg(argc, argv, i);
-            break;
+            <span class="hljs-keyword">break</span>;
         }
     }
-    return def;
+    <span class="hljs-keyword">return</span> def;
 }
-</code></pre><ul>
+</code></pre>
+<ul>
 <li>argument&#xC5D0; &#xD574;&#xB2F9;&#xD558;&#xB294; char&#xD615; &#xC778;&#xC790;&#xAC12;&#xC744; &#xBC18;&#xD658;&#xD569;&#xB2C8;&#xB2E4;.</li>
 </ul>
 <h2 id="basecfg">basecfg</h2>
-<pre><code>char *basecfg(char *cfgfile)
-{
-    char *c = cfgfile;
-    char *next;
-    while((next = strchr(c, &apos;/&apos;)))
+<pre><code class="lang-c"><span class="hljs-function"><span class="hljs-keyword">char</span> *<span class="hljs-title">basecfg</span><span class="hljs-params">(<span class="hljs-keyword">char</span> *cfgfile)</span>
+</span>{
+    <span class="hljs-keyword">char</span> *c = cfgfile;
+    <span class="hljs-keyword">char</span> *next;
+    <span class="hljs-keyword">while</span>((next = <span class="hljs-built_in">strchr</span>(c, <span class="hljs-string">&apos;/&apos;</span>)))
     {
-        c = next+1;
+        c = next+<span class="hljs-number">1</span>;
     }
     c = copy_string(c);
-    next = strchr(c, &apos;.&apos;);
-    if (next) *next = 0;
-    return c;
+    next = <span class="hljs-built_in">strchr</span>(c, <span class="hljs-string">&apos;.&apos;</span>);
+    <span class="hljs-keyword">if</span> (next) *next = <span class="hljs-number">0</span>;
+    <span class="hljs-keyword">return</span> c;
 }
-</code></pre><ul>
+</code></pre>
+<ul>
 <li><p>&#xD30C;&#xC77C; &#xACBD;&#xB85C;&#xC5D0;&#xC11C; cfg &#xD30C;&#xC77C;&#xC758; &#xC774;&#xB984;&#xC744; &#xBC18;&#xD658; &#xD569;&#xB2C8;&#xB2E4;.</p>
 </li>
 <li><p>&#xC608;&#xB97C; &#xB4E4;&#xC5B4; <code>../cfg/yolo.cfg</code>&#xC778; &#xACBD;&#xC6B0; <code>yolo</code>&#xB97C; &#xBC18;&#xD658;&#xD569;&#xB2C8;&#xB2E4;.</p>
 </li>
 </ul>
 <h2 id="alphanumtoint">alphanum_to_int</h2>
-<pre><code>int alphanum_to_int(char c)
-{
-    return (c &lt; 58) ? c - 48 : c-87;
+<pre><code class="lang-c"><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">alphanum_to_int</span><span class="hljs-params">(<span class="hljs-keyword">char</span> c)</span>
+</span>{
+    <span class="hljs-keyword">return</span> (c &lt; <span class="hljs-number">58</span>) ? c - <span class="hljs-number">48</span> : c<span class="hljs-number">-87</span>;
 }
-</code></pre><ul>
+</code></pre>
+<ul>
 <li>&#xBB38;&#xC790;&#xB97C; &#xC22B;&#xC790;&#xB85C; &#xBC14;&#xAFC9;&#xB2C8;&#xB2E4;.</li>
 </ul>
 <h2 id="inttoalphanum">int_to_alphanum</h2>
-<pre><code>char int_to_alphanum(int i)
-{
-    if (i == 36) return &apos;.&apos;;
-    return (i &lt; 10) ? i + 48 : i + 87;
+<pre><code class="lang-c"><span class="hljs-function"><span class="hljs-keyword">char</span> <span class="hljs-title">int_to_alphanum</span><span class="hljs-params">(<span class="hljs-keyword">int</span> i)</span>
+</span>{
+    <span class="hljs-keyword">if</span> (i == <span class="hljs-number">36</span>) <span class="hljs-keyword">return</span> <span class="hljs-string">&apos;.&apos;</span>;
+    <span class="hljs-keyword">return</span> (i &lt; <span class="hljs-number">10</span>) ? i + <span class="hljs-number">48</span> : i + <span class="hljs-number">87</span>;
 }
-</code></pre><ul>
+</code></pre>
+<ul>
 <li>&#xC22B;&#xC790;&#xB97C; &#xBB38;&#xC790;&#xB85C; &#xBC14;&#xAFC9;&#xB2C8;&#xB2E4;.</li>
 </ul>
 <h2 id="pm">pm</h2>
-<pre><code>void pm(int M, int N, float *A)
-{
-    int i,j;
-    for(i =0 ; i &lt; M; ++i){
-        printf(&quot;%d &quot;, i+1);
-        for(j = 0; j &lt; N; ++j){
-            printf(&quot;%2.4f, &quot;, A[i*N+j]);
+<pre><code class="lang-c"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">pm</span><span class="hljs-params">(<span class="hljs-keyword">int</span> M, <span class="hljs-keyword">int</span> N, <span class="hljs-keyword">float</span> *A)</span>
+</span>{
+    <span class="hljs-keyword">int</span> i,j;
+    <span class="hljs-keyword">for</span>(i =<span class="hljs-number">0</span> ; i &lt; M; ++i){
+        <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;%d &quot;</span>, i+<span class="hljs-number">1</span>);
+        <span class="hljs-keyword">for</span>(j = <span class="hljs-number">0</span>; j &lt; N; ++j){
+            <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;%2.4f, &quot;</span>, A[i*N+j]);
         }
-        printf(&quot;\n&quot;);
+        <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;\n&quot;</span>);
     }
-    printf(&quot;\n&quot;);
+    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;\n&quot;</span>);
 }
-</code></pre><ul>
+</code></pre>
+<ul>
 <li>M x N &#xD06C;&#xAE30;&#xB97C; &#xAC00;&#xC9C0;&#xB294; A&#xD589;&#xB82C;&#xC744; &#xCD9C;&#xB825;&#xD569;&#xB2C8;&#xB2E4;.</li>
 </ul>
 <h2 id="findreplace">find_replace</h2>
-<pre><code>void find_replace(char *str, char *orig, char *rep, char *output)
-{
-    char buffer[4096] = {0};
-    char *p;
+<pre><code class="lang-c"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">find_replace</span><span class="hljs-params">(<span class="hljs-keyword">char</span> *str, <span class="hljs-keyword">char</span> *orig, <span class="hljs-keyword">char</span> *rep, <span class="hljs-keyword">char</span> *output)</span>
+</span>{
+    <span class="hljs-keyword">char</span> buffer[<span class="hljs-number">4096</span>] = {<span class="hljs-number">0</span>};
+    <span class="hljs-keyword">char</span> *p;
 
-    sprintf(buffer, &quot;%s&quot;, str);
-    if(!(p = strstr(buffer, orig))){  // Is &apos;orig&apos; even in &apos;str&apos;?
-        sprintf(output, &quot;%s&quot;, str);
-        return;
+    <span class="hljs-built_in">sprintf</span>(buffer, <span class="hljs-string">&quot;%s&quot;</span>, str);
+    <span class="hljs-keyword">if</span>(!(p = <span class="hljs-built_in">strstr</span>(buffer, orig))){  <span class="hljs-comment">// Is &apos;orig&apos; even in &apos;str&apos;?</span>
+        <span class="hljs-built_in">sprintf</span>(output, <span class="hljs-string">&quot;%s&quot;</span>, str);
+        <span class="hljs-keyword">return</span>;
     }
 
-    *p = &apos;\0&apos;;
+    *p = <span class="hljs-string">&apos;\0&apos;</span>;
 
-    sprintf(output, &quot;%s%s%s&quot;, buffer, rep, p+strlen(orig));
+    <span class="hljs-built_in">sprintf</span>(output, <span class="hljs-string">&quot;%s%s%s&quot;</span>, buffer, rep, p+<span class="hljs-built_in">strlen</span>(orig));
 }
-</code></pre><h2 id="sec">sec</h2>
-<pre><code>float sec(clock_t clocks)
-{
-    return (float)clocks/CLOCKS_PER_SEC;
+</code></pre>
+<h2 id="sec">sec</h2>
+<pre><code class="lang-c"><span class="hljs-function"><span class="hljs-keyword">float</span> <span class="hljs-title">sec</span><span class="hljs-params">(clock_t clocks)</span>
+</span>{
+    <span class="hljs-keyword">return</span> (<span class="hljs-keyword">float</span>)clocks/CLOCKS_PER_SEC;
 }
-</code></pre><ul>
+</code></pre>
+<ul>
 <li><p>&#xCF54;&#xB4DC; &#xC2E4;&#xD589;&#xC2DC;&#xAC04;&#xC744; &#xCE21;&#xC815;&#xD558;&#xAE30; &#xC704;&#xD55C; &#xD568;&#xC218; &#xC785;&#xB2C8;&#xB2E4;.</p>
 </li>
 <li><p>&#xC18C;&#xBE44;&#xB41C; &#xC2DC;&#xAC04; clock_t(clock ticks) &#xC790;&#xB8CC;&#xD615;&#xC744; &#xAC00;&#xC9C0;&#xB294; clocks&#xC5D0; CLOCKS_PER_SEC(&#xCD08;&#xB2F9; &#xD074;&#xB7ED;&#xC218;)&#xC744; &#xB098;&#xB204;&#xC5B4; &#xC8FC;&#xC5B4;&#xC57C; &#xD569;&#xB2C8;&#xB2E4;.</p>
 </li>
 </ul>
 <h2 id="topk">top_k</h2>
-<pre><code>void top_k(float *a, int n, int k, int *index)
-{
-    int i,j;
-    for(j = 0; j &lt; k; ++j) index[j] = -1;
-    for(i = 0; i &lt; n; ++i){
-        int curr = i;
-        for(j = 0; j &lt; k; ++j){
-            if((index[j] &lt; 0) || a[curr] &gt; a[index[j]]){
-                int swap = curr;
+<pre><code class="lang-c"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">top_k</span><span class="hljs-params">(<span class="hljs-keyword">float</span> *a, <span class="hljs-keyword">int</span> n, <span class="hljs-keyword">int</span> k, <span class="hljs-keyword">int</span> *index)</span>
+</span>{
+    <span class="hljs-keyword">int</span> i,j;
+    <span class="hljs-keyword">for</span>(j = <span class="hljs-number">0</span>; j &lt; k; ++j) index[j] = <span class="hljs-number">-1</span>;
+    <span class="hljs-keyword">for</span>(i = <span class="hljs-number">0</span>; i &lt; n; ++i){
+        <span class="hljs-keyword">int</span> curr = i;
+        <span class="hljs-keyword">for</span>(j = <span class="hljs-number">0</span>; j &lt; k; ++j){
+            <span class="hljs-keyword">if</span>((index[j] &lt; <span class="hljs-number">0</span>) || a[curr] &gt; a[index[j]]){
+                <span class="hljs-keyword">int</span> swap = curr;
                 curr = index[j];
                 index[j] = swap;
             }
         }
     }
 }
-</code></pre><p>-</p>
+</code></pre>
+<ul>
+<li>&#xBC30;&#xC5F4;&#xC5D0;&#xC11C; &#xAC12;&#xC774; &#xD070; &#xC21C;&#xC11C;&#xB300;&#xB85C; k&#xAC1C;&#xB97C; &#xBF51;&#xC544;&#xC11C; index&#xB97C; &#xBC18;&#xD658;&#xD569;&#xB2C8;&#xB2E4;.</li>
+</ul>
 <h2 id="error">error</h2>
-<pre><code>void error(const char *s)
-{
+<pre><code class="lang-c"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">error</span><span class="hljs-params">(<span class="hljs-keyword">const</span> <span class="hljs-keyword">char</span> *s)</span>
+</span>{
     perror(s);
-    assert(0);
-    exit(-1);
+    assert(<span class="hljs-number">0</span>);
+    <span class="hljs-built_in">exit</span>(<span class="hljs-number">-1</span>);
 }
-</code></pre><ul>
-<li><code>perror</code> : &#xC624;&#xB958; &#xBA54;&#xC138;&#xC9C0;&#xB97C; &#xCD9C;&#xB825;&#xD569;&#xB2C8;&#xB2E4;.
--</li>
+</code></pre>
+<ul>
+<li><code>perror</code> : &#xC624;&#xB958; &#xBA54;&#xC138;&#xC9C0;&#xB97C; &#xCD9C;&#xB825;&#xD569;&#xB2C8;&#xB2E4;.</li>
 </ul>
 <h2 id="readfile">read_file</h2>
-<pre><code>unsigned char *read_file(char *filename)
-{
-    FILE *fp = fopen(filename, &quot;rb&quot;);
-    size_t size;
+<pre><code class="lang-c"><span class="hljs-function"><span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">char</span> *<span class="hljs-title">read_file</span><span class="hljs-params">(<span class="hljs-keyword">char</span> *filename)</span>
+</span>{
+    FILE *fp = fopen(filename, <span class="hljs-string">&quot;rb&quot;</span>);
+    <span class="hljs-keyword">size_t</span> size;
 
-    fseek(fp, 0, SEEK_END);
+    fseek(fp, <span class="hljs-number">0</span>, SEEK_END);
     size = ftell(fp);
-    fseek(fp, 0, SEEK_SET);
+    fseek(fp, <span class="hljs-number">0</span>, SEEK_SET);
 
-    unsigned char *text = calloc(size+1, sizeof(char));
-    fread(text, 1, size, fp);
+    <span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">char</span> *text = <span class="hljs-built_in">calloc</span>(size+<span class="hljs-number">1</span>, <span class="hljs-keyword">sizeof</span>(<span class="hljs-keyword">char</span>));
+    fread(text, <span class="hljs-number">1</span>, size, fp);
     fclose(fp);
-    return text;
+    <span class="hljs-keyword">return</span> text;
 }
-</code></pre><h2 id="mallocerror">malloc_error</h2>
-<pre><code>void malloc_error()
-{
-    fprintf(stderr, &quot;Malloc error\n&quot;);
-    exit(-1);
+</code></pre>
+<h2 id="mallocerror">malloc_error</h2>
+<pre><code class="lang-c"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">malloc_error</span><span class="hljs-params">()</span>
+</span>{
+    <span class="hljs-built_in">fprintf</span>(<span class="hljs-built_in">stderr</span>, <span class="hljs-string">&quot;Malloc error\n&quot;</span>);
+    <span class="hljs-built_in">exit</span>(<span class="hljs-number">-1</span>);
 }
-</code></pre><h2 id="fileerror">file_error</h2>
-<pre><code>void file_error(char *s)
-{
-    fprintf(stderr, &quot;Couldn&apos;t open file: %s\n&quot;, s);
-    exit(0);
+</code></pre>
+<ul>
+<li>&#xBA54;&#xBAA8;&#xB9AC; &#xD560;&#xB2F9; &#xC5D0;&#xB7EC;</li>
+</ul>
+<h2 id="fileerror">file_error</h2>
+<pre><code class="lang-c"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">file_error</span><span class="hljs-params">(<span class="hljs-keyword">char</span> *s)</span>
+</span>{
+    <span class="hljs-built_in">fprintf</span>(<span class="hljs-built_in">stderr</span>, <span class="hljs-string">&quot;Couldn&apos;t open file: %s\n&quot;</span>, s);
+    <span class="hljs-built_in">exit</span>(<span class="hljs-number">0</span>);
 }
-</code></pre><ul>
+</code></pre>
+<ul>
 <li>file&#xC744; &#xC77D;&#xB294;&#xB370; &#xC5D0;&#xB7EC;&#xAC00; &#xBC1C;&#xC0DD;&#xD558;&#xB294; &#xACBD;&#xC6B0;&#xB97C; &#xCC98;&#xB9AC;&#xD569;&#xB2C8;&#xB2E4;.</li>
 </ul>
 <h2 id="splitstr">split_str</h2>
-<pre><code>list *split_str(char *s, char delim)
-{
-    size_t i;
-    size_t len = strlen(s);
-    list *l = make_list();
+<pre><code class="lang-c"><span class="hljs-function"><span class="hljs-built_in">list</span> *<span class="hljs-title">split_str</span><span class="hljs-params">(<span class="hljs-keyword">char</span> *s, <span class="hljs-keyword">char</span> delim)</span>
+</span>{
+    <span class="hljs-keyword">size_t</span> i;
+    <span class="hljs-keyword">size_t</span> len = <span class="hljs-built_in">strlen</span>(s);
+    <span class="hljs-built_in">list</span> *l = make_list();
     list_insert(l, s);
-    for(i = 0; i &lt; len; ++i){
-        if(s[i] == delim){
-            s[i] = &apos;\0&apos;;
-            list_insert(l, &amp;(s[i+1]));
+    <span class="hljs-keyword">for</span>(i = <span class="hljs-number">0</span>; i &lt; len; ++i){
+        <span class="hljs-keyword">if</span>(s[i] == delim){
+            s[i] = <span class="hljs-string">&apos;\0&apos;</span>;
+            list_insert(l, &amp;(s[i+<span class="hljs-number">1</span>]));
         }
     }
-    return l;
+    <span class="hljs-keyword">return</span> l;
 }
-</code></pre><h2 id="strip">strip</h2>
-<pre><code>void strip(char *s)
-{
-    size_t i;
-    size_t len = strlen(s);
-    size_t offset = 0;
-    for(i = 0; i &lt; len; ++i){
-        char c = s[i];
-        if(c==&apos; &apos;||c==&apos;\t&apos;||c==&apos;\n&apos;) ++offset;
-        else s[i-offset] = c;
+</code></pre>
+<h2 id="strip">strip</h2>
+<pre><code class="lang-c"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">strip</span><span class="hljs-params">(<span class="hljs-keyword">char</span> *s)</span>
+</span>{
+    <span class="hljs-keyword">size_t</span> i;
+    <span class="hljs-keyword">size_t</span> len = <span class="hljs-built_in">strlen</span>(s);
+    <span class="hljs-keyword">size_t</span> offset = <span class="hljs-number">0</span>;
+    <span class="hljs-keyword">for</span>(i = <span class="hljs-number">0</span>; i &lt; len; ++i){
+        <span class="hljs-keyword">char</span> c = s[i];
+        <span class="hljs-keyword">if</span>(c==<span class="hljs-string">&apos; &apos;</span>||c==<span class="hljs-string">&apos;\t&apos;</span>||c==<span class="hljs-string">&apos;\n&apos;</span>) ++offset;
+        <span class="hljs-keyword">else</span> s[i-offset] = c;
     }
-    s[len-offset] = &apos;\0&apos;;
+    s[len-offset] = <span class="hljs-string">&apos;\0&apos;</span>;
 }
-</code></pre><h2 id="stripchar">strip_char</h2>
-<pre><code>void strip_char(char *s, char bad)
-{
-    size_t i;
-    size_t len = strlen(s);
-    size_t offset = 0;
-    for(i = 0; i &lt; len; ++i){
-        char c = s[i];
-        if(c==bad) ++offset;
-        else s[i-offset] = c;
+</code></pre>
+<h2 id="stripchar">strip_char</h2>
+<pre><code class="lang-c"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">strip_char</span><span class="hljs-params">(<span class="hljs-keyword">char</span> *s, <span class="hljs-keyword">char</span> bad)</span>
+</span>{
+    <span class="hljs-keyword">size_t</span> i;
+    <span class="hljs-keyword">size_t</span> len = <span class="hljs-built_in">strlen</span>(s);
+    <span class="hljs-keyword">size_t</span> offset = <span class="hljs-number">0</span>;
+    <span class="hljs-keyword">for</span>(i = <span class="hljs-number">0</span>; i &lt; len; ++i){
+        <span class="hljs-keyword">char</span> c = s[i];
+        <span class="hljs-keyword">if</span>(c==bad) ++offset;
+        <span class="hljs-keyword">else</span> s[i-offset] = c;
     }
-    s[len-offset] = &apos;\0&apos;;
+    s[len-offset] = <span class="hljs-string">&apos;\0&apos;</span>;
 }
-</code></pre><h2 id="freeptrs">free_ptrs</h2>
-<pre><code>void free_ptrs(void **ptrs, int n)
-{
-    int i;
-    for(i = 0; i &lt; n; ++i) free(ptrs[i]);
-    free(ptrs);
+</code></pre>
+<h2 id="freeptrs">free_ptrs</h2>
+<pre><code class="lang-c"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">free_ptrs</span><span class="hljs-params">(<span class="hljs-keyword">void</span> **ptrs, <span class="hljs-keyword">int</span> n)</span>
+</span>{
+    <span class="hljs-keyword">int</span> i;
+    <span class="hljs-keyword">for</span>(i = <span class="hljs-number">0</span>; i &lt; n; ++i) <span class="hljs-built_in">free</span>(ptrs[i]);
+    <span class="hljs-built_in">free</span>(ptrs);
 }
-</code></pre><h2 id="freeptrs">free_ptrs</h2>
-<pre><code>char *fgetl(FILE *fp)
+</code></pre>
+<h2 id="freeptrs">free_ptrs</h2>
+<pre><code class="lang-c">char *fgetl(FILE *fp)
 {
     if(feof(fp)) return 0;
     size_t size = 512;
@@ -2360,142 +2390,164 @@
 
     return line;
 }
-</code></pre><h2 id="readint">read_int</h2>
-<pre><code>int read_int(int fd)
-{
-    int n = 0;
-    int next = read(fd, &amp;n, sizeof(int));
-    if(next &lt;= 0) return -1;
-    return n;
+</code></pre>
+<h2 id="readint">read_int</h2>
+<pre><code class="lang-c"><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">read_int</span><span class="hljs-params">(<span class="hljs-keyword">int</span> fd)</span>
+</span>{
+    <span class="hljs-keyword">int</span> n = <span class="hljs-number">0</span>;
+    <span class="hljs-keyword">int</span> next = read(fd, &amp;n, <span class="hljs-keyword">sizeof</span>(<span class="hljs-keyword">int</span>));
+    <span class="hljs-keyword">if</span>(next &lt;= <span class="hljs-number">0</span>) <span class="hljs-keyword">return</span> <span class="hljs-number">-1</span>;
+    <span class="hljs-keyword">return</span> n;
 }
-</code></pre><h2 id="writeint">write_int</h2>
-<pre><code>void write_int(int fd, int n)
-{
-    int next = write(fd, &amp;n, sizeof(int));
-    if(next &lt;= 0) error(&quot;read failed&quot;);
+</code></pre>
+<h2 id="writeint">write_int</h2>
+<pre><code class="lang-c"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">write_int</span><span class="hljs-params">(<span class="hljs-keyword">int</span> fd, <span class="hljs-keyword">int</span> n)</span>
+</span>{
+    <span class="hljs-keyword">int</span> next = write(fd, &amp;n, <span class="hljs-keyword">sizeof</span>(<span class="hljs-keyword">int</span>));
+    <span class="hljs-keyword">if</span>(next &lt;= <span class="hljs-number">0</span>) error(<span class="hljs-string">&quot;read failed&quot;</span>);
 }
-</code></pre><h2 id="readallfail">read_all_fail</h2>
-<pre><code>int read_all_fail(int fd, char *buffer, size_t bytes)
-{
-    size_t n = 0;
-    while(n &lt; bytes){
-        int next = read(fd, buffer + n, bytes-n);
-        if(next &lt;= 0) return 1;
+</code></pre>
+<h2 id="readallfail">read_all_fail</h2>
+<pre><code class="lang-c"><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">read_all_fail</span><span class="hljs-params">(<span class="hljs-keyword">int</span> fd, <span class="hljs-keyword">char</span> *buffer, size_t bytes)</span>
+</span>{
+    <span class="hljs-keyword">size_t</span> n = <span class="hljs-number">0</span>;
+    <span class="hljs-keyword">while</span>(n &lt; bytes){
+        <span class="hljs-keyword">int</span> next = read(fd, buffer + n, bytes-n);
+        <span class="hljs-keyword">if</span>(next &lt;= <span class="hljs-number">0</span>) <span class="hljs-keyword">return</span> <span class="hljs-number">1</span>;
         n += next;
     }
-    return 0;
+    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
 }
-</code></pre><h2 id="writeallfail">write_all_fail</h2>
-<pre><code>int write_all_fail(int fd, char *buffer, size_t bytes)
-{
-    size_t n = 0;
-    while(n &lt; bytes){
-        size_t next = write(fd, buffer + n, bytes-n);
-        if(next &lt;= 0) return 1;
+</code></pre>
+<h2 id="writeallfail">write_all_fail</h2>
+<pre><code class="lang-c"><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">write_all_fail</span><span class="hljs-params">(<span class="hljs-keyword">int</span> fd, <span class="hljs-keyword">char</span> *buffer, size_t bytes)</span>
+</span>{
+    <span class="hljs-keyword">size_t</span> n = <span class="hljs-number">0</span>;
+    <span class="hljs-keyword">while</span>(n &lt; bytes){
+        <span class="hljs-keyword">size_t</span> next = write(fd, buffer + n, bytes-n);
+        <span class="hljs-keyword">if</span>(next &lt;= <span class="hljs-number">0</span>) <span class="hljs-keyword">return</span> <span class="hljs-number">1</span>;
         n += next;
     }
-    return 0;
+    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
 }
-</code></pre><h2 id="readall">read_all</h2>
-<pre><code>void read_all(int fd, char *buffer, size_t bytes)
-{
-    size_t n = 0;
-    while(n &lt; bytes){
-        int next = read(fd, buffer + n, bytes-n);
-        if(next &lt;= 0) error(&quot;read failed&quot;);
-        n += next;
-    }
-}
-</code></pre><h2 id="writeall">write_all</h2>
-<pre><code>void write_all(int fd, char *buffer, size_t bytes)
-{
-    size_t n = 0;
-    while(n &lt; bytes){
-        size_t next = write(fd, buffer + n, bytes-n);
-        if(next &lt;= 0) error(&quot;write failed&quot;);
+</code></pre>
+<h2 id="readall">read_all</h2>
+<pre><code class="lang-c"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">read_all</span><span class="hljs-params">(<span class="hljs-keyword">int</span> fd, <span class="hljs-keyword">char</span> *buffer, size_t bytes)</span>
+</span>{
+    <span class="hljs-keyword">size_t</span> n = <span class="hljs-number">0</span>;
+    <span class="hljs-keyword">while</span>(n &lt; bytes){
+        <span class="hljs-keyword">int</span> next = read(fd, buffer + n, bytes-n);
+        <span class="hljs-keyword">if</span>(next &lt;= <span class="hljs-number">0</span>) error(<span class="hljs-string">&quot;read failed&quot;</span>);
         n += next;
     }
 }
-</code></pre><h2 id="copystring">copy_string</h2>
-<pre><code>char *copy_string(char *s)
-{
-    char *copy = malloc(strlen(s)+1);
-    strncpy(copy, s, strlen(s)+1);
-    return copy;
+</code></pre>
+<h2 id="writeall">write_all</h2>
+<pre><code class="lang-c"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">write_all</span><span class="hljs-params">(<span class="hljs-keyword">int</span> fd, <span class="hljs-keyword">char</span> *buffer, size_t bytes)</span>
+</span>{
+    <span class="hljs-keyword">size_t</span> n = <span class="hljs-number">0</span>;
+    <span class="hljs-keyword">while</span>(n &lt; bytes){
+        <span class="hljs-keyword">size_t</span> next = write(fd, buffer + n, bytes-n);
+        <span class="hljs-keyword">if</span>(next &lt;= <span class="hljs-number">0</span>) error(<span class="hljs-string">&quot;write failed&quot;</span>);
+        n += next;
+    }
 }
-</code></pre><ul>
+</code></pre>
+<h2 id="copystring">copy_string</h2>
+<pre><code class="lang-c"><span class="hljs-function"><span class="hljs-keyword">char</span> *<span class="hljs-title">copy_string</span><span class="hljs-params">(<span class="hljs-keyword">char</span> *s)</span>
+</span>{
+    <span class="hljs-keyword">char</span> *copy = <span class="hljs-built_in">malloc</span>(<span class="hljs-built_in">strlen</span>(s)+<span class="hljs-number">1</span>);
+    <span class="hljs-built_in">strncpy</span>(copy, s, <span class="hljs-built_in">strlen</span>(s)+<span class="hljs-number">1</span>);
+    <span class="hljs-keyword">return</span> copy;
+}
+</code></pre>
+<ul>
 <li>&#xBB38;&#xC790;&#xC5F4;&#xC744; &#xBCF5;&#xC0AC;&#xD558;&#xC5EC; &#xBC18;&#xD658;&#xD569;&#xB2C8;&#xB2E4;.</li>
 </ul>
 <h2 id="parsecsvline">parse_csv_line</h2>
-<pre><code>list *parse_csv_line(char *line)
-{
-    list *l = make_list();
-    char *c, *p;
-    int in = 0;
-    for(c = line, p = line; *c != &apos;\0&apos;; ++c){
-        if(*c == &apos;&quot;&apos;) in = !in;
-        else if(*c == &apos;,&apos; &amp;&amp; !in){
-            *c = &apos;\0&apos;;
+<pre><code class="lang-c"><span class="hljs-function"><span class="hljs-built_in">list</span> *<span class="hljs-title">parse_csv_line</span><span class="hljs-params">(<span class="hljs-keyword">char</span> *line)</span>
+</span>{
+    <span class="hljs-built_in">list</span> *l = make_list();
+    <span class="hljs-keyword">char</span> *c, *p;
+    <span class="hljs-keyword">int</span> in = <span class="hljs-number">0</span>;
+    <span class="hljs-keyword">for</span>(c = line, p = line; *c != <span class="hljs-string">&apos;\0&apos;</span>; ++c){
+        <span class="hljs-keyword">if</span>(*c == <span class="hljs-string">&apos;&quot;&apos;</span>) in = !in;
+        <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span>(*c == <span class="hljs-string">&apos;,&apos;</span> &amp;&amp; !in){
+            *c = <span class="hljs-string">&apos;\0&apos;</span>;
             list_insert(l, copy_string(p));
-            p = c+1;
+            p = c+<span class="hljs-number">1</span>;
         }
     }
     list_insert(l, copy_string(p));
-    return l;
+    <span class="hljs-keyword">return</span> l;
 }
-</code></pre><h2 id="countfields">count_fields</h2>
-<pre><code>int count_fields(char *line)
-{
-    int count = 0;
-    int done = 0;
-    char *c;
-    for(c = line; !done; ++c){
-        done = (*c == &apos;\0&apos;);
-        if(*c == &apos;,&apos; || done) ++count;
+</code></pre>
+<h2 id="countfields">count_fields</h2>
+<pre><code class="lang-c"><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">count_fields</span><span class="hljs-params">(<span class="hljs-keyword">char</span> *line)</span>
+</span>{
+    <span class="hljs-keyword">int</span> count = <span class="hljs-number">0</span>;
+    <span class="hljs-keyword">int</span> done = <span class="hljs-number">0</span>;
+    <span class="hljs-keyword">char</span> *c;
+    <span class="hljs-keyword">for</span>(c = line; !done; ++c){
+        done = (*c == <span class="hljs-string">&apos;\0&apos;</span>);
+        <span class="hljs-keyword">if</span>(*c == <span class="hljs-string">&apos;,&apos;</span> || done) ++count;
     }
-    return count;
+    <span class="hljs-keyword">return</span> count;
 }
-</code></pre><h2 id="parsefields">parse_fields</h2>
-<pre><code>float *parse_fields(char *line, int n)
-{
-    float *field = calloc(n, sizeof(float));
-    char *c, *p, *end;
-    int count = 0;
-    int done = 0;
-    for(c = line, p = line; !done; ++c){
-        done = (*c == &apos;\0&apos;);
-        if(*c == &apos;,&apos; || done){
-            *c = &apos;\0&apos;;
+</code></pre>
+<ul>
+<li><code>,</code>&#xB97C; &#xAE30;&#xC900;&#xC73C;&#xB85C; &#xBD84;&#xB9AC;&#xD558;&#xC5EC; &#xAC1C;&#xC218;&#xB97C; &#xBC18;&#xD658;&#xD569;&#xB2C8;&#xB2E4;.</li>
+</ul>
+<h2 id="parsefields">parse_fields</h2>
+<pre><code class="lang-c"><span class="hljs-function"><span class="hljs-keyword">float</span> *<span class="hljs-title">parse_fields</span><span class="hljs-params">(<span class="hljs-keyword">char</span> *line, <span class="hljs-keyword">int</span> n)</span>
+</span>{
+    <span class="hljs-keyword">float</span> *field = <span class="hljs-built_in">calloc</span>(n, <span class="hljs-keyword">sizeof</span>(<span class="hljs-keyword">float</span>));
+    <span class="hljs-keyword">char</span> *c, *p, *end;
+    <span class="hljs-keyword">int</span> count = <span class="hljs-number">0</span>;
+    <span class="hljs-keyword">int</span> done = <span class="hljs-number">0</span>;
+    <span class="hljs-keyword">for</span>(c = line, p = line; !done; ++c){
+        done = (*c == <span class="hljs-string">&apos;\0&apos;</span>);
+        <span class="hljs-keyword">if</span>(*c == <span class="hljs-string">&apos;,&apos;</span> || done){
+            *c = <span class="hljs-string">&apos;\0&apos;</span>;
             field[count] = strtod(p, &amp;end);
-            if(p == c) field[count] = nan(&quot;&quot;);
-            if(end != c &amp;&amp; (end != c-1 || *end != &apos;\r&apos;)) field[count] = nan(&quot;&quot;); //DOS file formats!
-            p = c+1;
+            <span class="hljs-keyword">if</span>(p == c) field[count] = nan(<span class="hljs-string">&quot;&quot;</span>);
+            <span class="hljs-keyword">if</span>(end != c &amp;&amp; (end != c<span class="hljs-number">-1</span> || *end != <span class="hljs-string">&apos;\r&apos;</span>)) field[count] = nan(<span class="hljs-string">&quot;&quot;</span>); <span class="hljs-comment">//DOS file formats!</span>
+            p = c+<span class="hljs-number">1</span>;
             ++count;
         }
     }
-    return field;
+    <span class="hljs-keyword">return</span> field;
 }
-</code></pre><h2 id="sumarray">sum_array</h2>
-<pre><code>float sum_array(float *a, int n)
-{
-    int i;
-    float sum = 0;
-    for(i = 0; i &lt; n; ++i) sum += a[i];
-    return sum;
+</code></pre>
+<ul>
+<li><p><code>strtod</code> : &#xBB38;&#xC790;&#xC5F4;&#xC744; &#xC2E4;&#xC218; &#xAC12;&#xC73C;&#xB85C; &#xBC18;&#xD658;&#xD569;&#xB2C8;&#xB2E4;.</p>
+</li>
+<li><p>&#xD55C;&#xC904;&#xC744; &#xC77D;&#xC5B4;&#xB4E4;&#xC5EC; &#xBC30;&#xC5F4; &#xAC12;&#xC744; &#xBC18;&#xD658;&#xD569;&#xB2C8;&#xB2E4;.</p>
+</li>
+</ul>
+<h2 id="sumarray">sum_array</h2>
+<pre><code class="lang-c"><span class="hljs-function"><span class="hljs-keyword">float</span> <span class="hljs-title">sum_array</span><span class="hljs-params">(<span class="hljs-keyword">float</span> *a, <span class="hljs-keyword">int</span> n)</span>
+</span>{
+    <span class="hljs-keyword">int</span> i;
+    <span class="hljs-keyword">float</span> sum = <span class="hljs-number">0</span>;
+    <span class="hljs-keyword">for</span>(i = <span class="hljs-number">0</span>; i &lt; n; ++i) sum += a[i];
+    <span class="hljs-keyword">return</span> sum;
 }
-</code></pre><ul>
+</code></pre>
+<ul>
 <li>&#xBC30;&#xC5F4; a&#xC758; &#xD569;&#xC744; &#xBC18;&#xD658;&#xD569;&#xB2C8;&#xB2E4;.</li>
 </ul>
 <h2 id="meanarray">mean_array</h2>
-<pre><code>float mean_array(float *a, int n)
-{
-    return sum_array(a,n)/n;
+<pre><code class="lang-c"><span class="hljs-function"><span class="hljs-keyword">float</span> <span class="hljs-title">mean_array</span><span class="hljs-params">(<span class="hljs-keyword">float</span> *a, <span class="hljs-keyword">int</span> n)</span>
+</span>{
+    <span class="hljs-keyword">return</span> sum_array(a,n)/n;
 }
-</code></pre><ul>
+</code></pre>
+<ul>
 <li>&#xBC30;&#xC5F4; a&#xC758; &#xD3C9;&#xADE0;&#xC744; &#xBC18;&#xD658;&#xD569;&#xB2C8;&#xB2E4;.</li>
 </ul>
 <h2 id="meanarrays">mean_arrays</h2>
-<pre><code>void mean_arrays(float **a, int n, int els, float *avg)
+<pre><code class="lang-c">void mean_arrays(float **a, int n, int els, float *avg)
 {
     int i;
     int j;
@@ -2509,146 +2561,158 @@
         avg[i] /= n;
     }
 }
-</code></pre><ul>
+</code></pre>
+<ul>
 <li>2&#xCC28;&#xC6D0; &#xBC30;&#xC5F4; a&#xC758; &#xD3C9;&#xADE0;&#xC744; &#xBC18;&#xD658;&#xD569;&#xB2C8;&#xB2E4;.</li>
 </ul>
 <h2 id="printstatistics">print_statistics</h2>
-<pre><code>void print_statistics(float *a, int n)
-{
-    float m = mean_array(a, n);
-    float v = variance_array(a, n);
-    printf(&quot;MSE: %.6f, Mean: %.6f, Variance: %.6f\n&quot;, mse_array(a, n), m, v);
+<pre><code class="lang-c"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">print_statistics</span><span class="hljs-params">(<span class="hljs-keyword">float</span> *a, <span class="hljs-keyword">int</span> n)</span>
+</span>{
+    <span class="hljs-keyword">float</span> m = mean_array(a, n);
+    <span class="hljs-keyword">float</span> v = variance_array(a, n);
+    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;MSE: %.6f, Mean: %.6f, Variance: %.6f\n&quot;</span>, mse_array(a, n), m, v);
 }
-</code></pre><ul>
+</code></pre>
+<ul>
 <li>mse, mean, variance&#xB97C; &#xCD9C;&#xB825;&#xD569;&#xB2C8;&#xB2E4;.</li>
 </ul>
 <h2 id="variancearray">variance_array</h2>
-<pre><code>float variance_array(float *a, int n)
-{
-    int i;
-    float sum = 0;
-    float mean = mean_array(a, n);
-    for(i = 0; i &lt; n; ++i) sum += (a[i] - mean)*(a[i]-mean);
-    float variance = sum/n;
-    return variance;
+<pre><code class="lang-c"><span class="hljs-function"><span class="hljs-keyword">float</span> <span class="hljs-title">variance_array</span><span class="hljs-params">(<span class="hljs-keyword">float</span> *a, <span class="hljs-keyword">int</span> n)</span>
+</span>{
+    <span class="hljs-keyword">int</span> i;
+    <span class="hljs-keyword">float</span> sum = <span class="hljs-number">0</span>;
+    <span class="hljs-keyword">float</span> mean = mean_array(a, n);
+    <span class="hljs-keyword">for</span>(i = <span class="hljs-number">0</span>; i &lt; n; ++i) sum += (a[i] - mean)*(a[i]-mean);
+    <span class="hljs-keyword">float</span> variance = sum/n;
+    <span class="hljs-keyword">return</span> variance;
 }
-</code></pre><ul>
+</code></pre>
+<ul>
 <li>&#xBC30;&#xC5F4; a&#xC758; &#xBD84;&#xC0B0;&#xC744; &#xBC18;&#xD658;&#xD569;&#xB2C8;&#xB2E4;.</li>
 </ul>
 <h2 id="constrainint">constrain_int</h2>
-<pre><code>int constrain_int(int a, int min, int max)
-{
-    if (a &lt; min) return min;
-    if (a &gt; max) return max;
-    return a;
+<pre><code class="lang-c"><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">constrain_int</span><span class="hljs-params">(<span class="hljs-keyword">int</span> a, <span class="hljs-keyword">int</span> min, <span class="hljs-keyword">int</span> max)</span>
+</span>{
+    <span class="hljs-keyword">if</span> (a &lt; min) <span class="hljs-keyword">return</span> min;
+    <span class="hljs-keyword">if</span> (a &gt; max) <span class="hljs-keyword">return</span> max;
+    <span class="hljs-keyword">return</span> a;
 }
-</code></pre><ul>
+</code></pre>
+<ul>
 <li>int</li>
 <li>min&#xBCF4;&#xB2E4; &#xC791;&#xC73C;&#xBA74; min</li>
 <li>max&#xBCF4;&#xB2E4; &#xD06C;&#xBA74; max</li>
 <li>&#xD56D;&#xC0C1; min ~ max&#xC758; &#xAC12;&#xB9CC; &#xBC18;&#xD658;&#xD55C;&#xB2E4;.</li>
 </ul>
 <h2 id="constrain">constrain</h2>
-<pre><code>float constrain(float min, float max, float a)
-{
-    if (a &lt; min) return min;
-    if (a &gt; max) return max;
-    return a;
+<pre><code class="lang-c"><span class="hljs-function"><span class="hljs-keyword">float</span> <span class="hljs-title">constrain</span><span class="hljs-params">(<span class="hljs-keyword">float</span> min, <span class="hljs-keyword">float</span> max, <span class="hljs-keyword">float</span> a)</span>
+</span>{
+    <span class="hljs-keyword">if</span> (a &lt; min) <span class="hljs-keyword">return</span> min;
+    <span class="hljs-keyword">if</span> (a &gt; max) <span class="hljs-keyword">return</span> max;
+    <span class="hljs-keyword">return</span> a;
 }
-</code></pre><ul>
+</code></pre>
+<ul>
 <li>float</li>
 <li>min&#xBCF4;&#xB2E4; &#xC791;&#xC73C;&#xBA74; min</li>
 <li>max&#xBCF4;&#xB2E4; &#xD06C;&#xBA74; max</li>
 <li>&#xD56D;&#xC0C1; min ~ max&#xC758; &#xAC12;&#xB9CC; &#xBC18;&#xD658;&#xD55C;&#xB2E4;.</li>
 </ul>
 <h2 id="distarray">dist_array</h2>
-<pre><code>float dist_array(float *a, float *b, int n, int sub)
-{
-    int i;
-    float sum = 0;
-    for(i = 0; i &lt; n; i += sub) sum += pow(a[i]-b[i], 2);
-    return sqrt(sum);
+<pre><code class="lang-c"><span class="hljs-function"><span class="hljs-keyword">float</span> <span class="hljs-title">dist_array</span><span class="hljs-params">(<span class="hljs-keyword">float</span> *a, <span class="hljs-keyword">float</span> *b, <span class="hljs-keyword">int</span> n, <span class="hljs-keyword">int</span> sub)</span>
+</span>{
+    <span class="hljs-keyword">int</span> i;
+    <span class="hljs-keyword">float</span> sum = <span class="hljs-number">0</span>;
+    <span class="hljs-keyword">for</span>(i = <span class="hljs-number">0</span>; i &lt; n; i += sub) sum += <span class="hljs-built_in">pow</span>(a[i]-b[i], <span class="hljs-number">2</span>);
+    <span class="hljs-keyword">return</span> <span class="hljs-built_in">sqrt</span>(sum);
 }
-</code></pre><ul>
+</code></pre>
+<ul>
 <li>a&#xC640; b&#xC758; &#xC720;&#xD074;&#xB9AC;&#xB4DC; &#xAC70;&#xB9AC;&#xB97C; &#xAD6C;&#xD569;&#xB2C8;&#xB2E4;.</li>
 <li><script type="math/tex; ">\sqrt{\sum_{i=1}^{n} (a_i - b_i)^2}</script></li>
 </ul>
 <h2 id="msearray">mse_array</h2>
-<pre><code>float mse_array(float *a, int n)
-{
-    int i;
-    float sum = 0;
-    for(i = 0; i &lt; n; ++i) sum += a[i]*a[i];
-    return sqrt(sum/n);
+<pre><code class="lang-c"><span class="hljs-function"><span class="hljs-keyword">float</span> <span class="hljs-title">mse_array</span><span class="hljs-params">(<span class="hljs-keyword">float</span> *a, <span class="hljs-keyword">int</span> n)</span>
+</span>{
+    <span class="hljs-keyword">int</span> i;
+    <span class="hljs-keyword">float</span> sum = <span class="hljs-number">0</span>;
+    <span class="hljs-keyword">for</span>(i = <span class="hljs-number">0</span>; i &lt; n; ++i) sum += a[i]*a[i];
+    <span class="hljs-keyword">return</span> <span class="hljs-built_in">sqrt</span>(sum/n);
 }
-</code></pre><ul>
+</code></pre>
+<ul>
 <li>mean square&#xB97C; &#xAD6C;&#xD569;&#xB2C8;&#xB2E4;.</li>
 <li><script type="math/tex; ">\frac{1}{N} \sum_{i=1}^{n} a_i^2</script></li>
 </ul>
 <h2 id="normalizearray">normalize_array</h2>
-<pre><code>void normalize_array(float *a, int n)
-{
-    int i;
-    float mu = mean_array(a,n);
-    float sigma = sqrt(variance_array(a,n));
-    for(i = 0; i &lt; n; ++i){
+<pre><code class="lang-c"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">normalize_array</span><span class="hljs-params">(<span class="hljs-keyword">float</span> *a, <span class="hljs-keyword">int</span> n)</span>
+</span>{
+    <span class="hljs-keyword">int</span> i;
+    <span class="hljs-keyword">float</span> mu = mean_array(a,n);
+    <span class="hljs-keyword">float</span> sigma = <span class="hljs-built_in">sqrt</span>(variance_array(a,n));
+    <span class="hljs-keyword">for</span>(i = <span class="hljs-number">0</span>; i &lt; n; ++i){
         a[i] = (a[i] - mu)/sigma;
     }
     mu = mean_array(a,n);
-    sigma = sqrt(variance_array(a,n));
+    sigma = <span class="hljs-built_in">sqrt</span>(variance_array(a,n));
 }
-</code></pre><ul>
+</code></pre>
+<ul>
 <li>&#xBC30;&#xC5F4; a&#xB97C; &#xC815;&#xADDC;&#xD654; &#xD569;&#xB2C8;&#xB2E4;.</li>
 </ul>
 <h2 id="translatearray">translate_array</h2>
-<pre><code>void translate_array(float *a, int n, float s)
-{
-    int i;
-    for(i = 0; i &lt; n; ++i){
+<pre><code class="lang-c"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">translate_array</span><span class="hljs-params">(<span class="hljs-keyword">float</span> *a, <span class="hljs-keyword">int</span> n, <span class="hljs-keyword">float</span> s)</span>
+</span>{
+    <span class="hljs-keyword">int</span> i;
+    <span class="hljs-keyword">for</span>(i = <span class="hljs-number">0</span>; i &lt; n; ++i){
         a[i] += s;
     }
 }
-</code></pre><ul>
+</code></pre>
+<ul>
 <li>&#xBC30;&#xC5F4; a&#xC5D0; &#xCD94;&#xAC00;&#xD560; &#xAC12;&#xC744; &#xB354;&#xD569;&#xB2C8;&#xB2E4;.</li>
 </ul>
 <h2 id="magarray">mag_array</h2>
-<pre><code>float mag_array(float *a, int n)
-{
-    int i;
-    float sum = 0;
-    for(i = 0; i &lt; n; ++i){
+<pre><code class="lang-c"><span class="hljs-function"><span class="hljs-keyword">float</span> <span class="hljs-title">mag_array</span><span class="hljs-params">(<span class="hljs-keyword">float</span> *a, <span class="hljs-keyword">int</span> n)</span>
+</span>{
+    <span class="hljs-keyword">int</span> i;
+    <span class="hljs-keyword">float</span> sum = <span class="hljs-number">0</span>;
+    <span class="hljs-keyword">for</span>(i = <span class="hljs-number">0</span>; i &lt; n; ++i){
         sum += a[i]*a[i];   
     }
-    return sqrt(sum);
+    <span class="hljs-keyword">return</span> <span class="hljs-built_in">sqrt</span>(sum);
 }
-</code></pre><ul>
+</code></pre>
+<ul>
 <li>???</li>
 </ul>
 <h2 id="scalearray">scale_array</h2>
-<pre><code>void scale_array(float *a, int n, float s)
-{
-    int i;
-    for(i = 0; i &lt; n; ++i){
+<pre><code class="lang-c"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">scale_array</span><span class="hljs-params">(<span class="hljs-keyword">float</span> *a, <span class="hljs-keyword">int</span> n, <span class="hljs-keyword">float</span> s)</span>
+</span>{
+    <span class="hljs-keyword">int</span> i;
+    <span class="hljs-keyword">for</span>(i = <span class="hljs-number">0</span>; i &lt; n; ++i){
         a[i] *= s;
     }
 }
-</code></pre><ul>
+</code></pre>
+<ul>
 <li>&#xBC30;&#xC5F4; a&#xC758; scale&#xC744; &#xC870;&#xC808;&#xD569;&#xB2C8;&#xB2E4;.</li>
 </ul>
 <h2 id="samplearray">sample_array</h2>
-<pre><code>int sample_array(float *a, int n)
-{
-    float sum = sum_array(a, n);
-    scale_array(a, n, 1./sum);
-    float r = rand_uniform(0, 1);
-    int i;
-    for(i = 0; i &lt; n; ++i){
+<pre><code class="lang-c"><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">sample_array</span><span class="hljs-params">(<span class="hljs-keyword">float</span> *a, <span class="hljs-keyword">int</span> n)</span>
+</span>{
+    <span class="hljs-keyword">float</span> sum = sum_array(a, n);
+    scale_array(a, n, <span class="hljs-number">1.</span>/sum);
+    <span class="hljs-keyword">float</span> r = rand_uniform(<span class="hljs-number">0</span>, <span class="hljs-number">1</span>);
+    <span class="hljs-keyword">int</span> i;
+    <span class="hljs-keyword">for</span>(i = <span class="hljs-number">0</span>; i &lt; n; ++i){
         r = r - a[i];
-        if (r &lt;= 0) return i;
+        <span class="hljs-keyword">if</span> (r &lt;= <span class="hljs-number">0</span>) <span class="hljs-keyword">return</span> i;
     }
-    return n-1;
+    <span class="hljs-keyword">return</span> n<span class="hljs-number">-1</span>;
 }
-</code></pre><p>-</p>
+</code></pre>
+<p>-</p>
 <h2 id="maxintindex">max_int_index</h2>
 <pre><code>int max_int_index(int *a, int n)
 {
@@ -2852,7 +2916,7 @@ return [[1, 0, 0], [0, 1, 0], [0, 0, 1]]
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"utils.c","level":"5.44","depth":1,"next":{"title":"yolo_layer.c","level":"5.45","depth":1,"path":"part3_src/yolo_layer.md","ref":"part3_src/yolo_layer.md","articles":[]},"previous":{"title":"upsample_layer.c","level":"5.43","depth":1,"path":"part3_src/upsample_layer.md","ref":"part3_src/upsample_layer.md","articles":[]},"dir":"ltr"},"config":{"plugins":["advanced-emoji","theme-gestalt","-theme-default","styles-sass-fix","theme-api","mathjax"],"root":"./","styles":{"website":"website-1597403756570.css"},"pluginsConfig":{"styles-sass-fix":{},"theme-gestalt":{"showLevel":false,"styles":{"website":"styles/website.css"},"logo":"/darknet_book/assets/darknet.png","baseUrl":null,"excludeDefaultStyles":true,"doNotHideChildrenChapters":false},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"theme-api":{"languages":[],"split":true,"theme":"light"},"mathjax":{"forceSVG":false,"version":"2.6-latest"},"advanced-emoji":{"embedEmojis":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]}},"theme":"default","author":"JJM","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"DarkNet Book","output.name":"site","gitbook":"*"},"file":{"path":"part3_src/utils.md","mtime":"2020-08-13T07:15:42.341Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-08-14T11:15:45.491Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"utils.c","level":"5.44","depth":1,"next":{"title":"yolo_layer.c","level":"5.45","depth":1,"path":"part3_src/yolo_layer.md","ref":"part3_src/yolo_layer.md","articles":[]},"previous":{"title":"upsample_layer.c","level":"5.43","depth":1,"path":"part3_src/upsample_layer.md","ref":"part3_src/upsample_layer.md","articles":[]},"dir":"ltr"},"config":{"plugins":["advanced-emoji","theme-gestalt","-theme-default","styles-sass-fix","theme-api","mathjax"],"root":"./","styles":{"website":"website-1599634348142.css"},"pluginsConfig":{"styles-sass-fix":{},"theme-gestalt":{"showLevel":false,"styles":{"website":"styles/website.css"},"logo":"/darknet_book/assets/darknet.png","baseUrl":null,"excludeDefaultStyles":true,"doNotHideChildrenChapters":false},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"theme-api":{"languages":[],"split":true,"theme":"light"},"mathjax":{"forceSVG":false,"version":"2.6-latest"},"advanced-emoji":{"embedEmojis":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]}},"theme":"default","author":"JJM","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"DarkNet Book","output.name":"site","gitbook":"*"},"file":{"path":"part3_src/utils.md","mtime":"2020-09-09T06:05:32.417Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-09-09T06:52:18.609Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>
