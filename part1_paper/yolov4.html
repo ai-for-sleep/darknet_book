@@ -42,7 +42,7 @@
 
     
         
-        <link rel="stylesheet" href="../website-1599724489739.css">
+        <link rel="stylesheet" href="../website-1599910179376.css">
         
     
 
@@ -1964,7 +1964,255 @@
     
                                 <section class="normal markdown-section">
                                 
-                                
+                                <h1 id="yolov4">YOLOv4</h1>
+<ul>
+<li>Paper : <a href="https://arxiv.org/abs/2004.10934" target="_blank">https://arxiv.org/abs/2004.10934</a></li>
+</ul>
+<p>&#xAE30;&#xC874; YOLOv3&#xAE4C;&#xC9C0; &#xC800;&#xC790;&#xC168;&#xB358; <code>Joseph Redmon</code>&#xC774; &#xCC38;&#xC5EC;&#xD558;&#xC9C0; &#xC54A;&#xC558;&#xC2B5;&#xB2C8;&#xB2E4;.</p>
+<p>YOLOv4&#xB294; YOLOv3&#xC774;&#xD6C4;&#xC5D0; &#xB098;&#xC628; &#xB525;&#xB7EC;&#xB2DD;&#xC758; &#xC815;&#xD655;&#xB3C4;&#xB97C; &#xAC1C;&#xC120;&#xD558;&#xB294; &#xB2E4;&#xC591;&#xD55C; &#xBC29;&#xBC95;&#xC744; &#xC801;&#xC6A9;&#xD574; YOLO&#xC758; &#xC131;&#xB2A5;&#xC744; &#xADF9;&#xB300;&#xD654; &#xD558;&#xB294; &#xBC29;&#xBC95;&#xC744; &#xC124;&#xBA85;&#xD569;&#xB2C8;&#xB2E4;.  </p>
+<p><img src="../figure/paper/yolov4/bench.PNG" alt="bench"></p>
+<p>&#xC704;&#xC5D0; &#xD45C;&#xB97C; &#xBCF4;&#xBA74; &#xC18D;&#xB3C4;&#xB294; &#xC720;&#xC0AC;&#xD558;&#xC9C0;&#xB9CC; &#xC815;&#xD655;&#xB3C4;&#xAC00; &#xB9E4;&#xC6B0; &#xB9CE;&#xC774; &#xAC1C;&#xC120;&#xB418;&#xC5C8;&#xC2B5;&#xB2C8;&#xB2E4;.</p>
+<p><img src="../figure/paper/yolov4/od.PNG" alt="od"></p>
+<p>&#xCD5C;&#xADFC; &#xD45C;&#xC900;&#xD654;&#xB41C; Object Detection&#xC758; &#xBAA8;&#xB378; &#xAD6C;&#xC870;&#xC5D0; &#xB300;&#xD574; &#xC694;&#xC57D;&#xD558;&#xBA74; &#xC704;&#xC640; &#xAC19;&#xC2B5;&#xB2C8;&#xB2E4;.
+&#xAE54;&#xB054;&#xD558;&#xAC8C; &#xC815;&#xB9AC;&#xB418;&#xC11C; &#xD55C;&#xB208;&#xC5D0; &#xBCF4;&#xAE30; &#xC27D;&#xC2B5;&#xB2C8;&#xB2E4;.</p>
+<p>YOLOv4&#xB294; &#xB2E4;&#xC591;&#xD55C; &#xAE30;&#xBC95;&#xB4E4;&#xC744; 2&#xAC00;&#xC9C0; &#xBC94;&#xC8FC;&#xB85C; &#xBB36;&#xC5B4;&#xC11C; &#xC124;&#xBA85;&#xD569;&#xB2C8;&#xB2E4;.</p>
+<ul>
+<li>BOF(Bag Of Freebies)</li>
+<li>BOS(Bag Of Specials)</li>
+</ul>
+<h2 id="bag-of-freebies">Bag Of Freebies</h2>
+<p>&#xCD94;&#xB860;&#xC18D;&#xB3C4;&#xB294; &#xC720;&#xC9C0;&#xD558;&#xC9C0;&#xB9CC; &#xD559;&#xC2B5; &#xC804;&#xB7B5;&#xC744; &#xBC14;&#xAFB8;&#xAC70;&#xB098; &#xD559;&#xC2B5; &#xBE44;&#xC6A9;&#xC744; &#xC99D;&#xAC00;&#xC2DC;&#xCF1C; &#xC815;&#xD655;&#xB3C4;&#xB97C; &#xB192;&#xC774;&#xB294; &#xBC29;&#xBC95;</p>
+<h3 id="data-augmentation">Data Augmentation</h3>
+<p>&#xC6D0;&#xBCF8; &#xB370;&#xC774;&#xD130;&#xC14B;&#xC758; &#xACFC;&#xC801;&#xD569;&#xC744; &#xB9C9;&#xACE0; &#xC801;&#xC740; &#xB370;&#xC774;&#xD130;&#xC14B;&#xC758; &#xD6A8;&#xACFC;&#xB97C; &#xADF9;&#xB300;&#xD654;&#xD558;&#xAE30; &#xC704;&#xD55C; &#xBC29;&#xBC95;</p>
+<ul>
+<li>Photometric Distortions : brightness, contrast, hue, saturation, noise</li>
+<li>Geometric Distortions : random scaling, cropping, flipping, rotating</li>
+<li>CutOut</li>
+<li>Random Erase</li>
+<li>MixUp</li>
+<li>CutMix</li>
+<li>GAN</li>
+</ul>
+<p><img src="../figure/paper/yolov4/cutmix.PNG" alt="cutmix"></p>
+<p>&#xC5EC;&#xAE30;&#xC11C; Random Erase&#xB294; CutOut&#xACFC; &#xBE44;&#xC2B7;&#xD55C;&#xB370; CutOut&#xC740; &#xC81C;&#xAC70;&#xD55C; &#xC601;&#xC5ED;&#xC744; 0&#xC73C;&#xB85C; &#xCC44;&#xC6B0;&#xB294; &#xBC18;&#xBA74;, Random Erase&#xB294; &#xB79C;&#xB364;&#xD55C; &#xAC12;&#xC73C;&#xB85C; &#xCC44;&#xC6C1;&#xB2C8;&#xB2E4;.</p>
+<h3 id="semantic-distribution-bias">Semantic Distribution Bias</h3>
+<p>&#xB370;&#xC774;&#xD130;&#xC14B;&#xC5D0; &#xD2B9;&#xC815; &#xB77C;&#xBCA8;&#xC774; &#xB9CE;&#xAC70;&#xB098; &#xD558;&#xB294; &#xACBD;&#xC6B0;&#xC5D0; &#xB300;&#xD55C; &#xBD88;&#xADE0;&#xD615;&#xC744; &#xD574;&#xACB0;&#xD558;&#xAE30;&#xC704;&#xD55C; &#xBC29;&#xBC95;</p>
+<ul>
+<li>Hard Negative Example Mining</li>
+</ul>
+<p>Hard Negative&#xB780; Negative&#xB97C; Positive&#xB77C;&#xACE0; &#xC608;&#xCE21;&#xD558;&#xAE30; &#xC26C;&#xC6B4; &#xB370;&#xC774;&#xD130;&#xC785;&#xB2C8;&#xB2E4;. &#xADF8;&#xB798;&#xC11C; Hard Negative Mining&#xC774;&#xB780; Hard Negative &#xB370;&#xC774;&#xD130;&#xB97C; &#xBAA8;&#xC544;&#xC11C; &#xC6D0;&#xB798; &#xB370;&#xC774;&#xD130;&#xC5D0; &#xCD94;&#xAC00;&#xD574;&#xC11C; &#xD559;&#xC2B5;&#xD558;&#xB294; &#xBC29;&#xBC95;&#xC785;&#xB2C8;&#xB2E4;. &#xC774;&#xB85C;&#xC778;&#xD574; False Negative &#xC624;&#xB958;&#xC5D0; &#xAC15;&#xD574;&#xC9D1;&#xB2C8;&#xB2E4;.</p>
+<ul>
+<li>Focal Loss</li>
+</ul>
+<p>&#xBD84;&#xB958;&#xD558;&#xAE30; &#xC26C;&#xC6B4; &#xC0D8;&#xD50C;&#xC758; &#xACBD;&#xC6B0; &#xD559;&#xC2B5;&#xC5D0; &#xAE30;&#xC5EC;&#xB3C4;&#xB294; &#xB0AE;&#xAE30; &#xB54C;&#xBB38;&#xC5D0; &#xBE44;&#xD6A8;&#xC728;&#xC801;&#xC774;&#xB2E4;. &#xC774;&#xB7EC;&#xD55C; &#xBB38;&#xC81C;&#xB97C; &#xD574;&#xACB0;&#xD558;&#xAE30; &#xC704;&#xD55C; &#xC0C8;&#xB85C;&#xC6B4; &#xC190;&#xC2E4; &#xD568;&#xC218;&#xB2E4;.</p>
+<p><script type="math/tex; ">Cross entropy = -log(p_t)</script></p>
+<p><script type="math/tex; ">Focal Loss = -(1 - p_t)^{\gamma}log(p_t), \quad \gamma \geq 0</script></p>
+<p>&#xAE30;&#xC874; Cross Entropy&#xC5D0; <script type="math/tex; ">(1 - p_t^{\gamma})</script>&#xB77C;&#xB294; factor&#xAC00; &#xD558;&#xB098; &#xD3EC;&#xD568;&#xB418;&#xC5B4;&#xC788;&#xACE0; &#xC774; factor&#xC758; scale&#xC740; <script type="math/tex; ">\gamma</script>&#xB85C; &#xC870;&#xC808;&#xD569;&#xB2C8;&#xB2E4;. &#xC774;&#xB85C;&#xC778;&#xD574; &#xC26C;&#xC6B4; &#xC608;&#xC81C;&#xC758; &#xACBD;&#xC6B0; &#xC190;&#xC2E4;&#xC5D0; &#xAE30;&#xC5EC;&#xB3C4;&#xB97C; &#xB0AE;&#xCD9C;&#xC218; &#xC788;&#xB2E4;.</p>
+<ul>
+<li>Label Smoothing</li>
+</ul>
+<p>&#xB370;&#xC774;&#xD130;&#xC14B; &#xB77C;&#xBCA8;&#xB9C1;&#xC758; &#xC2E4;&#xC218; &#xAC00;&#xB2A5;&#xC131;&#xC744; &#xD3EC;&#xD568;&#xD558;&#xB294; &#xBC29;&#xBC95;&#xC785;&#xB2C8;&#xB2E4;.</p>
+<p>&#xACE0;&#xC591;&#xC774; &#xC0AC;&#xC9C4;&#xC774; &#xC788;&#xB294; &#xACBD;&#xC6B0; &#xB77C;&#xBCA8;&#xC744; [&#xACE0;&#xC591;&#xC774;: 1 | &#xAC1C;: 0] &#xC73C;&#xB85C; &#xC815;&#xB2F5;&#xC744; &#xB77C;&#xBCA8;&#xB9C1;&#xD558;&#xB294; &#xAC83;&#xC774; &#xC544;&#xB2C8;&#xB77C; [&#xACE0;&#xC591;&#xC774;: 0.9 | &#xAC1C;: 0.1]&#xB85C; &#xD569;&#xB2C8;&#xB2E4;.</p>
+<pre><code>new labels = one hot labels * (1 - label smoothing value) + label smoothing value / num classes
+
+IF 0.2&#xC778; &#xACBD;&#xC6B0;
+
+1 * (1 - 0.2) + 0.2 / 2 = 0.9
+0 * (1 - 0.2) + 0.2 / 2 = 0.1
+</code></pre><h3 id="bounding-box-regression">Bounding Box Regression</h3>
+<ul>
+<li><p>GIOU(Generalized Intersection over Union)</p>
+</li>
+<li><p>CIOU(Complete Intersection over Union)</p>
+</li>
+<li><p>DIOU(Distance Intersection over Union)</p>
+</li>
+</ul>
+<p><img src="../figure/paper/yolov4/iou.PNG" alt="iou"></p>
+<h2 id="bag-of-specials">Bag Of Specials</h2>
+<p>&#xC57D;&#xAC04;&#xC758; &#xCD94;&#xB860; &#xC18D;&#xB3C4; &#xC99D;&#xAC00;&#xB97C; &#xD1B5;&#xD574; &#xC815;&#xD655;&#xB3C4;&#xB97C; &#xB192;&#xC774;&#xB294; &#xBC29;&#xBC95;</p>
+<h3 id="spp">SPP</h3>
+<p>SPM(Spatial Pytamid Matching)&#xC5D0; &#xC758;&#xD574; &#xAC1C;&#xBC1C; &#xB41C; &#xBAA8;&#xB4C8;&#xC785;&#xB2C8;&#xB2E4;. &#xC6D0;&#xB798; SPM &#xBC29;&#xBC95;&#xC740; &#xD2B9;&#xC9D5; &#xB9F5;&#xC744; &#xB3D9;&#xC77C;&#xD55C; d x d &#xBE14;&#xB85D;&#xC73C;&#xB85C; &#xB098;&#xB208; &#xB4A4;, spatial pyramid&#xB97C; &#xD615;&#xC131;&#xD558;&#xACE0; bag-of-word&#xB97C; &#xC0AC;&#xC6A9;&#xD574; features&#xB97C; &#xCD94;&#xCD9C;&#xD569;&#xB2C8;&#xB2E4;.</p>
+<p>SPP&#xB294; &#xB525;&#xB7EC;&#xB2DD;&#xC5D0; &#xCD5C;&#xC801;&#xD654; &#xD558;&#xAE30; &#xC704;&#xD574; CNN&#xC640; SPM&#xC744; &#xACB0;&#xD569;&#xD558;&#xACE0; bag-of word &#xB300;&#xC2E0; maxpooling&#xC744; &#xC0AC;&#xC6A9;&#xD569;&#xB2C8;&#xB2E4;.</p>
+<h3 id="aspp">ASPP</h3>
+<p>ASPP(Atrous Spatial Pyramid Pooling)&#xC740; &#xD5A5;&#xC0C1;&#xB41C; SPP&#xB85C; DeepLapV3&#xC5D0;&#xC11C; &#xC81C;&#xC548;&#xB41C; &#xBC29;&#xBC95;&#xC785;&#xB2C8;&#xB2E4;. &#xB2E4;&#xC591;&#xD55C; dilated ratio(6, 12, 18, 24)&#xB97C; &#xAC00;&#xC9C0;&#xACE0; &#xD569;&#xC131;&#xACF1; &#xC5F0;&#xC0B0;&#xC744; &#xD55C; &#xB4A4; concat&#xD558;&#xC5EC; &#xC5F0;&#xC0B0;&#xD569;&#xB2C8;&#xB2E4;.</p>
+<p>&#xC57D; 7% &#xCD94;&#xB860;&#xC2DC;&#xAC04;&#xC774; &#xC99D;&#xAC00;&#xD558;&#xC9C0;&#xB9CC; 5.7% &#xC815;&#xD655;&#xB3C4;&#xAC00; &#xD5A5;&#xC0C1;&#xB429;&#xB2C8;&#xB2E4;.</p>
+<h3 id="rfb">RFB</h3>
+<p>RFB(Receptive Field Block Net)</p>
+<h3 id="se">SE</h3>
+<p>SE(Squeeze-and-Excitation)</p>
+<p><img src="../figure/paper/yolov4/se.PNG" alt="se"></p>
+<p>&#xC57D; 2% &#xC5F0;&#xC0B0;&#xB7C9;&#xC774; &#xC99D;&#xAC00;&#xC9C0;&#xB9CC; 1% &#xC815;&#xD655;&#xB3C4;&#xAC00; &#xD5A5;&#xC0C1; &#xB41C;&#xB2E4;. &#xD558;&#xC9C0;&#xB9CC; GPU&#xC5D0;&#xC11C; &#xCD94;&#xB860;&#xC2DC;&#xAC04;&#xC774; 10% &#xC99D;&#xAC00;&#xD55C;&#xB2E4;.</p>
+<h3 id="sam">SAM</h3>
+<p>SAM(Spatial Attention module) 0.1% &#xC5F0;&#xC0B0;&#xB7C9;&#xC774; &#xC99D;&#xAC00;&#xD558;&#xACE0; 0.5% &#xC815;&#xD655;&#xB3C4;&#xAC00; &#xD5A5;&#xC0C1;&#xB41C;&#xB2E4;. GPU &#xCD94;&#xB860;&#xC2DC;&#xAC04;&#xC5D0; &#xC601;&#xD5A5;&#xC774; &#xC5C6;&#xB2E4;.</p>
+<p><img src="../figure/paper/yolov4/sam.PNG" alt="sam"></p>
+<h3 id="sfam">SFAM</h3>
+<p>SPAM(Scale-wise Feature Aggregation Module)&#xC740; SE &#xBAA8;&#xB4C8;&#xC744; &#xC0AC;&#xC6A9;&#xD574; multi scale&#xC774; &#xC5F0;&#xACB0; &#xB41C; &#xD2B9;&#xC9D5; &#xB9F5;&#xC5D0;&#xC11C; channelwise level re-weighting&#xC744; &#xD569;&#xB2C8;&#xB2E4;.</p>
+<p><img src="../figure/paper/yolov4/sfam.PNG" alt="sfam"></p>
+<p>SFAM &#xB17C;&#xBB38;&#xC5D0;&#xC11C; &#xC0AC;&#xC6A9; &#xB41C; &#xBAA8;&#xB378;&#xC758; &#xC804;&#xCCB4;&#xC801;&#xC778; &#xD750;&#xB984;&#xC744; &#xB098;&#xD0C0;&#xB0C5;&#xB2C8;&#xB2E4;.</p>
+<p><img src="../figure/paper/yolov4/sfam2.PNG" alt="sfam2"></p>
+<p>(a) : FFMv1
+(b) : FFMv2
+(c) : TUM</p>
+<p><img src="../figure/paper/yolov4/sfam3.PNG" alt="sfam3"></p>
+<p>SFAM&#xC744; &#xBB18;&#xC0AC;&#xD55C; &#xADF8;&#xB9BC;&#xC785;&#xB2C8;&#xB2E4;.</p>
+<h3 id="asff">ASFF</h3>
+<p>ASFF(Adaptively Spatial Feature Fusion)</p>
+<p><img src="../figure/paper/yolov4/asff.PNG" alt="asff"></p>
+<h3 id="bifpn">BiFPN</h3>
+<p>multi input weighted residual connections&#xB294; scale-wise level re-weighting&#xC744; &#xC2E4;&#xD589;&#xD55C; &#xB2E4;&#xC74C; &#xB2E4;&#xB978; &#xC2A4;&#xCF00;&#xC77C;&#xC758; &#xD2B9;&#xC9D5; &#xB9F5;&#xC744; &#xCD94;&#xAC00;&#xD558;&#xAE30; &#xC704;&#xD574;&#xC11C; &#xC81C;&#xC548;&#xB429;&#xB2C8;&#xB2E4;.</p>
+<p><img src="../figure/paper/yolov4/bifpn.PNG" alt="bifpn"></p>
+<h3 id="activation-function">Activation Function</h3>
+<ul>
+<li>LReLU, PReLU : ReLU&#xAC00; 0&#xBCF4;&#xB2E4; &#xC791;&#xC740; &#xACBD;&#xC6B0; &#xAE30;&#xC6B8;&#xAE30;&#xAC00; 0&#xC774;&#xB77C;&#xB294; &#xBB38;&#xC81C;&#xB97C; &#xD574;&#xACB0;</li>
+<li>ReLU6 ,Hard-Swish : Quantization network&#xB97C; &#xC704;&#xD574; &#xC124;&#xACC4;&#xB428;</li>
+<li>SeLU : &#xB124;&#xD2B8;&#xC6CC;&#xD06C;&#xB97C; &#xC815;&#xADDC;&#xD654;&#xD558;&#xAE30; &#xC704;&#xD574;&#xC11C; &#xC0AC;&#xC6A9;&#xB41C;&#xB2E4;.</li>
+<li>Mish</li>
+<li>...</li>
+</ul>
+<p>&#xD65C;&#xC131;&#xD654; &#xD568;&#xC218;&#xB294; ReLU&#xB098; &#xAE30;&#xC874; &#xD65C;&#xC131;&#xD654; &#xD568;&#xC218; &#xC870;&#xD569;&#xC73C;&#xB85C; &#xC0DD;&#xACA8;&#xB09C; &#xAC83;&#xC774; &#xB9CE;&#xACE0; &#xAD81;&#xAE08;&#xD55C; &#xB0B4;&#xC6A9;&#xB9CC; &#xCC3E;&#xC544;&#xBCF4;&#xC2DC;&#xBA74; &#xB420; &#xAC83; &#xAC19;&#xC2B5;&#xB2C8;&#xB2E4;.</p>
+<h3 id="nms">NMS</h3>
+<ul>
+<li>NMS</li>
+<li>Soft NMS</li>
+</ul>
+<p><img src="../figure/paper/yolov4/nms.PNG" alt="nms"></p>
+<p>&#xACB9;&#xCE58;&#xB294; bouning box&#xB97C; &#xD6C4;&#xCC98;&#xB9AC; &#xD574;&#xC8FC;&#xB294; &#xC791;&#xC5C5;&#xC740; &#xC704;&#xC5D0; &#xC2DD;&#xC73C;&#xB85C; &#xD45C;&#xD604;&#xD560; &#xC218; &#xC788;&#xC2B5;&#xB2C8;&#xB2E4;.</p>
+<h2 id="selection-of-architecture">Selection of Architecture</h2>
+<ul>
+<li><p>Objective</p>
+<ul>
+<li>Input Network Resolution</li>
+<li>Convolution Layer Number</li>
+<li>Parameter Number</li>
+<li>Number of Layer Output</li>
+</ul>
+</li>
+<li><p>CSPResNeXt50 : ImageNet(Classification)</p>
+</li>
+<li>CSPDarkNet53 : MS COCO(Object Detection)</li>
+</ul>
+<p>classification&#xC774; &#xCD5C;&#xC801;&#xC778; &#xBAA8;&#xB378;&#xC774;&#xB77C;&#xACE0; &#xD574;&#xC11C; detector&#xC5D0;&#xC11C;&#xB3C4; &#xCD5C;&#xC801;&#xC774; &#xC544;&#xB2D9;&#xB2C8;&#xB2E4;.</p>
+<p><img src="../figure/paper/yolov4/table.PNG" alt="table"></p>
+<ul>
+<li>&#xB192;&#xC740; &#xC785;&#xB825; &#xD574;&#xC0C1;&#xB3C4; : &#xC791;&#xC740; &#xD06C;&#xAE30;&#xC758; &#xAC1D;&#xCCB4;&#xB97C; &#xAC80;&#xCD9C;</li>
+<li>&#xB354; &#xB9CE;&#xC740; &#xACC4;&#xCE35; : &#xC99D;&#xAC00; &#xB41C; &#xD574;&#xC0C1;&#xB3C4;&#xB97C; &#xCEE4;&#xBC84;&#xD558;&#xAE30; &#xC704;&#xD55C; &#xB354; &#xB192;&#xC740; receptive field</li>
+<li>&#xB354; &#xB9CE;&#xC740; &#xB9E4;&#xAC1C;&#xBCC0;&#xC218; : &#xD06C;&#xAE30;&#xAC00; &#xB2E4;&#xB978; &#xC5EC;&#xB7EC;&#xAC1C;&#xC758; &#xAC1D;&#xCCB4;&#xB97C; &#xAC80;&#xCD9C;&#xD558;&#xB294; &#xBAA8;&#xB378;&#xC758; &#xC6A9;&#xB7C9;&#xC744; &#xB298;&#xB9AC;&#xAE30; &#xC704;&#xD568;</li>
+</ul>
+<p>&#xC81C;&#xC77C; &#xD569;&#xB2F9;&#xD55C; &#xBAA8;&#xB378;&#xC740; DarkNet&#xC774;&#xB77C;&#xACE0; &#xD560; &#xC218; &#xC788;&#xC2B5;&#xB2C8;&#xB2E4;.</p>
+<p>YOLOv3&#xB294; CSPDarkNet53&#xC5D0; SPP &#xBE14;&#xB85D;&#xC744; &#xCD94;&#xAC00;&#xD558;&#xACE0; YOLOv3&#xC5D0;&#xC11C; &#xC0AC;&#xC6A9;&#xB418;&#xB294; FPN&#xB300;&#xC2E0; PANet&#xC744; &#xC0AC;&#xC6A9;&#xD569;&#xB2C8;&#xB2E4;.</p>
+<h4 id="csp">CSP</h4>
+<p>CSP(Cross-Stage-Partial-Connections)</p>
+<p><img src="../figure/paper/yolov4/csp.PNG" alt="csp"></p>
+<p>&#xD2B9;&#xC9D5; &#xB9F5; &#xCC44;&#xB110;&#xC758; &#xC808;&#xBC18;&#xB9CC; Residual Block&#xC744; &#xD1B5;&#xACFC;&#xD558;&#xAE30; &#xB54C;&#xBB38;&#xC5D0; Bottleneck layer&#xB97C; &#xC0AC;&#xC6A9; &#xD560; &#xD544;&#xC694;&#xAC00; &#xC5C6;&#xC2B5;&#xB2C8;&#xB2E4;.</p>
+<h4 id="new-method">New Method</h4>
+<ul>
+<li><p>SAT</p>
+</li>
+<li><p>Mosaic</p>
+<ul>
+<li>4&#xAC1C;&#xC758; &#xD559;&#xC2B5; &#xC774;&#xBBF8;&#xC9C0;&#xB97C; &#xD63C;&#xD569;&#xD55C;&#xB2E4;.</li>
+<li>Mini Batch&#xAC00; &#xD06C;&#xC9C0; &#xC54A;&#xC544;&#xB3C4; &#xB41C;&#xB2E4;.(&#xD63C;&#xD569; &#xC790;&#xCCB4;&#xB85C; &#xD6A8;&#xACFC;&#xC801;&#xC784;)</li>
+</ul>
+</li>
+</ul>
+<p><img src="../figure/paper/yolov4/mosaic.PNG" alt="mosaic"></p>
+<ul>
+<li><p>modified SAM</p>
+</li>
+<li><p>modified PAN</p>
+</li>
+</ul>
+<p><img src="../figure/paper/yolov4/new.PNG" alt="new"></p>
+<ul>
+<li>Cross mini-Batch Normalization(CmBN)</li>
+</ul>
+<p><img src="../figure/paper/yolov4/cmbn.PNG" alt="cmbn"></p>
+<h4 id="activation">Activation</h4>
+<ul>
+<li>ReLU, LReLU, PReLU, ReLU6, SELU, Swish, Mish</li>
+</ul>
+<h4 id="bouding-box-regression-loss">Bouding box regression loss</h4>
+<ul>
+<li>MSE, IoU, GIoU, CIoU, DIoU</li>
+</ul>
+<h4 id="data-augmentation">Data Augmentation</h4>
+<ul>
+<li>CutOut, MixUp, CutMix</li>
+</ul>
+<h4 id="regularization-method">Regularization method</h4>
+<ul>
+<li>DropOut, DropPath, Spatial DropOut, or DropBlock</li>
+</ul>
+<h4 id="normalization-of-the-network-activations-by-their-mean-and-variance">Normalization of the network activations by their mean and variance</h4>
+<ul>
+<li>Batch Normalization (BN)</li>
+<li>Cross-GPU Batch Normalization (CGBN or SyncBN)</li>
+<li>Filter Response Normalization (FRN)</li>
+<li>Cross-Iteration Batch Normalization (CBN)</li>
+</ul>
+<h4 id="skip-connections">Skip-connections</h4>
+<ul>
+<li>Residual connections</li>
+<li>Weighted residual connections</li>
+<li>Multi-input weighted residual connections</li>
+<li>Cross stage partial connections (CSP)</li>
+</ul>
+<h2 id="yolov4">YOLOv4</h2>
+<ul>
+<li>Backbone : CSPDarkNet53</li>
+<li>Neck : SPP, PAN</li>
+<li><p>Head : Yolov3</p>
+</li>
+<li><p>Bag of Freebies for backbone : CutMix, Mosaic, DropBlock, Class label smoothing</p>
+</li>
+<li><p>Bag of Specials for backbone : Mish, CSP, Muiti-input weighted residual connections(MiWRC)</p>
+</li>
+<li><p>Bag of Freebies for detector : CIoU, CmBN, DropBlock, Mosaic, Self Adversarial Training, Eliminate grid sensitivity, Using multiple anchors for a single ground truth, Cosine anneling scheduler, Optimal hyper parameters, Random training shapes</p>
+</li>
+<li><p>Bag of Specials for detector : Mish, SPP, SAM, PAN, DIoU NMS</p>
+</li>
+</ul>
+<h2 id="experiments">Experiments</h2>
+<ul>
+<li>training steps : 8,000,000</li>
+<li>batch size : 128 / mini batch size 32</li>
+<li>learning rate : 0.1 warm-up : 1000</li>
+<li>momentum : 0.9 / weight decay : 0.005</li>
+<li>BoF experiments : data augmentation &#xAC80;&#xC99D;</li>
+<li>BoS experiments : activation function &#xAC80;&#xC99D;</li>
+<li>genetic algorithm : hyper parameter search (lr : 0.00261, momentum : 0.949, IoU thresholds : 0.213, loss normalizer : 0.07)</li>
+</ul>
+<p><img src="../figure/paper/yolov4/tabel2.PNG" alt="tabel2"></p>
+<p><img src="../figure/paper/yolov4/tabel3.PNG" alt="tabel3"></p>
+<ul>
+<li>S : Eliminate grid sensitivity : sigmoid&#xC5D0; 1.0&#xC744; &#xCD08;&#xACFC;&#xD558;&#xB294; &#xACC4;&#xC218;&#xB97C; &#xACF1;&#xD574; object&#xAC00; &#xAC80;&#xCD9C;&#xB418;&#xC9C0; &#xC54A;&#xB294; grid&#xC758; &#xC601;&#xD5A5;&#xC744; &#xC81C;&#xAC70;&#xD55C;&#xB2E4;.</li>
+<li>M : Mosaic</li>
+<li>IT : IoU threshold (single GT &gt; IoU threshold)</li>
+<li>GA : genetic algorithm (hyperparameter search)</li>
+<li>LS : class label smoothing</li>
+<li>CBN : CmBN</li>
+<li>CA : cosine anneling</li>
+<li>DM : dynamic minibatch size</li>
+<li>OA : optimized anchors</li>
+</ul>
+<p><img src="../figure/paper/yolov4/tabel4.PNG" alt="tabel4"></p>
+<ul>
+<li>classification accuracy&#xAC00; &#xB192;&#xB2E4;&#xACE0; detector accuracy&#xAC00; &#xD56D;&#xC0C1; &#xB192;&#xC740;&#xAC74; &#xC544;&#xB2D9;&#xB2C8;&#xB2E4;.</li>
+<li>CSPResNet50&#xC758; classification accurac&#xAC00; &#xB192;&#xC9C0;&#xB9CC; detector accuracy&#xB294; CSPDarkNet53&#xC774; &#xB354; &#xB192;&#xC2B5;&#xB2C8;&#xB2E4;.</li>
+<li>CSPResNet50&#xC5D0; BoF, Mish&#xB97C; &#xC0AC;&#xC6A9;&#xD558;&#xBA74; classification accuracy&#xB294; &#xB192;&#xC544;&#xC9C0;&#xC9C0;&#xB9CC; detector accuracy&#xB294; &#xB0AE;&#xC544;&#xC9D1;&#xB2C8;&#xB2E4;.</li>
+<li>CSPDarkNet53&#xC5D0; BoF, Mish&#xB97C; &#xC0AC;&#xC6A9;&#xD558;&#xBA74; detector accuracy&#xAC00; &#xB192;&#xC544;&#xC9D1;&#xB2C8;&#xB2E4;.</li>
+</ul>
+<p><img src="../figure/paper/yolov4/tabel5.PNG" alt="tabel5"></p>
+<ul>
+<li>BOF, BOS&#xB97C; &#xCD94;&#xAC00;&#xD55C; &#xB4A4; mini batch size&#xAC00; &#xC131;&#xB2A5;&#xC5D0; &#xAC70;&#xC758; &#xC601;&#xD5A5;&#xC744; &#xBBF8;&#xCE58;&#xC9C0; &#xC54A;&#xC2B5;&#xB2C8;&#xB2E4;.<ul>
+<li>&#xC989;, &#xACE0;&#xAC00;&#xC758; GPU&#xB294; &#xBD88;&#xD544;&#xC694;&#xD569;&#xB2C8;&#xB2E4;.</li>
+</ul>
+</li>
+</ul>
+<h2 id="result">Result</h2>
+<p><img src="../figure/paper/yolov4/result.PNG" alt="result"></p>
+
                                 
                                 </section>
                             
@@ -2007,7 +2255,7 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"YOLOv4","level":"2.4","depth":1,"next":{"title":"project","level":"3.1","depth":1,"path":"part2_source/0_Project.md","ref":"part2_source/0_Project.md","articles":[]},"previous":{"title":"YOLOv3","level":"2.3","depth":1,"path":"part1_paper/yolov3.md","ref":"part1_paper/yolov3.md","articles":[]},"dir":"neutral"},"config":{"plugins":["advanced-emoji","theme-gestalt","-theme-default","styles-sass-fix","theme-api","mathjax","ga"],"root":"./","styles":{"website":"website-1599724489739.css"},"pluginsConfig":{"styles-sass-fix":{},"theme-gestalt":{"showLevel":false,"styles":{"website":"styles/website.css"},"logo":"/darknet_book/assets/darknet.png","baseUrl":null,"excludeDefaultStyles":true,"doNotHideChildrenChapters":false},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"theme-api":{"languages":[],"split":true,"theme":"light"},"mathjax":{"forceSVG":false,"version":"2.6-latest"},"ga":{"configuration":"auto","token":"UA-136921229-1"},"advanced-emoji":{"embedEmojis":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]}},"theme":"default","author":"JJM","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{"BASE_URL":"https://jjeamin.github.io"},"title":"DarkNet Book","output.name":"site","gitbook":"*"},"file":{"path":"part1_paper/yolov4.md","mtime":"2020-06-13T18:22:05.648Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-09-10T07:54:40.444Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"YOLOv4","level":"2.4","depth":1,"next":{"title":"project","level":"3.1","depth":1,"path":"part2_source/0_Project.md","ref":"part2_source/0_Project.md","articles":[]},"previous":{"title":"YOLOv3","level":"2.3","depth":1,"path":"part1_paper/yolov3.md","ref":"part1_paper/yolov3.md","articles":[]},"dir":"ltr"},"config":{"plugins":["advanced-emoji","theme-gestalt","-theme-default","styles-sass-fix","theme-api","mathjax","ga"],"root":"./","styles":{"website":"website-1599910179376.css"},"pluginsConfig":{"styles-sass-fix":{},"theme-gestalt":{"showLevel":false,"styles":{"website":"styles/website.css"},"logo":"/darknet_book/assets/darknet.png","baseUrl":null,"excludeDefaultStyles":true,"doNotHideChildrenChapters":false},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"theme-api":{"languages":[],"split":true,"theme":"light"},"mathjax":{"forceSVG":false,"version":"2.6-latest"},"ga":{"configuration":"auto","token":"UA-136921229-1"},"advanced-emoji":{"embedEmojis":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]}},"theme":"default","author":"JJM","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{"BASE_URL":"https://jjeamin.github.io"},"title":"DarkNet Book","output.name":"site","gitbook":"*"},"file":{"path":"part1_paper/yolov4.md","mtime":"2020-09-12T11:19:39.451Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-09-12T11:29:34.578Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>
