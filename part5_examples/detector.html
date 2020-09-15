@@ -1,0 +1,2672 @@
+
+<!DOCTYPE HTML>
+<html lang="" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>detector.c · DarkNet Book</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 3.2.3">
+        <meta name="author" content="JJM">
+        
+        
+    
+    
+
+    
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-advanced-emoji/emoji-website.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-search/search.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-fontsettings/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-theme-api/theme-api.css">
+                
+            
+        
+
+    
+
+    
+        
+        <link rel="stylesheet" href="../website-1600186244488.css">
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    
+    
+        <link rel="shortcut icon" href="../gitbook/images/favicon.ico" type="image/x-icon">
+    
+    
+    
+
+    
+    <link rel="next" href="dice.html" />
+    
+    
+    <link rel="prev" href="darknet.html" />
+    
+
+    </head>
+    <body>
+        
+<div class="book">
+    <div class="book-summary">
+        
+            <div class="book-logo">   
+                
+                <img src="/darknet_book/assets/darknet.png"/>
+                
+            </div>
+            
+<div id="book-search-input" role="search">
+    <input type="text" placeholder="Type to search" />
+</div>
+
+            
+                <nav role="navigation">
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        
+        <li class="header ">DARKNET</li>
+        
+        
+    
+        
+        <li class="chapter 
+              "
+            data-level="1.1" 
+            data-path="../">
+
+            
+                <a href="../">
+            
+                    
+                    DarkNet
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="1.2" 
+            data-path="../INSTALL.html">
+
+            
+                <a href="../INSTALL.html">
+            
+                    
+                    설치하기
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+        
+        
+        <li class="header ">Paper</li>
+        
+        
+    
+        
+        <li class="chapter 
+              "
+            data-level="2.1" 
+            data-path="../part1_paper/yolov1.html">
+
+            
+                <a href="../part1_paper/yolov1.html">
+            
+                    
+                    YOLOv1
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="2.2" 
+            data-path="../part1_paper/yolov2.html">
+
+            
+                <a href="../part1_paper/yolov2.html">
+            
+                    
+                    YOLOv2
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="2.3" 
+            data-path="../part1_paper/yolov3.html">
+
+            
+                <a href="../part1_paper/yolov3.html">
+            
+                    
+                    YOLOv3
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="2.4" 
+            data-path="../part1_paper/yolov4.html">
+
+            
+                <a href="../part1_paper/yolov4.html">
+            
+                    
+                    YOLOv4
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+        
+        
+        <li class="header ">SOURCE</li>
+        
+        
+    
+        
+        <li class="chapter 
+              "
+            data-level="3.1" 
+            data-path="../part2_source/0_Project.html">
+
+            
+                <a href="../part2_source/0_Project.html">
+            
+                    
+                    project
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="3.2" 
+            data-path="../part2_source/1_DATA.html">
+
+            
+                <a href="../part2_source/1_DATA.html">
+            
+                    
+                    /data
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="3.3" 
+            data-path="../part2_source/2_CFG.html">
+
+            
+                <a href="../part2_source/2_CFG.html">
+            
+                    
+                    /cfg
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="3.4" 
+            data-path="../part2_source/3_EXAMPLE.html">
+
+            
+                <a href="../part2_source/3_EXAMPLE.html">
+            
+                    
+                    /example
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="3.5" 
+            data-path="../part2_source/4_SRC.html">
+
+            
+                <a href="../part2_source/4_SRC.html">
+            
+                    
+                    /src
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+        
+        
+        <li class="header ">Structure</li>
+        
+        
+    
+        
+        <li class="chapter 
+              "
+            data-level="4.1" 
+            data-path="../part4_structure/network.html">
+
+            
+                <a href="../part4_structure/network.html">
+            
+                    
+                    network
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="4.2" 
+            data-path="../part4_structure/layer.html">
+
+            
+                <a href="../part4_structure/layer.html">
+            
+                    
+                    layer
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="4.3" 
+            data-path="../part4_structure/etc.html">
+
+            
+                <a href="../part4_structure/etc.html">
+            
+                    
+                    etc
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+        
+        
+        <li class="header ">/SRC</li>
+        
+        
+    
+        
+        <li class="chapter 
+              "
+            data-level="5.1" 
+            data-path="../part3_src/activation_layer.html">
+
+            
+                <a href="../part3_src/activation_layer.html">
+            
+                    
+                    activation_layer.c
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="5.2" 
+            data-path="../part3_src/activations_1.html">
+
+            
+                <a href="../part3_src/activations_1.html">
+            
+                    
+                    activations.c
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+                
+    
+        
+        <li class="chapter 
+               hide "
+            data-level="5.2.1" 
+            data-path="../part3_src/activations_2.html">
+
+            
+                <a href="../part3_src/activations_2.html">
+            
+                    
+                    activation.h
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="5.3" 
+            data-path="../part3_src/avgpool.html">
+
+            
+                <a href="../part3_src/avgpool.html">
+            
+                    
+                    avgpool_layer.c
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="5.4" 
+            data-path="../part3_src/batchnorm_layer.html">
+
+            
+                <a href="../part3_src/batchnorm_layer.html">
+            
+                    
+                    batchnorm_layer.c
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="5.5" 
+            data-path="../part3_src/blas.html">
+
+            
+                <a href="../part3_src/blas.html">
+            
+                    
+                    blas.c
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="5.6" 
+            data-path="../part3_src/box.html">
+
+            
+                <a href="../part3_src/box.html">
+            
+                    
+                    box.c
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="5.7" 
+            data-path="../part3_src/col2im.html">
+
+            
+                <a href="../part3_src/col2im.html">
+            
+                    
+                    col2im.c
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="5.8" 
+            data-path="../part3_src/compare.html">
+
+            
+                <a href="../part3_src/compare.html">
+            
+                    
+                    compare.c
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="5.9" 
+            data-path="../part3_src/connected_layer.html">
+
+            
+                <a href="../part3_src/connected_layer.html">
+            
+                    
+                    connected_layer.c
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="5.10" 
+            data-path="../part3_src/convolutional_layer.html">
+
+            
+                <a href="../part3_src/convolutional_layer.html">
+            
+                    
+                    convolutional_layer.c
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="5.11" 
+            data-path="../part3_src/cost_layer.html">
+
+            
+                <a href="../part3_src/cost_layer.html">
+            
+                    
+                    cost_layer.c
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="5.12" 
+            data-path="../part3_src/crnn_layer.html">
+
+            
+                <a href="../part3_src/crnn_layer.html">
+            
+                    
+                    crnn_layer.c
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="5.13" 
+            data-path="../part3_src/crop_layer.html">
+
+            
+                <a href="../part3_src/crop_layer.html">
+            
+                    
+                    crop_layer.c
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="5.14" 
+            data-path="../part3_src/data.html">
+
+            
+                <a href="../part3_src/data.html">
+            
+                    
+                    data.c
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="5.15" 
+            data-path="../part3_src/deconvolutional_layer.html">
+
+            
+                <a href="../part3_src/deconvolutional_layer.html">
+            
+                    
+                    deconvolutional_layer.c
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="5.16" 
+            data-path="../part3_src/demo.html">
+
+            
+                <a href="../part3_src/demo.html">
+            
+                    
+                    demo.c
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="5.17" 
+            data-path="../part3_src/detection_layer.html">
+
+            
+                <a href="../part3_src/detection_layer.html">
+            
+                    
+                    detection_layer.c
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="5.18" 
+            data-path="../part3_src/dropout_layer.html">
+
+            
+                <a href="../part3_src/dropout_layer.html">
+            
+                    
+                    dropout_layer.c
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="5.19" 
+            data-path="../part3_src/gemm.html">
+
+            
+                <a href="../part3_src/gemm.html">
+            
+                    
+                    gemm.c
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="5.20" 
+            data-path="../part3_src/gru_layer.html">
+
+            
+                <a href="../part3_src/gru_layer.html">
+            
+                    
+                    gru_layer.c
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="5.21" 
+            data-path="../part3_src/im2col.html">
+
+            
+                <a href="../part3_src/im2col.html">
+            
+                    
+                    im2col.c
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="5.22" 
+            data-path="../part3_src/image.html">
+
+            
+                <a href="../part3_src/image.html">
+            
+                    
+                    image.c
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="5.23" 
+            data-path="../part3_src/iseg_layer.html">
+
+            
+                <a href="../part3_src/iseg_layer.html">
+            
+                    
+                    iseg_layer.c
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="5.24" 
+            data-path="../part3_src/l2norm_layer.html">
+
+            
+                <a href="../part3_src/l2norm_layer.html">
+            
+                    
+                    l2norm_layer.c
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="5.25" 
+            data-path="../part3_src/layer.html">
+
+            
+                <a href="../part3_src/layer.html">
+            
+                    
+                    layer.c
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="5.26" 
+            data-path="../part3_src/list.html">
+
+            
+                <a href="../part3_src/list.html">
+            
+                    
+                    list.c
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="5.27" 
+            data-path="../part3_src/local_layer.html">
+
+            
+                <a href="../part3_src/local_layer.html">
+            
+                    
+                    local_layer.c
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="5.28" 
+            data-path="../part3_src/logistic_layer.html">
+
+            
+                <a href="../part3_src/logistic_layer.html">
+            
+                    
+                    logistic_layer.c
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="5.29" 
+            data-path="../part3_src/lstm_layer.html">
+
+            
+                <a href="../part3_src/lstm_layer.html">
+            
+                    
+                    lstm_layer.c
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="5.30" 
+            data-path="../part3_src/matrix.html">
+
+            
+                <a href="../part3_src/matrix.html">
+            
+                    
+                    matrix.c
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="5.31" 
+            data-path="../part3_src/maxpool.html">
+
+            
+                <a href="../part3_src/maxpool.html">
+            
+                    
+                    maxpool_layer.c
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="5.32" 
+            data-path="../part3_src/network.html">
+
+            
+                <a href="../part3_src/network.html">
+            
+                    
+                    network.c
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="5.33" 
+            data-path="../part3_src/normalization_layer.html">
+
+            
+                <a href="../part3_src/normalization_layer.html">
+            
+                    
+                    normalization_layer.c
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="5.34" 
+            data-path="../part3_src/option_list.html">
+
+            
+                <a href="../part3_src/option_list.html">
+            
+                    
+                    option_list.c
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="5.35" 
+            data-path="../part3_src/parser_1.html">
+
+            
+                <a href="../part3_src/parser_1.html">
+            
+                    
+                    parser.c
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+                
+    
+        
+        <li class="chapter 
+               hide "
+            data-level="5.35.1" 
+            data-path="../part3_src/parser_2.html">
+
+            
+                <a href="../part3_src/parser_2.html">
+            
+                    
+                    + parser.c
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="5.36" 
+            data-path="../part3_src/region_layer.html">
+
+            
+                <a href="../part3_src/region_layer.html">
+            
+                    
+                    region_layer.c
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="5.37" 
+            data-path="../part3_src/reorg_layer.html">
+
+            
+                <a href="../part3_src/reorg_layer.html">
+            
+                    
+                    reorg_layer.c
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="5.38" 
+            data-path="../part3_src/rnn_layer.html">
+
+            
+                <a href="../part3_src/rnn_layer.html">
+            
+                    
+                    rnn_layer.c
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="5.39" 
+            data-path="../part3_src/route_layer.html">
+
+            
+                <a href="../part3_src/route_layer.html">
+            
+                    
+                    route_layer.c
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="5.40" 
+            data-path="../part3_src/shortcut.md">
+
+            
+                <span>
+            
+                    
+                    shortcut_layer.c
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="5.41" 
+            data-path="../part3_src/softmax_layer.html">
+
+            
+                <a href="../part3_src/softmax_layer.html">
+            
+                    
+                    softmax_layer.c
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="5.42" 
+            data-path="../part3_src/tree.html">
+
+            
+                <a href="../part3_src/tree.html">
+            
+                    
+                    tree.c
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="5.43" 
+            data-path="../part3_src/upsample_layer.html">
+
+            
+                <a href="../part3_src/upsample_layer.html">
+            
+                    
+                    upsample_layer.c
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="5.44" 
+            data-path="../part3_src/utils.html">
+
+            
+                <a href="../part3_src/utils.html">
+            
+                    
+                    utils.c
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="5.45" 
+            data-path="../part3_src/yolo_layer.html">
+
+            
+                <a href="../part3_src/yolo_layer.html">
+            
+                    
+                    yolo_layer.c
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="5.46" 
+            data-path="../part3_src/image_opencv.html">
+
+            
+                <a href="../part3_src/image_opencv.html">
+            
+                    
+                    image_opencv.cpp
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+        
+        
+        <li class="header  selected ">/EXAMPLE</li>
+        
+        
+    
+        
+        <li class="chapter 
+              "
+            data-level="6.1" 
+            data-path="art.html">
+
+            
+                <a href="art.html">
+            
+                    
+                    art.c
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="6.2" 
+            data-path="attention.html">
+
+            
+                <a href="attention.html">
+            
+                    
+                    attention.c
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="6.3" 
+            data-path="captcha.html">
+
+            
+                <a href="captcha.html">
+            
+                    
+                    captcha.c
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="6.4" 
+            data-path="cifar.html">
+
+            
+                <a href="cifar.html">
+            
+                    
+                    cifar.c
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="6.5" 
+            data-path="classifier.html">
+
+            
+                <a href="classifier.html">
+            
+                    
+                    classifier.c
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="6.6" 
+            data-path="coco.html">
+
+            
+                <a href="coco.html">
+            
+                    
+                    coco.c
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="6.7" 
+            data-path="darknet.html">
+
+            
+                <a href="darknet.html">
+            
+                    
+                    darknet.c
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+            active  selected  "
+            data-level="6.8" 
+            data-path="detector.html">
+
+            
+                <a href="detector.html">
+            
+                    
+                    detector.c
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="6.9" 
+            data-path="dice.html">
+
+            
+                <a href="dice.html">
+            
+                    
+                    dice.c
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="6.10" 
+            data-path="go.html">
+
+            
+                <a href="go.html">
+            
+                    
+                    go.c
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="6.11" 
+            data-path="instance-segmenter.html">
+
+            
+                <a href="instance-segmenter.html">
+            
+                    
+                    instance-segmenter.c
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="6.12" 
+            data-path="lsd.html">
+
+            
+                <a href="lsd.html">
+            
+                    
+                    lsd.c
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="6.13" 
+            data-path="nightmare.html">
+
+            
+                <a href="nightmare.html">
+            
+                    
+                    nightmare.c
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="6.14" 
+            data-path="regressor.html">
+
+            
+                <a href="regressor.html">
+            
+                    
+                    regressor.c
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="6.15" 
+            data-path="rnn.html">
+
+            
+                <a href="rnn.html">
+            
+                    
+                    rnn.c
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="6.16" 
+            data-path="rnn_vid.html">
+
+            
+                <a href="rnn_vid.html">
+            
+                    
+                    rnn_vid.c
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="6.17" 
+            data-path="segmenter.html">
+
+            
+                <a href="segmenter.html">
+            
+                    
+                    segmenter.c
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="6.18" 
+            data-path="super.html">
+
+            
+                <a href="super.html">
+            
+                    
+                    super.c
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="6.19" 
+            data-path="swag.html">
+
+            
+                <a href="swag.html">
+            
+                    
+                    swag.c
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="6.20" 
+            data-path="tag.html">
+
+            
+                <a href="tag.html">
+            
+                    
+                    tag.c
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="6.21" 
+            data-path="voxel.html">
+
+            
+                <a href="voxel.html">
+            
+                    
+                    voxel.c
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="6.22" 
+            data-path="writing.html">
+
+            
+                <a href="writing.html">
+            
+                    
+                    writing.c
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="6.23" 
+            data-path="yolo.html">
+
+            
+                <a href="yolo.html">
+            
+                    
+                    yolo.c
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href=".." >detector.c</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+<div id="book-search-results">
+    <div class="search-noresults">
+    
+                                <section class="normal markdown-section">
+                                
+                                <h1 id="detectorc">detector.c</h1>
+<pre><code class="lang-c"><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-string">&quot;darknet.h&quot;</span></span>
+
+<span class="hljs-keyword">static</span> <span class="hljs-keyword">int</span> coco_ids[] = {<span class="hljs-number">1</span>,<span class="hljs-number">2</span>,<span class="hljs-number">3</span>,<span class="hljs-number">4</span>,<span class="hljs-number">5</span>,<span class="hljs-number">6</span>,<span class="hljs-number">7</span>,<span class="hljs-number">8</span>,<span class="hljs-number">9</span>,<span class="hljs-number">10</span>,<span class="hljs-number">11</span>,<span class="hljs-number">13</span>,<span class="hljs-number">14</span>,<span class="hljs-number">15</span>,<span class="hljs-number">16</span>,<span class="hljs-number">17</span>,<span class="hljs-number">18</span>,<span class="hljs-number">19</span>,<span class="hljs-number">20</span>,<span class="hljs-number">21</span>,<span class="hljs-number">22</span>,<span class="hljs-number">23</span>,<span class="hljs-number">24</span>,<span class="hljs-number">25</span>,<span class="hljs-number">27</span>,<span class="hljs-number">28</span>,<span class="hljs-number">31</span>,<span class="hljs-number">32</span>,<span class="hljs-number">33</span>,<span class="hljs-number">34</span>,<span class="hljs-number">35</span>,<span class="hljs-number">36</span>,<span class="hljs-number">37</span>,<span class="hljs-number">38</span>,<span class="hljs-number">39</span>,<span class="hljs-number">40</span>,<span class="hljs-number">41</span>,<span class="hljs-number">42</span>,<span class="hljs-number">43</span>,<span class="hljs-number">44</span>,<span class="hljs-number">46</span>,<span class="hljs-number">47</span>,<span class="hljs-number">48</span>,<span class="hljs-number">49</span>,<span class="hljs-number">50</span>,<span class="hljs-number">51</span>,<span class="hljs-number">52</span>,<span class="hljs-number">53</span>,<span class="hljs-number">54</span>,<span class="hljs-number">55</span>,<span class="hljs-number">56</span>,<span class="hljs-number">57</span>,<span class="hljs-number">58</span>,<span class="hljs-number">59</span>,<span class="hljs-number">60</span>,<span class="hljs-number">61</span>,<span class="hljs-number">62</span>,<span class="hljs-number">63</span>,<span class="hljs-number">64</span>,<span class="hljs-number">65</span>,<span class="hljs-number">67</span>,<span class="hljs-number">70</span>,<span class="hljs-number">72</span>,<span class="hljs-number">73</span>,<span class="hljs-number">74</span>,<span class="hljs-number">75</span>,<span class="hljs-number">76</span>,<span class="hljs-number">77</span>,<span class="hljs-number">78</span>,<span class="hljs-number">79</span>,<span class="hljs-number">80</span>,<span class="hljs-number">81</span>,<span class="hljs-number">82</span>,<span class="hljs-number">84</span>,<span class="hljs-number">85</span>,<span class="hljs-number">86</span>,<span class="hljs-number">87</span>,<span class="hljs-number">88</span>,<span class="hljs-number">89</span>,<span class="hljs-number">90</span>};
+
+
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">train_detector</span><span class="hljs-params">(<span class="hljs-keyword">char</span> *datacfg, <span class="hljs-keyword">char</span> *cfgfile, <span class="hljs-keyword">char</span> *weightfile, <span class="hljs-keyword">int</span> *gpus, <span class="hljs-keyword">int</span> ngpus, <span class="hljs-keyword">int</span> clear)</span>
+</span>{
+    <span class="hljs-built_in">list</span> *options = read_data_cfg(datacfg);
+    <span class="hljs-keyword">char</span> *train_images = option_find_str(options, <span class="hljs-string">&quot;train&quot;</span>, <span class="hljs-string">&quot;data/train.list&quot;</span>);
+    <span class="hljs-keyword">char</span> *backup_directory = option_find_str(options, <span class="hljs-string">&quot;backup&quot;</span>, <span class="hljs-string">&quot;/backup/&quot;</span>);
+
+    srand(time(<span class="hljs-number">0</span>));
+    <span class="hljs-keyword">char</span> *base = basecfg(cfgfile);
+    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;%s\n&quot;</span>, base);
+    <span class="hljs-keyword">float</span> avg_loss = <span class="hljs-number">-1</span>;
+    network **nets = <span class="hljs-built_in">calloc</span>(ngpus, <span class="hljs-keyword">sizeof</span>(network));
+
+    srand(time(<span class="hljs-number">0</span>));
+    <span class="hljs-keyword">int</span> seed = rand();
+    <span class="hljs-keyword">int</span> i;
+    <span class="hljs-keyword">for</span>(i = <span class="hljs-number">0</span>; i &lt; ngpus; ++i){
+        srand(seed);
+<span class="hljs-meta">#<span class="hljs-meta-keyword">ifdef</span> GPU</span>
+        cuda_set_device(gpus[i]);
+<span class="hljs-meta">#<span class="hljs-meta-keyword">endif</span></span>
+        nets[i] = load_network(cfgfile, weightfile, clear);
+        nets[i]-&gt;learning_rate *= ngpus;
+    }
+    srand(time(<span class="hljs-number">0</span>));
+    network *net = nets[<span class="hljs-number">0</span>];
+
+    <span class="hljs-keyword">int</span> imgs = net-&gt;batch * net-&gt;subdivisions * ngpus;
+    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;Learning Rate: %g, Momentum: %g, Decay: %g\n&quot;</span>, net-&gt;learning_rate, net-&gt;momentum, net-&gt;decay);
+    data train, buffer;
+
+    layer l = net-&gt;layers[net-&gt;n - <span class="hljs-number">1</span>];
+
+    <span class="hljs-keyword">int</span> classes = l.classes;
+    <span class="hljs-keyword">float</span> jitter = l.jitter;
+
+    <span class="hljs-built_in">list</span> *plist = get_paths(train_images);
+    <span class="hljs-comment">//int N = plist-&gt;size;</span>
+    <span class="hljs-keyword">char</span> **paths = (<span class="hljs-keyword">char</span> **)list_to_array(plist);
+
+    load_args args = get_base_args(net);
+    args.coords = l.coords;
+    args.paths = paths;
+    args.n = imgs;
+    args.m = plist-&gt;size;
+    args.classes = classes;
+    args.jitter = jitter;
+    args.num_boxes = l.max_boxes;
+    args.d = &amp;buffer;
+    args.type = DETECTION_DATA;
+    <span class="hljs-comment">//args.type = INSTANCE_DATA;</span>
+    args.threads = <span class="hljs-number">64</span>;
+
+    <span class="hljs-keyword">pthread_t</span> load_thread = load_data(args);
+    <span class="hljs-keyword">double</span> time;
+    <span class="hljs-keyword">int</span> count = <span class="hljs-number">0</span>;
+    <span class="hljs-comment">//while(i*imgs &lt; N*120){</span>
+    <span class="hljs-keyword">while</span>(get_current_batch(net) &lt; net-&gt;max_batches){
+        <span class="hljs-keyword">if</span>(l.random &amp;&amp; count++%<span class="hljs-number">10</span> == <span class="hljs-number">0</span>){
+            <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;Resizing\n&quot;</span>);
+            <span class="hljs-keyword">int</span> dim = (rand() % <span class="hljs-number">10</span> + <span class="hljs-number">10</span>) * <span class="hljs-number">32</span>;
+            <span class="hljs-keyword">if</span> (get_current_batch(net)+<span class="hljs-number">200</span> &gt; net-&gt;max_batches) dim = <span class="hljs-number">608</span>;
+            <span class="hljs-comment">//int dim = (rand() % 4 + 16) * 32;</span>
+            <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;%d\n&quot;</span>, dim);
+            args.w = dim;
+            args.h = dim;
+
+            pthread_join(load_thread, <span class="hljs-number">0</span>);
+            train = buffer;
+            free_data(train);
+            load_thread = load_data(args);
+
+            <span class="hljs-meta">#<span class="hljs-meta-keyword">pragma</span> omp parallel for</span>
+            <span class="hljs-keyword">for</span>(i = <span class="hljs-number">0</span>; i &lt; ngpus; ++i){
+                resize_network(nets[i], dim, dim);
+            }
+            net = nets[<span class="hljs-number">0</span>];
+        }
+        time=what_time_is_it_now();
+        pthread_join(load_thread, <span class="hljs-number">0</span>);
+        train = buffer;
+        load_thread = load_data(args);
+
+        <span class="hljs-comment">/*
+           int k;
+           for(k = 0; k &lt; l.max_boxes; ++k){
+           box b = float_to_box(train.y.vals[10] + 1 + k*5);
+           if(!b.x) break;
+           printf(&quot;loaded: %f %f %f %f\n&quot;, b.x, b.y, b.w, b.h);
+           }
+         */</span>
+        <span class="hljs-comment">/*
+           int zz;
+           for(zz = 0; zz &lt; train.X.cols; ++zz){
+           image im = float_to_image(net-&gt;w, net-&gt;h, 3, train.X.vals[zz]);
+           int k;
+           for(k = 0; k &lt; l.max_boxes; ++k){
+           box b = float_to_box(train.y.vals[zz] + k*5, 1);
+           printf(&quot;%f %f %f %f\n&quot;, b.x, b.y, b.w, b.h);
+           draw_bbox(im, b, 1, 1,0,0);
+           }
+           show_image(im, &quot;truth11&quot;);
+           cvWaitKey(0);
+           save_image(im, &quot;truth11&quot;);
+           }
+         */</span>
+
+        <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;Loaded: %lf seconds\n&quot;</span>, what_time_is_it_now()-time);
+
+        time=what_time_is_it_now();
+        <span class="hljs-keyword">float</span> loss = <span class="hljs-number">0</span>;
+<span class="hljs-meta">#<span class="hljs-meta-keyword">ifdef</span> GPU</span>
+        <span class="hljs-keyword">if</span>(ngpus == <span class="hljs-number">1</span>){
+            loss = train_network(net, train);
+        } <span class="hljs-keyword">else</span> {
+            loss = train_networks(nets, ngpus, train, <span class="hljs-number">4</span>);
+        }
+<span class="hljs-meta">#<span class="hljs-meta-keyword">else</span></span>
+        loss = train_network(net, train);
+<span class="hljs-meta">#<span class="hljs-meta-keyword">endif</span></span>
+        <span class="hljs-keyword">if</span> (avg_loss &lt; <span class="hljs-number">0</span>) avg_loss = loss;
+        avg_loss = avg_loss*<span class="hljs-number">.9</span> + loss*<span class="hljs-number">.1</span>;
+
+        i = get_current_batch(net);
+        <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;%ld: %f, %f avg, %f rate, %lf seconds, %d images\n&quot;</span>, get_current_batch(net), loss, avg_loss, get_current_rate(net), what_time_is_it_now()-time, i*imgs);
+        <span class="hljs-keyword">if</span>(i%<span class="hljs-number">100</span>==<span class="hljs-number">0</span>){
+<span class="hljs-meta">#<span class="hljs-meta-keyword">ifdef</span> GPU</span>
+            <span class="hljs-keyword">if</span>(ngpus != <span class="hljs-number">1</span>) sync_nets(nets, ngpus, <span class="hljs-number">0</span>);
+<span class="hljs-meta">#<span class="hljs-meta-keyword">endif</span></span>
+            <span class="hljs-keyword">char</span> buff[<span class="hljs-number">256</span>];
+            <span class="hljs-built_in">sprintf</span>(buff, <span class="hljs-string">&quot;%s/%s.backup&quot;</span>, backup_directory, base);
+            save_weights(net, buff);
+        }
+        <span class="hljs-keyword">if</span>(i%<span class="hljs-number">10000</span>==<span class="hljs-number">0</span> || (i &lt; <span class="hljs-number">1000</span> &amp;&amp; i%<span class="hljs-number">100</span> == <span class="hljs-number">0</span>)){
+<span class="hljs-meta">#<span class="hljs-meta-keyword">ifdef</span> GPU</span>
+            <span class="hljs-keyword">if</span>(ngpus != <span class="hljs-number">1</span>) sync_nets(nets, ngpus, <span class="hljs-number">0</span>);
+<span class="hljs-meta">#<span class="hljs-meta-keyword">endif</span></span>
+            <span class="hljs-keyword">char</span> buff[<span class="hljs-number">256</span>];
+            <span class="hljs-built_in">sprintf</span>(buff, <span class="hljs-string">&quot;%s/%s_%d.weights&quot;</span>, backup_directory, base, i);
+            save_weights(net, buff);
+        }
+        free_data(train);
+    }
+<span class="hljs-meta">#<span class="hljs-meta-keyword">ifdef</span> GPU</span>
+    <span class="hljs-keyword">if</span>(ngpus != <span class="hljs-number">1</span>) sync_nets(nets, ngpus, <span class="hljs-number">0</span>);
+<span class="hljs-meta">#<span class="hljs-meta-keyword">endif</span></span>
+    <span class="hljs-keyword">char</span> buff[<span class="hljs-number">256</span>];
+    <span class="hljs-built_in">sprintf</span>(buff, <span class="hljs-string">&quot;%s/%s_final.weights&quot;</span>, backup_directory, base);
+    save_weights(net, buff);
+}
+
+
+<span class="hljs-function"><span class="hljs-keyword">static</span> <span class="hljs-keyword">int</span> <span class="hljs-title">get_coco_image_id</span><span class="hljs-params">(<span class="hljs-keyword">char</span> *filename)</span>
+</span>{
+    <span class="hljs-keyword">char</span> *p = <span class="hljs-built_in">strrchr</span>(filename, <span class="hljs-string">&apos;/&apos;</span>);
+    <span class="hljs-keyword">char</span> *c = <span class="hljs-built_in">strrchr</span>(filename, <span class="hljs-string">&apos;_&apos;</span>);
+    <span class="hljs-keyword">if</span>(c) p = c;
+    <span class="hljs-keyword">return</span> atoi(p+<span class="hljs-number">1</span>);
+}
+
+<span class="hljs-function"><span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">print_cocos</span><span class="hljs-params">(FILE *fp, <span class="hljs-keyword">char</span> *image_path, detection *dets, <span class="hljs-keyword">int</span> num_boxes, <span class="hljs-keyword">int</span> classes, <span class="hljs-keyword">int</span> w, <span class="hljs-keyword">int</span> h)</span>
+</span>{
+    <span class="hljs-keyword">int</span> i, j;
+    <span class="hljs-keyword">int</span> image_id = get_coco_image_id(image_path);
+    <span class="hljs-keyword">for</span>(i = <span class="hljs-number">0</span>; i &lt; num_boxes; ++i){
+        <span class="hljs-keyword">float</span> xmin = dets[i].bbox.x - dets[i].bbox.w/<span class="hljs-number">2.</span>;
+        <span class="hljs-keyword">float</span> xmax = dets[i].bbox.x + dets[i].bbox.w/<span class="hljs-number">2.</span>;
+        <span class="hljs-keyword">float</span> ymin = dets[i].bbox.y - dets[i].bbox.h/<span class="hljs-number">2.</span>;
+        <span class="hljs-keyword">float</span> ymax = dets[i].bbox.y + dets[i].bbox.h/<span class="hljs-number">2.</span>;
+
+        <span class="hljs-keyword">if</span> (xmin &lt; <span class="hljs-number">0</span>) xmin = <span class="hljs-number">0</span>;
+        <span class="hljs-keyword">if</span> (ymin &lt; <span class="hljs-number">0</span>) ymin = <span class="hljs-number">0</span>;
+        <span class="hljs-keyword">if</span> (xmax &gt; w) xmax = w;
+        <span class="hljs-keyword">if</span> (ymax &gt; h) ymax = h;
+
+        <span class="hljs-keyword">float</span> bx = xmin;
+        <span class="hljs-keyword">float</span> by = ymin;
+        <span class="hljs-keyword">float</span> bw = xmax - xmin;
+        <span class="hljs-keyword">float</span> bh = ymax - ymin;
+
+        <span class="hljs-keyword">for</span>(j = <span class="hljs-number">0</span>; j &lt; classes; ++j){
+            <span class="hljs-keyword">if</span> (dets[i].prob[j]) <span class="hljs-built_in">fprintf</span>(fp, <span class="hljs-string">&quot;{\&quot;image_id\&quot;:%d, \&quot;category_id\&quot;:%d, \&quot;bbox\&quot;:[%f, %f, %f, %f], \&quot;score\&quot;:%f},\n&quot;</span>, image_id, coco_ids[j], bx, by, bw, bh, dets[i].prob[j]);
+        }
+    }
+}
+
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">print_detector_detections</span><span class="hljs-params">(FILE **fps, <span class="hljs-keyword">char</span> *id, detection *dets, <span class="hljs-keyword">int</span> total, <span class="hljs-keyword">int</span> classes, <span class="hljs-keyword">int</span> w, <span class="hljs-keyword">int</span> h)</span>
+</span>{
+    <span class="hljs-keyword">int</span> i, j;
+    <span class="hljs-keyword">for</span>(i = <span class="hljs-number">0</span>; i &lt; total; ++i){
+        <span class="hljs-keyword">float</span> xmin = dets[i].bbox.x - dets[i].bbox.w/<span class="hljs-number">2.</span> + <span class="hljs-number">1</span>;
+        <span class="hljs-keyword">float</span> xmax = dets[i].bbox.x + dets[i].bbox.w/<span class="hljs-number">2.</span> + <span class="hljs-number">1</span>;
+        <span class="hljs-keyword">float</span> ymin = dets[i].bbox.y - dets[i].bbox.h/<span class="hljs-number">2.</span> + <span class="hljs-number">1</span>;
+        <span class="hljs-keyword">float</span> ymax = dets[i].bbox.y + dets[i].bbox.h/<span class="hljs-number">2.</span> + <span class="hljs-number">1</span>;
+
+        <span class="hljs-keyword">if</span> (xmin &lt; <span class="hljs-number">1</span>) xmin = <span class="hljs-number">1</span>;
+        <span class="hljs-keyword">if</span> (ymin &lt; <span class="hljs-number">1</span>) ymin = <span class="hljs-number">1</span>;
+        <span class="hljs-keyword">if</span> (xmax &gt; w) xmax = w;
+        <span class="hljs-keyword">if</span> (ymax &gt; h) ymax = h;
+
+        <span class="hljs-keyword">for</span>(j = <span class="hljs-number">0</span>; j &lt; classes; ++j){
+            <span class="hljs-keyword">if</span> (dets[i].prob[j]) <span class="hljs-built_in">fprintf</span>(fps[j], <span class="hljs-string">&quot;%s %f %f %f %f %f\n&quot;</span>, id, dets[i].prob[j],
+                    xmin, ymin, xmax, ymax);
+        }
+    }
+}
+
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">print_imagenet_detections</span><span class="hljs-params">(FILE *fp, <span class="hljs-keyword">int</span> id, detection *dets, <span class="hljs-keyword">int</span> total, <span class="hljs-keyword">int</span> classes, <span class="hljs-keyword">int</span> w, <span class="hljs-keyword">int</span> h)</span>
+</span>{
+    <span class="hljs-keyword">int</span> i, j;
+    <span class="hljs-keyword">for</span>(i = <span class="hljs-number">0</span>; i &lt; total; ++i){
+        <span class="hljs-keyword">float</span> xmin = dets[i].bbox.x - dets[i].bbox.w/<span class="hljs-number">2.</span>;
+        <span class="hljs-keyword">float</span> xmax = dets[i].bbox.x + dets[i].bbox.w/<span class="hljs-number">2.</span>;
+        <span class="hljs-keyword">float</span> ymin = dets[i].bbox.y - dets[i].bbox.h/<span class="hljs-number">2.</span>;
+        <span class="hljs-keyword">float</span> ymax = dets[i].bbox.y + dets[i].bbox.h/<span class="hljs-number">2.</span>;
+
+        <span class="hljs-keyword">if</span> (xmin &lt; <span class="hljs-number">0</span>) xmin = <span class="hljs-number">0</span>;
+        <span class="hljs-keyword">if</span> (ymin &lt; <span class="hljs-number">0</span>) ymin = <span class="hljs-number">0</span>;
+        <span class="hljs-keyword">if</span> (xmax &gt; w) xmax = w;
+        <span class="hljs-keyword">if</span> (ymax &gt; h) ymax = h;
+
+        <span class="hljs-keyword">for</span>(j = <span class="hljs-number">0</span>; j &lt; classes; ++j){
+            <span class="hljs-keyword">int</span> <span class="hljs-keyword">class</span> = j;
+            <span class="hljs-keyword">if</span> (dets[i].prob[<span class="hljs-keyword">class</span>]) <span class="hljs-built_in">fprintf</span>(fp, <span class="hljs-string">&quot;%d %d %f %f %f %f %f\n&quot;</span>, id, j+<span class="hljs-number">1</span>, dets[i].prob[<span class="hljs-keyword">class</span>],
+                    xmin, ymin, xmax, ymax);
+        }
+    }
+}
+
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">validate_detector_flip</span><span class="hljs-params">(<span class="hljs-keyword">char</span> *datacfg, <span class="hljs-keyword">char</span> *cfgfile, <span class="hljs-keyword">char</span> *weightfile, <span class="hljs-keyword">char</span> *outfile)</span>
+</span>{
+    <span class="hljs-keyword">int</span> j;
+    <span class="hljs-built_in">list</span> *options = read_data_cfg(datacfg);
+    <span class="hljs-keyword">char</span> *valid_images = option_find_str(options, <span class="hljs-string">&quot;valid&quot;</span>, <span class="hljs-string">&quot;data/train.list&quot;</span>);
+    <span class="hljs-keyword">char</span> *name_list = option_find_str(options, <span class="hljs-string">&quot;names&quot;</span>, <span class="hljs-string">&quot;data/names.list&quot;</span>);
+    <span class="hljs-keyword">char</span> *prefix = option_find_str(options, <span class="hljs-string">&quot;results&quot;</span>, <span class="hljs-string">&quot;results&quot;</span>);
+    <span class="hljs-keyword">char</span> **names = get_labels(name_list);
+    <span class="hljs-keyword">char</span> *mapf = option_find_str(options, <span class="hljs-string">&quot;map&quot;</span>, <span class="hljs-number">0</span>);
+    <span class="hljs-keyword">int</span> *<span class="hljs-built_in">map</span> = <span class="hljs-number">0</span>;
+    <span class="hljs-keyword">if</span> (mapf) <span class="hljs-built_in">map</span> = read_map(mapf);
+
+    network *net = load_network(cfgfile, weightfile, <span class="hljs-number">0</span>);
+    set_batch_network(net, <span class="hljs-number">2</span>);
+    <span class="hljs-built_in">fprintf</span>(<span class="hljs-built_in">stderr</span>, <span class="hljs-string">&quot;Learning Rate: %g, Momentum: %g, Decay: %g\n&quot;</span>, net-&gt;learning_rate, net-&gt;momentum, net-&gt;decay);
+    srand(time(<span class="hljs-number">0</span>));
+
+    <span class="hljs-built_in">list</span> *plist = get_paths(valid_images);
+    <span class="hljs-keyword">char</span> **paths = (<span class="hljs-keyword">char</span> **)list_to_array(plist);
+
+    layer l = net-&gt;layers[net-&gt;n<span class="hljs-number">-1</span>];
+    <span class="hljs-keyword">int</span> classes = l.classes;
+
+    <span class="hljs-keyword">char</span> buff[<span class="hljs-number">1024</span>];
+    <span class="hljs-keyword">char</span> *type = option_find_str(options, <span class="hljs-string">&quot;eval&quot;</span>, <span class="hljs-string">&quot;voc&quot;</span>);
+    FILE *fp = <span class="hljs-number">0</span>;
+    FILE **fps = <span class="hljs-number">0</span>;
+    <span class="hljs-keyword">int</span> coco = <span class="hljs-number">0</span>;
+    <span class="hljs-keyword">int</span> imagenet = <span class="hljs-number">0</span>;
+    <span class="hljs-keyword">if</span>(<span class="hljs-number">0</span>==<span class="hljs-built_in">strcmp</span>(type, <span class="hljs-string">&quot;coco&quot;</span>)){
+        <span class="hljs-keyword">if</span>(!outfile) outfile = <span class="hljs-string">&quot;coco_results&quot;</span>;
+        <span class="hljs-built_in">snprintf</span>(buff, <span class="hljs-number">1024</span>, <span class="hljs-string">&quot;%s/%s.json&quot;</span>, prefix, outfile);
+        fp = fopen(buff, <span class="hljs-string">&quot;w&quot;</span>);
+        <span class="hljs-built_in">fprintf</span>(fp, <span class="hljs-string">&quot;[\n&quot;</span>);
+        coco = <span class="hljs-number">1</span>;
+    } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span>(<span class="hljs-number">0</span>==<span class="hljs-built_in">strcmp</span>(type, <span class="hljs-string">&quot;imagenet&quot;</span>)){
+        <span class="hljs-keyword">if</span>(!outfile) outfile = <span class="hljs-string">&quot;imagenet-detection&quot;</span>;
+        <span class="hljs-built_in">snprintf</span>(buff, <span class="hljs-number">1024</span>, <span class="hljs-string">&quot;%s/%s.txt&quot;</span>, prefix, outfile);
+        fp = fopen(buff, <span class="hljs-string">&quot;w&quot;</span>);
+        imagenet = <span class="hljs-number">1</span>;
+        classes = <span class="hljs-number">200</span>;
+    } <span class="hljs-keyword">else</span> {
+        <span class="hljs-keyword">if</span>(!outfile) outfile = <span class="hljs-string">&quot;comp4_det_test_&quot;</span>;
+        fps = <span class="hljs-built_in">calloc</span>(classes, <span class="hljs-keyword">sizeof</span>(FILE *));
+        <span class="hljs-keyword">for</span>(j = <span class="hljs-number">0</span>; j &lt; classes; ++j){
+            <span class="hljs-built_in">snprintf</span>(buff, <span class="hljs-number">1024</span>, <span class="hljs-string">&quot;%s/%s%s.txt&quot;</span>, prefix, outfile, names[j]);
+            fps[j] = fopen(buff, <span class="hljs-string">&quot;w&quot;</span>);
+        }
+    }
+
+    <span class="hljs-keyword">int</span> m = plist-&gt;size;
+    <span class="hljs-keyword">int</span> i=<span class="hljs-number">0</span>;
+    <span class="hljs-keyword">int</span> t;
+
+    <span class="hljs-keyword">float</span> thresh = <span class="hljs-number">.005</span>;
+    <span class="hljs-keyword">float</span> nms = <span class="hljs-number">.45</span>;
+
+    <span class="hljs-keyword">int</span> nthreads = <span class="hljs-number">4</span>;
+    image *val = <span class="hljs-built_in">calloc</span>(nthreads, <span class="hljs-keyword">sizeof</span>(image));
+    image *val_resized = <span class="hljs-built_in">calloc</span>(nthreads, <span class="hljs-keyword">sizeof</span>(image));
+    image *buf = <span class="hljs-built_in">calloc</span>(nthreads, <span class="hljs-keyword">sizeof</span>(image));
+    image *buf_resized = <span class="hljs-built_in">calloc</span>(nthreads, <span class="hljs-keyword">sizeof</span>(image));
+    <span class="hljs-keyword">pthread_t</span> *thr = <span class="hljs-built_in">calloc</span>(nthreads, <span class="hljs-keyword">sizeof</span>(<span class="hljs-keyword">pthread_t</span>));
+
+    image input = make_image(net-&gt;w, net-&gt;h, net-&gt;c*<span class="hljs-number">2</span>);
+
+    load_args args = {<span class="hljs-number">0</span>};
+    args.w = net-&gt;w;
+    args.h = net-&gt;h;
+    <span class="hljs-comment">//args.type = IMAGE_DATA;</span>
+    args.type = LETTERBOX_DATA;
+
+    <span class="hljs-keyword">for</span>(t = <span class="hljs-number">0</span>; t &lt; nthreads; ++t){
+        args.path = paths[i+t];
+        args.im = &amp;buf[t];
+        args.resized = &amp;buf_resized[t];
+        thr[t] = load_data_in_thread(args);
+    }
+    <span class="hljs-keyword">double</span> start = what_time_is_it_now();
+    <span class="hljs-keyword">for</span>(i = nthreads; i &lt; m+nthreads; i += nthreads){
+        <span class="hljs-built_in">fprintf</span>(<span class="hljs-built_in">stderr</span>, <span class="hljs-string">&quot;%d\n&quot;</span>, i);
+        <span class="hljs-keyword">for</span>(t = <span class="hljs-number">0</span>; t &lt; nthreads &amp;&amp; i+t-nthreads &lt; m; ++t){
+            pthread_join(thr[t], <span class="hljs-number">0</span>);
+            val[t] = buf[t];
+            val_resized[t] = buf_resized[t];
+        }
+        <span class="hljs-keyword">for</span>(t = <span class="hljs-number">0</span>; t &lt; nthreads &amp;&amp; i+t &lt; m; ++t){
+            args.path = paths[i+t];
+            args.im = &amp;buf[t];
+            args.resized = &amp;buf_resized[t];
+            thr[t] = load_data_in_thread(args);
+        }
+        <span class="hljs-keyword">for</span>(t = <span class="hljs-number">0</span>; t &lt; nthreads &amp;&amp; i+t-nthreads &lt; m; ++t){
+            <span class="hljs-keyword">char</span> *path = paths[i+t-nthreads];
+            <span class="hljs-keyword">char</span> *id = basecfg(path);
+            copy_cpu(net-&gt;w*net-&gt;h*net-&gt;c, val_resized[t].data, <span class="hljs-number">1</span>, input.data, <span class="hljs-number">1</span>);
+            flip_image(val_resized[t]);
+            copy_cpu(net-&gt;w*net-&gt;h*net-&gt;c, val_resized[t].data, <span class="hljs-number">1</span>, input.data + net-&gt;w*net-&gt;h*net-&gt;c, <span class="hljs-number">1</span>);
+
+            network_predict(net, input.data);
+            <span class="hljs-keyword">int</span> w = val[t].w;
+            <span class="hljs-keyword">int</span> h = val[t].h;
+            <span class="hljs-keyword">int</span> num = <span class="hljs-number">0</span>;
+            detection *dets = get_network_boxes(net, w, h, thresh, <span class="hljs-number">.5</span>, <span class="hljs-built_in">map</span>, <span class="hljs-number">0</span>, &amp;num);
+            <span class="hljs-keyword">if</span> (nms) do_nms_sort(dets, num, classes, nms);
+            <span class="hljs-keyword">if</span> (coco){
+                print_cocos(fp, path, dets, num, classes, w, h);
+            } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (imagenet){
+                print_imagenet_detections(fp, i+t-nthreads+<span class="hljs-number">1</span>, dets, num, classes, w, h);
+            } <span class="hljs-keyword">else</span> {
+                print_detector_detections(fps, id, dets, num, classes, w, h);
+            }
+            free_detections(dets, num);
+            <span class="hljs-built_in">free</span>(id);
+            free_image(val[t]);
+            free_image(val_resized[t]);
+        }
+    }
+    <span class="hljs-keyword">for</span>(j = <span class="hljs-number">0</span>; j &lt; classes; ++j){
+        <span class="hljs-keyword">if</span>(fps) fclose(fps[j]);
+    }
+    <span class="hljs-keyword">if</span>(coco){
+        fseek(fp, <span class="hljs-number">-2</span>, SEEK_CUR);
+        <span class="hljs-built_in">fprintf</span>(fp, <span class="hljs-string">&quot;\n]\n&quot;</span>);
+        fclose(fp);
+    }
+    <span class="hljs-built_in">fprintf</span>(<span class="hljs-built_in">stderr</span>, <span class="hljs-string">&quot;Total Detection Time: %f Seconds\n&quot;</span>, what_time_is_it_now() - start);
+}
+
+
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">validate_detector</span><span class="hljs-params">(<span class="hljs-keyword">char</span> *datacfg, <span class="hljs-keyword">char</span> *cfgfile, <span class="hljs-keyword">char</span> *weightfile, <span class="hljs-keyword">char</span> *outfile)</span>
+</span>{
+    <span class="hljs-keyword">int</span> j;
+    <span class="hljs-built_in">list</span> *options = read_data_cfg(datacfg);
+    <span class="hljs-keyword">char</span> *valid_images = option_find_str(options, <span class="hljs-string">&quot;valid&quot;</span>, <span class="hljs-string">&quot;data/train.list&quot;</span>);
+    <span class="hljs-keyword">char</span> *name_list = option_find_str(options, <span class="hljs-string">&quot;names&quot;</span>, <span class="hljs-string">&quot;data/names.list&quot;</span>);
+    <span class="hljs-keyword">char</span> *prefix = option_find_str(options, <span class="hljs-string">&quot;results&quot;</span>, <span class="hljs-string">&quot;results&quot;</span>);
+    <span class="hljs-keyword">char</span> **names = get_labels(name_list);
+    <span class="hljs-keyword">char</span> *mapf = option_find_str(options, <span class="hljs-string">&quot;map&quot;</span>, <span class="hljs-number">0</span>);
+    <span class="hljs-keyword">int</span> *<span class="hljs-built_in">map</span> = <span class="hljs-number">0</span>;
+    <span class="hljs-keyword">if</span> (mapf) <span class="hljs-built_in">map</span> = read_map(mapf);
+
+    network *net = load_network(cfgfile, weightfile, <span class="hljs-number">0</span>);
+    set_batch_network(net, <span class="hljs-number">1</span>);
+    <span class="hljs-built_in">fprintf</span>(<span class="hljs-built_in">stderr</span>, <span class="hljs-string">&quot;Learning Rate: %g, Momentum: %g, Decay: %g\n&quot;</span>, net-&gt;learning_rate, net-&gt;momentum, net-&gt;decay);
+    srand(time(<span class="hljs-number">0</span>));
+
+    <span class="hljs-built_in">list</span> *plist = get_paths(valid_images);
+    <span class="hljs-keyword">char</span> **paths = (<span class="hljs-keyword">char</span> **)list_to_array(plist);
+
+    layer l = net-&gt;layers[net-&gt;n<span class="hljs-number">-1</span>];
+    <span class="hljs-keyword">int</span> classes = l.classes;
+
+    <span class="hljs-keyword">char</span> buff[<span class="hljs-number">1024</span>];
+    <span class="hljs-keyword">char</span> *type = option_find_str(options, <span class="hljs-string">&quot;eval&quot;</span>, <span class="hljs-string">&quot;voc&quot;</span>);
+    FILE *fp = <span class="hljs-number">0</span>;
+    FILE **fps = <span class="hljs-number">0</span>;
+    <span class="hljs-keyword">int</span> coco = <span class="hljs-number">0</span>;
+    <span class="hljs-keyword">int</span> imagenet = <span class="hljs-number">0</span>;
+    <span class="hljs-keyword">if</span>(<span class="hljs-number">0</span>==<span class="hljs-built_in">strcmp</span>(type, <span class="hljs-string">&quot;coco&quot;</span>)){
+        <span class="hljs-keyword">if</span>(!outfile) outfile = <span class="hljs-string">&quot;coco_results&quot;</span>;
+        <span class="hljs-built_in">snprintf</span>(buff, <span class="hljs-number">1024</span>, <span class="hljs-string">&quot;%s/%s.json&quot;</span>, prefix, outfile);
+        fp = fopen(buff, <span class="hljs-string">&quot;w&quot;</span>);
+        <span class="hljs-built_in">fprintf</span>(fp, <span class="hljs-string">&quot;[\n&quot;</span>);
+        coco = <span class="hljs-number">1</span>;
+    } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span>(<span class="hljs-number">0</span>==<span class="hljs-built_in">strcmp</span>(type, <span class="hljs-string">&quot;imagenet&quot;</span>)){
+        <span class="hljs-keyword">if</span>(!outfile) outfile = <span class="hljs-string">&quot;imagenet-detection&quot;</span>;
+        <span class="hljs-built_in">snprintf</span>(buff, <span class="hljs-number">1024</span>, <span class="hljs-string">&quot;%s/%s.txt&quot;</span>, prefix, outfile);
+        fp = fopen(buff, <span class="hljs-string">&quot;w&quot;</span>);
+        imagenet = <span class="hljs-number">1</span>;
+        classes = <span class="hljs-number">200</span>;
+    } <span class="hljs-keyword">else</span> {
+        <span class="hljs-keyword">if</span>(!outfile) outfile = <span class="hljs-string">&quot;comp4_det_test_&quot;</span>;
+        fps = <span class="hljs-built_in">calloc</span>(classes, <span class="hljs-keyword">sizeof</span>(FILE *));
+        <span class="hljs-keyword">for</span>(j = <span class="hljs-number">0</span>; j &lt; classes; ++j){
+            <span class="hljs-built_in">snprintf</span>(buff, <span class="hljs-number">1024</span>, <span class="hljs-string">&quot;%s/%s%s.txt&quot;</span>, prefix, outfile, names[j]);
+            fps[j] = fopen(buff, <span class="hljs-string">&quot;w&quot;</span>);
+        }
+    }
+
+
+    <span class="hljs-keyword">int</span> m = plist-&gt;size;
+    <span class="hljs-keyword">int</span> i=<span class="hljs-number">0</span>;
+    <span class="hljs-keyword">int</span> t;
+
+    <span class="hljs-keyword">float</span> thresh = <span class="hljs-number">.005</span>;
+    <span class="hljs-keyword">float</span> nms = <span class="hljs-number">.45</span>;
+
+    <span class="hljs-keyword">int</span> nthreads = <span class="hljs-number">4</span>;
+    image *val = <span class="hljs-built_in">calloc</span>(nthreads, <span class="hljs-keyword">sizeof</span>(image));
+    image *val_resized = <span class="hljs-built_in">calloc</span>(nthreads, <span class="hljs-keyword">sizeof</span>(image));
+    image *buf = <span class="hljs-built_in">calloc</span>(nthreads, <span class="hljs-keyword">sizeof</span>(image));
+    image *buf_resized = <span class="hljs-built_in">calloc</span>(nthreads, <span class="hljs-keyword">sizeof</span>(image));
+    <span class="hljs-keyword">pthread_t</span> *thr = <span class="hljs-built_in">calloc</span>(nthreads, <span class="hljs-keyword">sizeof</span>(<span class="hljs-keyword">pthread_t</span>));
+
+    load_args args = {<span class="hljs-number">0</span>};
+    args.w = net-&gt;w;
+    args.h = net-&gt;h;
+    <span class="hljs-comment">//args.type = IMAGE_DATA;</span>
+    args.type = LETTERBOX_DATA;
+
+    <span class="hljs-keyword">for</span>(t = <span class="hljs-number">0</span>; t &lt; nthreads; ++t){
+        args.path = paths[i+t];
+        args.im = &amp;buf[t];
+        args.resized = &amp;buf_resized[t];
+        thr[t] = load_data_in_thread(args);
+    }
+    <span class="hljs-keyword">double</span> start = what_time_is_it_now();
+    <span class="hljs-keyword">for</span>(i = nthreads; i &lt; m+nthreads; i += nthreads){
+        <span class="hljs-built_in">fprintf</span>(<span class="hljs-built_in">stderr</span>, <span class="hljs-string">&quot;%d\n&quot;</span>, i);
+        <span class="hljs-keyword">for</span>(t = <span class="hljs-number">0</span>; t &lt; nthreads &amp;&amp; i+t-nthreads &lt; m; ++t){
+            pthread_join(thr[t], <span class="hljs-number">0</span>);
+            val[t] = buf[t];
+            val_resized[t] = buf_resized[t];
+        }
+        <span class="hljs-keyword">for</span>(t = <span class="hljs-number">0</span>; t &lt; nthreads &amp;&amp; i+t &lt; m; ++t){
+            args.path = paths[i+t];
+            args.im = &amp;buf[t];
+            args.resized = &amp;buf_resized[t];
+            thr[t] = load_data_in_thread(args);
+        }
+        <span class="hljs-keyword">for</span>(t = <span class="hljs-number">0</span>; t &lt; nthreads &amp;&amp; i+t-nthreads &lt; m; ++t){
+            <span class="hljs-keyword">char</span> *path = paths[i+t-nthreads];
+            <span class="hljs-keyword">char</span> *id = basecfg(path);
+            <span class="hljs-keyword">float</span> *X = val_resized[t].data;
+            network_predict(net, X);
+            <span class="hljs-keyword">int</span> w = val[t].w;
+            <span class="hljs-keyword">int</span> h = val[t].h;
+            <span class="hljs-keyword">int</span> nboxes = <span class="hljs-number">0</span>;
+            detection *dets = get_network_boxes(net, w, h, thresh, <span class="hljs-number">.5</span>, <span class="hljs-built_in">map</span>, <span class="hljs-number">0</span>, &amp;nboxes);
+            <span class="hljs-keyword">if</span> (nms) do_nms_sort(dets, nboxes, classes, nms);
+            <span class="hljs-keyword">if</span> (coco){
+                print_cocos(fp, path, dets, nboxes, classes, w, h);
+            } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (imagenet){
+                print_imagenet_detections(fp, i+t-nthreads+<span class="hljs-number">1</span>, dets, nboxes, classes, w, h);
+            } <span class="hljs-keyword">else</span> {
+                print_detector_detections(fps, id, dets, nboxes, classes, w, h);
+            }
+            free_detections(dets, nboxes);
+            <span class="hljs-built_in">free</span>(id);
+            free_image(val[t]);
+            free_image(val_resized[t]);
+        }
+    }
+    <span class="hljs-keyword">for</span>(j = <span class="hljs-number">0</span>; j &lt; classes; ++j){
+        <span class="hljs-keyword">if</span>(fps) fclose(fps[j]);
+    }
+    <span class="hljs-keyword">if</span>(coco){
+        fseek(fp, <span class="hljs-number">-2</span>, SEEK_CUR);
+        <span class="hljs-built_in">fprintf</span>(fp, <span class="hljs-string">&quot;\n]\n&quot;</span>);
+        fclose(fp);
+    }
+    <span class="hljs-built_in">fprintf</span>(<span class="hljs-built_in">stderr</span>, <span class="hljs-string">&quot;Total Detection Time: %f Seconds\n&quot;</span>, what_time_is_it_now() - start);
+}
+
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">validate_detector_recall</span><span class="hljs-params">(<span class="hljs-keyword">char</span> *cfgfile, <span class="hljs-keyword">char</span> *weightfile)</span>
+</span>{
+    network *net = load_network(cfgfile, weightfile, <span class="hljs-number">0</span>);
+    set_batch_network(net, <span class="hljs-number">1</span>);
+    <span class="hljs-built_in">fprintf</span>(<span class="hljs-built_in">stderr</span>, <span class="hljs-string">&quot;Learning Rate: %g, Momentum: %g, Decay: %g\n&quot;</span>, net-&gt;learning_rate, net-&gt;momentum, net-&gt;decay);
+    srand(time(<span class="hljs-number">0</span>));
+
+    <span class="hljs-built_in">list</span> *plist = get_paths(<span class="hljs-string">&quot;data/coco_val_5k.list&quot;</span>);
+    <span class="hljs-keyword">char</span> **paths = (<span class="hljs-keyword">char</span> **)list_to_array(plist);
+
+    layer l = net-&gt;layers[net-&gt;n<span class="hljs-number">-1</span>];
+
+    <span class="hljs-keyword">int</span> j, k;
+
+    <span class="hljs-keyword">int</span> m = plist-&gt;size;
+    <span class="hljs-keyword">int</span> i=<span class="hljs-number">0</span>;
+
+    <span class="hljs-keyword">float</span> thresh = <span class="hljs-number">.001</span>;
+    <span class="hljs-keyword">float</span> iou_thresh = <span class="hljs-number">.5</span>;
+    <span class="hljs-keyword">float</span> nms = <span class="hljs-number">.4</span>;
+
+    <span class="hljs-keyword">int</span> total = <span class="hljs-number">0</span>;
+    <span class="hljs-keyword">int</span> correct = <span class="hljs-number">0</span>;
+    <span class="hljs-keyword">int</span> proposals = <span class="hljs-number">0</span>;
+    <span class="hljs-keyword">float</span> avg_iou = <span class="hljs-number">0</span>;
+
+    <span class="hljs-keyword">for</span>(i = <span class="hljs-number">0</span>; i &lt; m; ++i){
+        <span class="hljs-keyword">char</span> *path = paths[i];
+        image orig = load_image_color(path, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>);
+        image sized = resize_image(orig, net-&gt;w, net-&gt;h);
+        <span class="hljs-keyword">char</span> *id = basecfg(path);
+        network_predict(net, sized.data);
+        <span class="hljs-keyword">int</span> nboxes = <span class="hljs-number">0</span>;
+        detection *dets = get_network_boxes(net, sized.w, sized.h, thresh, <span class="hljs-number">.5</span>, <span class="hljs-number">0</span>, <span class="hljs-number">1</span>, &amp;nboxes);
+        <span class="hljs-keyword">if</span> (nms) do_nms_obj(dets, nboxes, <span class="hljs-number">1</span>, nms);
+
+        <span class="hljs-keyword">char</span> labelpath[<span class="hljs-number">4096</span>];
+        find_replace(path, <span class="hljs-string">&quot;images&quot;</span>, <span class="hljs-string">&quot;labels&quot;</span>, labelpath);
+        find_replace(labelpath, <span class="hljs-string">&quot;JPEGImages&quot;</span>, <span class="hljs-string">&quot;labels&quot;</span>, labelpath);
+        find_replace(labelpath, <span class="hljs-string">&quot;.jpg&quot;</span>, <span class="hljs-string">&quot;.txt&quot;</span>, labelpath);
+        find_replace(labelpath, <span class="hljs-string">&quot;.JPEG&quot;</span>, <span class="hljs-string">&quot;.txt&quot;</span>, labelpath);
+
+        <span class="hljs-keyword">int</span> num_labels = <span class="hljs-number">0</span>;
+        box_label *truth = read_boxes(labelpath, &amp;num_labels);
+        <span class="hljs-keyword">for</span>(k = <span class="hljs-number">0</span>; k &lt; nboxes; ++k){
+            <span class="hljs-keyword">if</span>(dets[k].objectness &gt; thresh){
+                ++proposals;
+            }
+        }
+        <span class="hljs-keyword">for</span> (j = <span class="hljs-number">0</span>; j &lt; num_labels; ++j) {
+            ++total;
+            box t = {truth[j].x, truth[j].y, truth[j].w, truth[j].h};
+            <span class="hljs-keyword">float</span> best_iou = <span class="hljs-number">0</span>;
+            <span class="hljs-keyword">for</span>(k = <span class="hljs-number">0</span>; k &lt; l.w*l.h*l.n; ++k){
+                <span class="hljs-keyword">float</span> iou = box_iou(dets[k].bbox, t);
+                <span class="hljs-keyword">if</span>(dets[k].objectness &gt; thresh &amp;&amp; iou &gt; best_iou){
+                    best_iou = iou;
+                }
+            }
+            avg_iou += best_iou;
+            <span class="hljs-keyword">if</span>(best_iou &gt; iou_thresh){
+                ++correct;
+            }
+        }
+
+        <span class="hljs-built_in">fprintf</span>(<span class="hljs-built_in">stderr</span>, <span class="hljs-string">&quot;%5d %5d %5d\tRPs/Img: %.2f\tIOU: %.2f%%\tRecall:%.2f%%\n&quot;</span>, i, correct, total, (<span class="hljs-keyword">float</span>)proposals/(i+<span class="hljs-number">1</span>), avg_iou*<span class="hljs-number">100</span>/total, <span class="hljs-number">100.</span>*correct/total);
+        <span class="hljs-built_in">free</span>(id);
+        free_image(orig);
+        free_image(sized);
+    }
+}
+
+
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">test_detector</span><span class="hljs-params">(<span class="hljs-keyword">char</span> *datacfg, <span class="hljs-keyword">char</span> *cfgfile, <span class="hljs-keyword">char</span> *weightfile, <span class="hljs-keyword">char</span> *filename, <span class="hljs-keyword">float</span> thresh, <span class="hljs-keyword">float</span> hier_thresh, <span class="hljs-keyword">char</span> *outfile, <span class="hljs-keyword">int</span> fullscreen)</span>
+</span>{
+    <span class="hljs-built_in">list</span> *options = read_data_cfg(datacfg);
+    <span class="hljs-keyword">char</span> *name_list = option_find_str(options, <span class="hljs-string">&quot;names&quot;</span>, <span class="hljs-string">&quot;data/names.list&quot;</span>);
+    <span class="hljs-keyword">char</span> **names = get_labels(name_list);
+
+    image **alphabet = load_alphabet();
+    network *net = load_network(cfgfile, weightfile, <span class="hljs-number">0</span>);
+    set_batch_network(net, <span class="hljs-number">1</span>);
+    srand(<span class="hljs-number">2222222</span>);
+    <span class="hljs-keyword">double</span> time;
+    <span class="hljs-keyword">char</span> buff[<span class="hljs-number">256</span>];
+    <span class="hljs-keyword">char</span> *input = buff;
+    <span class="hljs-keyword">float</span> nms=<span class="hljs-number">.45</span>;
+    <span class="hljs-keyword">while</span>(<span class="hljs-number">1</span>){
+        <span class="hljs-keyword">if</span>(filename){
+            <span class="hljs-built_in">strncpy</span>(input, filename, <span class="hljs-number">256</span>);
+        } <span class="hljs-keyword">else</span> {
+            <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;Enter Image Path: &quot;</span>);
+            fflush(<span class="hljs-built_in">stdout</span>);
+            input = fgets(input, <span class="hljs-number">256</span>, <span class="hljs-built_in">stdin</span>);
+            <span class="hljs-keyword">if</span>(!input) <span class="hljs-keyword">return</span>;
+            strtok(input, <span class="hljs-string">&quot;\n&quot;</span>);
+        }
+        image im = load_image_color(input,<span class="hljs-number">0</span>,<span class="hljs-number">0</span>);
+        image sized = letterbox_image(im, net-&gt;w, net-&gt;h);
+        <span class="hljs-comment">//image sized = resize_image(im, net-&gt;w, net-&gt;h);</span>
+        <span class="hljs-comment">//image sized2 = resize_max(im, net-&gt;w);</span>
+        <span class="hljs-comment">//image sized = crop_image(sized2, -((net-&gt;w - sized2.w)/2), -((net-&gt;h - sized2.h)/2), net-&gt;w, net-&gt;h);</span>
+        <span class="hljs-comment">//resize_network(net, sized.w, sized.h);</span>
+        layer l = net-&gt;layers[net-&gt;n<span class="hljs-number">-1</span>];
+
+
+        <span class="hljs-keyword">float</span> *X = sized.data;
+        time=what_time_is_it_now();
+        network_predict(net, X);
+        <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;%s: Predicted in %f seconds.\n&quot;</span>, input, what_time_is_it_now()-time);
+        <span class="hljs-keyword">int</span> nboxes = <span class="hljs-number">0</span>;
+        detection *dets = get_network_boxes(net, im.w, im.h, thresh, hier_thresh, <span class="hljs-number">0</span>, <span class="hljs-number">1</span>, &amp;nboxes);
+        <span class="hljs-comment">//printf(&quot;%d\n&quot;, nboxes);</span>
+        <span class="hljs-comment">//if (nms) do_nms_obj(boxes, probs, l.w*l.h*l.n, l.classes, nms);</span>
+        <span class="hljs-keyword">if</span> (nms) do_nms_sort(dets, nboxes, l.classes, nms);
+        draw_detections(im, dets, nboxes, thresh, names, alphabet, l.classes);
+        free_detections(dets, nboxes);
+        <span class="hljs-keyword">if</span>(outfile){
+            save_image(im, outfile);
+        }
+        <span class="hljs-keyword">else</span>{
+            save_image(im, <span class="hljs-string">&quot;predictions&quot;</span>);
+<span class="hljs-meta">#<span class="hljs-meta-keyword">ifdef</span> OPENCV</span>
+            make_window(<span class="hljs-string">&quot;predictions&quot;</span>, <span class="hljs-number">512</span>, <span class="hljs-number">512</span>, <span class="hljs-number">0</span>);
+            show_image(im, <span class="hljs-string">&quot;predictions&quot;</span>, <span class="hljs-number">0</span>);
+<span class="hljs-meta">#<span class="hljs-meta-keyword">endif</span></span>
+        }
+
+        free_image(im);
+        free_image(sized);
+        <span class="hljs-keyword">if</span> (filename) <span class="hljs-keyword">break</span>;
+    }
+}
+
+<span class="hljs-comment">/*
+void censor_detector(char *datacfg, char *cfgfile, char *weightfile, int cam_index, const char *filename, int class, float thresh, int skip)
+{
+#ifdef OPENCV
+    char *base = basecfg(cfgfile);
+    network *net = load_network(cfgfile, weightfile, 0);
+    set_batch_network(net, 1);
+
+    srand(2222222);
+    CvCapture * cap;
+
+    int w = 1280;
+    int h = 720;
+
+    if(filename){
+        cap = cvCaptureFromFile(filename);
+    }else{
+        cap = cvCaptureFromCAM(cam_index);
+    }
+
+    if(w){
+        cvSetCaptureProperty(cap, CV_CAP_PROP_FRAME_WIDTH, w);
+    }
+    if(h){
+        cvSetCaptureProperty(cap, CV_CAP_PROP_FRAME_HEIGHT, h);
+    }
+
+    if(!cap) error(&quot;Couldn&apos;t connect to webcam.\n&quot;);
+    cvNamedWindow(base, CV_WINDOW_NORMAL);
+    cvResizeWindow(base, 512, 512);
+    float fps = 0;
+    int i;
+    float nms = .45;
+
+    while(1){
+        image in = get_image_from_stream(cap);
+        //image in_s = resize_image(in, net-&gt;w, net-&gt;h);
+        image in_s = letterbox_image(in, net-&gt;w, net-&gt;h);
+        layer l = net-&gt;layers[net-&gt;n-1];
+
+        float *X = in_s.data;
+        network_predict(net, X);
+        int nboxes = 0;
+        detection *dets = get_network_boxes(net, in.w, in.h, thresh, 0, 0, 0, &amp;nboxes);
+        //if (nms) do_nms_obj(boxes, probs, l.w*l.h*l.n, l.classes, nms);
+        if (nms) do_nms_sort(dets, nboxes, l.classes, nms);
+
+        for(i = 0; i &lt; nboxes; ++i){
+            if(dets[i].prob[class] &gt; thresh){
+                box b = dets[i].bbox;
+                int left  = b.x-b.w/2.;
+                int top   = b.y-b.h/2.;
+                censor_image(in, left, top, b.w, b.h);
+            }
+        }
+        show_image(in, base);
+        cvWaitKey(10);
+        free_detections(dets, nboxes);
+
+
+        free_image(in_s);
+        free_image(in);
+
+
+        float curr = 0;
+        fps = .9*fps + .1*curr;
+        for(i = 0; i &lt; skip; ++i){
+            image in = get_image_from_stream(cap);
+            free_image(in);
+        }
+    }
+    #endif
+}
+
+void extract_detector(char *datacfg, char *cfgfile, char *weightfile, int cam_index, const char *filename, int class, float thresh, int skip)
+{
+#ifdef OPENCV
+    char *base = basecfg(cfgfile);
+    network *net = load_network(cfgfile, weightfile, 0);
+    set_batch_network(net, 1);
+
+    srand(2222222);
+    CvCapture * cap;
+
+    int w = 1280;
+    int h = 720;
+
+    if(filename){
+        cap = cvCaptureFromFile(filename);
+    }else{
+        cap = cvCaptureFromCAM(cam_index);
+    }
+
+    if(w){
+        cvSetCaptureProperty(cap, CV_CAP_PROP_FRAME_WIDTH, w);
+    }
+    if(h){
+        cvSetCaptureProperty(cap, CV_CAP_PROP_FRAME_HEIGHT, h);
+    }
+
+    if(!cap) error(&quot;Couldn&apos;t connect to webcam.\n&quot;);
+    cvNamedWindow(base, CV_WINDOW_NORMAL);
+    cvResizeWindow(base, 512, 512);
+    float fps = 0;
+    int i;
+    int count = 0;
+    float nms = .45;
+
+    while(1){
+        image in = get_image_from_stream(cap);
+        //image in_s = resize_image(in, net-&gt;w, net-&gt;h);
+        image in_s = letterbox_image(in, net-&gt;w, net-&gt;h);
+        layer l = net-&gt;layers[net-&gt;n-1];
+
+        show_image(in, base);
+
+        int nboxes = 0;
+        float *X = in_s.data;
+        network_predict(net, X);
+        detection *dets = get_network_boxes(net, in.w, in.h, thresh, 0, 0, 1, &amp;nboxes);
+        //if (nms) do_nms_obj(boxes, probs, l.w*l.h*l.n, l.classes, nms);
+        if (nms) do_nms_sort(dets, nboxes, l.classes, nms);
+
+        for(i = 0; i &lt; nboxes; ++i){
+            if(dets[i].prob[class] &gt; thresh){
+                box b = dets[i].bbox;
+                int size = b.w*in.w &gt; b.h*in.h ? b.w*in.w : b.h*in.h;
+                int dx  = b.x*in.w-size/2.;
+                int dy  = b.y*in.h-size/2.;
+                image bim = crop_image(in, dx, dy, size, size);
+                char buff[2048];
+                sprintf(buff, &quot;results/extract/%07d&quot;, count);
+                ++count;
+                save_image(bim, buff);
+                free_image(bim);
+            }
+        }
+        free_detections(dets, nboxes);
+
+
+        free_image(in_s);
+        free_image(in);
+
+
+        float curr = 0;
+        fps = .9*fps + .1*curr;
+        for(i = 0; i &lt; skip; ++i){
+            image in = get_image_from_stream(cap);
+            free_image(in);
+        }
+    }
+    #endif
+}
+*/</span>
+
+<span class="hljs-comment">/*
+void network_detect(network *net, image im, float thresh, float hier_thresh, float nms, detection *dets)
+{
+    network_predict_image(net, im);
+    layer l = net-&gt;layers[net-&gt;n-1];
+    int nboxes = num_boxes(net);
+    fill_network_boxes(net, im.w, im.h, thresh, hier_thresh, 0, 0, dets);
+    if (nms) do_nms_sort(dets, nboxes, l.classes, nms);
+}
+*/</span>
+
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">run_detector</span><span class="hljs-params">(<span class="hljs-keyword">int</span> argc, <span class="hljs-keyword">char</span> **argv)</span>
+</span>{
+    <span class="hljs-keyword">char</span> *prefix = find_char_arg(argc, argv, <span class="hljs-string">&quot;-prefix&quot;</span>, <span class="hljs-number">0</span>);
+    <span class="hljs-keyword">float</span> thresh = find_float_arg(argc, argv, <span class="hljs-string">&quot;-thresh&quot;</span>, <span class="hljs-number">.5</span>);
+    <span class="hljs-keyword">float</span> hier_thresh = find_float_arg(argc, argv, <span class="hljs-string">&quot;-hier&quot;</span>, <span class="hljs-number">.5</span>);
+    <span class="hljs-keyword">int</span> cam_index = find_int_arg(argc, argv, <span class="hljs-string">&quot;-c&quot;</span>, <span class="hljs-number">0</span>);
+    <span class="hljs-keyword">int</span> frame_skip = find_int_arg(argc, argv, <span class="hljs-string">&quot;-s&quot;</span>, <span class="hljs-number">0</span>);
+    <span class="hljs-keyword">int</span> avg = find_int_arg(argc, argv, <span class="hljs-string">&quot;-avg&quot;</span>, <span class="hljs-number">3</span>);
+    <span class="hljs-keyword">if</span>(argc &lt; <span class="hljs-number">4</span>){
+        <span class="hljs-built_in">fprintf</span>(<span class="hljs-built_in">stderr</span>, <span class="hljs-string">&quot;usage: %s %s [train/test/valid] [cfg] [weights (optional)]\n&quot;</span>, argv[<span class="hljs-number">0</span>], argv[<span class="hljs-number">1</span>]);
+        <span class="hljs-keyword">return</span>;
+    }
+    <span class="hljs-keyword">char</span> *gpu_list = find_char_arg(argc, argv, <span class="hljs-string">&quot;-gpus&quot;</span>, <span class="hljs-number">0</span>);
+    <span class="hljs-keyword">char</span> *outfile = find_char_arg(argc, argv, <span class="hljs-string">&quot;-out&quot;</span>, <span class="hljs-number">0</span>);
+    <span class="hljs-keyword">int</span> *gpus = <span class="hljs-number">0</span>;
+    <span class="hljs-keyword">int</span> gpu = <span class="hljs-number">0</span>;
+    <span class="hljs-keyword">int</span> ngpus = <span class="hljs-number">0</span>;
+    <span class="hljs-keyword">if</span>(gpu_list){
+        <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;%s\n&quot;</span>, gpu_list);
+        <span class="hljs-keyword">int</span> len = <span class="hljs-built_in">strlen</span>(gpu_list);
+        ngpus = <span class="hljs-number">1</span>;
+        <span class="hljs-keyword">int</span> i;
+        <span class="hljs-keyword">for</span>(i = <span class="hljs-number">0</span>; i &lt; len; ++i){
+            <span class="hljs-keyword">if</span> (gpu_list[i] == <span class="hljs-string">&apos;,&apos;</span>) ++ngpus;
+        }
+        gpus = <span class="hljs-built_in">calloc</span>(ngpus, <span class="hljs-keyword">sizeof</span>(<span class="hljs-keyword">int</span>));
+        <span class="hljs-keyword">for</span>(i = <span class="hljs-number">0</span>; i &lt; ngpus; ++i){
+            gpus[i] = atoi(gpu_list);
+            gpu_list = <span class="hljs-built_in">strchr</span>(gpu_list, <span class="hljs-string">&apos;,&apos;</span>)+<span class="hljs-number">1</span>;
+        }
+    } <span class="hljs-keyword">else</span> {
+        gpu = gpu_index;
+        gpus = &amp;gpu;
+        ngpus = <span class="hljs-number">1</span>;
+    }
+
+    <span class="hljs-keyword">int</span> clear = find_arg(argc, argv, <span class="hljs-string">&quot;-clear&quot;</span>);
+    <span class="hljs-keyword">int</span> fullscreen = find_arg(argc, argv, <span class="hljs-string">&quot;-fullscreen&quot;</span>);
+    <span class="hljs-keyword">int</span> width = find_int_arg(argc, argv, <span class="hljs-string">&quot;-w&quot;</span>, <span class="hljs-number">0</span>);
+    <span class="hljs-keyword">int</span> height = find_int_arg(argc, argv, <span class="hljs-string">&quot;-h&quot;</span>, <span class="hljs-number">0</span>);
+    <span class="hljs-keyword">int</span> fps = find_int_arg(argc, argv, <span class="hljs-string">&quot;-fps&quot;</span>, <span class="hljs-number">0</span>);
+    <span class="hljs-comment">//int class = find_int_arg(argc, argv, &quot;-class&quot;, 0);</span>
+
+    <span class="hljs-keyword">char</span> *datacfg = argv[<span class="hljs-number">3</span>];
+    <span class="hljs-keyword">char</span> *cfg = argv[<span class="hljs-number">4</span>];
+    <span class="hljs-keyword">char</span> *weights = (argc &gt; <span class="hljs-number">5</span>) ? argv[<span class="hljs-number">5</span>] : <span class="hljs-number">0</span>;
+    <span class="hljs-keyword">char</span> *filename = (argc &gt; <span class="hljs-number">6</span>) ? argv[<span class="hljs-number">6</span>]: <span class="hljs-number">0</span>;
+    <span class="hljs-keyword">if</span>(<span class="hljs-number">0</span>==<span class="hljs-built_in">strcmp</span>(argv[<span class="hljs-number">2</span>], <span class="hljs-string">&quot;test&quot;</span>)) test_detector(datacfg, cfg, weights, filename, thresh, hier_thresh, outfile, fullscreen);
+    <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span>(<span class="hljs-number">0</span>==<span class="hljs-built_in">strcmp</span>(argv[<span class="hljs-number">2</span>], <span class="hljs-string">&quot;train&quot;</span>)) train_detector(datacfg, cfg, weights, gpus, ngpus, clear);
+    <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span>(<span class="hljs-number">0</span>==<span class="hljs-built_in">strcmp</span>(argv[<span class="hljs-number">2</span>], <span class="hljs-string">&quot;valid&quot;</span>)) validate_detector(datacfg, cfg, weights, outfile);
+    <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span>(<span class="hljs-number">0</span>==<span class="hljs-built_in">strcmp</span>(argv[<span class="hljs-number">2</span>], <span class="hljs-string">&quot;valid2&quot;</span>)) validate_detector_flip(datacfg, cfg, weights, outfile);
+    <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span>(<span class="hljs-number">0</span>==<span class="hljs-built_in">strcmp</span>(argv[<span class="hljs-number">2</span>], <span class="hljs-string">&quot;recall&quot;</span>)) validate_detector_recall(cfg, weights);
+    <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span>(<span class="hljs-number">0</span>==<span class="hljs-built_in">strcmp</span>(argv[<span class="hljs-number">2</span>], <span class="hljs-string">&quot;demo&quot;</span>)) {
+        <span class="hljs-built_in">list</span> *options = read_data_cfg(datacfg);
+        <span class="hljs-keyword">int</span> classes = option_find_int(options, <span class="hljs-string">&quot;classes&quot;</span>, <span class="hljs-number">20</span>);
+        <span class="hljs-keyword">char</span> *name_list = option_find_str(options, <span class="hljs-string">&quot;names&quot;</span>, <span class="hljs-string">&quot;data/names.list&quot;</span>);
+        <span class="hljs-keyword">char</span> **names = get_labels(name_list);
+        demo(cfg, weights, thresh, cam_index, filename, names, classes, frame_skip, prefix, avg, hier_thresh, width, height, fps, fullscreen);
+    }
+    <span class="hljs-comment">//else if(0==strcmp(argv[2], &quot;extract&quot;)) extract_detector(datacfg, cfg, weights, cam_index, filename, class, thresh, frame_skip);</span>
+    <span class="hljs-comment">//else if(0==strcmp(argv[2], &quot;censor&quot;)) censor_detector(datacfg, cfg, weights, cam_index, filename, class, thresh, frame_skip);</span>
+}
+</code></pre>
+
+                                
+                                </section>
+                            
+    </div>
+    <div class="search-results">
+        <div class="has-results">
+            
+            <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+            <ul class="search-results-list"></ul>
+            
+        </div>
+        <div class="no-results">
+            
+            <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+            
+        </div>
+    </div>
+</div>
+
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="darknet.html" class="navigation navigation-prev " aria-label="Previous page: darknet.c">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="dice.html" class="navigation navigation-next " aria-label="Next page: dice.c">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"detector.c","level":"6.8","depth":1,"next":{"title":"dice.c","level":"6.9","depth":1,"path":"part5_examples/dice.md","ref":"part5_examples/dice.md","articles":[]},"previous":{"title":"darknet.c","level":"6.7","depth":1,"path":"part5_examples/darknet.md","ref":"part5_examples/darknet.md","articles":[]},"dir":"ltr"},"config":{"plugins":["advanced-emoji","theme-gestalt","-theme-default","styles-sass-fix","theme-api","mathjax","ga"],"root":"./","styles":{"website":"website-1600186244488.css"},"pluginsConfig":{"styles-sass-fix":{},"theme-gestalt":{"showLevel":false,"styles":{"website":"styles/website.css"},"logo":"/darknet_book/assets/darknet.png","baseUrl":null,"excludeDefaultStyles":true,"doNotHideChildrenChapters":false},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"theme-api":{"languages":[],"split":true,"theme":"light"},"mathjax":{"forceSVG":false,"version":"2.6-latest"},"ga":{"configuration":"auto","token":"UA-136921229-1"},"advanced-emoji":{"embedEmojis":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]}},"theme":"default","author":"JJM","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{"BASE_URL":"https://jjeamin.github.io"},"title":"DarkNet Book","output.name":"site","gitbook":"*"},"file":{"path":"part5_examples/detector.md","mtime":"2020-09-15T15:55:01.563Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-09-15T16:10:39.415Z"},"basePath":"..","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <script src="../gitbook/gitbook.js"></script>
+    <script src="../gitbook/theme.js"></script>
+    
+        
+        <script src="https://cdn.mathjax.org/mathjax/2.6-latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-mathjax/plugin.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-ga/plugin.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-search/search-engine.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-search/search.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lunr/lunr.min.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lunr/search-lunr.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-sharing/buttons.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-fontsettings/fontsettings.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-theme-api/theme-api.js"></script>
+        
+    
+
+    </body>
+</html>
+

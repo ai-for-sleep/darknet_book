@@ -298,6 +298,9 @@ void find_replace(char *str, char *orig, char *rep, char *output)
 }
 ```
 
+- `strstr` : 문자열안에 특정 문자(열)이 있는지 확인 해주는 함수
+- `str` 문자열에서 `orig` 문자열을 찾아 `rep`로 변경한 뒤 `output`에 저장하는 함수
+
 ## sec
 
 ```c

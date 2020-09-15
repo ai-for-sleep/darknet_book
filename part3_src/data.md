@@ -57,6 +57,7 @@ char **find_replace_paths(char **paths, int n, char *find, char *replace)
 }
 ```
 
+- path들의 경로를 변경하여 반환합니다.
 
 ## load_image_paths_gray
 
@@ -240,6 +241,9 @@ void correct_boxes(box_label *boxes, int n, float dx, float dy, float sx, float 
 }
 ```
 
+- box를 YOLO 형식에 맞게 변환합니다.
+- 자세한 내용은 PAPER 파트에 있습니다.
+
 ## fill_truth_swag
 
 ```
@@ -365,6 +369,7 @@ void or_image(image src, image dest, int c)
     }
 }
 ```
+
 
 ## exclusive_image
 
@@ -1277,6 +1282,8 @@ void *load_thread(void *ptr)
 }
 ```
 
+- 데이터를
+
 ## load_data_in_thread
 
 ```
@@ -1381,24 +1388,6 @@ data load_data_old(char **paths, int n, int m, char **labels, int k, int w, int 
 }
 ```
 
-## load_data_study
-
-```
-/*
-   data load_data_study(char **paths, int n, int m, char **labels, int k, int min, int max, int size, float angle, float aspect, float hue, float saturation, float exposure)
-   {
-   data d = {0};
-   d.indexes = calloc(n, sizeof(int));
-   if(m) paths = get_random_paths_indexes(paths, n, m, d.indexes);
-   d.shallow = 0;
-   d.X = load_image_augment_paths(paths, n, min, max, size, angle, aspect, hue, saturation, exposure);
-   d.y = load_labels_paths(paths, n, labels, k);
-   if(m) free(paths);
-   return d;
-   }
- */
- ```
-
 ## load_data_super
 
  ```
@@ -1448,6 +1437,8 @@ data load_data_regression(char **paths, int n, int m, int k, int min, int max, i
 }
 ```
 
+- 학습시킬 데이터(보강 방법을 거친 데이터)와 regression labels가 포함되어 있는 데이터를 반환합니다.
+
 ## select_data
 
 ```
@@ -1474,6 +1465,8 @@ data select_data(data *orig, int *inds)
     return d;
 }
 ```
+
+-
 
 ## tile_data
 
@@ -1530,6 +1523,8 @@ data resize_data(data orig, int w, int h)
 }
 ```
 
+- 데이터를 resize 합니다.
+
 ## load_data_augment
 
 ```
@@ -1547,6 +1542,8 @@ data load_data_augment(char **paths, int n, int m, char **labels, int k, tree *h
 }
 ```
 
+- 학습시킬 데이터(보강 방법을 거친 데이터)와 labels가 포함되어 있는 데이터를 반환합니다.
+
 ## load_data_tag
 
 ```
@@ -1563,6 +1560,8 @@ data load_data_tag(char **paths, int n, int m, int k, int min, int max, int size
     return d;
 }
 ```
+
+- 학습시킬 데이터(보강 방법을 거친 데이터)와 tags가 포함되어 있는 데이터를 반환합니다.
 
 ## concat_matrix
 
@@ -1584,6 +1583,8 @@ matrix concat_matrix(matrix m1, matrix m2)
 }
 ```
 
+- 행렬을 concat 합니다.
+
 ## concat_data
 
 ```
@@ -1598,6 +1599,8 @@ data concat_data(data d1, data d2)
     return d;
 }
 ```
+
+- 데이터 2개를 concat 합니다.
 
 ## concat_datas
 
@@ -1614,6 +1617,8 @@ data concat_datas(data *d, int n)
     return out;
 }
 ```
+
+- 데이터 여러개를 concat 합니다.
 
 ## load_categorical_data_csv
 
@@ -1635,6 +1640,8 @@ data load_categorical_data_csv(char *filename, int target, int k)
     return d;
 }
 ```
+
+- csv에 담겨진 categorical 데이터를 반환합니다.
 
 ## load_cifar10_data
 
@@ -1681,6 +1688,8 @@ void get_random_batch(data d, int n, float *X, float *y)
 }
 ```
 
+- 데이터의 무작위 batch를 반환합니다.
+
 ## get_next_batch
 
 ```
@@ -1694,6 +1703,8 @@ void get_next_batch(data d, int n, int offset, float *X, float *y)
     }
 }
 ```
+
+- 데이터의 다음 batch를 반환합니다.
 
 ## smooth_data
 
@@ -1710,6 +1721,8 @@ void smooth_data(data d)
     }
 }
 ```
+
+- 데이터를 smoothing 합니다.
 
 ## load_all_cifar10
 
@@ -1747,6 +1760,8 @@ data load_all_cifar10()
     return d;
 }
 ```
+
+- 모든 CIFAR10 데이터를 반환합니다.
 
 ## load_go
 
@@ -1801,7 +1816,6 @@ data load_go(char *filename)
 ## randomize_data
 
 ```
-
 void randomize_data(data d)
 {
     int i;
@@ -1818,6 +1832,8 @@ void randomize_data(data d)
 }
 ```
 
+- 데이터를 무작위로 섞습니다.
+
 ## scale_data_rows
 
 ```
@@ -1830,6 +1846,8 @@ void scale_data_rows(data d, float s)
 }
 ```
 
+- 데이터에 `s`값을 곱합니다.
+
 ## translate_data_rows
 
 ```
@@ -1841,6 +1859,8 @@ void translate_data_rows(data d, float s)
     }
 }
 ```
+
+- 데이터에 `s`값을 더합니다.
 
 ## copy_data
 
@@ -1859,6 +1879,8 @@ data copy_data(data d)
 }
 ```
 
+- 데이터를 복사합니다.
+
 ## normalize_data_rows
 
 ```
@@ -1870,6 +1892,8 @@ void normalize_data_rows(data d)
     }
 }
 ```
+
+- 데이터를 행 단위로 정규화 합니다.
 
 ## get_data_part
 
@@ -1887,6 +1911,9 @@ data get_data_part(data d, int part, int total)
     return p;
 }
 ```
+
+- 특정 부분 데이터를 반환합니다.
+
 
 ## get_random_data
 
@@ -1914,6 +1941,8 @@ data get_random_data(data d, int num)
     return r;
 }
 ```
+
+- `num`개의 데이터를 무작위로 반환합니다.
 
 ## split_data
 
@@ -1955,3 +1984,5 @@ data *split_data(data d, int part, int total)
     return split;
 }
 ```
+
+- 데이터셋을 train test로 분할 합니다.

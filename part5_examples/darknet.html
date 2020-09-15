@@ -1,0 +1,2324 @@
+
+<!DOCTYPE HTML>
+<html lang="" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>darknet.c · DarkNet Book</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 3.2.3">
+        <meta name="author" content="JJM">
+        
+        
+    
+    
+
+    
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-advanced-emoji/emoji-website.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-search/search.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-fontsettings/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-theme-api/theme-api.css">
+                
+            
+        
+
+    
+
+    
+        
+        <link rel="stylesheet" href="../website-1600186244488.css">
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    
+    
+        <link rel="shortcut icon" href="../gitbook/images/favicon.ico" type="image/x-icon">
+    
+    
+    
+
+    
+    <link rel="next" href="detector.html" />
+    
+    
+    <link rel="prev" href="coco.html" />
+    
+
+    </head>
+    <body>
+        
+<div class="book">
+    <div class="book-summary">
+        
+            <div class="book-logo">   
+                
+                <img src="/darknet_book/assets/darknet.png"/>
+                
+            </div>
+            
+<div id="book-search-input" role="search">
+    <input type="text" placeholder="Type to search" />
+</div>
+
+            
+                <nav role="navigation">
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        
+        <li class="header ">DARKNET</li>
+        
+        
+    
+        
+        <li class="chapter 
+              "
+            data-level="1.1" 
+            data-path="../">
+
+            
+                <a href="../">
+            
+                    
+                    DarkNet
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="1.2" 
+            data-path="../INSTALL.html">
+
+            
+                <a href="../INSTALL.html">
+            
+                    
+                    설치하기
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+        
+        
+        <li class="header ">Paper</li>
+        
+        
+    
+        
+        <li class="chapter 
+              "
+            data-level="2.1" 
+            data-path="../part1_paper/yolov1.html">
+
+            
+                <a href="../part1_paper/yolov1.html">
+            
+                    
+                    YOLOv1
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="2.2" 
+            data-path="../part1_paper/yolov2.html">
+
+            
+                <a href="../part1_paper/yolov2.html">
+            
+                    
+                    YOLOv2
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="2.3" 
+            data-path="../part1_paper/yolov3.html">
+
+            
+                <a href="../part1_paper/yolov3.html">
+            
+                    
+                    YOLOv3
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="2.4" 
+            data-path="../part1_paper/yolov4.html">
+
+            
+                <a href="../part1_paper/yolov4.html">
+            
+                    
+                    YOLOv4
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+        
+        
+        <li class="header ">SOURCE</li>
+        
+        
+    
+        
+        <li class="chapter 
+              "
+            data-level="3.1" 
+            data-path="../part2_source/0_Project.html">
+
+            
+                <a href="../part2_source/0_Project.html">
+            
+                    
+                    project
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="3.2" 
+            data-path="../part2_source/1_DATA.html">
+
+            
+                <a href="../part2_source/1_DATA.html">
+            
+                    
+                    /data
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="3.3" 
+            data-path="../part2_source/2_CFG.html">
+
+            
+                <a href="../part2_source/2_CFG.html">
+            
+                    
+                    /cfg
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="3.4" 
+            data-path="../part2_source/3_EXAMPLE.html">
+
+            
+                <a href="../part2_source/3_EXAMPLE.html">
+            
+                    
+                    /example
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="3.5" 
+            data-path="../part2_source/4_SRC.html">
+
+            
+                <a href="../part2_source/4_SRC.html">
+            
+                    
+                    /src
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+        
+        
+        <li class="header ">Structure</li>
+        
+        
+    
+        
+        <li class="chapter 
+              "
+            data-level="4.1" 
+            data-path="../part4_structure/network.html">
+
+            
+                <a href="../part4_structure/network.html">
+            
+                    
+                    network
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="4.2" 
+            data-path="../part4_structure/layer.html">
+
+            
+                <a href="../part4_structure/layer.html">
+            
+                    
+                    layer
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="4.3" 
+            data-path="../part4_structure/etc.html">
+
+            
+                <a href="../part4_structure/etc.html">
+            
+                    
+                    etc
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+        
+        
+        <li class="header ">/SRC</li>
+        
+        
+    
+        
+        <li class="chapter 
+              "
+            data-level="5.1" 
+            data-path="../part3_src/activation_layer.html">
+
+            
+                <a href="../part3_src/activation_layer.html">
+            
+                    
+                    activation_layer.c
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="5.2" 
+            data-path="../part3_src/activations_1.html">
+
+            
+                <a href="../part3_src/activations_1.html">
+            
+                    
+                    activations.c
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+                
+    
+        
+        <li class="chapter 
+               hide "
+            data-level="5.2.1" 
+            data-path="../part3_src/activations_2.html">
+
+            
+                <a href="../part3_src/activations_2.html">
+            
+                    
+                    activation.h
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="5.3" 
+            data-path="../part3_src/avgpool.html">
+
+            
+                <a href="../part3_src/avgpool.html">
+            
+                    
+                    avgpool_layer.c
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="5.4" 
+            data-path="../part3_src/batchnorm_layer.html">
+
+            
+                <a href="../part3_src/batchnorm_layer.html">
+            
+                    
+                    batchnorm_layer.c
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="5.5" 
+            data-path="../part3_src/blas.html">
+
+            
+                <a href="../part3_src/blas.html">
+            
+                    
+                    blas.c
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="5.6" 
+            data-path="../part3_src/box.html">
+
+            
+                <a href="../part3_src/box.html">
+            
+                    
+                    box.c
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="5.7" 
+            data-path="../part3_src/col2im.html">
+
+            
+                <a href="../part3_src/col2im.html">
+            
+                    
+                    col2im.c
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="5.8" 
+            data-path="../part3_src/compare.html">
+
+            
+                <a href="../part3_src/compare.html">
+            
+                    
+                    compare.c
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="5.9" 
+            data-path="../part3_src/connected_layer.html">
+
+            
+                <a href="../part3_src/connected_layer.html">
+            
+                    
+                    connected_layer.c
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="5.10" 
+            data-path="../part3_src/convolutional_layer.html">
+
+            
+                <a href="../part3_src/convolutional_layer.html">
+            
+                    
+                    convolutional_layer.c
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="5.11" 
+            data-path="../part3_src/cost_layer.html">
+
+            
+                <a href="../part3_src/cost_layer.html">
+            
+                    
+                    cost_layer.c
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="5.12" 
+            data-path="../part3_src/crnn_layer.html">
+
+            
+                <a href="../part3_src/crnn_layer.html">
+            
+                    
+                    crnn_layer.c
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="5.13" 
+            data-path="../part3_src/crop_layer.html">
+
+            
+                <a href="../part3_src/crop_layer.html">
+            
+                    
+                    crop_layer.c
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="5.14" 
+            data-path="../part3_src/data.html">
+
+            
+                <a href="../part3_src/data.html">
+            
+                    
+                    data.c
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="5.15" 
+            data-path="../part3_src/deconvolutional_layer.html">
+
+            
+                <a href="../part3_src/deconvolutional_layer.html">
+            
+                    
+                    deconvolutional_layer.c
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="5.16" 
+            data-path="../part3_src/demo.html">
+
+            
+                <a href="../part3_src/demo.html">
+            
+                    
+                    demo.c
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="5.17" 
+            data-path="../part3_src/detection_layer.html">
+
+            
+                <a href="../part3_src/detection_layer.html">
+            
+                    
+                    detection_layer.c
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="5.18" 
+            data-path="../part3_src/dropout_layer.html">
+
+            
+                <a href="../part3_src/dropout_layer.html">
+            
+                    
+                    dropout_layer.c
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="5.19" 
+            data-path="../part3_src/gemm.html">
+
+            
+                <a href="../part3_src/gemm.html">
+            
+                    
+                    gemm.c
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="5.20" 
+            data-path="../part3_src/gru_layer.html">
+
+            
+                <a href="../part3_src/gru_layer.html">
+            
+                    
+                    gru_layer.c
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="5.21" 
+            data-path="../part3_src/im2col.html">
+
+            
+                <a href="../part3_src/im2col.html">
+            
+                    
+                    im2col.c
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="5.22" 
+            data-path="../part3_src/image.html">
+
+            
+                <a href="../part3_src/image.html">
+            
+                    
+                    image.c
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="5.23" 
+            data-path="../part3_src/iseg_layer.html">
+
+            
+                <a href="../part3_src/iseg_layer.html">
+            
+                    
+                    iseg_layer.c
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="5.24" 
+            data-path="../part3_src/l2norm_layer.html">
+
+            
+                <a href="../part3_src/l2norm_layer.html">
+            
+                    
+                    l2norm_layer.c
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="5.25" 
+            data-path="../part3_src/layer.html">
+
+            
+                <a href="../part3_src/layer.html">
+            
+                    
+                    layer.c
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="5.26" 
+            data-path="../part3_src/list.html">
+
+            
+                <a href="../part3_src/list.html">
+            
+                    
+                    list.c
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="5.27" 
+            data-path="../part3_src/local_layer.html">
+
+            
+                <a href="../part3_src/local_layer.html">
+            
+                    
+                    local_layer.c
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="5.28" 
+            data-path="../part3_src/logistic_layer.html">
+
+            
+                <a href="../part3_src/logistic_layer.html">
+            
+                    
+                    logistic_layer.c
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="5.29" 
+            data-path="../part3_src/lstm_layer.html">
+
+            
+                <a href="../part3_src/lstm_layer.html">
+            
+                    
+                    lstm_layer.c
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="5.30" 
+            data-path="../part3_src/matrix.html">
+
+            
+                <a href="../part3_src/matrix.html">
+            
+                    
+                    matrix.c
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="5.31" 
+            data-path="../part3_src/maxpool.html">
+
+            
+                <a href="../part3_src/maxpool.html">
+            
+                    
+                    maxpool_layer.c
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="5.32" 
+            data-path="../part3_src/network.html">
+
+            
+                <a href="../part3_src/network.html">
+            
+                    
+                    network.c
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="5.33" 
+            data-path="../part3_src/normalization_layer.html">
+
+            
+                <a href="../part3_src/normalization_layer.html">
+            
+                    
+                    normalization_layer.c
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="5.34" 
+            data-path="../part3_src/option_list.html">
+
+            
+                <a href="../part3_src/option_list.html">
+            
+                    
+                    option_list.c
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="5.35" 
+            data-path="../part3_src/parser_1.html">
+
+            
+                <a href="../part3_src/parser_1.html">
+            
+                    
+                    parser.c
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+                
+    
+        
+        <li class="chapter 
+               hide "
+            data-level="5.35.1" 
+            data-path="../part3_src/parser_2.html">
+
+            
+                <a href="../part3_src/parser_2.html">
+            
+                    
+                    + parser.c
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="5.36" 
+            data-path="../part3_src/region_layer.html">
+
+            
+                <a href="../part3_src/region_layer.html">
+            
+                    
+                    region_layer.c
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="5.37" 
+            data-path="../part3_src/reorg_layer.html">
+
+            
+                <a href="../part3_src/reorg_layer.html">
+            
+                    
+                    reorg_layer.c
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="5.38" 
+            data-path="../part3_src/rnn_layer.html">
+
+            
+                <a href="../part3_src/rnn_layer.html">
+            
+                    
+                    rnn_layer.c
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="5.39" 
+            data-path="../part3_src/route_layer.html">
+
+            
+                <a href="../part3_src/route_layer.html">
+            
+                    
+                    route_layer.c
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="5.40" 
+            data-path="../part3_src/shortcut.md">
+
+            
+                <span>
+            
+                    
+                    shortcut_layer.c
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="5.41" 
+            data-path="../part3_src/softmax_layer.html">
+
+            
+                <a href="../part3_src/softmax_layer.html">
+            
+                    
+                    softmax_layer.c
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="5.42" 
+            data-path="../part3_src/tree.html">
+
+            
+                <a href="../part3_src/tree.html">
+            
+                    
+                    tree.c
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="5.43" 
+            data-path="../part3_src/upsample_layer.html">
+
+            
+                <a href="../part3_src/upsample_layer.html">
+            
+                    
+                    upsample_layer.c
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="5.44" 
+            data-path="../part3_src/utils.html">
+
+            
+                <a href="../part3_src/utils.html">
+            
+                    
+                    utils.c
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="5.45" 
+            data-path="../part3_src/yolo_layer.html">
+
+            
+                <a href="../part3_src/yolo_layer.html">
+            
+                    
+                    yolo_layer.c
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="5.46" 
+            data-path="../part3_src/image_opencv.html">
+
+            
+                <a href="../part3_src/image_opencv.html">
+            
+                    
+                    image_opencv.cpp
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+        
+        
+        <li class="header  selected ">/EXAMPLE</li>
+        
+        
+    
+        
+        <li class="chapter 
+              "
+            data-level="6.1" 
+            data-path="art.html">
+
+            
+                <a href="art.html">
+            
+                    
+                    art.c
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="6.2" 
+            data-path="attention.html">
+
+            
+                <a href="attention.html">
+            
+                    
+                    attention.c
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="6.3" 
+            data-path="captcha.html">
+
+            
+                <a href="captcha.html">
+            
+                    
+                    captcha.c
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="6.4" 
+            data-path="cifar.html">
+
+            
+                <a href="cifar.html">
+            
+                    
+                    cifar.c
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="6.5" 
+            data-path="classifier.html">
+
+            
+                <a href="classifier.html">
+            
+                    
+                    classifier.c
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="6.6" 
+            data-path="coco.html">
+
+            
+                <a href="coco.html">
+            
+                    
+                    coco.c
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+            active  selected  "
+            data-level="6.7" 
+            data-path="darknet.html">
+
+            
+                <a href="darknet.html">
+            
+                    
+                    darknet.c
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="6.8" 
+            data-path="detector.html">
+
+            
+                <a href="detector.html">
+            
+                    
+                    detector.c
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="6.9" 
+            data-path="dice.html">
+
+            
+                <a href="dice.html">
+            
+                    
+                    dice.c
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="6.10" 
+            data-path="go.html">
+
+            
+                <a href="go.html">
+            
+                    
+                    go.c
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="6.11" 
+            data-path="instance-segmenter.html">
+
+            
+                <a href="instance-segmenter.html">
+            
+                    
+                    instance-segmenter.c
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="6.12" 
+            data-path="lsd.html">
+
+            
+                <a href="lsd.html">
+            
+                    
+                    lsd.c
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="6.13" 
+            data-path="nightmare.html">
+
+            
+                <a href="nightmare.html">
+            
+                    
+                    nightmare.c
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="6.14" 
+            data-path="regressor.html">
+
+            
+                <a href="regressor.html">
+            
+                    
+                    regressor.c
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="6.15" 
+            data-path="rnn.html">
+
+            
+                <a href="rnn.html">
+            
+                    
+                    rnn.c
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="6.16" 
+            data-path="rnn_vid.html">
+
+            
+                <a href="rnn_vid.html">
+            
+                    
+                    rnn_vid.c
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="6.17" 
+            data-path="segmenter.html">
+
+            
+                <a href="segmenter.html">
+            
+                    
+                    segmenter.c
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="6.18" 
+            data-path="super.html">
+
+            
+                <a href="super.html">
+            
+                    
+                    super.c
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="6.19" 
+            data-path="swag.html">
+
+            
+                <a href="swag.html">
+            
+                    
+                    swag.c
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="6.20" 
+            data-path="tag.html">
+
+            
+                <a href="tag.html">
+            
+                    
+                    tag.c
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="6.21" 
+            data-path="voxel.html">
+
+            
+                <a href="voxel.html">
+            
+                    
+                    voxel.c
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="6.22" 
+            data-path="writing.html">
+
+            
+                <a href="writing.html">
+            
+                    
+                    writing.c
+            
+                </a>
+            
+
+            
+        </li>
+    
+        
+        <li class="chapter 
+              "
+            data-level="6.23" 
+            data-path="yolo.html">
+
+            
+                <a href="yolo.html">
+            
+                    
+                    yolo.c
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href=".." >darknet.c</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+<div id="book-search-results">
+    <div class="search-noresults">
+    
+                                <section class="normal markdown-section">
+                                
+                                <h1 id="darknetc">darknet.c</h1>
+<pre><code class="lang-c"><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-string">&quot;darknet.h&quot;</span></span>
+
+<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;time.h&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;stdlib.h&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;stdio.h&gt;</span></span>
+
+<span class="hljs-function"><span class="hljs-keyword">extern</span> <span class="hljs-keyword">void</span> <span class="hljs-title">predict_classifier</span><span class="hljs-params">(<span class="hljs-keyword">char</span> *datacfg, <span class="hljs-keyword">char</span> *cfgfile, <span class="hljs-keyword">char</span> *weightfile, <span class="hljs-keyword">char</span> *filename, <span class="hljs-keyword">int</span> top)</span></span>;
+<span class="hljs-function"><span class="hljs-keyword">extern</span> <span class="hljs-keyword">void</span> <span class="hljs-title">test_detector</span><span class="hljs-params">(<span class="hljs-keyword">char</span> *datacfg, <span class="hljs-keyword">char</span> *cfgfile, <span class="hljs-keyword">char</span> *weightfile, <span class="hljs-keyword">char</span> *filename, <span class="hljs-keyword">float</span> thresh, <span class="hljs-keyword">float</span> hier_thresh, <span class="hljs-keyword">char</span> *outfile, <span class="hljs-keyword">int</span> fullscreen)</span></span>;
+<span class="hljs-function"><span class="hljs-keyword">extern</span> <span class="hljs-keyword">void</span> <span class="hljs-title">run_yolo</span><span class="hljs-params">(<span class="hljs-keyword">int</span> argc, <span class="hljs-keyword">char</span> **argv)</span></span>;
+<span class="hljs-function"><span class="hljs-keyword">extern</span> <span class="hljs-keyword">void</span> <span class="hljs-title">run_detector</span><span class="hljs-params">(<span class="hljs-keyword">int</span> argc, <span class="hljs-keyword">char</span> **argv)</span></span>;
+<span class="hljs-function"><span class="hljs-keyword">extern</span> <span class="hljs-keyword">void</span> <span class="hljs-title">run_coco</span><span class="hljs-params">(<span class="hljs-keyword">int</span> argc, <span class="hljs-keyword">char</span> **argv)</span></span>;
+<span class="hljs-function"><span class="hljs-keyword">extern</span> <span class="hljs-keyword">void</span> <span class="hljs-title">run_nightmare</span><span class="hljs-params">(<span class="hljs-keyword">int</span> argc, <span class="hljs-keyword">char</span> **argv)</span></span>;
+<span class="hljs-function"><span class="hljs-keyword">extern</span> <span class="hljs-keyword">void</span> <span class="hljs-title">run_classifier</span><span class="hljs-params">(<span class="hljs-keyword">int</span> argc, <span class="hljs-keyword">char</span> **argv)</span></span>;
+<span class="hljs-function"><span class="hljs-keyword">extern</span> <span class="hljs-keyword">void</span> <span class="hljs-title">run_regressor</span><span class="hljs-params">(<span class="hljs-keyword">int</span> argc, <span class="hljs-keyword">char</span> **argv)</span></span>;
+<span class="hljs-function"><span class="hljs-keyword">extern</span> <span class="hljs-keyword">void</span> <span class="hljs-title">run_segmenter</span><span class="hljs-params">(<span class="hljs-keyword">int</span> argc, <span class="hljs-keyword">char</span> **argv)</span></span>;
+<span class="hljs-function"><span class="hljs-keyword">extern</span> <span class="hljs-keyword">void</span> <span class="hljs-title">run_isegmenter</span><span class="hljs-params">(<span class="hljs-keyword">int</span> argc, <span class="hljs-keyword">char</span> **argv)</span></span>;
+<span class="hljs-function"><span class="hljs-keyword">extern</span> <span class="hljs-keyword">void</span> <span class="hljs-title">run_char_rnn</span><span class="hljs-params">(<span class="hljs-keyword">int</span> argc, <span class="hljs-keyword">char</span> **argv)</span></span>;
+<span class="hljs-function"><span class="hljs-keyword">extern</span> <span class="hljs-keyword">void</span> <span class="hljs-title">run_tag</span><span class="hljs-params">(<span class="hljs-keyword">int</span> argc, <span class="hljs-keyword">char</span> **argv)</span></span>;
+<span class="hljs-function"><span class="hljs-keyword">extern</span> <span class="hljs-keyword">void</span> <span class="hljs-title">run_cifar</span><span class="hljs-params">(<span class="hljs-keyword">int</span> argc, <span class="hljs-keyword">char</span> **argv)</span></span>;
+<span class="hljs-function"><span class="hljs-keyword">extern</span> <span class="hljs-keyword">void</span> <span class="hljs-title">run_go</span><span class="hljs-params">(<span class="hljs-keyword">int</span> argc, <span class="hljs-keyword">char</span> **argv)</span></span>;
+<span class="hljs-function"><span class="hljs-keyword">extern</span> <span class="hljs-keyword">void</span> <span class="hljs-title">run_art</span><span class="hljs-params">(<span class="hljs-keyword">int</span> argc, <span class="hljs-keyword">char</span> **argv)</span></span>;
+<span class="hljs-function"><span class="hljs-keyword">extern</span> <span class="hljs-keyword">void</span> <span class="hljs-title">run_super</span><span class="hljs-params">(<span class="hljs-keyword">int</span> argc, <span class="hljs-keyword">char</span> **argv)</span></span>;
+<span class="hljs-function"><span class="hljs-keyword">extern</span> <span class="hljs-keyword">void</span> <span class="hljs-title">run_lsd</span><span class="hljs-params">(<span class="hljs-keyword">int</span> argc, <span class="hljs-keyword">char</span> **argv)</span></span>;
+
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">average</span><span class="hljs-params">(<span class="hljs-keyword">int</span> argc, <span class="hljs-keyword">char</span> *argv[])</span>
+</span>{
+    <span class="hljs-keyword">char</span> *cfgfile = argv[<span class="hljs-number">2</span>];
+    <span class="hljs-keyword">char</span> *outfile = argv[<span class="hljs-number">3</span>];
+    gpu_index = <span class="hljs-number">-1</span>;
+    network *net = parse_network_cfg(cfgfile);
+    network *sum = parse_network_cfg(cfgfile);
+
+    <span class="hljs-keyword">char</span> *weightfile = argv[<span class="hljs-number">4</span>];   
+    load_weights(sum, weightfile);
+
+    <span class="hljs-keyword">int</span> i, j;
+    <span class="hljs-keyword">int</span> n = argc - <span class="hljs-number">5</span>;
+    <span class="hljs-keyword">for</span>(i = <span class="hljs-number">0</span>; i &lt; n; ++i){
+        weightfile = argv[i+<span class="hljs-number">5</span>];   
+        load_weights(net, weightfile);
+        <span class="hljs-keyword">for</span>(j = <span class="hljs-number">0</span>; j &lt; net-&gt;n; ++j){
+            layer l = net-&gt;layers[j];
+            layer out = sum-&gt;layers[j];
+            <span class="hljs-keyword">if</span>(l.type == CONVOLUTIONAL){
+                <span class="hljs-keyword">int</span> num = l.n*l.c*l.size*l.size;
+                axpy_cpu(l.n, <span class="hljs-number">1</span>, l.biases, <span class="hljs-number">1</span>, out.biases, <span class="hljs-number">1</span>);
+                axpy_cpu(num, <span class="hljs-number">1</span>, l.weights, <span class="hljs-number">1</span>, out.weights, <span class="hljs-number">1</span>);
+                <span class="hljs-keyword">if</span>(l.batch_normalize){
+                    axpy_cpu(l.n, <span class="hljs-number">1</span>, l.scales, <span class="hljs-number">1</span>, out.scales, <span class="hljs-number">1</span>);
+                    axpy_cpu(l.n, <span class="hljs-number">1</span>, l.rolling_mean, <span class="hljs-number">1</span>, out.rolling_mean, <span class="hljs-number">1</span>);
+                    axpy_cpu(l.n, <span class="hljs-number">1</span>, l.rolling_variance, <span class="hljs-number">1</span>, out.rolling_variance, <span class="hljs-number">1</span>);
+                }
+            }
+            <span class="hljs-keyword">if</span>(l.type == CONNECTED){
+                axpy_cpu(l.outputs, <span class="hljs-number">1</span>, l.biases, <span class="hljs-number">1</span>, out.biases, <span class="hljs-number">1</span>);
+                axpy_cpu(l.outputs*l.inputs, <span class="hljs-number">1</span>, l.weights, <span class="hljs-number">1</span>, out.weights, <span class="hljs-number">1</span>);
+            }
+        }
+    }
+    n = n+<span class="hljs-number">1</span>;
+    <span class="hljs-keyword">for</span>(j = <span class="hljs-number">0</span>; j &lt; net-&gt;n; ++j){
+        layer l = sum-&gt;layers[j];
+        <span class="hljs-keyword">if</span>(l.type == CONVOLUTIONAL){
+            <span class="hljs-keyword">int</span> num = l.n*l.c*l.size*l.size;
+            scal_cpu(l.n, <span class="hljs-number">1.</span>/n, l.biases, <span class="hljs-number">1</span>);
+            scal_cpu(num, <span class="hljs-number">1.</span>/n, l.weights, <span class="hljs-number">1</span>);
+                <span class="hljs-keyword">if</span>(l.batch_normalize){
+                    scal_cpu(l.n, <span class="hljs-number">1.</span>/n, l.scales, <span class="hljs-number">1</span>);
+                    scal_cpu(l.n, <span class="hljs-number">1.</span>/n, l.rolling_mean, <span class="hljs-number">1</span>);
+                    scal_cpu(l.n, <span class="hljs-number">1.</span>/n, l.rolling_variance, <span class="hljs-number">1</span>);
+                }
+        }
+        <span class="hljs-keyword">if</span>(l.type == CONNECTED){
+            scal_cpu(l.outputs, <span class="hljs-number">1.</span>/n, l.biases, <span class="hljs-number">1</span>);
+            scal_cpu(l.outputs*l.inputs, <span class="hljs-number">1.</span>/n, l.weights, <span class="hljs-number">1</span>);
+        }
+    }
+    save_weights(sum, outfile);
+}
+
+<span class="hljs-function"><span class="hljs-keyword">long</span> <span class="hljs-title">numops</span><span class="hljs-params">(network *net)</span>
+</span>{
+    <span class="hljs-keyword">int</span> i;
+    <span class="hljs-keyword">long</span> ops = <span class="hljs-number">0</span>;
+    <span class="hljs-keyword">for</span>(i = <span class="hljs-number">0</span>; i &lt; net-&gt;n; ++i){
+        layer l = net-&gt;layers[i];
+        <span class="hljs-keyword">if</span>(l.type == CONVOLUTIONAL){
+            ops += <span class="hljs-number">2l</span> * l.n * l.size*l.size*l.c/l.groups * l.out_h*l.out_w;
+        } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span>(l.type == CONNECTED){
+            ops += <span class="hljs-number">2l</span> * l.inputs * l.outputs;
+        } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (l.type == RNN){
+            ops += <span class="hljs-number">2l</span> * l.input_layer-&gt;inputs * l.input_layer-&gt;outputs;
+            ops += <span class="hljs-number">2l</span> * l.self_layer-&gt;inputs * l.self_layer-&gt;outputs;
+            ops += <span class="hljs-number">2l</span> * l.output_layer-&gt;inputs * l.output_layer-&gt;outputs;
+        } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (l.type == GRU){
+            ops += <span class="hljs-number">2l</span> * l.uz-&gt;inputs * l.uz-&gt;outputs;
+            ops += <span class="hljs-number">2l</span> * l.uh-&gt;inputs * l.uh-&gt;outputs;
+            ops += <span class="hljs-number">2l</span> * l.ur-&gt;inputs * l.ur-&gt;outputs;
+            ops += <span class="hljs-number">2l</span> * l.wz-&gt;inputs * l.wz-&gt;outputs;
+            ops += <span class="hljs-number">2l</span> * l.wh-&gt;inputs * l.wh-&gt;outputs;
+            ops += <span class="hljs-number">2l</span> * l.wr-&gt;inputs * l.wr-&gt;outputs;
+        } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (l.type == LSTM){
+            ops += <span class="hljs-number">2l</span> * l.uf-&gt;inputs * l.uf-&gt;outputs;
+            ops += <span class="hljs-number">2l</span> * l.ui-&gt;inputs * l.ui-&gt;outputs;
+            ops += <span class="hljs-number">2l</span> * l.ug-&gt;inputs * l.ug-&gt;outputs;
+            ops += <span class="hljs-number">2l</span> * l.uo-&gt;inputs * l.uo-&gt;outputs;
+            ops += <span class="hljs-number">2l</span> * l.wf-&gt;inputs * l.wf-&gt;outputs;
+            ops += <span class="hljs-number">2l</span> * l.wi-&gt;inputs * l.wi-&gt;outputs;
+            ops += <span class="hljs-number">2l</span> * l.wg-&gt;inputs * l.wg-&gt;outputs;
+            ops += <span class="hljs-number">2l</span> * l.wo-&gt;inputs * l.wo-&gt;outputs;
+        }
+    }
+    <span class="hljs-keyword">return</span> ops;
+}
+
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">speed</span><span class="hljs-params">(<span class="hljs-keyword">char</span> *cfgfile, <span class="hljs-keyword">int</span> tics)</span>
+</span>{
+    <span class="hljs-keyword">if</span> (tics == <span class="hljs-number">0</span>) tics = <span class="hljs-number">1000</span>;
+    network *net = parse_network_cfg(cfgfile);
+    set_batch_network(net, <span class="hljs-number">1</span>);
+    <span class="hljs-keyword">int</span> i;
+    <span class="hljs-keyword">double</span> time=what_time_is_it_now();
+    image im = make_image(net-&gt;w, net-&gt;h, net-&gt;c*net-&gt;batch);
+    <span class="hljs-keyword">for</span>(i = <span class="hljs-number">0</span>; i &lt; tics; ++i){
+        network_predict(net, im.data);
+    }
+    <span class="hljs-keyword">double</span> t = what_time_is_it_now() - time;
+    <span class="hljs-keyword">long</span> ops = numops(net);
+    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;\n%d evals, %f Seconds\n&quot;</span>, tics, t);
+    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;Floating Point Operations: %.2f Bn\n&quot;</span>, (<span class="hljs-keyword">float</span>)ops/<span class="hljs-number">1000000000.</span>);
+    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;FLOPS: %.2f Bn\n&quot;</span>, (<span class="hljs-keyword">float</span>)ops/<span class="hljs-number">1000000000.</span>*tics/t);
+    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;Speed: %f sec/eval\n&quot;</span>, t/tics);
+    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;Speed: %f Hz\n&quot;</span>, tics/t);
+}
+
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">operations</span><span class="hljs-params">(<span class="hljs-keyword">char</span> *cfgfile)</span>
+</span>{
+    gpu_index = <span class="hljs-number">-1</span>;
+    network *net = parse_network_cfg(cfgfile);
+    <span class="hljs-keyword">long</span> ops = numops(net);
+    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;Floating Point Operations: %ld\n&quot;</span>, ops);
+    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;Floating Point Operations: %.2f Bn\n&quot;</span>, (<span class="hljs-keyword">float</span>)ops/<span class="hljs-number">1000000000.</span>);
+}
+
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">oneoff</span><span class="hljs-params">(<span class="hljs-keyword">char</span> *cfgfile, <span class="hljs-keyword">char</span> *weightfile, <span class="hljs-keyword">char</span> *outfile)</span>
+</span>{
+    gpu_index = <span class="hljs-number">-1</span>;
+    network *net = parse_network_cfg(cfgfile);
+    <span class="hljs-keyword">int</span> oldn = net-&gt;layers[net-&gt;n - <span class="hljs-number">2</span>].n;
+    <span class="hljs-keyword">int</span> c = net-&gt;layers[net-&gt;n - <span class="hljs-number">2</span>].c;
+    scal_cpu(oldn*c, <span class="hljs-number">.1</span>, net-&gt;layers[net-&gt;n - <span class="hljs-number">2</span>].weights, <span class="hljs-number">1</span>);
+    scal_cpu(oldn, <span class="hljs-number">0</span>, net-&gt;layers[net-&gt;n - <span class="hljs-number">2</span>].biases, <span class="hljs-number">1</span>);
+    net-&gt;layers[net-&gt;n - <span class="hljs-number">2</span>].n = <span class="hljs-number">11921</span>;
+    net-&gt;layers[net-&gt;n - <span class="hljs-number">2</span>].biases += <span class="hljs-number">5</span>;
+    net-&gt;layers[net-&gt;n - <span class="hljs-number">2</span>].weights += <span class="hljs-number">5</span>*c;
+    <span class="hljs-keyword">if</span>(weightfile){
+        load_weights(net, weightfile);
+    }
+    net-&gt;layers[net-&gt;n - <span class="hljs-number">2</span>].biases -= <span class="hljs-number">5</span>;
+    net-&gt;layers[net-&gt;n - <span class="hljs-number">2</span>].weights -= <span class="hljs-number">5</span>*c;
+    net-&gt;layers[net-&gt;n - <span class="hljs-number">2</span>].n = oldn;
+    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;%d\n&quot;</span>, oldn);
+    layer l = net-&gt;layers[net-&gt;n - <span class="hljs-number">2</span>];
+    copy_cpu(l.n/<span class="hljs-number">3</span>, l.biases, <span class="hljs-number">1</span>, l.biases +   l.n/<span class="hljs-number">3</span>, <span class="hljs-number">1</span>);
+    copy_cpu(l.n/<span class="hljs-number">3</span>, l.biases, <span class="hljs-number">1</span>, l.biases + <span class="hljs-number">2</span>*l.n/<span class="hljs-number">3</span>, <span class="hljs-number">1</span>);
+    copy_cpu(l.n/<span class="hljs-number">3</span>*l.c, l.weights, <span class="hljs-number">1</span>, l.weights +   l.n/<span class="hljs-number">3</span>*l.c, <span class="hljs-number">1</span>);
+    copy_cpu(l.n/<span class="hljs-number">3</span>*l.c, l.weights, <span class="hljs-number">1</span>, l.weights + <span class="hljs-number">2</span>*l.n/<span class="hljs-number">3</span>*l.c, <span class="hljs-number">1</span>);
+    *net-&gt;seen = <span class="hljs-number">0</span>;
+    save_weights(net, outfile);
+}
+
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">oneoff2</span><span class="hljs-params">(<span class="hljs-keyword">char</span> *cfgfile, <span class="hljs-keyword">char</span> *weightfile, <span class="hljs-keyword">char</span> *outfile, <span class="hljs-keyword">int</span> l)</span>
+</span>{
+    gpu_index = <span class="hljs-number">-1</span>;
+    network *net = parse_network_cfg(cfgfile);
+    <span class="hljs-keyword">if</span>(weightfile){
+        load_weights_upto(net, weightfile, <span class="hljs-number">0</span>, net-&gt;n);
+        load_weights_upto(net, weightfile, l, net-&gt;n);
+    }
+    *net-&gt;seen = <span class="hljs-number">0</span>;
+    save_weights_upto(net, outfile, net-&gt;n);
+}
+
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">partial</span><span class="hljs-params">(<span class="hljs-keyword">char</span> *cfgfile, <span class="hljs-keyword">char</span> *weightfile, <span class="hljs-keyword">char</span> *outfile, <span class="hljs-keyword">int</span> max)</span>
+</span>{
+    gpu_index = <span class="hljs-number">-1</span>;
+    network *net = load_network(cfgfile, weightfile, <span class="hljs-number">1</span>);
+    save_weights_upto(net, outfile, max);
+}
+
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">print_weights</span><span class="hljs-params">(<span class="hljs-keyword">char</span> *cfgfile, <span class="hljs-keyword">char</span> *weightfile, <span class="hljs-keyword">int</span> n)</span>
+</span>{
+    gpu_index = <span class="hljs-number">-1</span>;
+    network *net = load_network(cfgfile, weightfile, <span class="hljs-number">1</span>);
+    layer l = net-&gt;layers[n];
+    <span class="hljs-keyword">int</span> i, j;
+    <span class="hljs-comment">//printf(&quot;[&quot;);</span>
+    <span class="hljs-keyword">for</span>(i = <span class="hljs-number">0</span>; i &lt; l.n; ++i){
+        <span class="hljs-comment">//printf(&quot;[&quot;);</span>
+        <span class="hljs-keyword">for</span>(j = <span class="hljs-number">0</span>; j &lt; l.size*l.size*l.c; ++j){
+            <span class="hljs-comment">//if(j &gt; 0) printf(&quot;,&quot;);</span>
+            <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;%g &quot;</span>, l.weights[i*l.size*l.size*l.c + j]);
+        }
+        <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;\n&quot;</span>);
+        <span class="hljs-comment">//printf(&quot;]%s\n&quot;, (i == l.n-1)?&quot;&quot;:&quot;,&quot;);</span>
+    }
+    <span class="hljs-comment">//printf(&quot;]&quot;);</span>
+}
+
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">rescale_net</span><span class="hljs-params">(<span class="hljs-keyword">char</span> *cfgfile, <span class="hljs-keyword">char</span> *weightfile, <span class="hljs-keyword">char</span> *outfile)</span>
+</span>{
+    gpu_index = <span class="hljs-number">-1</span>;
+    network *net = load_network(cfgfile, weightfile, <span class="hljs-number">0</span>);
+    <span class="hljs-keyword">int</span> i;
+    <span class="hljs-keyword">for</span>(i = <span class="hljs-number">0</span>; i &lt; net-&gt;n; ++i){
+        layer l = net-&gt;layers[i];
+        <span class="hljs-keyword">if</span>(l.type == CONVOLUTIONAL){
+            rescale_weights(l, <span class="hljs-number">2</span>, <span class="hljs-number">-.5</span>);
+            <span class="hljs-keyword">break</span>;
+        }
+    }
+    save_weights(net, outfile);
+}
+
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">rgbgr_net</span><span class="hljs-params">(<span class="hljs-keyword">char</span> *cfgfile, <span class="hljs-keyword">char</span> *weightfile, <span class="hljs-keyword">char</span> *outfile)</span>
+</span>{
+    gpu_index = <span class="hljs-number">-1</span>;
+    network *net = load_network(cfgfile, weightfile, <span class="hljs-number">0</span>);
+    <span class="hljs-keyword">int</span> i;
+    <span class="hljs-keyword">for</span>(i = <span class="hljs-number">0</span>; i &lt; net-&gt;n; ++i){
+        layer l = net-&gt;layers[i];
+        <span class="hljs-keyword">if</span>(l.type == CONVOLUTIONAL){
+            rgbgr_weights(l);
+            <span class="hljs-keyword">break</span>;
+        }
+    }
+    save_weights(net, outfile);
+}
+
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">reset_normalize_net</span><span class="hljs-params">(<span class="hljs-keyword">char</span> *cfgfile, <span class="hljs-keyword">char</span> *weightfile, <span class="hljs-keyword">char</span> *outfile)</span>
+</span>{
+    gpu_index = <span class="hljs-number">-1</span>;
+    network *net = load_network(cfgfile, weightfile, <span class="hljs-number">0</span>);
+    <span class="hljs-keyword">int</span> i;
+    <span class="hljs-keyword">for</span> (i = <span class="hljs-number">0</span>; i &lt; net-&gt;n; ++i) {
+        layer l = net-&gt;layers[i];
+        <span class="hljs-keyword">if</span> (l.type == CONVOLUTIONAL &amp;&amp; l.batch_normalize) {
+            denormalize_convolutional_layer(l);
+        }
+        <span class="hljs-keyword">if</span> (l.type == CONNECTED &amp;&amp; l.batch_normalize) {
+            denormalize_connected_layer(l);
+        }
+        <span class="hljs-keyword">if</span> (l.type == GRU &amp;&amp; l.batch_normalize) {
+            denormalize_connected_layer(*l.input_z_layer);
+            denormalize_connected_layer(*l.input_r_layer);
+            denormalize_connected_layer(*l.input_h_layer);
+            denormalize_connected_layer(*l.state_z_layer);
+            denormalize_connected_layer(*l.state_r_layer);
+            denormalize_connected_layer(*l.state_h_layer);
+        }
+    }
+    save_weights(net, outfile);
+}
+
+<span class="hljs-function">layer <span class="hljs-title">normalize_layer</span><span class="hljs-params">(layer l, <span class="hljs-keyword">int</span> n)</span>
+</span>{
+    <span class="hljs-keyword">int</span> j;
+    l.batch_normalize=<span class="hljs-number">1</span>;
+    l.scales = <span class="hljs-built_in">calloc</span>(n, <span class="hljs-keyword">sizeof</span>(<span class="hljs-keyword">float</span>));
+    <span class="hljs-keyword">for</span>(j = <span class="hljs-number">0</span>; j &lt; n; ++j){
+        l.scales[j] = <span class="hljs-number">1</span>;
+    }
+    l.rolling_mean = <span class="hljs-built_in">calloc</span>(n, <span class="hljs-keyword">sizeof</span>(<span class="hljs-keyword">float</span>));
+    l.rolling_variance = <span class="hljs-built_in">calloc</span>(n, <span class="hljs-keyword">sizeof</span>(<span class="hljs-keyword">float</span>));
+    <span class="hljs-keyword">return</span> l;
+}
+
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">normalize_net</span><span class="hljs-params">(<span class="hljs-keyword">char</span> *cfgfile, <span class="hljs-keyword">char</span> *weightfile, <span class="hljs-keyword">char</span> *outfile)</span>
+</span>{
+    gpu_index = <span class="hljs-number">-1</span>;
+    network *net = load_network(cfgfile, weightfile, <span class="hljs-number">0</span>);
+    <span class="hljs-keyword">int</span> i;
+    <span class="hljs-keyword">for</span>(i = <span class="hljs-number">0</span>; i &lt; net-&gt;n; ++i){
+        layer l = net-&gt;layers[i];
+        <span class="hljs-keyword">if</span>(l.type == CONVOLUTIONAL &amp;&amp; !l.batch_normalize){
+            net-&gt;layers[i] = normalize_layer(l, l.n);
+        }
+        <span class="hljs-keyword">if</span> (l.type == CONNECTED &amp;&amp; !l.batch_normalize) {
+            net-&gt;layers[i] = normalize_layer(l, l.outputs);
+        }
+        <span class="hljs-keyword">if</span> (l.type == GRU &amp;&amp; l.batch_normalize) {
+            *l.input_z_layer = normalize_layer(*l.input_z_layer, l.input_z_layer-&gt;outputs);
+            *l.input_r_layer = normalize_layer(*l.input_r_layer, l.input_r_layer-&gt;outputs);
+            *l.input_h_layer = normalize_layer(*l.input_h_layer, l.input_h_layer-&gt;outputs);
+            *l.state_z_layer = normalize_layer(*l.state_z_layer, l.state_z_layer-&gt;outputs);
+            *l.state_r_layer = normalize_layer(*l.state_r_layer, l.state_r_layer-&gt;outputs);
+            *l.state_h_layer = normalize_layer(*l.state_h_layer, l.state_h_layer-&gt;outputs);
+            net-&gt;layers[i].batch_normalize=<span class="hljs-number">1</span>;
+        }
+    }
+    save_weights(net, outfile);
+}
+
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">statistics_net</span><span class="hljs-params">(<span class="hljs-keyword">char</span> *cfgfile, <span class="hljs-keyword">char</span> *weightfile)</span>
+</span>{
+    gpu_index = <span class="hljs-number">-1</span>;
+    network *net = load_network(cfgfile, weightfile, <span class="hljs-number">0</span>);
+    <span class="hljs-keyword">int</span> i;
+    <span class="hljs-keyword">for</span> (i = <span class="hljs-number">0</span>; i &lt; net-&gt;n; ++i) {
+        layer l = net-&gt;layers[i];
+        <span class="hljs-keyword">if</span> (l.type == CONNECTED &amp;&amp; l.batch_normalize) {
+            <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;Connected Layer %d\n&quot;</span>, i);
+            statistics_connected_layer(l);
+        }
+        <span class="hljs-keyword">if</span> (l.type == GRU &amp;&amp; l.batch_normalize) {
+            <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;GRU Layer %d\n&quot;</span>, i);
+            <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;Input Z\n&quot;</span>);
+            statistics_connected_layer(*l.input_z_layer);
+            <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;Input R\n&quot;</span>);
+            statistics_connected_layer(*l.input_r_layer);
+            <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;Input H\n&quot;</span>);
+            statistics_connected_layer(*l.input_h_layer);
+            <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;State Z\n&quot;</span>);
+            statistics_connected_layer(*l.state_z_layer);
+            <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;State R\n&quot;</span>);
+            statistics_connected_layer(*l.state_r_layer);
+            <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;State H\n&quot;</span>);
+            statistics_connected_layer(*l.state_h_layer);
+        }
+        <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;\n&quot;</span>);
+    }
+}
+
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">denormalize_net</span><span class="hljs-params">(<span class="hljs-keyword">char</span> *cfgfile, <span class="hljs-keyword">char</span> *weightfile, <span class="hljs-keyword">char</span> *outfile)</span>
+</span>{
+    gpu_index = <span class="hljs-number">-1</span>;
+    network *net = load_network(cfgfile, weightfile, <span class="hljs-number">0</span>);
+    <span class="hljs-keyword">int</span> i;
+    <span class="hljs-keyword">for</span> (i = <span class="hljs-number">0</span>; i &lt; net-&gt;n; ++i) {
+        layer l = net-&gt;layers[i];
+        <span class="hljs-keyword">if</span> ((l.type == DECONVOLUTIONAL || l.type == CONVOLUTIONAL) &amp;&amp; l.batch_normalize) {
+            denormalize_convolutional_layer(l);
+            net-&gt;layers[i].batch_normalize=<span class="hljs-number">0</span>;
+        }
+        <span class="hljs-keyword">if</span> (l.type == CONNECTED &amp;&amp; l.batch_normalize) {
+            denormalize_connected_layer(l);
+            net-&gt;layers[i].batch_normalize=<span class="hljs-number">0</span>;
+        }
+        <span class="hljs-keyword">if</span> (l.type == GRU &amp;&amp; l.batch_normalize) {
+            denormalize_connected_layer(*l.input_z_layer);
+            denormalize_connected_layer(*l.input_r_layer);
+            denormalize_connected_layer(*l.input_h_layer);
+            denormalize_connected_layer(*l.state_z_layer);
+            denormalize_connected_layer(*l.state_r_layer);
+            denormalize_connected_layer(*l.state_h_layer);
+            l.input_z_layer-&gt;batch_normalize = <span class="hljs-number">0</span>;
+            l.input_r_layer-&gt;batch_normalize = <span class="hljs-number">0</span>;
+            l.input_h_layer-&gt;batch_normalize = <span class="hljs-number">0</span>;
+            l.state_z_layer-&gt;batch_normalize = <span class="hljs-number">0</span>;
+            l.state_r_layer-&gt;batch_normalize = <span class="hljs-number">0</span>;
+            l.state_h_layer-&gt;batch_normalize = <span class="hljs-number">0</span>;
+            net-&gt;layers[i].batch_normalize=<span class="hljs-number">0</span>;
+        }
+    }
+    save_weights(net, outfile);
+}
+
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">mkimg</span><span class="hljs-params">(<span class="hljs-keyword">char</span> *cfgfile, <span class="hljs-keyword">char</span> *weightfile, <span class="hljs-keyword">int</span> h, <span class="hljs-keyword">int</span> w, <span class="hljs-keyword">int</span> num, <span class="hljs-keyword">char</span> *prefix)</span>
+</span>{
+    network *net = load_network(cfgfile, weightfile, <span class="hljs-number">0</span>);
+    image *ims = get_weights(net-&gt;layers[<span class="hljs-number">0</span>]);
+    <span class="hljs-keyword">int</span> n = net-&gt;layers[<span class="hljs-number">0</span>].n;
+    <span class="hljs-keyword">int</span> z;
+    <span class="hljs-keyword">for</span>(z = <span class="hljs-number">0</span>; z &lt; num; ++z){
+        image im = make_image(h, w, <span class="hljs-number">3</span>);
+        fill_image(im, <span class="hljs-number">.5</span>);
+        <span class="hljs-keyword">int</span> i;
+        <span class="hljs-keyword">for</span>(i = <span class="hljs-number">0</span>; i &lt; <span class="hljs-number">100</span>; ++i){
+            image r = copy_image(ims[rand()%n]);
+            rotate_image_cw(r, rand()%<span class="hljs-number">4</span>);
+            random_distort_image(r, <span class="hljs-number">1</span>, <span class="hljs-number">1.5</span>, <span class="hljs-number">1.5</span>);
+            <span class="hljs-keyword">int</span> dx = rand()%(w-r.w);
+            <span class="hljs-keyword">int</span> dy = rand()%(h-r.h);
+            ghost_image(r, im, dx, dy);
+            free_image(r);
+        }
+        <span class="hljs-keyword">char</span> buff[<span class="hljs-number">256</span>];
+        <span class="hljs-built_in">sprintf</span>(buff, <span class="hljs-string">&quot;%s/gen_%d&quot;</span>, prefix, z);
+        save_image(im, buff);
+        free_image(im);
+    }
+}
+
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">visualize</span><span class="hljs-params">(<span class="hljs-keyword">char</span> *cfgfile, <span class="hljs-keyword">char</span> *weightfile)</span>
+</span>{
+    network *net = load_network(cfgfile, weightfile, <span class="hljs-number">0</span>);
+    visualize_network(net);
+}
+
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">(<span class="hljs-keyword">int</span> argc, <span class="hljs-keyword">char</span> **argv)</span>
+</span>{
+    <span class="hljs-comment">//test_resize(&quot;data/bad.jpg&quot;);</span>
+    <span class="hljs-comment">//test_box();</span>
+    <span class="hljs-comment">//test_convolutional_layer();</span>
+    <span class="hljs-keyword">if</span>(argc &lt; <span class="hljs-number">2</span>){
+        <span class="hljs-built_in">fprintf</span>(<span class="hljs-built_in">stderr</span>, <span class="hljs-string">&quot;usage: %s &lt;function&gt;\n&quot;</span>, argv[<span class="hljs-number">0</span>]);
+        <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+    }
+    gpu_index = find_int_arg(argc, argv, <span class="hljs-string">&quot;-i&quot;</span>, <span class="hljs-number">0</span>);
+    <span class="hljs-keyword">if</span>(find_arg(argc, argv, <span class="hljs-string">&quot;-nogpu&quot;</span>)) {
+        gpu_index = <span class="hljs-number">-1</span>;
+    }
+
+<span class="hljs-meta">#<span class="hljs-meta-keyword">ifndef</span> GPU</span>
+    gpu_index = <span class="hljs-number">-1</span>;
+<span class="hljs-meta">#<span class="hljs-meta-keyword">else</span></span>
+    <span class="hljs-keyword">if</span>(gpu_index &gt;= <span class="hljs-number">0</span>){
+        cuda_set_device(gpu_index);
+    }
+<span class="hljs-meta">#<span class="hljs-meta-keyword">endif</span></span>
+
+    <span class="hljs-keyword">if</span> (<span class="hljs-number">0</span> == <span class="hljs-built_in">strcmp</span>(argv[<span class="hljs-number">1</span>], <span class="hljs-string">&quot;average&quot;</span>)){
+        average(argc, argv);
+    } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (<span class="hljs-number">0</span> == <span class="hljs-built_in">strcmp</span>(argv[<span class="hljs-number">1</span>], <span class="hljs-string">&quot;yolo&quot;</span>)){
+        run_yolo(argc, argv);
+    } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (<span class="hljs-number">0</span> == <span class="hljs-built_in">strcmp</span>(argv[<span class="hljs-number">1</span>], <span class="hljs-string">&quot;super&quot;</span>)){
+        run_super(argc, argv);
+    } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (<span class="hljs-number">0</span> == <span class="hljs-built_in">strcmp</span>(argv[<span class="hljs-number">1</span>], <span class="hljs-string">&quot;lsd&quot;</span>)){
+        run_lsd(argc, argv);
+    } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (<span class="hljs-number">0</span> == <span class="hljs-built_in">strcmp</span>(argv[<span class="hljs-number">1</span>], <span class="hljs-string">&quot;detector&quot;</span>)){
+        run_detector(argc, argv);
+    } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (<span class="hljs-number">0</span> == <span class="hljs-built_in">strcmp</span>(argv[<span class="hljs-number">1</span>], <span class="hljs-string">&quot;detect&quot;</span>)){
+        <span class="hljs-keyword">float</span> thresh = find_float_arg(argc, argv, <span class="hljs-string">&quot;-thresh&quot;</span>, <span class="hljs-number">.5</span>);
+        <span class="hljs-keyword">char</span> *filename = (argc &gt; <span class="hljs-number">4</span>) ? argv[<span class="hljs-number">4</span>]: <span class="hljs-number">0</span>;
+        <span class="hljs-keyword">char</span> *outfile = find_char_arg(argc, argv, <span class="hljs-string">&quot;-out&quot;</span>, <span class="hljs-number">0</span>);
+        <span class="hljs-keyword">int</span> fullscreen = find_arg(argc, argv, <span class="hljs-string">&quot;-fullscreen&quot;</span>);
+        test_detector(<span class="hljs-string">&quot;cfg/coco.data&quot;</span>, argv[<span class="hljs-number">2</span>], argv[<span class="hljs-number">3</span>], filename, thresh, <span class="hljs-number">.5</span>, outfile, fullscreen);
+    } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (<span class="hljs-number">0</span> == <span class="hljs-built_in">strcmp</span>(argv[<span class="hljs-number">1</span>], <span class="hljs-string">&quot;cifar&quot;</span>)){
+        run_cifar(argc, argv);
+    } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (<span class="hljs-number">0</span> == <span class="hljs-built_in">strcmp</span>(argv[<span class="hljs-number">1</span>], <span class="hljs-string">&quot;go&quot;</span>)){
+        run_go(argc, argv);
+    } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (<span class="hljs-number">0</span> == <span class="hljs-built_in">strcmp</span>(argv[<span class="hljs-number">1</span>], <span class="hljs-string">&quot;rnn&quot;</span>)){
+        run_char_rnn(argc, argv);
+    } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (<span class="hljs-number">0</span> == <span class="hljs-built_in">strcmp</span>(argv[<span class="hljs-number">1</span>], <span class="hljs-string">&quot;coco&quot;</span>)){
+        run_coco(argc, argv);
+    } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (<span class="hljs-number">0</span> == <span class="hljs-built_in">strcmp</span>(argv[<span class="hljs-number">1</span>], <span class="hljs-string">&quot;classify&quot;</span>)){
+        predict_classifier(<span class="hljs-string">&quot;cfg/imagenet1k.data&quot;</span>, argv[<span class="hljs-number">2</span>], argv[<span class="hljs-number">3</span>], argv[<span class="hljs-number">4</span>], <span class="hljs-number">5</span>);
+    } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (<span class="hljs-number">0</span> == <span class="hljs-built_in">strcmp</span>(argv[<span class="hljs-number">1</span>], <span class="hljs-string">&quot;classifier&quot;</span>)){
+        run_classifier(argc, argv);
+    } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (<span class="hljs-number">0</span> == <span class="hljs-built_in">strcmp</span>(argv[<span class="hljs-number">1</span>], <span class="hljs-string">&quot;regressor&quot;</span>)){
+        run_regressor(argc, argv);
+    } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (<span class="hljs-number">0</span> == <span class="hljs-built_in">strcmp</span>(argv[<span class="hljs-number">1</span>], <span class="hljs-string">&quot;isegmenter&quot;</span>)){
+        run_isegmenter(argc, argv);
+    } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (<span class="hljs-number">0</span> == <span class="hljs-built_in">strcmp</span>(argv[<span class="hljs-number">1</span>], <span class="hljs-string">&quot;segmenter&quot;</span>)){
+        run_segmenter(argc, argv);
+    } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (<span class="hljs-number">0</span> == <span class="hljs-built_in">strcmp</span>(argv[<span class="hljs-number">1</span>], <span class="hljs-string">&quot;art&quot;</span>)){
+        run_art(argc, argv);
+    } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (<span class="hljs-number">0</span> == <span class="hljs-built_in">strcmp</span>(argv[<span class="hljs-number">1</span>], <span class="hljs-string">&quot;tag&quot;</span>)){
+        run_tag(argc, argv);
+    } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (<span class="hljs-number">0</span> == <span class="hljs-built_in">strcmp</span>(argv[<span class="hljs-number">1</span>], <span class="hljs-string">&quot;3d&quot;</span>)){
+        composite_3d(argv[<span class="hljs-number">2</span>], argv[<span class="hljs-number">3</span>], argv[<span class="hljs-number">4</span>], (argc &gt; <span class="hljs-number">5</span>) ? atof(argv[<span class="hljs-number">5</span>]) : <span class="hljs-number">0</span>);
+    } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (<span class="hljs-number">0</span> == <span class="hljs-built_in">strcmp</span>(argv[<span class="hljs-number">1</span>], <span class="hljs-string">&quot;test&quot;</span>)){
+        test_resize(argv[<span class="hljs-number">2</span>]);
+    } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (<span class="hljs-number">0</span> == <span class="hljs-built_in">strcmp</span>(argv[<span class="hljs-number">1</span>], <span class="hljs-string">&quot;nightmare&quot;</span>)){
+        run_nightmare(argc, argv);
+    } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (<span class="hljs-number">0</span> == <span class="hljs-built_in">strcmp</span>(argv[<span class="hljs-number">1</span>], <span class="hljs-string">&quot;rgbgr&quot;</span>)){
+        rgbgr_net(argv[<span class="hljs-number">2</span>], argv[<span class="hljs-number">3</span>], argv[<span class="hljs-number">4</span>]);
+    } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (<span class="hljs-number">0</span> == <span class="hljs-built_in">strcmp</span>(argv[<span class="hljs-number">1</span>], <span class="hljs-string">&quot;reset&quot;</span>)){
+        reset_normalize_net(argv[<span class="hljs-number">2</span>], argv[<span class="hljs-number">3</span>], argv[<span class="hljs-number">4</span>]);
+    } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (<span class="hljs-number">0</span> == <span class="hljs-built_in">strcmp</span>(argv[<span class="hljs-number">1</span>], <span class="hljs-string">&quot;denormalize&quot;</span>)){
+        denormalize_net(argv[<span class="hljs-number">2</span>], argv[<span class="hljs-number">3</span>], argv[<span class="hljs-number">4</span>]);
+    } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (<span class="hljs-number">0</span> == <span class="hljs-built_in">strcmp</span>(argv[<span class="hljs-number">1</span>], <span class="hljs-string">&quot;statistics&quot;</span>)){
+        statistics_net(argv[<span class="hljs-number">2</span>], argv[<span class="hljs-number">3</span>]);
+    } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (<span class="hljs-number">0</span> == <span class="hljs-built_in">strcmp</span>(argv[<span class="hljs-number">1</span>], <span class="hljs-string">&quot;normalize&quot;</span>)){
+        normalize_net(argv[<span class="hljs-number">2</span>], argv[<span class="hljs-number">3</span>], argv[<span class="hljs-number">4</span>]);
+    } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (<span class="hljs-number">0</span> == <span class="hljs-built_in">strcmp</span>(argv[<span class="hljs-number">1</span>], <span class="hljs-string">&quot;rescale&quot;</span>)){
+        rescale_net(argv[<span class="hljs-number">2</span>], argv[<span class="hljs-number">3</span>], argv[<span class="hljs-number">4</span>]);
+    } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (<span class="hljs-number">0</span> == <span class="hljs-built_in">strcmp</span>(argv[<span class="hljs-number">1</span>], <span class="hljs-string">&quot;ops&quot;</span>)){
+        operations(argv[<span class="hljs-number">2</span>]);
+    } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (<span class="hljs-number">0</span> == <span class="hljs-built_in">strcmp</span>(argv[<span class="hljs-number">1</span>], <span class="hljs-string">&quot;speed&quot;</span>)){
+        speed(argv[<span class="hljs-number">2</span>], (argc &gt; <span class="hljs-number">3</span> &amp;&amp; argv[<span class="hljs-number">3</span>]) ? atoi(argv[<span class="hljs-number">3</span>]) : <span class="hljs-number">0</span>);
+    } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (<span class="hljs-number">0</span> == <span class="hljs-built_in">strcmp</span>(argv[<span class="hljs-number">1</span>], <span class="hljs-string">&quot;oneoff&quot;</span>)){
+        oneoff(argv[<span class="hljs-number">2</span>], argv[<span class="hljs-number">3</span>], argv[<span class="hljs-number">4</span>]);
+    } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (<span class="hljs-number">0</span> == <span class="hljs-built_in">strcmp</span>(argv[<span class="hljs-number">1</span>], <span class="hljs-string">&quot;oneoff2&quot;</span>)){
+        oneoff2(argv[<span class="hljs-number">2</span>], argv[<span class="hljs-number">3</span>], argv[<span class="hljs-number">4</span>], atoi(argv[<span class="hljs-number">5</span>]));
+    } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (<span class="hljs-number">0</span> == <span class="hljs-built_in">strcmp</span>(argv[<span class="hljs-number">1</span>], <span class="hljs-string">&quot;print&quot;</span>)){
+        print_weights(argv[<span class="hljs-number">2</span>], argv[<span class="hljs-number">3</span>], atoi(argv[<span class="hljs-number">4</span>]));
+    } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (<span class="hljs-number">0</span> == <span class="hljs-built_in">strcmp</span>(argv[<span class="hljs-number">1</span>], <span class="hljs-string">&quot;partial&quot;</span>)){
+        partial(argv[<span class="hljs-number">2</span>], argv[<span class="hljs-number">3</span>], argv[<span class="hljs-number">4</span>], atoi(argv[<span class="hljs-number">5</span>]));
+    } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (<span class="hljs-number">0</span> == <span class="hljs-built_in">strcmp</span>(argv[<span class="hljs-number">1</span>], <span class="hljs-string">&quot;average&quot;</span>)){
+        average(argc, argv);
+    } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (<span class="hljs-number">0</span> == <span class="hljs-built_in">strcmp</span>(argv[<span class="hljs-number">1</span>], <span class="hljs-string">&quot;visualize&quot;</span>)){
+        visualize(argv[<span class="hljs-number">2</span>], (argc &gt; <span class="hljs-number">3</span>) ? argv[<span class="hljs-number">3</span>] : <span class="hljs-number">0</span>);
+    } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (<span class="hljs-number">0</span> == <span class="hljs-built_in">strcmp</span>(argv[<span class="hljs-number">1</span>], <span class="hljs-string">&quot;mkimg&quot;</span>)){
+        mkimg(argv[<span class="hljs-number">2</span>], argv[<span class="hljs-number">3</span>], atoi(argv[<span class="hljs-number">4</span>]), atoi(argv[<span class="hljs-number">5</span>]), atoi(argv[<span class="hljs-number">6</span>]), argv[<span class="hljs-number">7</span>]);
+    } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (<span class="hljs-number">0</span> == <span class="hljs-built_in">strcmp</span>(argv[<span class="hljs-number">1</span>], <span class="hljs-string">&quot;imtest&quot;</span>)){
+        test_resize(argv[<span class="hljs-number">2</span>]);
+    } <span class="hljs-keyword">else</span> {
+        <span class="hljs-built_in">fprintf</span>(<span class="hljs-built_in">stderr</span>, <span class="hljs-string">&quot;Not an option: %s\n&quot;</span>, argv[<span class="hljs-number">1</span>]);
+    }
+    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+}
+</code></pre>
+
+                                
+                                </section>
+                            
+    </div>
+    <div class="search-results">
+        <div class="has-results">
+            
+            <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+            <ul class="search-results-list"></ul>
+            
+        </div>
+        <div class="no-results">
+            
+            <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+            
+        </div>
+    </div>
+</div>
+
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="coco.html" class="navigation navigation-prev " aria-label="Previous page: coco.c">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="detector.html" class="navigation navigation-next " aria-label="Next page: detector.c">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"darknet.c","level":"6.7","depth":1,"next":{"title":"detector.c","level":"6.8","depth":1,"path":"part5_examples/detector.md","ref":"part5_examples/detector.md","articles":[]},"previous":{"title":"coco.c","level":"6.6","depth":1,"path":"part5_examples/coco.md","ref":"part5_examples/coco.md","articles":[]},"dir":"ltr"},"config":{"plugins":["advanced-emoji","theme-gestalt","-theme-default","styles-sass-fix","theme-api","mathjax","ga"],"root":"./","styles":{"website":"website-1600186244488.css"},"pluginsConfig":{"styles-sass-fix":{},"theme-gestalt":{"showLevel":false,"styles":{"website":"styles/website.css"},"logo":"/darknet_book/assets/darknet.png","baseUrl":null,"excludeDefaultStyles":true,"doNotHideChildrenChapters":false},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"theme-api":{"languages":[],"split":true,"theme":"light"},"mathjax":{"forceSVG":false,"version":"2.6-latest"},"ga":{"configuration":"auto","token":"UA-136921229-1"},"advanced-emoji":{"embedEmojis":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]}},"theme":"default","author":"JJM","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{"BASE_URL":"https://jjeamin.github.io"},"title":"DarkNet Book","output.name":"site","gitbook":"*"},"file":{"path":"part5_examples/darknet.md","mtime":"2020-09-15T15:38:50.937Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-09-15T16:10:39.415Z"},"basePath":"..","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <script src="../gitbook/gitbook.js"></script>
+    <script src="../gitbook/theme.js"></script>
+    
+        
+        <script src="https://cdn.mathjax.org/mathjax/2.6-latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-mathjax/plugin.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-ga/plugin.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-search/search-engine.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-search/search.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lunr/lunr.min.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lunr/search-lunr.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-sharing/buttons.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-fontsettings/fontsettings.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-theme-api/theme-api.js"></script>
+        
+    
+
+    </body>
+</html>
+

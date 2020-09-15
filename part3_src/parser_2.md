@@ -1,6 +1,6 @@
 ## free_section
 
-```
+```c
 void free_section(section *s)
 {
     free(s->type);
@@ -22,7 +22,7 @@ void free_section(section *s)
 
 ## parse_data
 
-```
+```c
 void parse_data(char *data, float *a, int n)
 {
     int i;
@@ -46,7 +46,7 @@ void parse_data(char *data, float *a, int n)
 
 ## parse_local
 
-```
+```c
 local_layer parse_local(list *options, size_params params)
 {
     int n = option_find_int(options, "filters",1);
@@ -73,7 +73,7 @@ local_layer parse_local(list *options, size_params params)
 
 ## parse_deconvolutional
 
-```
+```c
 layer parse_deconvolutional(list *options, size_params params)
 {
     int n = option_find_int(options, "filters",1);
@@ -104,7 +104,7 @@ layer parse_deconvolutional(list *options, size_params params)
 
 ## parse_convolutional
 
-```
+```c
 convolutional_layer parse_convolutional(list *options, size_params params)
 {
     int n = option_find_int(options, "filters",1);
@@ -140,7 +140,7 @@ convolutional_layer parse_convolutional(list *options, size_params params)
 
 ## parse_crnn
 
-```
+```c
 layer parse_crnn(list *options, size_params params)
 {
     int output_filters = option_find_int(options, "output_filters",1);
@@ -161,7 +161,7 @@ layer parse_crnn(list *options, size_params params)
 
 ## parse_rnn
 
-```
+```c
 layer parse_rnn(list *options, size_params params)
 {
     int output = option_find_int(options, "output",1);
@@ -181,7 +181,7 @@ layer parse_rnn(list *options, size_params params)
 
 ## parse_gru
 
-```
+```c
 layer parse_gru(list *options, size_params params)
 {
     int output = option_find_int(options, "output",1);
@@ -198,7 +198,7 @@ layer parse_gru(list *options, size_params params)
 
 ## parse_lstm
 
-```
+```c
 layer parse_lstm(list *options, size_params params)
 {
     int output = option_find_int(options, "output", 1);
@@ -214,7 +214,7 @@ layer parse_lstm(list *options, size_params params)
 
 ## parse_connected
 
-```
+```c
 layer parse_connected(list *options, size_params params)
 {
     int output = option_find_int(options, "output",1);
@@ -231,7 +231,7 @@ layer parse_connected(list *options, size_params params)
 
 ## parse_softmax
 
-```
+```c
 layer parse_softmax(list *options, size_params params)
 {
     int groups = option_find_int_quiet(options, "groups",1);
@@ -252,7 +252,7 @@ layer parse_softmax(list *options, size_params params)
 
 ## parse_yolo_mask
 
-```
+```c
 int *parse_yolo_mask(char *a, int *num)
 {
     int *mask = 0;
@@ -277,7 +277,7 @@ int *parse_yolo_mask(char *a, int *num)
 
 ## parse_yolo
 
-```
+```c
 layer parse_yolo(list *options, size_params params)
 {
     int classes = option_find_int(options, "classes", 20);
@@ -321,7 +321,7 @@ layer parse_yolo(list *options, size_params params)
 
 ## parse_iseg
 
-```
+```c
 layer parse_iseg(list *options, size_params params)
 {
     int classes = option_find_int(options, "classes", 20);
@@ -336,7 +336,7 @@ layer parse_iseg(list *options, size_params params)
 
 ## parse_region
 
-```
+```c
 layer parse_region(list *options, size_params params)
 {
     int coords = option_find_int(options, "coords", 4);
@@ -394,7 +394,7 @@ layer parse_region(list *options, size_params params)
 
 ## parse_detection
 
-```
+```c
 detection_layer parse_detection(list *options, size_params params)
 {
     int coords = option_find_int(options, "coords", 1);
@@ -424,7 +424,7 @@ detection_layer parse_detection(list *options, size_params params)
 
 ## parse_cost
 
-```
+```c
 cost_layer parse_cost(list *options, size_params params)
 {
     char *type_s = option_find_str(options, "type", "sse");
@@ -442,7 +442,7 @@ cost_layer parse_cost(list *options, size_params params)
 
 ## parse_crop
 
-```
+```c
 crop_layer parse_crop(list *options, size_params params)
 {
     int crop_height = option_find_int(options, "crop_height",1);
@@ -472,7 +472,7 @@ crop_layer parse_crop(list *options, size_params params)
 
 ## parse_reorg
 
-```
+```c
 layer parse_reorg(list *options, size_params params)
 {
     int stride = option_find_int(options, "stride",1);
@@ -496,7 +496,7 @@ layer parse_reorg(list *options, size_params params)
 
 ## parse_maxpool
 
-```
+```c
 maxpool_layer parse_maxpool(list *options, size_params params)
 {
     int stride = option_find_int(options, "stride",1);
@@ -519,7 +519,7 @@ maxpool_layer parse_maxpool(list *options, size_params params)
 
 ## parse_avgpool
 
-```
+```c
 avgpool_layer parse_avgpool(list *options, size_params params)
 {
     int batch,w,h,c;
@@ -538,7 +538,7 @@ avgpool_layer parse_avgpool(list *options, size_params params)
 
 ## parse_dropout
 
-```
+```c
 dropout_layer parse_dropout(list *options, size_params params)
 {
     float probability = option_find_float(options, "probability", .5);
@@ -554,7 +554,7 @@ dropout_layer parse_dropout(list *options, size_params params)
 
 ## parse_normalization
 
-```
+```c
 layer parse_normalization(list *options, size_params params)
 {
     float alpha = option_find_float(options, "alpha", .0001);
@@ -570,7 +570,7 @@ layer parse_normalization(list *options, size_params params)
 
 ## parse_batchnorm
 
-```
+```c
 layer parse_batchnorm(list *options, size_params params)
 {
     layer l = make_batchnorm_layer(params.batch, params.w, params.h, params.c);
@@ -582,7 +582,7 @@ layer parse_batchnorm(list *options, size_params params)
 
 ## parse_shortcut
 
-```
+```c
 layer parse_shortcut(list *options, size_params params, network *net)
 {
     char *l = option_find(options, "from");
@@ -607,7 +607,7 @@ layer parse_shortcut(list *options, size_params params, network *net)
 
 ## parse_l2norm
 
-```
+```c
 layer parse_l2norm(list *options, size_params params)
 {
     layer l = make_l2norm_layer(params.batch, params.inputs);
@@ -622,7 +622,7 @@ layer parse_l2norm(list *options, size_params params)
 
 ## parse_logistic
 
-```
+```c
 layer parse_logistic(list *options, size_params params)
 {
     layer l = make_logistic_layer(params.batch, params.inputs);
@@ -637,7 +637,7 @@ layer parse_logistic(list *options, size_params params)
 
 ## parse_activation
 
-```
+```c
 layer parse_activation(list *options, size_params params)
 {
     char *activation_s = option_find_str(options, "activation", "linear");
@@ -657,7 +657,7 @@ layer parse_activation(list *options, size_params params)
 
 ## parse_upsample
 
-```
+```c
 layer parse_upsample(list *options, size_params params, network *net)
 {
 
@@ -672,7 +672,7 @@ layer parse_upsample(list *options, size_params params, network *net)
 
 ## parse_route
 
-```
+```c
 route_layer parse_route(list *options, size_params params, network *net)
 {
     char *l = option_find(options, "layers");
@@ -719,7 +719,7 @@ route_layer parse_route(list *options, size_params params, network *net)
 
 ## get_policy
 
-```
+```c
 typedef enum {
     CONSTANT, STEP, EXP, POLY, STEPS, SIG, RANDOM
 } learning_rate_policy;
@@ -742,7 +742,7 @@ learning_rate_policy get_policy(char *s)
 
 ## is_network
 
-```
+```c
 int is_network(section *s)
 {
     return (strcmp(s->type, "[net]")==0 || strcmp(s->type, "[network]")==0);
@@ -753,14 +753,14 @@ int is_network(section *s)
 
 ## load_weights
 
-```
+```c
 void load_weights(network *net, char *filename)
 {
     load_weights_upto(net, filename, 0, net->n);
 }
 ```
 
-```
+```c
 void load_weights_upto(network *net, char *filename, int start, int cutoff)
 {
     fprintf(stderr, "Loading weights from %s...", filename);
@@ -846,7 +846,7 @@ void load_weights_upto(network *net, char *filename, int start, int cutoff)
 
 ## load_convolutional_weights
 
-```
+```c
 void load_convolutional_weights(layer l, FILE *fp)
 {
     if(l.binary){
@@ -900,7 +900,7 @@ void load_convolutional_weights(layer l, FILE *fp)
 
 ## load_batchnorm_weights
 
-```
+```c
 void load_batchnorm_weights(layer l, FILE *fp)
 {
     fread(l.scales, sizeof(float), l.c, fp);
@@ -913,7 +913,7 @@ void load_batchnorm_weights(layer l, FILE *fp)
 
 ## load_connected_weights
 
-```
+```c
 void load_connected_weights(layer l, FILE *fp, int transpose)
 {
     fread(l.biases, sizeof(float), l.outputs, fp);
@@ -938,7 +938,7 @@ void load_connected_weights(layer l, FILE *fp, int transpose)
 
 ## transpose_matrix
 
-```
+```c
 void transpose_matrix(float *a, int rows, int cols)
 {
     float *transpose = calloc(rows*cols, sizeof(float));
@@ -967,14 +967,14 @@ void transpose_matrix(float *a, int rows, int cols)
 
 ## save_weights
 
-```
+```c
 void save_weights(network *net, char *filename)
 {
     save_weights_upto(net, filename, net->n);
 }
 ```
 
-```
+```c
 void save_weights_upto(network *net, char *filename, int cutoff)
 {
     fprintf(stderr, "Saving weights to %s\n", filename);
@@ -1044,7 +1044,7 @@ void save_weights_upto(network *net, char *filename, int cutoff)
 
 ## save_connected_weights
 
-```
+```c
 void save_connected_weights(layer l, FILE *fp)
 {
     fwrite(l.biases, sizeof(float), l.outputs, fp);
@@ -1061,7 +1061,7 @@ void save_connected_weights(layer l, FILE *fp)
 
 ## save_batchnorm_weights
 
-```
+```c
 void save_batchnorm_weights(layer l, FILE *fp)
 {
     fwrite(l.scales, sizeof(float), l.c, fp);
@@ -1074,7 +1074,7 @@ void save_batchnorm_weights(layer l, FILE *fp)
 
 ## save_convolutional_weights
 
-```
+```c
 void save_convolutional_weights(layer l, FILE *fp)
 {
     if(l.binary){

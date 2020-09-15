@@ -1,3 +1,9 @@
+확인을 하면서 작업을 진행하시길 원한다면 빌드를 해주세요
+
+```
+gitbook build
+```
+
 # DarkNet BOOK
 
 - 본 문서는 [DarkNet](https://github.com/pjreddie/darknet) 프로젝트 분석 문서입니다.
@@ -22,9 +28,9 @@ C 언어로 작성된 Deep Learning Open Source
 
 ### :blush: 이 문서를 작성하면서 얻기 원하는 것 :blush:
 
-- Deep Learning
+- Deep Learning 이해
 
-- 프로젝트 분석 경험
+- 프로젝트 분석
 
 - C 언어
 
@@ -36,14 +42,11 @@ C 언어로 작성된 Deep Learning Open Source
 
 - 무식하게 코드를 읽었을수도 있지만 딥러닝을 코드로 이해하려고 이렇게 했습니다.
 
-- 1차적으로 GPU, OPENCV 코드는 빼고 봅니다. (추후 예정 입니다..)
+- GPU 코드는 빼고 봅니다.
 
-- 수정이 필요한게 있다면 메일을 주시면 좋을 것 같습니다. Github로 진행하고 싶은데 빌드를 해서 올리는 거라 좀 문제가 많네요..
+- DarkNet Book Public GitHub : [https://github.com/jjeamin/darknet_book_public](https://github.com/jjeamin/darknet_book_public)
 
-- 메일로 성함과 메일, 수정할 부분을 같이 보내주시면 제가 직접 수정하고 기여 목록을 만들어 올려드리겠습니다.
-
-- 조그만 수정이라도 정말 고맙게 받겠습니다.
-
+- 기여 많이 해주세요 ㅠㅠ
 
 ### 프로젝트를 분석하기 위한 철칙
 
@@ -51,15 +54,11 @@ C 언어로 작성된 Deep Learning Open Source
 
 - 딥러닝 개념을 이해 합니다.
 
-- 한줄한줄 주석을 적지 말고 중요한 부분에만 주석을 적습니다.
-
-- 함수가 무슨 역할을 하는지 한두줄만 적습니다.
+- <span style="color:red"> 함수가 무슨 역할을 하는지 한두줄만 적습니다. </span>
 
 - 자료구조를 이해합니다.
 
 - 스타일을 이해합니다.
-
-- 위에 작업이 끝나면 최초로 모든 사람들에게 배포하고 중요한 알고리즘을 읽어보며 이해하기 쉽게 추가 설명을 작성합니다.
 
 ### 서론
 
@@ -83,7 +82,7 @@ C 언어로 작성된 Deep Learning Open Source
 
 #### 작성자
 
-- `name` : `Jaemin Jeong`
+- `Name` : `Jaemin Jeong`
 - `E-mail` : `woalsdl600@gmail.com`
 - `Github` : [https://github.com/](https://github.com/)
 - `Blog` : [https://jjeamin.github.io/](https://github.com/)

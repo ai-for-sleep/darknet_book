@@ -31,7 +31,7 @@ param2=value2
 
 ## parse_network_cfg
 
-```
+```c
 network *parse_network_cfg(char *filename)
 {
     list *sections = read_cfg(filename);                    /// sections = cfg 파일 구조 리스트
@@ -171,7 +171,7 @@ network *parse_network_cfg(char *filename)
 
 ## read_cfg
 
-```
+```c
 list *read_cfg(char *filename)
 {
     FILE *file = fopen(filename, "r");             
@@ -221,7 +221,7 @@ list *read_cfg(char *filename)
 
 ## parse_net_options
 
-```
+```c
 void parse_net_options(list *options, network *net)
 {
     net->batch = option_find_int(options, "batch",1);
