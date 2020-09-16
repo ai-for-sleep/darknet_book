@@ -42,7 +42,7 @@
 
     
         
-        <link rel="stylesheet" href="../website-1600186244488.css">
+        <link rel="stylesheet" href="../website-1600237079999.css">
         
     
 
@@ -1724,8 +1724,9 @@
                                 
                                 <h1 id="cifarc">cifar.c</h1>
 <pre><code class="lang-c"><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-string">&quot;darknet.h&quot;</span></span>
-
-<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">train_cifar</span><span class="hljs-params">(<span class="hljs-keyword">char</span> *cfgfile, <span class="hljs-keyword">char</span> *weightfile)</span>
+</code></pre>
+<h2 id="traincifar">train_cifar</h2>
+<pre><code class="lang-c"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">train_cifar</span><span class="hljs-params">(<span class="hljs-keyword">char</span> *cfgfile, <span class="hljs-keyword">char</span> *weightfile)</span>
 </span>{
     srand(time(<span class="hljs-number">0</span>));
     <span class="hljs-keyword">float</span> avg_loss = <span class="hljs-number">-1</span>;
@@ -1769,8 +1770,9 @@
     <span class="hljs-built_in">free</span>(base);
     free_data(train);
 }
-
-<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">train_cifar_distill</span><span class="hljs-params">(<span class="hljs-keyword">char</span> *cfgfile, <span class="hljs-keyword">char</span> *weightfile)</span>
+</code></pre>
+<h2 id="traincifardistill">train_cifar_distill</h2>
+<pre><code class="lang-c"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">train_cifar_distill</span><span class="hljs-params">(<span class="hljs-keyword">char</span> *cfgfile, <span class="hljs-keyword">char</span> *weightfile)</span>
 </span>{
     srand(time(<span class="hljs-number">0</span>));
     <span class="hljs-keyword">float</span> avg_loss = <span class="hljs-number">-1</span>;
@@ -1822,8 +1824,9 @@
     <span class="hljs-built_in">free</span>(base);
     free_data(train);
 }
-
-<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">test_cifar_multi</span><span class="hljs-params">(<span class="hljs-keyword">char</span> *filename, <span class="hljs-keyword">char</span> *weightfile)</span>
+</code></pre>
+<h2 id="testcifarmulti">test_cifar_multi</h2>
+<pre><code class="lang-c"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">test_cifar_multi</span><span class="hljs-params">(<span class="hljs-keyword">char</span> *filename, <span class="hljs-keyword">char</span> *weightfile)</span>
 </span>{
     network *net = load_network(filename, weightfile, <span class="hljs-number">0</span>);
     set_batch_network(net, <span class="hljs-number">1</span>);
@@ -1851,8 +1854,9 @@
         <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;%4d: %.2f%%\n&quot;</span>, i, <span class="hljs-number">100.</span>*avg_acc/(i+<span class="hljs-number">1</span>));
     }
 }
-
-<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">test_cifar</span><span class="hljs-params">(<span class="hljs-keyword">char</span> *filename, <span class="hljs-keyword">char</span> *weightfile)</span>
+</code></pre>
+<h2 id="testcifar">test_cifar</h2>
+<pre><code class="lang-c"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">test_cifar</span><span class="hljs-params">(<span class="hljs-keyword">char</span> *filename, <span class="hljs-keyword">char</span> *weightfile)</span>
 </span>{
     network *net = load_network(filename, weightfile, <span class="hljs-number">0</span>);
     srand(time(<span class="hljs-number">0</span>));
@@ -1870,8 +1874,9 @@
     <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;top1: %f, %lf seconds, %d images\n&quot;</span>, avg_acc, sec(clock()-time), test.X.rows);
     free_data(test);
 }
-
-<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">extract_cifar</span><span class="hljs-params">()</span>
+</code></pre>
+<h2 id="extractcifar">extract_cifar</h2>
+<pre><code class="lang-c"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">extract_cifar</span><span class="hljs-params">()</span>
 </span>{
 <span class="hljs-keyword">char</span> *labels[] = {<span class="hljs-string">&quot;airplane&quot;</span>,<span class="hljs-string">&quot;automobile&quot;</span>,<span class="hljs-string">&quot;bird&quot;</span>,<span class="hljs-string">&quot;cat&quot;</span>,<span class="hljs-string">&quot;deer&quot;</span>,<span class="hljs-string">&quot;dog&quot;</span>,<span class="hljs-string">&quot;frog&quot;</span>,<span class="hljs-string">&quot;horse&quot;</span>,<span class="hljs-string">&quot;ship&quot;</span>,<span class="hljs-string">&quot;truck&quot;</span>};
     <span class="hljs-keyword">int</span> i;
@@ -1892,8 +1897,9 @@
         save_image_options(im, buff, PNG, <span class="hljs-number">0</span>);
     }
 }
-
-<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">test_cifar_csv</span><span class="hljs-params">(<span class="hljs-keyword">char</span> *filename, <span class="hljs-keyword">char</span> *weightfile)</span>
+</code></pre>
+<h2 id="testcifarcsv">test_cifar_csv</h2>
+<pre><code class="lang-c"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">test_cifar_csv</span><span class="hljs-params">(<span class="hljs-keyword">char</span> *filename, <span class="hljs-keyword">char</span> *weightfile)</span>
 </span>{
     network *net = load_network(filename, weightfile, <span class="hljs-number">0</span>);
     srand(time(<span class="hljs-number">0</span>));
@@ -1916,8 +1922,9 @@
     <span class="hljs-built_in">fprintf</span>(<span class="hljs-built_in">stderr</span>, <span class="hljs-string">&quot;Accuracy: %f\n&quot;</span>, matrix_topk_accuracy(test.y, pred, <span class="hljs-number">1</span>));
     free_data(test);
 }
-
-<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">test_cifar_csvtrain</span><span class="hljs-params">(<span class="hljs-keyword">char</span> *cfg, <span class="hljs-keyword">char</span> *weights)</span>
+</code></pre>
+<h2 id="testcifarcsvtrain">test_cifar_csvtrain</h2>
+<pre><code class="lang-c"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">test_cifar_csvtrain</span><span class="hljs-params">(<span class="hljs-keyword">char</span> *cfg, <span class="hljs-keyword">char</span> *weights)</span>
 </span>{
     network *net = load_network(cfg, weights, <span class="hljs-number">0</span>);
     srand(time(<span class="hljs-number">0</span>));
@@ -1940,8 +1947,9 @@
     <span class="hljs-built_in">fprintf</span>(<span class="hljs-built_in">stderr</span>, <span class="hljs-string">&quot;Accuracy: %f\n&quot;</span>, matrix_topk_accuracy(test.y, pred, <span class="hljs-number">1</span>));
     free_data(test);
 }
-
-<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">eval_cifar_csv</span><span class="hljs-params">()</span>
+</code></pre>
+<h2 id="evalcifarcsv">eval_cifar_csv</h2>
+<pre><code class="lang-c"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">eval_cifar_csv</span><span class="hljs-params">()</span>
 </span>{
     data test = load_cifar10_data(<span class="hljs-string">&quot;data/cifar/cifar-10-batches-bin/test_batch.bin&quot;</span>);
 
@@ -1952,9 +1960,9 @@
     free_data(test);
     free_matrix(pred);
 }
-
-
-<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">run_cifar</span><span class="hljs-params">(<span class="hljs-keyword">int</span> argc, <span class="hljs-keyword">char</span> **argv)</span>
+</code></pre>
+<h2 id="runcifar">run_cifar</h2>
+<pre><code class="lang-c"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">run_cifar</span><span class="hljs-params">(<span class="hljs-keyword">int</span> argc, <span class="hljs-keyword">char</span> **argv)</span>
 </span>{
     <span class="hljs-keyword">if</span>(argc &lt; <span class="hljs-number">4</span>){
         <span class="hljs-built_in">fprintf</span>(<span class="hljs-built_in">stderr</span>, <span class="hljs-string">&quot;usage: %s %s [train/test/valid] [cfg] [weights (optional)]\n&quot;</span>, argv[<span class="hljs-number">0</span>], argv[<span class="hljs-number">1</span>]);
@@ -2016,7 +2024,7 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"cifar.c","level":"6.4","depth":1,"next":{"title":"classifier.c","level":"6.5","depth":1,"path":"part5_examples/classifier.md","ref":"part5_examples/classifier.md","articles":[]},"previous":{"title":"captcha.c","level":"6.3","depth":1,"path":"part5_examples/captcha.md","ref":"part5_examples/captcha.md","articles":[]},"dir":"ltr"},"config":{"plugins":["advanced-emoji","theme-gestalt","-theme-default","styles-sass-fix","theme-api","mathjax","ga"],"root":"./","styles":{"website":"website-1600186244488.css"},"pluginsConfig":{"styles-sass-fix":{},"theme-gestalt":{"showLevel":false,"styles":{"website":"styles/website.css"},"logo":"/darknet_book/assets/darknet.png","baseUrl":null,"excludeDefaultStyles":true,"doNotHideChildrenChapters":false},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"theme-api":{"languages":[],"split":true,"theme":"light"},"mathjax":{"forceSVG":false,"version":"2.6-latest"},"ga":{"configuration":"auto","token":"UA-136921229-1"},"advanced-emoji":{"embedEmojis":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]}},"theme":"default","author":"JJM","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{"BASE_URL":"https://jjeamin.github.io"},"title":"DarkNet Book","output.name":"site","gitbook":"*"},"file":{"path":"part5_examples/cifar.md","mtime":"2020-09-15T15:37:41.700Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-09-15T16:10:39.415Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"cifar.c","level":"6.4","depth":1,"next":{"title":"classifier.c","level":"6.5","depth":1,"path":"part5_examples/classifier.md","ref":"part5_examples/classifier.md","articles":[]},"previous":{"title":"captcha.c","level":"6.3","depth":1,"path":"part5_examples/captcha.md","ref":"part5_examples/captcha.md","articles":[]},"dir":"ltr"},"config":{"plugins":["advanced-emoji","theme-gestalt","-theme-default","styles-sass-fix","theme-api","mathjax","ga"],"root":"./","styles":{"website":"website-1600237079999.css"},"pluginsConfig":{"styles-sass-fix":{},"theme-gestalt":{"showLevel":false,"styles":{"website":"styles/website.css"},"logo":"/darknet_book/assets/darknet.png","baseUrl":null,"excludeDefaultStyles":true,"doNotHideChildrenChapters":false},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"theme-api":{"languages":[],"split":true,"theme":"light"},"mathjax":{"forceSVG":false,"version":"2.6-latest"},"ga":{"configuration":"auto","token":"UA-136921229-1"},"advanced-emoji":{"embedEmojis":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]}},"theme":"default","author":"JJM","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{"BASE_URL":"https://jjeamin.github.io"},"title":"DarkNet Book","output.name":"site","gitbook":"*"},"file":{"path":"part5_examples/cifar.md","mtime":"2020-09-16T05:36:11.449Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-09-16T06:17:55.067Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>

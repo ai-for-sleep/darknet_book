@@ -42,7 +42,7 @@
 
     
         
-        <link rel="stylesheet" href="../website-1600186244488.css">
+        <link rel="stylesheet" href="../website-1600237079999.css">
         
     
 
@@ -1723,30 +1723,31 @@
                                 <section class="normal markdown-section">
                                 
                                 <h1 id="rnnc">rnn.c</h1>
-<pre><code class="lang-c">#include &quot;darknet.h&quot;
+<pre><code class="lang-c"><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-string">&quot;darknet.h&quot;</span></span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;math.h&gt;</span></span>
 
-#include &lt;math.h&gt;
-
-typedef struct {
-    float *x;
-    float *y;
+<span class="hljs-keyword">typedef</span> <span class="hljs-keyword">struct</span> {
+    <span class="hljs-keyword">float</span> *x;
+    <span class="hljs-keyword">float</span> *y;
 } float_pair;
-
-unsigned char **load_files(char *filename, int *n)
-{
-    list *paths = get_paths(filename);
+</code></pre>
+<h2 id="loadfiles">load_files</h2>
+<pre><code class="lang-c"><span class="hljs-function"><span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">char</span> **<span class="hljs-title">load_files</span><span class="hljs-params">(<span class="hljs-keyword">char</span> *filename, <span class="hljs-keyword">int</span> *n)</span>
+</span>{
+    <span class="hljs-built_in">list</span> *paths = get_paths(filename);
     *n = paths-&gt;size;
-    unsigned char **contents = calloc(*n, sizeof(char *));
-    int i;
+    <span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">char</span> **contents = <span class="hljs-built_in">calloc</span>(*n, <span class="hljs-keyword">sizeof</span>(<span class="hljs-keyword">char</span> *));
+    <span class="hljs-keyword">int</span> i;
     node *x = paths-&gt;front;
-    for(i = 0; i &lt; *n; ++i){
-        contents[i] = read_file((char *)x-&gt;val);
+    <span class="hljs-keyword">for</span>(i = <span class="hljs-number">0</span>; i &lt; *n; ++i){
+        contents[i] = read_file((<span class="hljs-keyword">char</span> *)x-&gt;val);
         x = x-&gt;next;
     }
-    return contents;
+    <span class="hljs-keyword">return</span> contents;
 }
-
-int *read_tokenized_data(char *filename, size_t *read)
+</code></pre>
+<h2 id="readtokenizeddata">read_tokenized_data</h2>
+<pre><code class="lang-c">int *read_tokenized_data(char *filename, size_t *read)
 {
     size_t size = 512;
     size_t count = 0;
@@ -1768,8 +1769,9 @@ int *read_tokenized_data(char *filename, size_t *read)
     *read = count;
     return d;
 }
-
-char **read_tokens(char *filename, size_t *read)
+</code></pre>
+<h2 id="readtokens">read_tokens</h2>
+<pre><code class="lang-c">char **read_tokens(char *filename, size_t *read)
 {
     size_t size = 512;
     size_t count = 0;
@@ -1790,480 +1792,491 @@ char **read_tokens(char *filename, size_t *read)
     *read = count;
     return d;
 }
+</code></pre>
+<h2 id="getrnntokendata">get_rnn_token_data</h2>
+<pre><code class="lang-c"><span class="hljs-function">float_pair <span class="hljs-title">get_rnn_token_data</span><span class="hljs-params">(<span class="hljs-keyword">int</span> *tokens, size_t *offsets, <span class="hljs-keyword">int</span> characters, size_t len, <span class="hljs-keyword">int</span> batch, <span class="hljs-keyword">int</span> steps)</span>
+</span>{
+    <span class="hljs-keyword">float</span> *x = <span class="hljs-built_in">calloc</span>(batch * steps * characters, <span class="hljs-keyword">sizeof</span>(<span class="hljs-keyword">float</span>));
+    <span class="hljs-keyword">float</span> *y = <span class="hljs-built_in">calloc</span>(batch * steps * characters, <span class="hljs-keyword">sizeof</span>(<span class="hljs-keyword">float</span>));
+    <span class="hljs-keyword">int</span> i,j;
+    <span class="hljs-keyword">for</span>(i = <span class="hljs-number">0</span>; i &lt; batch; ++i){
+        <span class="hljs-keyword">for</span>(j = <span class="hljs-number">0</span>; j &lt; steps; ++j){
+            <span class="hljs-keyword">int</span> curr = tokens[(offsets[i])%len];
+            <span class="hljs-keyword">int</span> next = tokens[(offsets[i] + <span class="hljs-number">1</span>)%len];
 
+            x[(j*batch + i)*characters + curr] = <span class="hljs-number">1</span>;
+            y[(j*batch + i)*characters + next] = <span class="hljs-number">1</span>;
 
-float_pair get_rnn_token_data(int *tokens, size_t *offsets, int characters, size_t len, int batch, int steps)
-{
-    float *x = calloc(batch * steps * characters, sizeof(float));
-    float *y = calloc(batch * steps * characters, sizeof(float));
-    int i,j;
-    for(i = 0; i &lt; batch; ++i){
-        for(j = 0; j &lt; steps; ++j){
-            int curr = tokens[(offsets[i])%len];
-            int next = tokens[(offsets[i] + 1)%len];
+            offsets[i] = (offsets[i] + <span class="hljs-number">1</span>) % len;
 
-            x[(j*batch + i)*characters + curr] = 1;
-            y[(j*batch + i)*characters + next] = 1;
-
-            offsets[i] = (offsets[i] + 1) % len;
-
-            if(curr &gt;= characters || curr &lt; 0 || next &gt;= characters || next &lt; 0){
-                error(&quot;Bad char&quot;);
+            <span class="hljs-keyword">if</span>(curr &gt;= characters || curr &lt; <span class="hljs-number">0</span> || next &gt;= characters || next &lt; <span class="hljs-number">0</span>){
+                error(<span class="hljs-string">&quot;Bad char&quot;</span>);
             }
         }
     }
     float_pair p;
     p.x = x;
     p.y = y;
-    return p;
+    <span class="hljs-keyword">return</span> p;
 }
+</code></pre>
+<h2 id="getseq2seqdata">get_seq2seq_data</h2>
+<pre><code class="lang-c"><span class="hljs-function">float_pair <span class="hljs-title">get_seq2seq_data</span><span class="hljs-params">(<span class="hljs-keyword">char</span> **source, <span class="hljs-keyword">char</span> **dest, <span class="hljs-keyword">int</span> n, <span class="hljs-keyword">int</span> characters, size_t len, <span class="hljs-keyword">int</span> batch, <span class="hljs-keyword">int</span> steps)</span>
+</span>{
+    <span class="hljs-keyword">int</span> i,j;
+    <span class="hljs-keyword">float</span> *x = <span class="hljs-built_in">calloc</span>(batch * steps * characters, <span class="hljs-keyword">sizeof</span>(<span class="hljs-keyword">float</span>));
+    <span class="hljs-keyword">float</span> *y = <span class="hljs-built_in">calloc</span>(batch * steps * characters, <span class="hljs-keyword">sizeof</span>(<span class="hljs-keyword">float</span>));
+    <span class="hljs-keyword">for</span>(i = <span class="hljs-number">0</span>; i &lt; batch; ++i){
+        <span class="hljs-keyword">int</span> index = rand()%n;
+        <span class="hljs-comment">//int slen = strlen(source[index]);</span>
+        <span class="hljs-comment">//int dlen = strlen(dest[index]);</span>
+        <span class="hljs-keyword">for</span>(j = <span class="hljs-number">0</span>; j &lt; steps; ++j){
+            <span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">char</span> curr = source[index][j];
+            <span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">char</span> next = dest[index][j];
 
-float_pair get_seq2seq_data(char **source, char **dest, int n, int characters, size_t len, int batch, int steps)
-{
-    int i,j;
-    float *x = calloc(batch * steps * characters, sizeof(float));
-    float *y = calloc(batch * steps * characters, sizeof(float));
-    for(i = 0; i &lt; batch; ++i){
-        int index = rand()%n;
-        //int slen = strlen(source[index]);
-        //int dlen = strlen(dest[index]);
-        for(j = 0; j &lt; steps; ++j){
-            unsigned char curr = source[index][j];
-            unsigned char next = dest[index][j];
+            x[(j*batch + i)*characters + curr] = <span class="hljs-number">1</span>;
+            y[(j*batch + i)*characters + next] = <span class="hljs-number">1</span>;
 
-            x[(j*batch + i)*characters + curr] = 1;
-            y[(j*batch + i)*characters + next] = 1;
-
-            if(curr &gt; 255 || curr &lt;= 0 || next &gt; 255 || next &lt;= 0){
-                /*text[(index+j+2)%len] = 0;
+            <span class="hljs-keyword">if</span>(curr &gt; <span class="hljs-number">255</span> || curr &lt;= <span class="hljs-number">0</span> || next &gt; <span class="hljs-number">255</span> || next &lt;= <span class="hljs-number">0</span>){
+                <span class="hljs-comment">/*text[(index+j+2)%len] = 0;
                 printf(&quot;%ld %d %d %d %d\n&quot;, index, j, len, (int)text[index+j], (int)text[index+j+1]);
                 printf(&quot;%s&quot;, text+index);
-                */
-                error(&quot;Bad char&quot;);
+                */</span>
+                error(<span class="hljs-string">&quot;Bad char&quot;</span>);
             }
         }
     }
     float_pair p;
     p.x = x;
     p.y = y;
-    return p;
+    <span class="hljs-keyword">return</span> p;
 }
+</code></pre>
+<h2 id="getrnndata">get_rnn_data</h2>
+<pre><code class="lang-c"><span class="hljs-function">float_pair <span class="hljs-title">get_rnn_data</span><span class="hljs-params">(<span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">char</span> *text, size_t *offsets, <span class="hljs-keyword">int</span> characters, size_t len, <span class="hljs-keyword">int</span> batch, <span class="hljs-keyword">int</span> steps)</span>
+</span>{
+    <span class="hljs-keyword">float</span> *x = <span class="hljs-built_in">calloc</span>(batch * steps * characters, <span class="hljs-keyword">sizeof</span>(<span class="hljs-keyword">float</span>));
+    <span class="hljs-keyword">float</span> *y = <span class="hljs-built_in">calloc</span>(batch * steps * characters, <span class="hljs-keyword">sizeof</span>(<span class="hljs-keyword">float</span>));
+    <span class="hljs-keyword">int</span> i,j;
+    <span class="hljs-keyword">for</span>(i = <span class="hljs-number">0</span>; i &lt; batch; ++i){
+        <span class="hljs-keyword">for</span>(j = <span class="hljs-number">0</span>; j &lt; steps; ++j){
+            <span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">char</span> curr = text[(offsets[i])%len];
+            <span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">char</span> next = text[(offsets[i] + <span class="hljs-number">1</span>)%len];
 
-float_pair get_rnn_data(unsigned char *text, size_t *offsets, int characters, size_t len, int batch, int steps)
-{
-    float *x = calloc(batch * steps * characters, sizeof(float));
-    float *y = calloc(batch * steps * characters, sizeof(float));
-    int i,j;
-    for(i = 0; i &lt; batch; ++i){
-        for(j = 0; j &lt; steps; ++j){
-            unsigned char curr = text[(offsets[i])%len];
-            unsigned char next = text[(offsets[i] + 1)%len];
+            x[(j*batch + i)*characters + curr] = <span class="hljs-number">1</span>;
+            y[(j*batch + i)*characters + next] = <span class="hljs-number">1</span>;
 
-            x[(j*batch + i)*characters + curr] = 1;
-            y[(j*batch + i)*characters + next] = 1;
+            offsets[i] = (offsets[i] + <span class="hljs-number">1</span>) % len;
 
-            offsets[i] = (offsets[i] + 1) % len;
-
-            if(curr &gt; 255 || curr &lt;= 0 || next &gt; 255 || next &lt;= 0){
-                /*text[(index+j+2)%len] = 0;
+            <span class="hljs-keyword">if</span>(curr &gt; <span class="hljs-number">255</span> || curr &lt;= <span class="hljs-number">0</span> || next &gt; <span class="hljs-number">255</span> || next &lt;= <span class="hljs-number">0</span>){
+                <span class="hljs-comment">/*text[(index+j+2)%len] = 0;
                 printf(&quot;%ld %d %d %d %d\n&quot;, index, j, len, (int)text[index+j], (int)text[index+j+1]);
                 printf(&quot;%s&quot;, text+index);
-                */
-                error(&quot;Bad char&quot;);
+                */</span>
+                error(<span class="hljs-string">&quot;Bad char&quot;</span>);
             }
         }
     }
     float_pair p;
     p.x = x;
     p.y = y;
-    return p;
+    <span class="hljs-keyword">return</span> p;
 }
-
-void train_char_rnn(char *cfgfile, char *weightfile, char *filename, int clear, int tokenized)
-{
-    srand(time(0));
-    unsigned char *text = 0;
-    int *tokens = 0;
-    size_t size;
-    if(tokenized){
+</code></pre>
+<h2 id="traincharrnn">train_char_rnn</h2>
+<pre><code class="lang-c"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">train_char_rnn</span><span class="hljs-params">(<span class="hljs-keyword">char</span> *cfgfile, <span class="hljs-keyword">char</span> *weightfile, <span class="hljs-keyword">char</span> *filename, <span class="hljs-keyword">int</span> clear, <span class="hljs-keyword">int</span> tokenized)</span>
+</span>{
+    srand(time(<span class="hljs-number">0</span>));
+    <span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">char</span> *text = <span class="hljs-number">0</span>;
+    <span class="hljs-keyword">int</span> *tokens = <span class="hljs-number">0</span>;
+    <span class="hljs-keyword">size_t</span> size;
+    <span class="hljs-keyword">if</span>(tokenized){
         tokens = read_tokenized_data(filename, &amp;size);
-    } else {
+    } <span class="hljs-keyword">else</span> {
         text = read_file(filename);
-        size = strlen((const char*)text);
+        size = <span class="hljs-built_in">strlen</span>((<span class="hljs-keyword">const</span> <span class="hljs-keyword">char</span>*)text);
     }
 
-    char *backup_directory = &quot;/home/pjreddie/backup/&quot;;
-    char *base = basecfg(cfgfile);
-    fprintf(stderr, &quot;%s\n&quot;, base);
-    float avg_loss = -1;
+    <span class="hljs-keyword">char</span> *backup_directory = <span class="hljs-string">&quot;/home/pjreddie/backup/&quot;</span>;
+    <span class="hljs-keyword">char</span> *base = basecfg(cfgfile);
+    <span class="hljs-built_in">fprintf</span>(<span class="hljs-built_in">stderr</span>, <span class="hljs-string">&quot;%s\n&quot;</span>, base);
+    <span class="hljs-keyword">float</span> avg_loss = <span class="hljs-number">-1</span>;
     network *net = load_network(cfgfile, weightfile, clear);
 
-    int inputs = net-&gt;inputs;
-    fprintf(stderr, &quot;Learning Rate: %g, Momentum: %g, Decay: %g, Inputs: %d %d %d\n&quot;, net-&gt;learning_rate, net-&gt;momentum, net-&gt;decay, inputs, net-&gt;batch, net-&gt;time_steps);
-    int batch = net-&gt;batch;
-    int steps = net-&gt;time_steps;
-    if(clear) *net-&gt;seen = 0;
-    int i = (*net-&gt;seen)/net-&gt;batch;
+    <span class="hljs-keyword">int</span> inputs = net-&gt;inputs;
+    <span class="hljs-built_in">fprintf</span>(<span class="hljs-built_in">stderr</span>, <span class="hljs-string">&quot;Learning Rate: %g, Momentum: %g, Decay: %g, Inputs: %d %d %d\n&quot;</span>, net-&gt;learning_rate, net-&gt;momentum, net-&gt;decay, inputs, net-&gt;batch, net-&gt;time_steps);
+    <span class="hljs-keyword">int</span> batch = net-&gt;batch;
+    <span class="hljs-keyword">int</span> steps = net-&gt;time_steps;
+    <span class="hljs-keyword">if</span>(clear) *net-&gt;seen = <span class="hljs-number">0</span>;
+    <span class="hljs-keyword">int</span> i = (*net-&gt;seen)/net-&gt;batch;
 
-    int streams = batch/steps;
-    size_t *offsets = calloc(streams, sizeof(size_t));
-    int j;
-    for(j = 0; j &lt; streams; ++j){
-        offsets[j] = rand_size_t()%size;
+    <span class="hljs-keyword">int</span> streams = batch/steps;
+    <span class="hljs-keyword">size_t</span> *offsets = <span class="hljs-built_in">calloc</span>(streams, <span class="hljs-keyword">sizeof</span>(<span class="hljs-keyword">size_t</span>));
+    <span class="hljs-keyword">int</span> j;
+    <span class="hljs-keyword">for</span>(j = <span class="hljs-number">0</span>; j &lt; streams; ++j){
+        offsets[j] = <span class="hljs-keyword">rand_size_t</span>()%size;
     }
 
-    clock_t time;
-    while(get_current_batch(net) &lt; net-&gt;max_batches){
-        i += 1;
+    <span class="hljs-keyword">clock_t</span> time;
+    <span class="hljs-keyword">while</span>(get_current_batch(net) &lt; net-&gt;max_batches){
+        i += <span class="hljs-number">1</span>;
         time=clock();
         float_pair p;
-        if(tokenized){
+        <span class="hljs-keyword">if</span>(tokenized){
             p = get_rnn_token_data(tokens, offsets, inputs, size, streams, steps);
-        }else{
+        }<span class="hljs-keyword">else</span>{
             p = get_rnn_data(text, offsets, inputs, size, streams, steps);
         }
 
-        copy_cpu(net-&gt;inputs*net-&gt;batch, p.x, 1, net-&gt;input, 1);
-        copy_cpu(net-&gt;truths*net-&gt;batch, p.y, 1, net-&gt;truth, 1);
-        float loss = train_network_datum(net) / (batch);
-        free(p.x);
-        free(p.y);
-        if (avg_loss &lt; 0) avg_loss = loss;
-        avg_loss = avg_loss*.9 + loss*.1;
+        copy_cpu(net-&gt;inputs*net-&gt;batch, p.x, <span class="hljs-number">1</span>, net-&gt;input, <span class="hljs-number">1</span>);
+        copy_cpu(net-&gt;truths*net-&gt;batch, p.y, <span class="hljs-number">1</span>, net-&gt;truth, <span class="hljs-number">1</span>);
+        <span class="hljs-keyword">float</span> loss = train_network_datum(net) / (batch);
+        <span class="hljs-built_in">free</span>(p.x);
+        <span class="hljs-built_in">free</span>(p.y);
+        <span class="hljs-keyword">if</span> (avg_loss &lt; <span class="hljs-number">0</span>) avg_loss = loss;
+        avg_loss = avg_loss*<span class="hljs-number">.9</span> + loss*<span class="hljs-number">.1</span>;
 
-        size_t chars = get_current_batch(net)*batch;
-        fprintf(stderr, &quot;%d: %f, %f avg, %f rate, %lf seconds, %f epochs\n&quot;, i, loss, avg_loss, get_current_rate(net), sec(clock()-time), (float) chars/size);
+        <span class="hljs-keyword">size_t</span> chars = get_current_batch(net)*batch;
+        <span class="hljs-built_in">fprintf</span>(<span class="hljs-built_in">stderr</span>, <span class="hljs-string">&quot;%d: %f, %f avg, %f rate, %lf seconds, %f epochs\n&quot;</span>, i, loss, avg_loss, get_current_rate(net), sec(clock()-time), (<span class="hljs-keyword">float</span>) chars/size);
 
-        for(j = 0; j &lt; streams; ++j){
-            //printf(&quot;%d\n&quot;, j);
-            if(rand()%64 == 0){
-                //fprintf(stderr, &quot;Reset\n&quot;);
-                offsets[j] = rand_size_t()%size;
+        <span class="hljs-keyword">for</span>(j = <span class="hljs-number">0</span>; j &lt; streams; ++j){
+            <span class="hljs-comment">//printf(&quot;%d\n&quot;, j);</span>
+            <span class="hljs-keyword">if</span>(rand()%<span class="hljs-number">64</span> == <span class="hljs-number">0</span>){
+                <span class="hljs-comment">//fprintf(stderr, &quot;Reset\n&quot;);</span>
+                offsets[j] = <span class="hljs-keyword">rand_size_t</span>()%size;
                 reset_network_state(net, j);
             }
         }
 
-        if(i%10000==0){
-            char buff[256];
-            sprintf(buff, &quot;%s/%s_%d.weights&quot;, backup_directory, base, i);
+        <span class="hljs-keyword">if</span>(i%<span class="hljs-number">10000</span>==<span class="hljs-number">0</span>){
+            <span class="hljs-keyword">char</span> buff[<span class="hljs-number">256</span>];
+            <span class="hljs-built_in">sprintf</span>(buff, <span class="hljs-string">&quot;%s/%s_%d.weights&quot;</span>, backup_directory, base, i);
             save_weights(net, buff);
         }
-        if(i%100==0){
-            char buff[256];
-            sprintf(buff, &quot;%s/%s.backup&quot;, backup_directory, base);
+        <span class="hljs-keyword">if</span>(i%<span class="hljs-number">100</span>==<span class="hljs-number">0</span>){
+            <span class="hljs-keyword">char</span> buff[<span class="hljs-number">256</span>];
+            <span class="hljs-built_in">sprintf</span>(buff, <span class="hljs-string">&quot;%s/%s.backup&quot;</span>, backup_directory, base);
             save_weights(net, buff);
         }
     }
-    char buff[256];
-    sprintf(buff, &quot;%s/%s_final.weights&quot;, backup_directory, base);
+    <span class="hljs-keyword">char</span> buff[<span class="hljs-number">256</span>];
+    <span class="hljs-built_in">sprintf</span>(buff, <span class="hljs-string">&quot;%s/%s_final.weights&quot;</span>, backup_directory, base);
     save_weights(net, buff);
 }
-
-void print_symbol(int n, char **tokens){
-    if(tokens){
-        printf(&quot;%s &quot;, tokens[n]);
-    } else {
-        printf(&quot;%c&quot;, n);
+</code></pre>
+<h2 id="printsymbol">print_symbol</h2>
+<pre><code class="lang-c"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">print_symbol</span><span class="hljs-params">(<span class="hljs-keyword">int</span> n, <span class="hljs-keyword">char</span> **tokens)</span></span>{
+    <span class="hljs-keyword">if</span>(tokens){
+        <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;%s &quot;</span>, tokens[n]);
+    } <span class="hljs-keyword">else</span> {
+        <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;%c&quot;</span>, n);
     }
 }
-
-void test_char_rnn(char *cfgfile, char *weightfile, int num, char *seed, float temp, int rseed, char *token_file)
-{
-    char **tokens = 0;
-    if(token_file){
-        size_t n;
+</code></pre>
+<h2 id="testcharrnn">test_char_rnn</h2>
+<pre><code class="lang-c"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">test_char_rnn</span><span class="hljs-params">(<span class="hljs-keyword">char</span> *cfgfile, <span class="hljs-keyword">char</span> *weightfile, <span class="hljs-keyword">int</span> num, <span class="hljs-keyword">char</span> *seed, <span class="hljs-keyword">float</span> temp, <span class="hljs-keyword">int</span> rseed, <span class="hljs-keyword">char</span> *token_file)</span>
+</span>{
+    <span class="hljs-keyword">char</span> **tokens = <span class="hljs-number">0</span>;
+    <span class="hljs-keyword">if</span>(token_file){
+        <span class="hljs-keyword">size_t</span> n;
         tokens = read_tokens(token_file, &amp;n);
     }
 
     srand(rseed);
-    char *base = basecfg(cfgfile);
-    fprintf(stderr, &quot;%s\n&quot;, base);
+    <span class="hljs-keyword">char</span> *base = basecfg(cfgfile);
+    <span class="hljs-built_in">fprintf</span>(<span class="hljs-built_in">stderr</span>, <span class="hljs-string">&quot;%s\n&quot;</span>, base);
 
-    network *net = load_network(cfgfile, weightfile, 0);
-    int inputs = net-&gt;inputs;
+    network *net = load_network(cfgfile, weightfile, <span class="hljs-number">0</span>);
+    <span class="hljs-keyword">int</span> inputs = net-&gt;inputs;
 
-    int i, j;
-    for(i = 0; i &lt; net-&gt;n; ++i) net-&gt;layers[i].temperature = temp;
-    int c = 0;
-    int len = strlen(seed);
-    float *input = calloc(inputs, sizeof(float));
+    <span class="hljs-keyword">int</span> i, j;
+    <span class="hljs-keyword">for</span>(i = <span class="hljs-number">0</span>; i &lt; net-&gt;n; ++i) net-&gt;layers[i].temperature = temp;
+    <span class="hljs-keyword">int</span> c = <span class="hljs-number">0</span>;
+    <span class="hljs-keyword">int</span> len = <span class="hljs-built_in">strlen</span>(seed);
+    <span class="hljs-keyword">float</span> *input = <span class="hljs-built_in">calloc</span>(inputs, <span class="hljs-keyword">sizeof</span>(<span class="hljs-keyword">float</span>));
 
-    /*
+    <span class="hljs-comment">/*
        fill_cpu(inputs, 0, input, 1);
        for(i = 0; i &lt; 10; ++i){
        network_predict(net, input);
        }
        fill_cpu(inputs, 0, input, 1);
-     */
+     */</span>
 
-    for(i = 0; i &lt; len-1; ++i){
+    <span class="hljs-keyword">for</span>(i = <span class="hljs-number">0</span>; i &lt; len<span class="hljs-number">-1</span>; ++i){
         c = seed[i];
-        input[c] = 1;
+        input[c] = <span class="hljs-number">1</span>;
         network_predict(net, input);
-        input[c] = 0;
+        input[c] = <span class="hljs-number">0</span>;
         print_symbol(c, tokens);
     }
-    if(len) c = seed[len-1];
+    <span class="hljs-keyword">if</span>(len) c = seed[len<span class="hljs-number">-1</span>];
     print_symbol(c, tokens);
-    for(i = 0; i &lt; num; ++i){
-        input[c] = 1;
-        float *out = network_predict(net, input);
-        input[c] = 0;
-        for(j = 32; j &lt; 127; ++j){
-            //printf(&quot;%d %c %f\n&quot;,j, j, out[j]);
+    <span class="hljs-keyword">for</span>(i = <span class="hljs-number">0</span>; i &lt; num; ++i){
+        input[c] = <span class="hljs-number">1</span>;
+        <span class="hljs-keyword">float</span> *out = network_predict(net, input);
+        input[c] = <span class="hljs-number">0</span>;
+        <span class="hljs-keyword">for</span>(j = <span class="hljs-number">32</span>; j &lt; <span class="hljs-number">127</span>; ++j){
+            <span class="hljs-comment">//printf(&quot;%d %c %f\n&quot;,j, j, out[j]);</span>
         }
-        for(j = 0; j &lt; inputs; ++j){
-            if (out[j] &lt; .0001) out[j] = 0;
+        <span class="hljs-keyword">for</span>(j = <span class="hljs-number">0</span>; j &lt; inputs; ++j){
+            <span class="hljs-keyword">if</span> (out[j] &lt; <span class="hljs-number">.0001</span>) out[j] = <span class="hljs-number">0</span>;
         }
         c = sample_array(out, inputs);
         print_symbol(c, tokens);
     }
-    printf(&quot;\n&quot;);
+    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;\n&quot;</span>);
 }
-
-void test_tactic_rnn_multi(char *cfgfile, char *weightfile, int num, float temp, int rseed, char *token_file)
-{
-    char **tokens = 0;
-    if(token_file){
-        size_t n;
+</code></pre>
+<h2 id="testtacticrnnmulti">test_tactic_rnn_multi</h2>
+<pre><code class="lang-c"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">test_tactic_rnn_multi</span><span class="hljs-params">(<span class="hljs-keyword">char</span> *cfgfile, <span class="hljs-keyword">char</span> *weightfile, <span class="hljs-keyword">int</span> num, <span class="hljs-keyword">float</span> temp, <span class="hljs-keyword">int</span> rseed, <span class="hljs-keyword">char</span> *token_file)</span>
+</span>{
+    <span class="hljs-keyword">char</span> **tokens = <span class="hljs-number">0</span>;
+    <span class="hljs-keyword">if</span>(token_file){
+        <span class="hljs-keyword">size_t</span> n;
         tokens = read_tokens(token_file, &amp;n);
     }
 
     srand(rseed);
-    char *base = basecfg(cfgfile);
-    fprintf(stderr, &quot;%s\n&quot;, base);
+    <span class="hljs-keyword">char</span> *base = basecfg(cfgfile);
+    <span class="hljs-built_in">fprintf</span>(<span class="hljs-built_in">stderr</span>, <span class="hljs-string">&quot;%s\n&quot;</span>, base);
 
-    network *net = load_network(cfgfile, weightfile, 0);
-    int inputs = net-&gt;inputs;
+    network *net = load_network(cfgfile, weightfile, <span class="hljs-number">0</span>);
+    <span class="hljs-keyword">int</span> inputs = net-&gt;inputs;
 
-    int i, j;
-    for(i = 0; i &lt; net-&gt;n; ++i) net-&gt;layers[i].temperature = temp;
-    int c = 0;
-    float *input = calloc(inputs, sizeof(float));
-    float *out = 0;
+    <span class="hljs-keyword">int</span> i, j;
+    <span class="hljs-keyword">for</span>(i = <span class="hljs-number">0</span>; i &lt; net-&gt;n; ++i) net-&gt;layers[i].temperature = temp;
+    <span class="hljs-keyword">int</span> c = <span class="hljs-number">0</span>;
+    <span class="hljs-keyword">float</span> *input = <span class="hljs-built_in">calloc</span>(inputs, <span class="hljs-keyword">sizeof</span>(<span class="hljs-keyword">float</span>));
+    <span class="hljs-keyword">float</span> *out = <span class="hljs-number">0</span>;
 
-    while(1){
-        reset_network_state(net, 0);
-        while((c = getc(stdin)) != EOF &amp;&amp; c != 0){
-            input[c] = 1;
+    <span class="hljs-keyword">while</span>(<span class="hljs-number">1</span>){
+        reset_network_state(net, <span class="hljs-number">0</span>);
+        <span class="hljs-keyword">while</span>((c = getc(<span class="hljs-built_in">stdin</span>)) != EOF &amp;&amp; c != <span class="hljs-number">0</span>){
+            input[c] = <span class="hljs-number">1</span>;
             out = network_predict(net, input);
-            input[c] = 0;
+            input[c] = <span class="hljs-number">0</span>;
         }
-        for(i = 0; i &lt; num; ++i){
-            for(j = 0; j &lt; inputs; ++j){
-                if (out[j] &lt; .0001) out[j] = 0;
+        <span class="hljs-keyword">for</span>(i = <span class="hljs-number">0</span>; i &lt; num; ++i){
+            <span class="hljs-keyword">for</span>(j = <span class="hljs-number">0</span>; j &lt; inputs; ++j){
+                <span class="hljs-keyword">if</span> (out[j] &lt; <span class="hljs-number">.0001</span>) out[j] = <span class="hljs-number">0</span>;
             }
-            int next = sample_array(out, inputs);
-            if(c == &apos;.&apos; &amp;&amp; next == &apos;\n&apos;) break;
+            <span class="hljs-keyword">int</span> next = sample_array(out, inputs);
+            <span class="hljs-keyword">if</span>(c == <span class="hljs-string">&apos;.&apos;</span> &amp;&amp; next == <span class="hljs-string">&apos;\n&apos;</span>) <span class="hljs-keyword">break</span>;
             c = next;
             print_symbol(c, tokens);
 
-            input[c] = 1;
+            input[c] = <span class="hljs-number">1</span>;
             out = network_predict(net, input);
-            input[c] = 0;
+            input[c] = <span class="hljs-number">0</span>;
         }
-        printf(&quot;\n&quot;);
+        <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;\n&quot;</span>);
     }
 }
-
-void test_tactic_rnn(char *cfgfile, char *weightfile, int num, float temp, int rseed, char *token_file)
-{
-    char **tokens = 0;
-    if(token_file){
-        size_t n;
+</code></pre>
+<h2 id="testtacticrnn">test_tactic_rnn</h2>
+<pre><code class="lang-c"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">test_tactic_rnn</span><span class="hljs-params">(<span class="hljs-keyword">char</span> *cfgfile, <span class="hljs-keyword">char</span> *weightfile, <span class="hljs-keyword">int</span> num, <span class="hljs-keyword">float</span> temp, <span class="hljs-keyword">int</span> rseed, <span class="hljs-keyword">char</span> *token_file)</span>
+</span>{
+    <span class="hljs-keyword">char</span> **tokens = <span class="hljs-number">0</span>;
+    <span class="hljs-keyword">if</span>(token_file){
+        <span class="hljs-keyword">size_t</span> n;
         tokens = read_tokens(token_file, &amp;n);
     }
 
     srand(rseed);
-    char *base = basecfg(cfgfile);
-    fprintf(stderr, &quot;%s\n&quot;, base);
+    <span class="hljs-keyword">char</span> *base = basecfg(cfgfile);
+    <span class="hljs-built_in">fprintf</span>(<span class="hljs-built_in">stderr</span>, <span class="hljs-string">&quot;%s\n&quot;</span>, base);
 
-    network *net = load_network(cfgfile, weightfile, 0);
-    int inputs = net-&gt;inputs;
+    network *net = load_network(cfgfile, weightfile, <span class="hljs-number">0</span>);
+    <span class="hljs-keyword">int</span> inputs = net-&gt;inputs;
 
-    int i, j;
-    for(i = 0; i &lt; net-&gt;n; ++i) net-&gt;layers[i].temperature = temp;
-    int c = 0;
-    float *input = calloc(inputs, sizeof(float));
-    float *out = 0;
+    <span class="hljs-keyword">int</span> i, j;
+    <span class="hljs-keyword">for</span>(i = <span class="hljs-number">0</span>; i &lt; net-&gt;n; ++i) net-&gt;layers[i].temperature = temp;
+    <span class="hljs-keyword">int</span> c = <span class="hljs-number">0</span>;
+    <span class="hljs-keyword">float</span> *input = <span class="hljs-built_in">calloc</span>(inputs, <span class="hljs-keyword">sizeof</span>(<span class="hljs-keyword">float</span>));
+    <span class="hljs-keyword">float</span> *out = <span class="hljs-number">0</span>;
 
-    while((c = getc(stdin)) != EOF){
-        input[c] = 1;
+    <span class="hljs-keyword">while</span>((c = getc(<span class="hljs-built_in">stdin</span>)) != EOF){
+        input[c] = <span class="hljs-number">1</span>;
         out = network_predict(net, input);
-        input[c] = 0;
+        input[c] = <span class="hljs-number">0</span>;
     }
-    for(i = 0; i &lt; num; ++i){
-        for(j = 0; j &lt; inputs; ++j){
-            if (out[j] &lt; .0001) out[j] = 0;
+    <span class="hljs-keyword">for</span>(i = <span class="hljs-number">0</span>; i &lt; num; ++i){
+        <span class="hljs-keyword">for</span>(j = <span class="hljs-number">0</span>; j &lt; inputs; ++j){
+            <span class="hljs-keyword">if</span> (out[j] &lt; <span class="hljs-number">.0001</span>) out[j] = <span class="hljs-number">0</span>;
         }
-        int next = sample_array(out, inputs);
-        if(c == &apos;.&apos; &amp;&amp; next == &apos;\n&apos;) break;
+        <span class="hljs-keyword">int</span> next = sample_array(out, inputs);
+        <span class="hljs-keyword">if</span>(c == <span class="hljs-string">&apos;.&apos;</span> &amp;&amp; next == <span class="hljs-string">&apos;\n&apos;</span>) <span class="hljs-keyword">break</span>;
         c = next;
         print_symbol(c, tokens);
 
-        input[c] = 1;
+        input[c] = <span class="hljs-number">1</span>;
         out = network_predict(net, input);
-        input[c] = 0;
+        input[c] = <span class="hljs-number">0</span>;
     }
-    printf(&quot;\n&quot;);
+    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;\n&quot;</span>);
 }
+</code></pre>
+<h2 id="validtacticrnn">valid_tactic_rnn</h2>
+<pre><code class="lang-c"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">valid_tactic_rnn</span><span class="hljs-params">(<span class="hljs-keyword">char</span> *cfgfile, <span class="hljs-keyword">char</span> *weightfile, <span class="hljs-keyword">char</span> *seed)</span>
+</span>{
+    <span class="hljs-keyword">char</span> *base = basecfg(cfgfile);
+    <span class="hljs-built_in">fprintf</span>(<span class="hljs-built_in">stderr</span>, <span class="hljs-string">&quot;%s\n&quot;</span>, base);
 
-void valid_tactic_rnn(char *cfgfile, char *weightfile, char *seed)
-{
-    char *base = basecfg(cfgfile);
-    fprintf(stderr, &quot;%s\n&quot;, base);
+    network *net = load_network(cfgfile, weightfile, <span class="hljs-number">0</span>);
+    <span class="hljs-keyword">int</span> inputs = net-&gt;inputs;
 
-    network *net = load_network(cfgfile, weightfile, 0);
-    int inputs = net-&gt;inputs;
-
-    int count = 0;
-    int words = 1;
-    int c;
-    int len = strlen(seed);
-    float *input = calloc(inputs, sizeof(float));
-    int i;
-    for(i = 0; i &lt; len; ++i){
+    <span class="hljs-keyword">int</span> count = <span class="hljs-number">0</span>;
+    <span class="hljs-keyword">int</span> words = <span class="hljs-number">1</span>;
+    <span class="hljs-keyword">int</span> c;
+    <span class="hljs-keyword">int</span> len = <span class="hljs-built_in">strlen</span>(seed);
+    <span class="hljs-keyword">float</span> *input = <span class="hljs-built_in">calloc</span>(inputs, <span class="hljs-keyword">sizeof</span>(<span class="hljs-keyword">float</span>));
+    <span class="hljs-keyword">int</span> i;
+    <span class="hljs-keyword">for</span>(i = <span class="hljs-number">0</span>; i &lt; len; ++i){
         c = seed[i];
-        input[(int)c] = 1;
+        input[(<span class="hljs-keyword">int</span>)c] = <span class="hljs-number">1</span>;
         network_predict(net, input);
-        input[(int)c] = 0;
+        input[(<span class="hljs-keyword">int</span>)c] = <span class="hljs-number">0</span>;
     }
-    float sum = 0;
-    c = getc(stdin);
-    float log2 = log(2);
-    int in = 0;
-    while(c != EOF){
-        int next = getc(stdin);
-        if(next == EOF) break;
-        if(next &lt; 0 || next &gt;= 255) error(&quot;Out of range character&quot;);
+    <span class="hljs-keyword">float</span> sum = <span class="hljs-number">0</span>;
+    c = getc(<span class="hljs-built_in">stdin</span>);
+    <span class="hljs-keyword">float</span> log2 = <span class="hljs-built_in">log</span>(<span class="hljs-number">2</span>);
+    <span class="hljs-keyword">int</span> in = <span class="hljs-number">0</span>;
+    <span class="hljs-keyword">while</span>(c != EOF){
+        <span class="hljs-keyword">int</span> next = getc(<span class="hljs-built_in">stdin</span>);
+        <span class="hljs-keyword">if</span>(next == EOF) <span class="hljs-keyword">break</span>;
+        <span class="hljs-keyword">if</span>(next &lt; <span class="hljs-number">0</span> || next &gt;= <span class="hljs-number">255</span>) error(<span class="hljs-string">&quot;Out of range character&quot;</span>);
 
-        input[c] = 1;
-        float *out = network_predict(net, input);
-        input[c] = 0;
+        input[c] = <span class="hljs-number">1</span>;
+        <span class="hljs-keyword">float</span> *out = network_predict(net, input);
+        input[c] = <span class="hljs-number">0</span>;
 
-        if(c == &apos;.&apos; &amp;&amp; next == &apos;\n&apos;) in = 0;
-        if(!in) {
-            if(c == &apos;&gt;&apos; &amp;&amp; next == &apos;&gt;&apos;){
-                in = 1;
+        <span class="hljs-keyword">if</span>(c == <span class="hljs-string">&apos;.&apos;</span> &amp;&amp; next == <span class="hljs-string">&apos;\n&apos;</span>) in = <span class="hljs-number">0</span>;
+        <span class="hljs-keyword">if</span>(!in) {
+            <span class="hljs-keyword">if</span>(c == <span class="hljs-string">&apos;&gt;&apos;</span> &amp;&amp; next == <span class="hljs-string">&apos;&gt;&apos;</span>){
+                in = <span class="hljs-number">1</span>;
                 ++words;
             }
             c = next;
-            continue;
+            <span class="hljs-keyword">continue</span>;
         }
         ++count;
-        sum += log(out[next])/log2;
+        sum += <span class="hljs-built_in">log</span>(out[next])/log2;
         c = next;
-        printf(&quot;%d %d Perplexity: %4.4f    Word Perplexity: %4.4f\n&quot;, count, words, pow(2, -sum/count), pow(2, -sum/words));
+        <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;%d %d Perplexity: %4.4f    Word Perplexity: %4.4f\n&quot;</span>, count, words, <span class="hljs-built_in">pow</span>(<span class="hljs-number">2</span>, -sum/count), <span class="hljs-built_in">pow</span>(<span class="hljs-number">2</span>, -sum/words));
     }
 }
+</code></pre>
+<h2 id="validcharrnn">valid_char_rnn</h2>
+<pre><code class="lang-c"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">valid_char_rnn</span><span class="hljs-params">(<span class="hljs-keyword">char</span> *cfgfile, <span class="hljs-keyword">char</span> *weightfile, <span class="hljs-keyword">char</span> *seed)</span>
+</span>{
+    <span class="hljs-keyword">char</span> *base = basecfg(cfgfile);
+    <span class="hljs-built_in">fprintf</span>(<span class="hljs-built_in">stderr</span>, <span class="hljs-string">&quot;%s\n&quot;</span>, base);
 
-void valid_char_rnn(char *cfgfile, char *weightfile, char *seed)
-{
-    char *base = basecfg(cfgfile);
-    fprintf(stderr, &quot;%s\n&quot;, base);
+    network *net = load_network(cfgfile, weightfile, <span class="hljs-number">0</span>);
+    <span class="hljs-keyword">int</span> inputs = net-&gt;inputs;
 
-    network *net = load_network(cfgfile, weightfile, 0);
-    int inputs = net-&gt;inputs;
-
-    int count = 0;
-    int words = 1;
-    int c;
-    int len = strlen(seed);
-    float *input = calloc(inputs, sizeof(float));
-    int i;
-    for(i = 0; i &lt; len; ++i){
+    <span class="hljs-keyword">int</span> count = <span class="hljs-number">0</span>;
+    <span class="hljs-keyword">int</span> words = <span class="hljs-number">1</span>;
+    <span class="hljs-keyword">int</span> c;
+    <span class="hljs-keyword">int</span> len = <span class="hljs-built_in">strlen</span>(seed);
+    <span class="hljs-keyword">float</span> *input = <span class="hljs-built_in">calloc</span>(inputs, <span class="hljs-keyword">sizeof</span>(<span class="hljs-keyword">float</span>));
+    <span class="hljs-keyword">int</span> i;
+    <span class="hljs-keyword">for</span>(i = <span class="hljs-number">0</span>; i &lt; len; ++i){
         c = seed[i];
-        input[(int)c] = 1;
+        input[(<span class="hljs-keyword">int</span>)c] = <span class="hljs-number">1</span>;
         network_predict(net, input);
-        input[(int)c] = 0;
+        input[(<span class="hljs-keyword">int</span>)c] = <span class="hljs-number">0</span>;
     }
-    float sum = 0;
-    c = getc(stdin);
-    float log2 = log(2);
-    while(c != EOF){
-        int next = getc(stdin);
-        if(next == EOF) break;
-        if(next &lt; 0 || next &gt;= 255) error(&quot;Out of range character&quot;);
+    <span class="hljs-keyword">float</span> sum = <span class="hljs-number">0</span>;
+    c = getc(<span class="hljs-built_in">stdin</span>);
+    <span class="hljs-keyword">float</span> log2 = <span class="hljs-built_in">log</span>(<span class="hljs-number">2</span>);
+    <span class="hljs-keyword">while</span>(c != EOF){
+        <span class="hljs-keyword">int</span> next = getc(<span class="hljs-built_in">stdin</span>);
+        <span class="hljs-keyword">if</span>(next == EOF) <span class="hljs-keyword">break</span>;
+        <span class="hljs-keyword">if</span>(next &lt; <span class="hljs-number">0</span> || next &gt;= <span class="hljs-number">255</span>) error(<span class="hljs-string">&quot;Out of range character&quot;</span>);
         ++count;
-        if(next == &apos; &apos; || next == &apos;\n&apos; || next == &apos;\t&apos;) ++words;
-        input[c] = 1;
-        float *out = network_predict(net, input);
-        input[c] = 0;
-        sum += log(out[next])/log2;
+        <span class="hljs-keyword">if</span>(next == <span class="hljs-string">&apos; &apos;</span> || next == <span class="hljs-string">&apos;\n&apos;</span> || next == <span class="hljs-string">&apos;\t&apos;</span>) ++words;
+        input[c] = <span class="hljs-number">1</span>;
+        <span class="hljs-keyword">float</span> *out = network_predict(net, input);
+        input[c] = <span class="hljs-number">0</span>;
+        sum += <span class="hljs-built_in">log</span>(out[next])/log2;
         c = next;
-        printf(&quot;%d BPC: %4.4f   Perplexity: %4.4f    Word Perplexity: %4.4f\n&quot;, count, -sum/count, pow(2, -sum/count), pow(2, -sum/words));
+        <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;%d BPC: %4.4f   Perplexity: %4.4f    Word Perplexity: %4.4f\n&quot;</span>, count, -sum/count, <span class="hljs-built_in">pow</span>(<span class="hljs-number">2</span>, -sum/count), <span class="hljs-built_in">pow</span>(<span class="hljs-number">2</span>, -sum/words));
     }
 }
+</code></pre>
+<h2 id="veccharrnn">vec_char_rnn</h2>
+<pre><code class="lang-c"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">vec_char_rnn</span><span class="hljs-params">(<span class="hljs-keyword">char</span> *cfgfile, <span class="hljs-keyword">char</span> *weightfile, <span class="hljs-keyword">char</span> *seed)</span>
+</span>{
+    <span class="hljs-keyword">char</span> *base = basecfg(cfgfile);
+    <span class="hljs-built_in">fprintf</span>(<span class="hljs-built_in">stderr</span>, <span class="hljs-string">&quot;%s\n&quot;</span>, base);
 
-void vec_char_rnn(char *cfgfile, char *weightfile, char *seed)
-{
-    char *base = basecfg(cfgfile);
-    fprintf(stderr, &quot;%s\n&quot;, base);
+    network *net = load_network(cfgfile, weightfile, <span class="hljs-number">0</span>);
+    <span class="hljs-keyword">int</span> inputs = net-&gt;inputs;
 
-    network *net = load_network(cfgfile, weightfile, 0);
-    int inputs = net-&gt;inputs;
-
-    int c;
-    int seed_len = strlen(seed);
-    float *input = calloc(inputs, sizeof(float));
-    int i;
-    char *line;
-    while((line=fgetl(stdin)) != 0){
-        reset_network_state(net, 0);
-        for(i = 0; i &lt; seed_len; ++i){
+    <span class="hljs-keyword">int</span> c;
+    <span class="hljs-keyword">int</span> seed_len = <span class="hljs-built_in">strlen</span>(seed);
+    <span class="hljs-keyword">float</span> *input = <span class="hljs-built_in">calloc</span>(inputs, <span class="hljs-keyword">sizeof</span>(<span class="hljs-keyword">float</span>));
+    <span class="hljs-keyword">int</span> i;
+    <span class="hljs-keyword">char</span> *line;
+    <span class="hljs-keyword">while</span>((line=fgetl(<span class="hljs-built_in">stdin</span>)) != <span class="hljs-number">0</span>){
+        reset_network_state(net, <span class="hljs-number">0</span>);
+        <span class="hljs-keyword">for</span>(i = <span class="hljs-number">0</span>; i &lt; seed_len; ++i){
             c = seed[i];
-            input[(int)c] = 1;
+            input[(<span class="hljs-keyword">int</span>)c] = <span class="hljs-number">1</span>;
             network_predict(net, input);
-            input[(int)c] = 0;
+            input[(<span class="hljs-keyword">int</span>)c] = <span class="hljs-number">0</span>;
         }
         strip(line);
-        int str_len = strlen(line);
-        for(i = 0; i &lt; str_len; ++i){
+        <span class="hljs-keyword">int</span> str_len = <span class="hljs-built_in">strlen</span>(line);
+        <span class="hljs-keyword">for</span>(i = <span class="hljs-number">0</span>; i &lt; str_len; ++i){
             c = line[i];
-            input[(int)c] = 1;
+            input[(<span class="hljs-keyword">int</span>)c] = <span class="hljs-number">1</span>;
             network_predict(net, input);
-            input[(int)c] = 0;
+            input[(<span class="hljs-keyword">int</span>)c] = <span class="hljs-number">0</span>;
         }
-        c = &apos; &apos;;
-        input[(int)c] = 1;
+        c = <span class="hljs-string">&apos; &apos;</span>;
+        input[(<span class="hljs-keyword">int</span>)c] = <span class="hljs-number">1</span>;
         network_predict(net, input);
-        input[(int)c] = 0;
+        input[(<span class="hljs-keyword">int</span>)c] = <span class="hljs-number">0</span>;
 
-        layer l = net-&gt;layers[0];
-        #ifdef GPU
+        layer l = net-&gt;layers[<span class="hljs-number">0</span>];
+        <span class="hljs-meta">#<span class="hljs-meta-keyword">ifdef</span> GPU</span>
         cuda_pull_array(l.output_gpu, l.output, l.outputs);
-        #endif
-        printf(&quot;%s&quot;, line);
-        for(i = 0; i &lt; l.outputs; ++i){
-            printf(&quot;,%g&quot;, l.output[i]);
+        <span class="hljs-meta">#<span class="hljs-meta-keyword">endif</span></span>
+        <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;%s&quot;</span>, line);
+        <span class="hljs-keyword">for</span>(i = <span class="hljs-number">0</span>; i &lt; l.outputs; ++i){
+            <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;,%g&quot;</span>, l.output[i]);
         }
-        printf(&quot;\n&quot;);
+        <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;\n&quot;</span>);
     }
 }
-
-void run_char_rnn(int argc, char **argv)
-{
-    if(argc &lt; 4){
-        fprintf(stderr, &quot;usage: %s %s [train/test/valid] [cfg] [weights (optional)]\n&quot;, argv[0], argv[1]);
-        return;
+</code></pre>
+<h2 id="runcharrnn">run_char_rnn</h2>
+<pre><code class="lang-c"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">run_char_rnn</span><span class="hljs-params">(<span class="hljs-keyword">int</span> argc, <span class="hljs-keyword">char</span> **argv)</span>
+</span>{
+    <span class="hljs-keyword">if</span>(argc &lt; <span class="hljs-number">4</span>){
+        <span class="hljs-built_in">fprintf</span>(<span class="hljs-built_in">stderr</span>, <span class="hljs-string">&quot;usage: %s %s [train/test/valid] [cfg] [weights (optional)]\n&quot;</span>, argv[<span class="hljs-number">0</span>], argv[<span class="hljs-number">1</span>]);
+        <span class="hljs-keyword">return</span>;
     }
-    char *filename = find_char_arg(argc, argv, &quot;-file&quot;, &quot;data/shakespeare.txt&quot;);
-    char *seed = find_char_arg(argc, argv, &quot;-seed&quot;, &quot;\n\n&quot;);
-    int len = find_int_arg(argc, argv, &quot;-len&quot;, 1000);
-    float temp = find_float_arg(argc, argv, &quot;-temp&quot;, .7);
-    int rseed = find_int_arg(argc, argv, &quot;-srand&quot;, time(0));
-    int clear = find_arg(argc, argv, &quot;-clear&quot;);
-    int tokenized = find_arg(argc, argv, &quot;-tokenized&quot;);
-    char *tokens = find_char_arg(argc, argv, &quot;-tokens&quot;, 0);
+    <span class="hljs-keyword">char</span> *filename = find_char_arg(argc, argv, <span class="hljs-string">&quot;-file&quot;</span>, <span class="hljs-string">&quot;data/shakespeare.txt&quot;</span>);
+    <span class="hljs-keyword">char</span> *seed = find_char_arg(argc, argv, <span class="hljs-string">&quot;-seed&quot;</span>, <span class="hljs-string">&quot;\n\n&quot;</span>);
+    <span class="hljs-keyword">int</span> len = find_int_arg(argc, argv, <span class="hljs-string">&quot;-len&quot;</span>, <span class="hljs-number">1000</span>);
+    <span class="hljs-keyword">float</span> temp = find_float_arg(argc, argv, <span class="hljs-string">&quot;-temp&quot;</span>, <span class="hljs-number">.7</span>);
+    <span class="hljs-keyword">int</span> rseed = find_int_arg(argc, argv, <span class="hljs-string">&quot;-srand&quot;</span>, time(<span class="hljs-number">0</span>));
+    <span class="hljs-keyword">int</span> clear = find_arg(argc, argv, <span class="hljs-string">&quot;-clear&quot;</span>);
+    <span class="hljs-keyword">int</span> tokenized = find_arg(argc, argv, <span class="hljs-string">&quot;-tokenized&quot;</span>);
+    <span class="hljs-keyword">char</span> *tokens = find_char_arg(argc, argv, <span class="hljs-string">&quot;-tokens&quot;</span>, <span class="hljs-number">0</span>);
 
-    char *cfg = argv[3];
-    char *weights = (argc &gt; 4) ? argv[4] : 0;
-    if(0==strcmp(argv[2], &quot;train&quot;)) train_char_rnn(cfg, weights, filename, clear, tokenized);
-    else if(0==strcmp(argv[2], &quot;valid&quot;)) valid_char_rnn(cfg, weights, seed);
-    else if(0==strcmp(argv[2], &quot;validtactic&quot;)) valid_tactic_rnn(cfg, weights, seed);
-    else if(0==strcmp(argv[2], &quot;vec&quot;)) vec_char_rnn(cfg, weights, seed);
-    else if(0==strcmp(argv[2], &quot;generate&quot;)) test_char_rnn(cfg, weights, len, seed, temp, rseed, tokens);
-    else if(0==strcmp(argv[2], &quot;generatetactic&quot;)) test_tactic_rnn(cfg, weights, len, temp, rseed, tokens);
+    <span class="hljs-keyword">char</span> *cfg = argv[<span class="hljs-number">3</span>];
+    <span class="hljs-keyword">char</span> *weights = (argc &gt; <span class="hljs-number">4</span>) ? argv[<span class="hljs-number">4</span>] : <span class="hljs-number">0</span>;
+    <span class="hljs-keyword">if</span>(<span class="hljs-number">0</span>==<span class="hljs-built_in">strcmp</span>(argv[<span class="hljs-number">2</span>], <span class="hljs-string">&quot;train&quot;</span>)) train_char_rnn(cfg, weights, filename, clear, tokenized);
+    <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span>(<span class="hljs-number">0</span>==<span class="hljs-built_in">strcmp</span>(argv[<span class="hljs-number">2</span>], <span class="hljs-string">&quot;valid&quot;</span>)) valid_char_rnn(cfg, weights, seed);
+    <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span>(<span class="hljs-number">0</span>==<span class="hljs-built_in">strcmp</span>(argv[<span class="hljs-number">2</span>], <span class="hljs-string">&quot;validtactic&quot;</span>)) valid_tactic_rnn(cfg, weights, seed);
+    <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span>(<span class="hljs-number">0</span>==<span class="hljs-built_in">strcmp</span>(argv[<span class="hljs-number">2</span>], <span class="hljs-string">&quot;vec&quot;</span>)) vec_char_rnn(cfg, weights, seed);
+    <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span>(<span class="hljs-number">0</span>==<span class="hljs-built_in">strcmp</span>(argv[<span class="hljs-number">2</span>], <span class="hljs-string">&quot;generate&quot;</span>)) test_char_rnn(cfg, weights, len, seed, temp, rseed, tokens);
+    <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span>(<span class="hljs-number">0</span>==<span class="hljs-built_in">strcmp</span>(argv[<span class="hljs-number">2</span>], <span class="hljs-string">&quot;generatetactic&quot;</span>)) test_tactic_rnn(cfg, weights, len, temp, rseed, tokens);
 }
 </code></pre>
 
@@ -2309,7 +2322,7 @@ void run_char_rnn(int argc, char **argv)
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"rnn.c","level":"6.15","depth":1,"next":{"title":"rnn_vid.c","level":"6.16","depth":1,"path":"part5_examples/rnn_vid.md","ref":"part5_examples/rnn_vid.md","articles":[]},"previous":{"title":"regressor.c","level":"6.14","depth":1,"path":"part5_examples/regressor.md","ref":"part5_examples/regressor.md","articles":[]},"dir":"ltr"},"config":{"plugins":["advanced-emoji","theme-gestalt","-theme-default","styles-sass-fix","theme-api","mathjax","ga"],"root":"./","styles":{"website":"website-1600186244488.css"},"pluginsConfig":{"styles-sass-fix":{},"theme-gestalt":{"showLevel":false,"styles":{"website":"styles/website.css"},"logo":"/darknet_book/assets/darknet.png","baseUrl":null,"excludeDefaultStyles":true,"doNotHideChildrenChapters":false},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"theme-api":{"languages":[],"split":true,"theme":"light"},"mathjax":{"forceSVG":false,"version":"2.6-latest"},"ga":{"configuration":"auto","token":"UA-136921229-1"},"advanced-emoji":{"embedEmojis":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]}},"theme":"default","author":"JJM","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{"BASE_URL":"https://jjeamin.github.io"},"title":"DarkNet Book","output.name":"site","gitbook":"*"},"file":{"path":"part5_examples/rnn.md","mtime":"2020-09-15T15:56:53.507Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-09-15T16:10:39.415Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"rnn.c","level":"6.15","depth":1,"next":{"title":"rnn_vid.c","level":"6.16","depth":1,"path":"part5_examples/rnn_vid.md","ref":"part5_examples/rnn_vid.md","articles":[]},"previous":{"title":"regressor.c","level":"6.14","depth":1,"path":"part5_examples/regressor.md","ref":"part5_examples/regressor.md","articles":[]},"dir":"ltr"},"config":{"plugins":["advanced-emoji","theme-gestalt","-theme-default","styles-sass-fix","theme-api","mathjax","ga"],"root":"./","styles":{"website":"website-1600237079999.css"},"pluginsConfig":{"styles-sass-fix":{},"theme-gestalt":{"showLevel":false,"styles":{"website":"styles/website.css"},"logo":"/darknet_book/assets/darknet.png","baseUrl":null,"excludeDefaultStyles":true,"doNotHideChildrenChapters":false},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"theme-api":{"languages":[],"split":true,"theme":"light"},"mathjax":{"forceSVG":false,"version":"2.6-latest"},"ga":{"configuration":"auto","token":"UA-136921229-1"},"advanced-emoji":{"embedEmojis":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]}},"theme":"default","author":"JJM","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{"BASE_URL":"https://jjeamin.github.io"},"title":"DarkNet Book","output.name":"site","gitbook":"*"},"file":{"path":"part5_examples/rnn.md","mtime":"2020-09-16T05:51:15.669Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-09-16T06:17:55.067Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>

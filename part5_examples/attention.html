@@ -42,7 +42,7 @@
 
     
         
-        <link rel="stylesheet" href="../website-1600186244488.css">
+        <link rel="stylesheet" href="../website-1600237079999.css">
         
     
 
@@ -1723,24 +1723,26 @@
                                 <section class="normal markdown-section">
                                 
                                 <h1 id="attentionc">attention.c</h1>
-<pre><code class="lang-c">#include &quot;darknet.h&quot;
+<pre><code class="lang-c"><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-string">&quot;darknet.h&quot;</span></span>
 
-#include &lt;sys/time.h&gt;
-#include &lt;assert.h&gt;
-
-void extend_data_truth(data *d, int n, float val)
-{
-    int i, j;
-    for(i = 0; i &lt; d-&gt;y.rows; ++i){
-        d-&gt;y.vals[i] = realloc(d-&gt;y.vals[i], (d-&gt;y.cols+n)*sizeof(float));
-        for(j = 0; j &lt; n; ++j){
+<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;sys/time.h&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;assert.h&gt;</span></span>
+</code></pre>
+<h2 id="extenddatatruth">extend_data_truth</h2>
+<pre><code class="lang-c"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">extend_data_truth</span><span class="hljs-params">(data *d, <span class="hljs-keyword">int</span> n, <span class="hljs-keyword">float</span> val)</span>
+</span>{
+    <span class="hljs-keyword">int</span> i, j;
+    <span class="hljs-keyword">for</span>(i = <span class="hljs-number">0</span>; i &lt; d-&gt;y.rows; ++i){
+        d-&gt;y.vals[i] = <span class="hljs-built_in">realloc</span>(d-&gt;y.vals[i], (d-&gt;y.cols+n)*<span class="hljs-keyword">sizeof</span>(<span class="hljs-keyword">float</span>));
+        <span class="hljs-keyword">for</span>(j = <span class="hljs-number">0</span>; j &lt; n; ++j){
             d-&gt;y.vals[i][d-&gt;y.cols + j] = val;
         }
     }
     d-&gt;y.cols += n;
 }
-
-matrix network_loss_data(network *net, data test)
+</code></pre>
+<h2 id="networklossdata">network_loss_data</h2>
+<pre><code class="lang-c">matrix network_loss_data(network *net, data test)
 {
     int i,b;
     int k = 1;
@@ -1775,56 +1777,57 @@ matrix network_loss_data(network *net, data test)
     free(y);
     return pred;   
 }
+</code></pre>
+<h2 id="trainattention">train_attention</h2>
+<pre><code class="lang-c"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">train_attention</span><span class="hljs-params">(<span class="hljs-keyword">char</span> *datacfg, <span class="hljs-keyword">char</span> *cfgfile, <span class="hljs-keyword">char</span> *weightfile, <span class="hljs-keyword">int</span> *gpus, <span class="hljs-keyword">int</span> ngpus, <span class="hljs-keyword">int</span> clear)</span>
+</span>{
+    <span class="hljs-keyword">int</span> i, j;
 
-void train_attention(char *datacfg, char *cfgfile, char *weightfile, int *gpus, int ngpus, int clear)
-{
-    int i, j;
+    <span class="hljs-keyword">float</span> avg_cls_loss = <span class="hljs-number">-1</span>;
+    <span class="hljs-keyword">float</span> avg_att_loss = <span class="hljs-number">-1</span>;
+    <span class="hljs-keyword">char</span> *base = basecfg(cfgfile);
+    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;%s\n&quot;</span>, base);
+    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;%d\n&quot;</span>, ngpus);
+    network **nets = <span class="hljs-built_in">calloc</span>(ngpus, <span class="hljs-keyword">sizeof</span>(network*));
 
-    float avg_cls_loss = -1;
-    float avg_att_loss = -1;
-    char *base = basecfg(cfgfile);
-    printf(&quot;%s\n&quot;, base);
-    printf(&quot;%d\n&quot;, ngpus);
-    network **nets = calloc(ngpus, sizeof(network*));
-
-    srand(time(0));
-    int seed = rand();
-    for(i = 0; i &lt; ngpus; ++i){
+    srand(time(<span class="hljs-number">0</span>));
+    <span class="hljs-keyword">int</span> seed = rand();
+    <span class="hljs-keyword">for</span>(i = <span class="hljs-number">0</span>; i &lt; ngpus; ++i){
         srand(seed);
-#ifdef GPU
+<span class="hljs-meta">#<span class="hljs-meta-keyword">ifdef</span> GPU</span>
         cuda_set_device(gpus[i]);
-#endif
+<span class="hljs-meta">#<span class="hljs-meta-keyword">endif</span></span>
         nets[i] = load_network(cfgfile, weightfile, clear);
         nets[i]-&gt;learning_rate *= ngpus;
     }
-    srand(time(0));
-    network *net = nets[0];
+    srand(time(<span class="hljs-number">0</span>));
+    network *net = nets[<span class="hljs-number">0</span>];
 
-    int imgs = net-&gt;batch * net-&gt;subdivisions * ngpus;
+    <span class="hljs-keyword">int</span> imgs = net-&gt;batch * net-&gt;subdivisions * ngpus;
 
-    printf(&quot;Learning Rate: %g, Momentum: %g, Decay: %g\n&quot;, net-&gt;learning_rate, net-&gt;momentum, net-&gt;decay);
-    list *options = read_data_cfg(datacfg);
+    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;Learning Rate: %g, Momentum: %g, Decay: %g\n&quot;</span>, net-&gt;learning_rate, net-&gt;momentum, net-&gt;decay);
+    <span class="hljs-built_in">list</span> *options = read_data_cfg(datacfg);
 
-    char *backup_directory = option_find_str(options, &quot;backup&quot;, &quot;/backup/&quot;);
-    char *label_list = option_find_str(options, &quot;labels&quot;, &quot;data/labels.list&quot;);
-    char *train_list = option_find_str(options, &quot;train&quot;, &quot;data/train.list&quot;);
-    int classes = option_find_int(options, &quot;classes&quot;, 2);
+    <span class="hljs-keyword">char</span> *backup_directory = option_find_str(options, <span class="hljs-string">&quot;backup&quot;</span>, <span class="hljs-string">&quot;/backup/&quot;</span>);
+    <span class="hljs-keyword">char</span> *label_list = option_find_str(options, <span class="hljs-string">&quot;labels&quot;</span>, <span class="hljs-string">&quot;data/labels.list&quot;</span>);
+    <span class="hljs-keyword">char</span> *train_list = option_find_str(options, <span class="hljs-string">&quot;train&quot;</span>, <span class="hljs-string">&quot;data/train.list&quot;</span>);
+    <span class="hljs-keyword">int</span> classes = option_find_int(options, <span class="hljs-string">&quot;classes&quot;</span>, <span class="hljs-number">2</span>);
 
-    char **labels = get_labels(label_list);
-    list *plist = get_paths(train_list);
-    char **paths = (char **)list_to_array(plist);
-    printf(&quot;%d\n&quot;, plist-&gt;size);
-    int N = plist-&gt;size;
-    double time;
+    <span class="hljs-keyword">char</span> **labels = get_labels(label_list);
+    <span class="hljs-built_in">list</span> *plist = get_paths(train_list);
+    <span class="hljs-keyword">char</span> **paths = (<span class="hljs-keyword">char</span> **)list_to_array(plist);
+    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;%d\n&quot;</span>, plist-&gt;size);
+    <span class="hljs-keyword">int</span> N = plist-&gt;size;
+    <span class="hljs-keyword">double</span> time;
 
-    int divs=3;
-    int size=2;
+    <span class="hljs-keyword">int</span> divs=<span class="hljs-number">3</span>;
+    <span class="hljs-keyword">int</span> size=<span class="hljs-number">2</span>;
 
-    load_args args = {0};
+    load_args args = {<span class="hljs-number">0</span>};
     args.w = divs*net-&gt;w/size;
     args.h = divs*net-&gt;h/size;
     args.size = divs*net-&gt;w/size;
-    args.threads = 32;
+    args.threads = <span class="hljs-number">32</span>;
     args.hierarchy = net-&gt;hierarchy;
 
     args.min = net-&gt;min_ratio*args.w;
@@ -1844,341 +1847,344 @@ void train_attention(char *datacfg, char *cfgfile, char *weightfile, int *gpus, 
 
     data train;
     data buffer;
-    pthread_t load_thread;
+    <span class="hljs-keyword">pthread_t</span> load_thread;
     args.d = &amp;buffer;
     load_thread = load_data(args);
 
-    int epoch = (*net-&gt;seen)/N;
-    while(get_current_batch(net) &lt; net-&gt;max_batches || net-&gt;max_batches == 0){
+    <span class="hljs-keyword">int</span> epoch = (*net-&gt;seen)/N;
+    <span class="hljs-keyword">while</span>(get_current_batch(net) &lt; net-&gt;max_batches || net-&gt;max_batches == <span class="hljs-number">0</span>){
         time = what_time_is_it_now();
 
-        pthread_join(load_thread, 0);
+        pthread_join(load_thread, <span class="hljs-number">0</span>);
         train = buffer;
         load_thread = load_data(args);
         data resized = resize_data(train, net-&gt;w, net-&gt;h);
-        extend_data_truth(&amp;resized, divs*divs, 0);
+        extend_data_truth(&amp;resized, divs*divs, <span class="hljs-number">0</span>);
         data *tiles = tile_data(train, divs, size);
 
-        printf(&quot;Loaded: %lf seconds\n&quot;, what_time_is_it_now()-time);
+        <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;Loaded: %lf seconds\n&quot;</span>, what_time_is_it_now()-time);
         time = what_time_is_it_now();
 
-        float aloss = 0;
-        float closs = 0;
-        int z;
-        for (i = 0; i &lt; divs*divs/ngpus; ++i) {
-#pragma omp parallel for
-            for(j = 0; j &lt; ngpus; ++j){
-                int index = i*ngpus + j;
+        <span class="hljs-keyword">float</span> aloss = <span class="hljs-number">0</span>;
+        <span class="hljs-keyword">float</span> closs = <span class="hljs-number">0</span>;
+        <span class="hljs-keyword">int</span> z;
+        <span class="hljs-keyword">for</span> (i = <span class="hljs-number">0</span>; i &lt; divs*divs/ngpus; ++i) {
+<span class="hljs-meta">#<span class="hljs-meta-keyword">pragma</span> omp parallel for</span>
+            <span class="hljs-keyword">for</span>(j = <span class="hljs-number">0</span>; j &lt; ngpus; ++j){
+                <span class="hljs-keyword">int</span> index = i*ngpus + j;
                 extend_data_truth(tiles+index, divs*divs, SECRET_NUM);
                 matrix deltas = network_loss_data(nets[j], tiles[index]);
-                for(z = 0; z &lt; resized.y.rows; ++z){
-                    resized.y.vals[z][train.y.cols + index] = deltas.vals[z][0];
+                <span class="hljs-keyword">for</span>(z = <span class="hljs-number">0</span>; z &lt; resized.y.rows; ++z){
+                    resized.y.vals[z][train.y.cols + index] = deltas.vals[z][<span class="hljs-number">0</span>];
                 }
                 free_matrix(deltas);
             }
         }
-        int *inds = calloc(resized.y.rows, sizeof(int));
-        for(z = 0; z &lt; resized.y.rows; ++z){
-            int index = max_index(resized.y.vals[z] + train.y.cols, divs*divs);
+        <span class="hljs-keyword">int</span> *inds = <span class="hljs-built_in">calloc</span>(resized.y.rows, <span class="hljs-keyword">sizeof</span>(<span class="hljs-keyword">int</span>));
+        <span class="hljs-keyword">for</span>(z = <span class="hljs-number">0</span>; z &lt; resized.y.rows; ++z){
+            <span class="hljs-keyword">int</span> index = max_index(resized.y.vals[z] + train.y.cols, divs*divs);
             inds[z] = index;
-            for(i = 0; i &lt; divs*divs; ++i){
-                resized.y.vals[z][train.y.cols + i] = (i == index)? 1 : 0;
+            <span class="hljs-keyword">for</span>(i = <span class="hljs-number">0</span>; i &lt; divs*divs; ++i){
+                resized.y.vals[z][train.y.cols + i] = (i == index)? <span class="hljs-number">1</span> : <span class="hljs-number">0</span>;
             }
         }
         data best = select_data(tiles, inds);
-        free(inds);
-        #ifdef GPU
-        if (ngpus == 1) {
+        <span class="hljs-built_in">free</span>(inds);
+        <span class="hljs-meta">#<span class="hljs-meta-keyword">ifdef</span> GPU</span>
+        <span class="hljs-keyword">if</span> (ngpus == <span class="hljs-number">1</span>) {
             closs = train_network(net, best);
-        } else {
-            closs = train_networks(nets, ngpus, best, 4);
+        } <span class="hljs-keyword">else</span> {
+            closs = train_networks(nets, ngpus, best, <span class="hljs-number">4</span>);
         }
-        #endif
-        for (i = 0; i &lt; divs*divs; ++i) {
-            printf(&quot;%.2f &quot;, resized.y.vals[0][train.y.cols + i]);
-            if((i+1)%divs == 0) printf(&quot;\n&quot;);
+        <span class="hljs-meta">#<span class="hljs-meta-keyword">endif</span></span>
+        <span class="hljs-keyword">for</span> (i = <span class="hljs-number">0</span>; i &lt; divs*divs; ++i) {
+            <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;%.2f &quot;</span>, resized.y.vals[<span class="hljs-number">0</span>][train.y.cols + i]);
+            <span class="hljs-keyword">if</span>((i+<span class="hljs-number">1</span>)%divs == <span class="hljs-number">0</span>) <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;\n&quot;</span>);
             free_data(tiles[i]);
         }
         free_data(best);
-        printf(&quot;\n&quot;);
-        image im = float_to_image(64,64,3,resized.X.vals[0]);
-        //show_image(im, &quot;orig&quot;);
-        //cvWaitKey(100);
-        /*
+        <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;\n&quot;</span>);
+        image im = float_to_image(<span class="hljs-number">64</span>,<span class="hljs-number">64</span>,<span class="hljs-number">3</span>,resized.X.vals[<span class="hljs-number">0</span>]);
+        <span class="hljs-comment">//show_image(im, &quot;orig&quot;);</span>
+        <span class="hljs-comment">//cvWaitKey(100);</span>
+        <span class="hljs-comment">/*
            image im1 = float_to_image(64,64,3,tiles[i].X.vals[0]);
            image im2 = float_to_image(64,64,3,resized.X.vals[0]);
            show_image(im1, &quot;tile&quot;);
            show_image(im2, &quot;res&quot;);
-         */
-#ifdef GPU
-        if (ngpus == 1) {
+         */</span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">ifdef</span> GPU</span>
+        <span class="hljs-keyword">if</span> (ngpus == <span class="hljs-number">1</span>) {
             aloss = train_network(net, resized);
-        } else {
-            aloss = train_networks(nets, ngpus, resized, 4);
+        } <span class="hljs-keyword">else</span> {
+            aloss = train_networks(nets, ngpus, resized, <span class="hljs-number">4</span>);
         }
-#endif
-        for(i = 0; i &lt; divs*divs; ++i){
-            printf(&quot;%f &quot;, nets[0]-&gt;output[1000 + i]);
-            if ((i+1) % divs == 0) printf(&quot;\n&quot;);
+<span class="hljs-meta">#<span class="hljs-meta-keyword">endif</span></span>
+        <span class="hljs-keyword">for</span>(i = <span class="hljs-number">0</span>; i &lt; divs*divs; ++i){
+            <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;%f &quot;</span>, nets[<span class="hljs-number">0</span>]-&gt;output[<span class="hljs-number">1000</span> + i]);
+            <span class="hljs-keyword">if</span> ((i+<span class="hljs-number">1</span>) % divs == <span class="hljs-number">0</span>) <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;\n&quot;</span>);
         }
-        printf(&quot;\n&quot;);
+        <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;\n&quot;</span>);
 
         free_data(resized);
         free_data(train);
-        if(avg_cls_loss == -1) avg_cls_loss = closs;
-        if(avg_att_loss == -1) avg_att_loss = aloss;
-        avg_cls_loss = avg_cls_loss*.9 + closs*.1;
-        avg_att_loss = avg_att_loss*.9 + aloss*.1;
+        <span class="hljs-keyword">if</span>(avg_cls_loss == <span class="hljs-number">-1</span>) avg_cls_loss = closs;
+        <span class="hljs-keyword">if</span>(avg_att_loss == <span class="hljs-number">-1</span>) avg_att_loss = aloss;
+        avg_cls_loss = avg_cls_loss*<span class="hljs-number">.9</span> + closs*<span class="hljs-number">.1</span>;
+        avg_att_loss = avg_att_loss*<span class="hljs-number">.9</span> + aloss*<span class="hljs-number">.1</span>;
 
-        printf(&quot;%ld, %.3f: Att: %f, %f avg, Class: %f, %f avg, %f rate, %lf seconds, %ld images\n&quot;, get_current_batch(net), (float)(*net-&gt;seen)/N, aloss, avg_att_loss, closs, avg_cls_loss, get_current_rate(net), what_time_is_it_now()-time, *net-&gt;seen);
-        if(*net-&gt;seen/N &gt; epoch){
+        <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;%ld, %.3f: Att: %f, %f avg, Class: %f, %f avg, %f rate, %lf seconds, %ld images\n&quot;</span>, get_current_batch(net), (<span class="hljs-keyword">float</span>)(*net-&gt;seen)/N, aloss, avg_att_loss, closs, avg_cls_loss, get_current_rate(net), what_time_is_it_now()-time, *net-&gt;seen);
+        <span class="hljs-keyword">if</span>(*net-&gt;seen/N &gt; epoch){
             epoch = *net-&gt;seen/N;
-            char buff[256];
-            sprintf(buff, &quot;%s/%s_%d.weights&quot;,backup_directory,base, epoch);
+            <span class="hljs-keyword">char</span> buff[<span class="hljs-number">256</span>];
+            <span class="hljs-built_in">sprintf</span>(buff, <span class="hljs-string">&quot;%s/%s_%d.weights&quot;</span>,backup_directory,base, epoch);
             save_weights(net, buff);
         }
-        if(get_current_batch(net)%1000 == 0){
-            char buff[256];
-            sprintf(buff, &quot;%s/%s.backup&quot;,backup_directory,base);
+        <span class="hljs-keyword">if</span>(get_current_batch(net)%<span class="hljs-number">1000</span> == <span class="hljs-number">0</span>){
+            <span class="hljs-keyword">char</span> buff[<span class="hljs-number">256</span>];
+            <span class="hljs-built_in">sprintf</span>(buff, <span class="hljs-string">&quot;%s/%s.backup&quot;</span>,backup_directory,base);
             save_weights(net, buff);
         }
     }
-    char buff[256];
-    sprintf(buff, &quot;%s/%s.weights&quot;, backup_directory, base);
+    <span class="hljs-keyword">char</span> buff[<span class="hljs-number">256</span>];
+    <span class="hljs-built_in">sprintf</span>(buff, <span class="hljs-string">&quot;%s/%s.weights&quot;</span>, backup_directory, base);
     save_weights(net, buff);
-    pthread_join(load_thread, 0);
+    pthread_join(load_thread, <span class="hljs-number">0</span>);
 
     free_network(net);
-    free_ptrs((void**)labels, classes);
-    free_ptrs((void**)paths, plist-&gt;size);
+    free_ptrs((<span class="hljs-keyword">void</span>**)labels, classes);
+    free_ptrs((<span class="hljs-keyword">void</span>**)paths, plist-&gt;size);
     free_list(plist);
-    free(base);
+    <span class="hljs-built_in">free</span>(base);
 }
+</code></pre>
+<h2 id="validateattentionsingle">validate_attention_single</h2>
+<pre><code class="lang-c"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">validate_attention_single</span><span class="hljs-params">(<span class="hljs-keyword">char</span> *datacfg, <span class="hljs-keyword">char</span> *filename, <span class="hljs-keyword">char</span> *weightfile)</span>
+</span>{
+    <span class="hljs-keyword">int</span> i, j;
+    network *net = load_network(filename, weightfile, <span class="hljs-number">0</span>);
+    set_batch_network(net, <span class="hljs-number">1</span>);
+    srand(time(<span class="hljs-number">0</span>));
 
-void validate_attention_single(char *datacfg, char *filename, char *weightfile)
-{
-    int i, j;
-    network *net = load_network(filename, weightfile, 0);
-    set_batch_network(net, 1);
-    srand(time(0));
+    <span class="hljs-built_in">list</span> *options = read_data_cfg(datacfg);
 
-    list *options = read_data_cfg(datacfg);
+    <span class="hljs-keyword">char</span> *label_list = option_find_str(options, <span class="hljs-string">&quot;labels&quot;</span>, <span class="hljs-string">&quot;data/labels.list&quot;</span>);
+    <span class="hljs-keyword">char</span> *leaf_list = option_find_str(options, <span class="hljs-string">&quot;leaves&quot;</span>, <span class="hljs-number">0</span>);
+    <span class="hljs-keyword">if</span>(leaf_list) change_leaves(net-&gt;hierarchy, leaf_list);
+    <span class="hljs-keyword">char</span> *valid_list = option_find_str(options, <span class="hljs-string">&quot;valid&quot;</span>, <span class="hljs-string">&quot;data/train.list&quot;</span>);
+    <span class="hljs-keyword">int</span> classes = option_find_int(options, <span class="hljs-string">&quot;classes&quot;</span>, <span class="hljs-number">2</span>);
+    <span class="hljs-keyword">int</span> topk = option_find_int(options, <span class="hljs-string">&quot;top&quot;</span>, <span class="hljs-number">1</span>);
 
-    char *label_list = option_find_str(options, &quot;labels&quot;, &quot;data/labels.list&quot;);
-    char *leaf_list = option_find_str(options, &quot;leaves&quot;, 0);
-    if(leaf_list) change_leaves(net-&gt;hierarchy, leaf_list);
-    char *valid_list = option_find_str(options, &quot;valid&quot;, &quot;data/train.list&quot;);
-    int classes = option_find_int(options, &quot;classes&quot;, 2);
-    int topk = option_find_int(options, &quot;top&quot;, 1);
+    <span class="hljs-keyword">char</span> **labels = get_labels(label_list);
+    <span class="hljs-built_in">list</span> *plist = get_paths(valid_list);
 
-    char **labels = get_labels(label_list);
-    list *plist = get_paths(valid_list);
-
-    char **paths = (char **)list_to_array(plist);
-    int m = plist-&gt;size;
+    <span class="hljs-keyword">char</span> **paths = (<span class="hljs-keyword">char</span> **)list_to_array(plist);
+    <span class="hljs-keyword">int</span> m = plist-&gt;size;
     free_list(plist);
 
-    float avg_acc = 0;
-    float avg_topk = 0;
-    int *indexes = calloc(topk, sizeof(int));
-    int divs = 4;
-    int size = 2;
-    int extra = 0;
-    float *avgs = calloc(classes, sizeof(float));
-    int *inds = calloc(divs*divs, sizeof(int));
+    <span class="hljs-keyword">float</span> avg_acc = <span class="hljs-number">0</span>;
+    <span class="hljs-keyword">float</span> avg_topk = <span class="hljs-number">0</span>;
+    <span class="hljs-keyword">int</span> *indexes = <span class="hljs-built_in">calloc</span>(topk, <span class="hljs-keyword">sizeof</span>(<span class="hljs-keyword">int</span>));
+    <span class="hljs-keyword">int</span> divs = <span class="hljs-number">4</span>;
+    <span class="hljs-keyword">int</span> size = <span class="hljs-number">2</span>;
+    <span class="hljs-keyword">int</span> extra = <span class="hljs-number">0</span>;
+    <span class="hljs-keyword">float</span> *avgs = <span class="hljs-built_in">calloc</span>(classes, <span class="hljs-keyword">sizeof</span>(<span class="hljs-keyword">float</span>));
+    <span class="hljs-keyword">int</span> *inds = <span class="hljs-built_in">calloc</span>(divs*divs, <span class="hljs-keyword">sizeof</span>(<span class="hljs-keyword">int</span>));
 
-    for(i = 0; i &lt; m; ++i){
-        int class = -1;
-        char *path = paths[i];
-        for(j = 0; j &lt; classes; ++j){
-            if(strstr(path, labels[j])){
-                class = j;
-                break;
+    <span class="hljs-keyword">for</span>(i = <span class="hljs-number">0</span>; i &lt; m; ++i){
+        <span class="hljs-keyword">int</span> <span class="hljs-keyword">class</span> = <span class="hljs-number">-1</span>;
+        <span class="hljs-keyword">char</span> *path = paths[i];
+        <span class="hljs-keyword">for</span>(j = <span class="hljs-number">0</span>; j &lt; classes; ++j){
+            <span class="hljs-keyword">if</span>(<span class="hljs-built_in">strstr</span>(path, labels[j])){
+                <span class="hljs-keyword">class</span> = j;
+                <span class="hljs-keyword">break</span>;
             }
         }
-        image im = load_image_color(paths[i], 0, 0);
+        image im = load_image_color(paths[i], <span class="hljs-number">0</span>, <span class="hljs-number">0</span>);
         image resized = resize_min(im, net-&gt;w*divs/size);
-        image crop = crop_image(resized, (resized.w - net-&gt;w*divs/size)/2, (resized.h - net-&gt;h*divs/size)/2, net-&gt;w*divs/size, net-&gt;h*divs/size);
+        image crop = crop_image(resized, (resized.w - net-&gt;w*divs/size)/<span class="hljs-number">2</span>, (resized.h - net-&gt;h*divs/size)/<span class="hljs-number">2</span>, net-&gt;w*divs/size, net-&gt;h*divs/size);
         image rcrop = resize_image(crop, net-&gt;w, net-&gt;h);
-        //show_image(im, &quot;orig&quot;);
-        //show_image(crop, &quot;cropped&quot;);
-        //cvWaitKey(0);
-        float *pred = network_predict(net, rcrop.data);
-        //pred[classes + 56] = 0;
-        for(j = 0; j &lt; divs*divs; ++j){
-            printf(&quot;%.2f &quot;, pred[classes + j]);
-            if((j+1)%divs == 0) printf(&quot;\n&quot;);
+        <span class="hljs-comment">//show_image(im, &quot;orig&quot;);</span>
+        <span class="hljs-comment">//show_image(crop, &quot;cropped&quot;);</span>
+        <span class="hljs-comment">//cvWaitKey(0);</span>
+        <span class="hljs-keyword">float</span> *pred = network_predict(net, rcrop.data);
+        <span class="hljs-comment">//pred[classes + 56] = 0;</span>
+        <span class="hljs-keyword">for</span>(j = <span class="hljs-number">0</span>; j &lt; divs*divs; ++j){
+            <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;%.2f &quot;</span>, pred[classes + j]);
+            <span class="hljs-keyword">if</span>((j+<span class="hljs-number">1</span>)%divs == <span class="hljs-number">0</span>) <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;\n&quot;</span>);
         }
-        printf(&quot;\n&quot;);
-        copy_cpu(classes, pred, 1, avgs, 1);
+        <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;\n&quot;</span>);
+        copy_cpu(classes, pred, <span class="hljs-number">1</span>, avgs, <span class="hljs-number">1</span>);
         top_k(pred + classes, divs*divs, divs*divs, inds);
-        show_image(crop, &quot;crop&quot;);
-        for(j = 0; j &lt; extra; ++j){
-            int index = inds[j];
-            int row = index / divs;
-            int col = index % divs;
-            int y = row * crop.h / divs - (net-&gt;h - crop.h/divs)/2;
-            int x = col * crop.w / divs - (net-&gt;w - crop.w/divs)/2;
-            printf(&quot;%d %d %d %d\n&quot;, row, col, y, x);
+        show_image(crop, <span class="hljs-string">&quot;crop&quot;</span>);
+        <span class="hljs-keyword">for</span>(j = <span class="hljs-number">0</span>; j &lt; extra; ++j){
+            <span class="hljs-keyword">int</span> index = inds[j];
+            <span class="hljs-keyword">int</span> row = index / divs;
+            <span class="hljs-keyword">int</span> col = index % divs;
+            <span class="hljs-keyword">int</span> y = row * crop.h / divs - (net-&gt;h - crop.h/divs)/<span class="hljs-number">2</span>;
+            <span class="hljs-keyword">int</span> x = col * crop.w / divs - (net-&gt;w - crop.w/divs)/<span class="hljs-number">2</span>;
+            <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;%d %d %d %d\n&quot;</span>, row, col, y, x);
             image tile = crop_image(crop, x, y, net-&gt;w, net-&gt;h);
-            float *pred = network_predict(net, tile.data);
-            axpy_cpu(classes, 1., pred, 1, avgs, 1);
-            show_image(tile, &quot;tile&quot;);
-            //cvWaitKey(10);
+            <span class="hljs-keyword">float</span> *pred = network_predict(net, tile.data);
+            axpy_cpu(classes, <span class="hljs-number">1.</span>, pred, <span class="hljs-number">1</span>, avgs, <span class="hljs-number">1</span>);
+            show_image(tile, <span class="hljs-string">&quot;tile&quot;</span>);
+            <span class="hljs-comment">//cvWaitKey(10);</span>
         }
-        if(net-&gt;hierarchy) hierarchy_predictions(pred, net-&gt;outputs, net-&gt;hierarchy, 1, 1);
+        <span class="hljs-keyword">if</span>(net-&gt;hierarchy) hierarchy_predictions(pred, net-&gt;outputs, net-&gt;hierarchy, <span class="hljs-number">1</span>, <span class="hljs-number">1</span>);
 
-        if(rcrop.data != resized.data) free_image(rcrop);
-        if(resized.data != im.data) free_image(resized);
+        <span class="hljs-keyword">if</span>(rcrop.data != resized.data) free_image(rcrop);
+        <span class="hljs-keyword">if</span>(resized.data != im.data) free_image(resized);
         free_image(im);
         free_image(crop);
         top_k(pred, classes, topk, indexes);
 
-        if(indexes[0] == class) avg_acc += 1;
-        for(j = 0; j &lt; topk; ++j){
-            if(indexes[j] == class) avg_topk += 1;
+        <span class="hljs-keyword">if</span>(indexes[<span class="hljs-number">0</span>] == <span class="hljs-keyword">class</span>) avg_acc += <span class="hljs-number">1</span>;
+        <span class="hljs-keyword">for</span>(j = <span class="hljs-number">0</span>; j &lt; topk; ++j){
+            <span class="hljs-keyword">if</span>(indexes[j] == <span class="hljs-keyword">class</span>) avg_topk += <span class="hljs-number">1</span>;
         }
 
-        printf(&quot;%d: top 1: %f, top %d: %f\n&quot;, i, avg_acc/(i+1), topk, avg_topk/(i+1));
+        <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;%d: top 1: %f, top %d: %f\n&quot;</span>, i, avg_acc/(i+<span class="hljs-number">1</span>), topk, avg_topk/(i+<span class="hljs-number">1</span>));
     }
 }
+</code></pre>
+<h2 id="validateattentionmulti">validate_attention_multi</h2>
+<pre><code class="lang-c"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">validate_attention_multi</span><span class="hljs-params">(<span class="hljs-keyword">char</span> *datacfg, <span class="hljs-keyword">char</span> *filename, <span class="hljs-keyword">char</span> *weightfile)</span>
+</span>{
+    <span class="hljs-keyword">int</span> i, j;
+    network *net = load_network(filename, weightfile, <span class="hljs-number">0</span>);
+    set_batch_network(net, <span class="hljs-number">1</span>);
+    srand(time(<span class="hljs-number">0</span>));
 
-void validate_attention_multi(char *datacfg, char *filename, char *weightfile)
-{
-    int i, j;
-    network *net = load_network(filename, weightfile, 0);
-    set_batch_network(net, 1);
-    srand(time(0));
+    <span class="hljs-built_in">list</span> *options = read_data_cfg(datacfg);
 
-    list *options = read_data_cfg(datacfg);
+    <span class="hljs-keyword">char</span> *label_list = option_find_str(options, <span class="hljs-string">&quot;labels&quot;</span>, <span class="hljs-string">&quot;data/labels.list&quot;</span>);
+    <span class="hljs-keyword">char</span> *valid_list = option_find_str(options, <span class="hljs-string">&quot;valid&quot;</span>, <span class="hljs-string">&quot;data/train.list&quot;</span>);
+    <span class="hljs-keyword">int</span> classes = option_find_int(options, <span class="hljs-string">&quot;classes&quot;</span>, <span class="hljs-number">2</span>);
+    <span class="hljs-keyword">int</span> topk = option_find_int(options, <span class="hljs-string">&quot;top&quot;</span>, <span class="hljs-number">1</span>);
 
-    char *label_list = option_find_str(options, &quot;labels&quot;, &quot;data/labels.list&quot;);
-    char *valid_list = option_find_str(options, &quot;valid&quot;, &quot;data/train.list&quot;);
-    int classes = option_find_int(options, &quot;classes&quot;, 2);
-    int topk = option_find_int(options, &quot;top&quot;, 1);
+    <span class="hljs-keyword">char</span> **labels = get_labels(label_list);
+    <span class="hljs-built_in">list</span> *plist = get_paths(valid_list);
+    <span class="hljs-keyword">int</span> scales[] = {<span class="hljs-number">224</span>, <span class="hljs-number">288</span>, <span class="hljs-number">320</span>, <span class="hljs-number">352</span>, <span class="hljs-number">384</span>};
+    <span class="hljs-keyword">int</span> nscales = <span class="hljs-keyword">sizeof</span>(scales)/<span class="hljs-keyword">sizeof</span>(scales[<span class="hljs-number">0</span>]);
 
-    char **labels = get_labels(label_list);
-    list *plist = get_paths(valid_list);
-    int scales[] = {224, 288, 320, 352, 384};
-    int nscales = sizeof(scales)/sizeof(scales[0]);
-
-    char **paths = (char **)list_to_array(plist);
-    int m = plist-&gt;size;
+    <span class="hljs-keyword">char</span> **paths = (<span class="hljs-keyword">char</span> **)list_to_array(plist);
+    <span class="hljs-keyword">int</span> m = plist-&gt;size;
     free_list(plist);
 
-    float avg_acc = 0;
-    float avg_topk = 0;
-    int *indexes = calloc(topk, sizeof(int));
+    <span class="hljs-keyword">float</span> avg_acc = <span class="hljs-number">0</span>;
+    <span class="hljs-keyword">float</span> avg_topk = <span class="hljs-number">0</span>;
+    <span class="hljs-keyword">int</span> *indexes = <span class="hljs-built_in">calloc</span>(topk, <span class="hljs-keyword">sizeof</span>(<span class="hljs-keyword">int</span>));
 
-    for(i = 0; i &lt; m; ++i){
-        int class = -1;
-        char *path = paths[i];
-        for(j = 0; j &lt; classes; ++j){
-            if(strstr(path, labels[j])){
-                class = j;
-                break;
+    <span class="hljs-keyword">for</span>(i = <span class="hljs-number">0</span>; i &lt; m; ++i){
+        <span class="hljs-keyword">int</span> <span class="hljs-keyword">class</span> = <span class="hljs-number">-1</span>;
+        <span class="hljs-keyword">char</span> *path = paths[i];
+        <span class="hljs-keyword">for</span>(j = <span class="hljs-number">0</span>; j &lt; classes; ++j){
+            <span class="hljs-keyword">if</span>(<span class="hljs-built_in">strstr</span>(path, labels[j])){
+                <span class="hljs-keyword">class</span> = j;
+                <span class="hljs-keyword">break</span>;
             }
         }
-        float *pred = calloc(classes, sizeof(float));
-        image im = load_image_color(paths[i], 0, 0);
-        for(j = 0; j &lt; nscales; ++j){
+        <span class="hljs-keyword">float</span> *pred = <span class="hljs-built_in">calloc</span>(classes, <span class="hljs-keyword">sizeof</span>(<span class="hljs-keyword">float</span>));
+        image im = load_image_color(paths[i], <span class="hljs-number">0</span>, <span class="hljs-number">0</span>);
+        <span class="hljs-keyword">for</span>(j = <span class="hljs-number">0</span>; j &lt; nscales; ++j){
             image r = resize_min(im, scales[j]);
             resize_network(net, r.w, r.h);
-            float *p = network_predict(net, r.data);
-            if(net-&gt;hierarchy) hierarchy_predictions(p, net-&gt;outputs, net-&gt;hierarchy, 1 , 1);
-            axpy_cpu(classes, 1, p, 1, pred, 1);
+            <span class="hljs-keyword">float</span> *p = network_predict(net, r.data);
+            <span class="hljs-keyword">if</span>(net-&gt;hierarchy) hierarchy_predictions(p, net-&gt;outputs, net-&gt;hierarchy, <span class="hljs-number">1</span> , <span class="hljs-number">1</span>);
+            axpy_cpu(classes, <span class="hljs-number">1</span>, p, <span class="hljs-number">1</span>, pred, <span class="hljs-number">1</span>);
             flip_image(r);
             p = network_predict(net, r.data);
-            axpy_cpu(classes, 1, p, 1, pred, 1);
-            if(r.data != im.data) free_image(r);
+            axpy_cpu(classes, <span class="hljs-number">1</span>, p, <span class="hljs-number">1</span>, pred, <span class="hljs-number">1</span>);
+            <span class="hljs-keyword">if</span>(r.data != im.data) free_image(r);
         }
         free_image(im);
         top_k(pred, classes, topk, indexes);
-        free(pred);
-        if(indexes[0] == class) avg_acc += 1;
-        for(j = 0; j &lt; topk; ++j){
-            if(indexes[j] == class) avg_topk += 1;
+        <span class="hljs-built_in">free</span>(pred);
+        <span class="hljs-keyword">if</span>(indexes[<span class="hljs-number">0</span>] == <span class="hljs-keyword">class</span>) avg_acc += <span class="hljs-number">1</span>;
+        <span class="hljs-keyword">for</span>(j = <span class="hljs-number">0</span>; j &lt; topk; ++j){
+            <span class="hljs-keyword">if</span>(indexes[j] == <span class="hljs-keyword">class</span>) avg_topk += <span class="hljs-number">1</span>;
         }
 
-        printf(&quot;%d: top 1: %f, top %d: %f\n&quot;, i, avg_acc/(i+1), topk, avg_topk/(i+1));
+        <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;%d: top 1: %f, top %d: %f\n&quot;</span>, i, avg_acc/(i+<span class="hljs-number">1</span>), topk, avg_topk/(i+<span class="hljs-number">1</span>));
     }
 }
+</code></pre>
+<h2 id="predictattention">predict_attention</h2>
+<pre><code class="lang-c"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">predict_attention</span><span class="hljs-params">(<span class="hljs-keyword">char</span> *datacfg, <span class="hljs-keyword">char</span> *cfgfile, <span class="hljs-keyword">char</span> *weightfile, <span class="hljs-keyword">char</span> *filename, <span class="hljs-keyword">int</span> top)</span>
+</span>{
+    network *net = load_network(cfgfile, weightfile, <span class="hljs-number">0</span>);
+    set_batch_network(net, <span class="hljs-number">1</span>);
+    srand(<span class="hljs-number">2222222</span>);
 
-void predict_attention(char *datacfg, char *cfgfile, char *weightfile, char *filename, int top)
-{
-    network *net = load_network(cfgfile, weightfile, 0);
-    set_batch_network(net, 1);
-    srand(2222222);
+    <span class="hljs-built_in">list</span> *options = read_data_cfg(datacfg);
 
-    list *options = read_data_cfg(datacfg);
+    <span class="hljs-keyword">char</span> *name_list = option_find_str(options, <span class="hljs-string">&quot;names&quot;</span>, <span class="hljs-number">0</span>);
+    <span class="hljs-keyword">if</span>(!name_list) name_list = option_find_str(options, <span class="hljs-string">&quot;labels&quot;</span>, <span class="hljs-string">&quot;data/labels.list&quot;</span>);
+    <span class="hljs-keyword">if</span>(top == <span class="hljs-number">0</span>) top = option_find_int(options, <span class="hljs-string">&quot;top&quot;</span>, <span class="hljs-number">1</span>);
 
-    char *name_list = option_find_str(options, &quot;names&quot;, 0);
-    if(!name_list) name_list = option_find_str(options, &quot;labels&quot;, &quot;data/labels.list&quot;);
-    if(top == 0) top = option_find_int(options, &quot;top&quot;, 1);
-
-    int i = 0;
-    char **names = get_labels(name_list);
-    clock_t time;
-    int *indexes = calloc(top, sizeof(int));
-    char buff[256];
-    char *input = buff;
-    while(1){
-        if(filename){
-            strncpy(input, filename, 256);
-        }else{
-            printf(&quot;Enter Image Path: &quot;);
-            fflush(stdout);
-            input = fgets(input, 256, stdin);
-            if(!input) return;
-            strtok(input, &quot;\n&quot;);
+    <span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>;
+    <span class="hljs-keyword">char</span> **names = get_labels(name_list);
+    <span class="hljs-keyword">clock_t</span> time;
+    <span class="hljs-keyword">int</span> *indexes = <span class="hljs-built_in">calloc</span>(top, <span class="hljs-keyword">sizeof</span>(<span class="hljs-keyword">int</span>));
+    <span class="hljs-keyword">char</span> buff[<span class="hljs-number">256</span>];
+    <span class="hljs-keyword">char</span> *input = buff;
+    <span class="hljs-keyword">while</span>(<span class="hljs-number">1</span>){
+        <span class="hljs-keyword">if</span>(filename){
+            <span class="hljs-built_in">strncpy</span>(input, filename, <span class="hljs-number">256</span>);
+        }<span class="hljs-keyword">else</span>{
+            <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;Enter Image Path: &quot;</span>);
+            fflush(<span class="hljs-built_in">stdout</span>);
+            input = fgets(input, <span class="hljs-number">256</span>, <span class="hljs-built_in">stdin</span>);
+            <span class="hljs-keyword">if</span>(!input) <span class="hljs-keyword">return</span>;
+            strtok(input, <span class="hljs-string">&quot;\n&quot;</span>);
         }
-        image im = load_image_color(input, 0, 0);
+        image im = load_image_color(input, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>);
         image r = letterbox_image(im, net-&gt;w, net-&gt;h);
-        //resize_network(&amp;net, r.w, r.h);
-        //printf(&quot;%d %d\n&quot;, r.w, r.h);
+        <span class="hljs-comment">//resize_network(&amp;net, r.w, r.h);</span>
+        <span class="hljs-comment">//printf(&quot;%d %d\n&quot;, r.w, r.h);</span>
 
-        float *X = r.data;
+        <span class="hljs-keyword">float</span> *X = r.data;
         time=clock();
-        float *predictions = network_predict(net, X);
-        if(net-&gt;hierarchy) hierarchy_predictions(predictions, net-&gt;outputs, net-&gt;hierarchy, 1, 1);
+        <span class="hljs-keyword">float</span> *predictions = network_predict(net, X);
+        <span class="hljs-keyword">if</span>(net-&gt;hierarchy) hierarchy_predictions(predictions, net-&gt;outputs, net-&gt;hierarchy, <span class="hljs-number">1</span>, <span class="hljs-number">1</span>);
         top_k(predictions, net-&gt;outputs, top, indexes);
-        fprintf(stderr, &quot;%s: Predicted in %f seconds.\n&quot;, input, sec(clock()-time));
-        for(i = 0; i &lt; top; ++i){
-            int index = indexes[i];
-            //if(net-&gt;hierarchy) printf(&quot;%d, %s: %f, parent: %s \n&quot;,index, names[index], predictions[index], (net-&gt;hierarchy-&gt;parent[index] &gt;= 0) ? names[net-&gt;hierarchy-&gt;parent[index]] : &quot;Root&quot;);
-            //else printf(&quot;%s: %f\n&quot;,names[index], predictions[index]);
-            printf(&quot;%5.2f%%: %s\n&quot;, predictions[index]*100, names[index]);
+        <span class="hljs-built_in">fprintf</span>(<span class="hljs-built_in">stderr</span>, <span class="hljs-string">&quot;%s: Predicted in %f seconds.\n&quot;</span>, input, sec(clock()-time));
+        <span class="hljs-keyword">for</span>(i = <span class="hljs-number">0</span>; i &lt; top; ++i){
+            <span class="hljs-keyword">int</span> index = indexes[i];
+            <span class="hljs-comment">//if(net-&gt;hierarchy) printf(&quot;%d, %s: %f, parent: %s \n&quot;,index, names[index], predictions[index], (net-&gt;hierarchy-&gt;parent[index] &gt;= 0) ? names[net-&gt;hierarchy-&gt;parent[index]] : &quot;Root&quot;);</span>
+            <span class="hljs-comment">//else printf(&quot;%s: %f\n&quot;,names[index], predictions[index]);</span>
+            <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;%5.2f%%: %s\n&quot;</span>, predictions[index]*<span class="hljs-number">100</span>, names[index]);
         }
-        if(r.data != im.data) free_image(r);
+        <span class="hljs-keyword">if</span>(r.data != im.data) free_image(r);
         free_image(im);
-        if (filename) break;
+        <span class="hljs-keyword">if</span> (filename) <span class="hljs-keyword">break</span>;
     }
 }
-
-
-void run_attention(int argc, char **argv)
-{
-    if(argc &lt; 4){
-        fprintf(stderr, &quot;usage: %s %s [train/test/valid] [cfg] [weights (optional)]\n&quot;, argv[0], argv[1]);
-        return;
+</code></pre>
+<h2 id="runattention">run_attention</h2>
+<pre><code class="lang-c"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">run_attention</span><span class="hljs-params">(<span class="hljs-keyword">int</span> argc, <span class="hljs-keyword">char</span> **argv)</span>
+</span>{
+    <span class="hljs-keyword">if</span>(argc &lt; <span class="hljs-number">4</span>){
+        <span class="hljs-built_in">fprintf</span>(<span class="hljs-built_in">stderr</span>, <span class="hljs-string">&quot;usage: %s %s [train/test/valid] [cfg] [weights (optional)]\n&quot;</span>, argv[<span class="hljs-number">0</span>], argv[<span class="hljs-number">1</span>]);
+        <span class="hljs-keyword">return</span>;
     }
 
-    char *gpu_list = find_char_arg(argc, argv, &quot;-gpus&quot;, 0);
-    int ngpus;
-    int *gpus = read_intlist(gpu_list, &amp;ngpus, gpu_index);
+    <span class="hljs-keyword">char</span> *gpu_list = find_char_arg(argc, argv, <span class="hljs-string">&quot;-gpus&quot;</span>, <span class="hljs-number">0</span>);
+    <span class="hljs-keyword">int</span> ngpus;
+    <span class="hljs-keyword">int</span> *gpus = read_intlist(gpu_list, &amp;ngpus, gpu_index);
 
 
-    int top = find_int_arg(argc, argv, &quot;-t&quot;, 0);
-    int clear = find_arg(argc, argv, &quot;-clear&quot;);
-    char *data = argv[3];
-    char *cfg = argv[4];
-    char *weights = (argc &gt; 5) ? argv[5] : 0;
-    char *filename = (argc &gt; 6) ? argv[6]: 0;
-    char *layer_s = (argc &gt; 7) ? argv[7]: 0;
-    if(0==strcmp(argv[2], &quot;predict&quot;)) predict_attention(data, cfg, weights, filename, top);
-    else if(0==strcmp(argv[2], &quot;train&quot;)) train_attention(data, cfg, weights, gpus, ngpus, clear);
-    else if(0==strcmp(argv[2], &quot;valid&quot;)) validate_attention_single(data, cfg, weights);
-    else if(0==strcmp(argv[2], &quot;validmulti&quot;)) validate_attention_multi(data, cfg, weights);
+    <span class="hljs-keyword">int</span> top = find_int_arg(argc, argv, <span class="hljs-string">&quot;-t&quot;</span>, <span class="hljs-number">0</span>);
+    <span class="hljs-keyword">int</span> clear = find_arg(argc, argv, <span class="hljs-string">&quot;-clear&quot;</span>);
+    <span class="hljs-keyword">char</span> *data = argv[<span class="hljs-number">3</span>];
+    <span class="hljs-keyword">char</span> *cfg = argv[<span class="hljs-number">4</span>];
+    <span class="hljs-keyword">char</span> *weights = (argc &gt; <span class="hljs-number">5</span>) ? argv[<span class="hljs-number">5</span>] : <span class="hljs-number">0</span>;
+    <span class="hljs-keyword">char</span> *filename = (argc &gt; <span class="hljs-number">6</span>) ? argv[<span class="hljs-number">6</span>]: <span class="hljs-number">0</span>;
+    <span class="hljs-keyword">char</span> *layer_s = (argc &gt; <span class="hljs-number">7</span>) ? argv[<span class="hljs-number">7</span>]: <span class="hljs-number">0</span>;
+    <span class="hljs-keyword">if</span>(<span class="hljs-number">0</span>==<span class="hljs-built_in">strcmp</span>(argv[<span class="hljs-number">2</span>], <span class="hljs-string">&quot;predict&quot;</span>)) predict_attention(data, cfg, weights, filename, top);
+    <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span>(<span class="hljs-number">0</span>==<span class="hljs-built_in">strcmp</span>(argv[<span class="hljs-number">2</span>], <span class="hljs-string">&quot;train&quot;</span>)) train_attention(data, cfg, weights, gpus, ngpus, clear);
+    <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span>(<span class="hljs-number">0</span>==<span class="hljs-built_in">strcmp</span>(argv[<span class="hljs-number">2</span>], <span class="hljs-string">&quot;valid&quot;</span>)) validate_attention_single(data, cfg, weights);
+    <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span>(<span class="hljs-number">0</span>==<span class="hljs-built_in">strcmp</span>(argv[<span class="hljs-number">2</span>], <span class="hljs-string">&quot;validmulti&quot;</span>)) validate_attention_multi(data, cfg, weights);
 }
 </code></pre>
 
@@ -2224,7 +2230,7 @@ void run_attention(int argc, char **argv)
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"attention.c","level":"6.2","depth":1,"next":{"title":"captcha.c","level":"6.3","depth":1,"path":"part5_examples/captcha.md","ref":"part5_examples/captcha.md","articles":[]},"previous":{"title":"art.c","level":"6.1","depth":1,"path":"part5_examples/art.md","ref":"part5_examples/art.md","articles":[]},"dir":"ltr"},"config":{"plugins":["advanced-emoji","theme-gestalt","-theme-default","styles-sass-fix","theme-api","mathjax","ga"],"root":"./","styles":{"website":"website-1600186244488.css"},"pluginsConfig":{"styles-sass-fix":{},"theme-gestalt":{"showLevel":false,"styles":{"website":"styles/website.css"},"logo":"/darknet_book/assets/darknet.png","baseUrl":null,"excludeDefaultStyles":true,"doNotHideChildrenChapters":false},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"theme-api":{"languages":[],"split":true,"theme":"light"},"mathjax":{"forceSVG":false,"version":"2.6-latest"},"ga":{"configuration":"auto","token":"UA-136921229-1"},"advanced-emoji":{"embedEmojis":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]}},"theme":"default","author":"JJM","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{"BASE_URL":"https://jjeamin.github.io"},"title":"DarkNet Book","output.name":"site","gitbook":"*"},"file":{"path":"part5_examples/attention.md","mtime":"2020-09-15T15:30:23.359Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-09-15T16:10:39.415Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"attention.c","level":"6.2","depth":1,"next":{"title":"captcha.c","level":"6.3","depth":1,"path":"part5_examples/captcha.md","ref":"part5_examples/captcha.md","articles":[]},"previous":{"title":"art.c","level":"6.1","depth":1,"path":"part5_examples/art.md","ref":"part5_examples/art.md","articles":[]},"dir":"ltr"},"config":{"plugins":["advanced-emoji","theme-gestalt","-theme-default","styles-sass-fix","theme-api","mathjax","ga"],"root":"./","styles":{"website":"website-1600237079999.css"},"pluginsConfig":{"styles-sass-fix":{},"theme-gestalt":{"showLevel":false,"styles":{"website":"styles/website.css"},"logo":"/darknet_book/assets/darknet.png","baseUrl":null,"excludeDefaultStyles":true,"doNotHideChildrenChapters":false},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"theme-api":{"languages":[],"split":true,"theme":"light"},"mathjax":{"forceSVG":false,"version":"2.6-latest"},"ga":{"configuration":"auto","token":"UA-136921229-1"},"advanced-emoji":{"embedEmojis":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]}},"theme":"default","author":"JJM","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{"BASE_URL":"https://jjeamin.github.io"},"title":"DarkNet Book","output.name":"site","gitbook":"*"},"file":{"path":"part5_examples/attention.md","mtime":"2020-09-16T05:34:05.882Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-09-16T06:17:55.067Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>

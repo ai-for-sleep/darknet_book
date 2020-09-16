@@ -42,7 +42,7 @@
 
     
         
-        <link rel="stylesheet" href="../website-1600186244488.css">
+        <link rel="stylesheet" href="../website-1600237079999.css">
         
     
 
@@ -1724,8 +1724,9 @@
 <pre><code class="lang-c"><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-string">&quot;darknet.h&quot;</span></span>
 
 <span class="hljs-keyword">char</span> *voc_names[] = {<span class="hljs-string">&quot;aeroplane&quot;</span>, <span class="hljs-string">&quot;bicycle&quot;</span>, <span class="hljs-string">&quot;bird&quot;</span>, <span class="hljs-string">&quot;boat&quot;</span>, <span class="hljs-string">&quot;bottle&quot;</span>, <span class="hljs-string">&quot;bus&quot;</span>, <span class="hljs-string">&quot;car&quot;</span>, <span class="hljs-string">&quot;cat&quot;</span>, <span class="hljs-string">&quot;chair&quot;</span>, <span class="hljs-string">&quot;cow&quot;</span>, <span class="hljs-string">&quot;diningtable&quot;</span>, <span class="hljs-string">&quot;dog&quot;</span>, <span class="hljs-string">&quot;horse&quot;</span>, <span class="hljs-string">&quot;motorbike&quot;</span>, <span class="hljs-string">&quot;person&quot;</span>, <span class="hljs-string">&quot;pottedplant&quot;</span>, <span class="hljs-string">&quot;sheep&quot;</span>, <span class="hljs-string">&quot;sofa&quot;</span>, <span class="hljs-string">&quot;train&quot;</span>, <span class="hljs-string">&quot;tvmonitor&quot;</span>};
-
-<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">train_yolo</span><span class="hljs-params">(<span class="hljs-keyword">char</span> *cfgfile, <span class="hljs-keyword">char</span> *weightfile)</span>
+</code></pre>
+<h2 id="trainyolo">train_yolo</h2>
+<pre><code class="lang-c"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">train_yolo</span><span class="hljs-params">(<span class="hljs-keyword">char</span> *cfgfile, <span class="hljs-keyword">char</span> *weightfile)</span>
 </span>{
     <span class="hljs-keyword">char</span> *train_images = <span class="hljs-string">&quot;/data/voc/train.txt&quot;</span>;
     <span class="hljs-keyword">char</span> *backup_directory = <span class="hljs-string">&quot;/home/pjreddie/backup/&quot;</span>;
@@ -1796,8 +1797,9 @@
     <span class="hljs-built_in">sprintf</span>(buff, <span class="hljs-string">&quot;%s/%s_final.weights&quot;</span>, backup_directory, base);
     save_weights(net, buff);
 }
-
-<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">print_yolo_detections</span><span class="hljs-params">(FILE **fps, <span class="hljs-keyword">char</span> *id, <span class="hljs-keyword">int</span> total, <span class="hljs-keyword">int</span> classes, <span class="hljs-keyword">int</span> w, <span class="hljs-keyword">int</span> h, detection *dets)</span>
+</code></pre>
+<h2 id="printyolodetections">print_yolo_detections</h2>
+<pre><code class="lang-c"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">print_yolo_detections</span><span class="hljs-params">(FILE **fps, <span class="hljs-keyword">char</span> *id, <span class="hljs-keyword">int</span> total, <span class="hljs-keyword">int</span> classes, <span class="hljs-keyword">int</span> w, <span class="hljs-keyword">int</span> h, detection *dets)</span>
 </span>{
     <span class="hljs-keyword">int</span> i, j;
     <span class="hljs-keyword">for</span>(i = <span class="hljs-number">0</span>; i &lt; total; ++i){
@@ -1817,8 +1819,9 @@
         }
     }
 }
-
-<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">validate_yolo</span><span class="hljs-params">(<span class="hljs-keyword">char</span> *cfg, <span class="hljs-keyword">char</span> *weights)</span>
+</code></pre>
+<h2 id="validateyolo">validate_yolo</h2>
+<pre><code class="lang-c"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">validate_yolo</span><span class="hljs-params">(<span class="hljs-keyword">char</span> *cfg, <span class="hljs-keyword">char</span> *weights)</span>
 </span>{
     network *net = load_network(cfg, weights, <span class="hljs-number">0</span>);
     set_batch_network(net, <span class="hljs-number">1</span>);
@@ -1901,8 +1904,9 @@
     }
     <span class="hljs-built_in">fprintf</span>(<span class="hljs-built_in">stderr</span>, <span class="hljs-string">&quot;Total Detection Time: %f Seconds\n&quot;</span>, (<span class="hljs-keyword">double</span>)(time(<span class="hljs-number">0</span>) - start));
 }
-
-<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">validate_yolo_recall</span><span class="hljs-params">(<span class="hljs-keyword">char</span> *cfg, <span class="hljs-keyword">char</span> *weights)</span>
+</code></pre>
+<h2 id="validateyolorecall">validate_yolo_recall</h2>
+<pre><code class="lang-c"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">validate_yolo_recall</span><span class="hljs-params">(<span class="hljs-keyword">char</span> *cfg, <span class="hljs-keyword">char</span> *weights)</span>
 </span>{
     network *net = load_network(cfg, weights, <span class="hljs-number">0</span>);
     set_batch_network(net, <span class="hljs-number">1</span>);
@@ -1984,8 +1988,9 @@
         free_image(sized);
     }
 }
-
-<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">test_yolo</span><span class="hljs-params">(<span class="hljs-keyword">char</span> *cfgfile, <span class="hljs-keyword">char</span> *weightfile, <span class="hljs-keyword">char</span> *filename, <span class="hljs-keyword">float</span> thresh)</span>
+</code></pre>
+<h2 id="testyolo">test_yolo</h2>
+<pre><code class="lang-c"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">test_yolo</span><span class="hljs-params">(<span class="hljs-keyword">char</span> *cfgfile, <span class="hljs-keyword">char</span> *weightfile, <span class="hljs-keyword">char</span> *filename, <span class="hljs-keyword">float</span> thresh)</span>
 </span>{
     image **alphabet = load_alphabet();
     network *net = load_network(cfgfile, weightfile, <span class="hljs-number">0</span>);
@@ -2026,8 +2031,9 @@
         <span class="hljs-keyword">if</span> (filename) <span class="hljs-keyword">break</span>;
     }
 }
-
-<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">run_yolo</span><span class="hljs-params">(<span class="hljs-keyword">int</span> argc, <span class="hljs-keyword">char</span> **argv)</span>
+</code></pre>
+<h2 id="runyolo">run_yolo</h2>
+<pre><code class="lang-c"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">run_yolo</span><span class="hljs-params">(<span class="hljs-keyword">int</span> argc, <span class="hljs-keyword">char</span> **argv)</span>
 </span>{
     <span class="hljs-keyword">char</span> *prefix = find_char_arg(argc, argv, <span class="hljs-string">&quot;-prefix&quot;</span>, <span class="hljs-number">0</span>);
     <span class="hljs-keyword">float</span> thresh = find_float_arg(argc, argv, <span class="hljs-string">&quot;-thresh&quot;</span>, <span class="hljs-number">.2</span>);
@@ -2088,7 +2094,7 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"yolo.c","level":"6.23","depth":1,"previous":{"title":"writing.c","level":"6.22","depth":1,"path":"part5_examples/writing.md","ref":"part5_examples/writing.md","articles":[]},"dir":"ltr"},"config":{"plugins":["advanced-emoji","theme-gestalt","-theme-default","styles-sass-fix","theme-api","mathjax","ga"],"root":"./","styles":{"website":"website-1600186244488.css"},"pluginsConfig":{"styles-sass-fix":{},"theme-gestalt":{"showLevel":false,"styles":{"website":"styles/website.css"},"logo":"/darknet_book/assets/darknet.png","baseUrl":null,"excludeDefaultStyles":true,"doNotHideChildrenChapters":false},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"theme-api":{"languages":[],"split":true,"theme":"light"},"mathjax":{"forceSVG":false,"version":"2.6-latest"},"ga":{"configuration":"auto","token":"UA-136921229-1"},"advanced-emoji":{"embedEmojis":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]}},"theme":"default","author":"JJM","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{"BASE_URL":"https://jjeamin.github.io"},"title":"DarkNet Book","output.name":"site","gitbook":"*"},"file":{"path":"part5_examples/yolo.md","mtime":"2020-09-15T15:55:29.774Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-09-15T16:10:39.415Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"yolo.c","level":"6.23","depth":1,"previous":{"title":"writing.c","level":"6.22","depth":1,"path":"part5_examples/writing.md","ref":"part5_examples/writing.md","articles":[]},"dir":"ltr"},"config":{"plugins":["advanced-emoji","theme-gestalt","-theme-default","styles-sass-fix","theme-api","mathjax","ga"],"root":"./","styles":{"website":"website-1600237079999.css"},"pluginsConfig":{"styles-sass-fix":{},"theme-gestalt":{"showLevel":false,"styles":{"website":"styles/website.css"},"logo":"/darknet_book/assets/darknet.png","baseUrl":null,"excludeDefaultStyles":true,"doNotHideChildrenChapters":false},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"theme-api":{"languages":[],"split":true,"theme":"light"},"mathjax":{"forceSVG":false,"version":"2.6-latest"},"ga":{"configuration":"auto","token":"UA-136921229-1"},"advanced-emoji":{"embedEmojis":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]}},"theme":"default","author":"JJM","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{"BASE_URL":"https://jjeamin.github.io"},"title":"DarkNet Book","output.name":"site","gitbook":"*"},"file":{"path":"part5_examples/yolo.md","mtime":"2020-09-16T05:46:14.984Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-09-16T06:17:55.067Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>

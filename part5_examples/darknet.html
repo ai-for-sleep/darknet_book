@@ -42,7 +42,7 @@
 
     
         
-        <link rel="stylesheet" href="../website-1600186244488.css">
+        <link rel="stylesheet" href="../website-1600237079999.css">
         
     
 
@@ -1746,8 +1746,9 @@
 <span class="hljs-function"><span class="hljs-keyword">extern</span> <span class="hljs-keyword">void</span> <span class="hljs-title">run_art</span><span class="hljs-params">(<span class="hljs-keyword">int</span> argc, <span class="hljs-keyword">char</span> **argv)</span></span>;
 <span class="hljs-function"><span class="hljs-keyword">extern</span> <span class="hljs-keyword">void</span> <span class="hljs-title">run_super</span><span class="hljs-params">(<span class="hljs-keyword">int</span> argc, <span class="hljs-keyword">char</span> **argv)</span></span>;
 <span class="hljs-function"><span class="hljs-keyword">extern</span> <span class="hljs-keyword">void</span> <span class="hljs-title">run_lsd</span><span class="hljs-params">(<span class="hljs-keyword">int</span> argc, <span class="hljs-keyword">char</span> **argv)</span></span>;
-
-<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">average</span><span class="hljs-params">(<span class="hljs-keyword">int</span> argc, <span class="hljs-keyword">char</span> *argv[])</span>
+</code></pre>
+<h2 id="average">average</h2>
+<pre><code class="lang-c"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">average</span><span class="hljs-params">(<span class="hljs-keyword">int</span> argc, <span class="hljs-keyword">char</span> *argv[])</span>
 </span>{
     <span class="hljs-keyword">char</span> *cfgfile = argv[<span class="hljs-number">2</span>];
     <span class="hljs-keyword">char</span> *outfile = argv[<span class="hljs-number">3</span>];
@@ -1802,8 +1803,9 @@
     }
     save_weights(sum, outfile);
 }
-
-<span class="hljs-function"><span class="hljs-keyword">long</span> <span class="hljs-title">numops</span><span class="hljs-params">(network *net)</span>
+</code></pre>
+<h2 id="numops">numops</h2>
+<pre><code class="lang-c"><span class="hljs-function"><span class="hljs-keyword">long</span> <span class="hljs-title">numops</span><span class="hljs-params">(network *net)</span>
 </span>{
     <span class="hljs-keyword">int</span> i;
     <span class="hljs-keyword">long</span> ops = <span class="hljs-number">0</span>;
@@ -1837,8 +1839,9 @@
     }
     <span class="hljs-keyword">return</span> ops;
 }
-
-<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">speed</span><span class="hljs-params">(<span class="hljs-keyword">char</span> *cfgfile, <span class="hljs-keyword">int</span> tics)</span>
+</code></pre>
+<h2 id="speed">speed</h2>
+<pre><code class="lang-c"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">speed</span><span class="hljs-params">(<span class="hljs-keyword">char</span> *cfgfile, <span class="hljs-keyword">int</span> tics)</span>
 </span>{
     <span class="hljs-keyword">if</span> (tics == <span class="hljs-number">0</span>) tics = <span class="hljs-number">1000</span>;
     network *net = parse_network_cfg(cfgfile);
@@ -1857,8 +1860,9 @@
     <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;Speed: %f sec/eval\n&quot;</span>, t/tics);
     <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;Speed: %f Hz\n&quot;</span>, tics/t);
 }
-
-<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">operations</span><span class="hljs-params">(<span class="hljs-keyword">char</span> *cfgfile)</span>
+</code></pre>
+<h2 id="operations">operations</h2>
+<pre><code class="lang-c"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">operations</span><span class="hljs-params">(<span class="hljs-keyword">char</span> *cfgfile)</span>
 </span>{
     gpu_index = <span class="hljs-number">-1</span>;
     network *net = parse_network_cfg(cfgfile);
@@ -1866,8 +1870,9 @@
     <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;Floating Point Operations: %ld\n&quot;</span>, ops);
     <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;Floating Point Operations: %.2f Bn\n&quot;</span>, (<span class="hljs-keyword">float</span>)ops/<span class="hljs-number">1000000000.</span>);
 }
-
-<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">oneoff</span><span class="hljs-params">(<span class="hljs-keyword">char</span> *cfgfile, <span class="hljs-keyword">char</span> *weightfile, <span class="hljs-keyword">char</span> *outfile)</span>
+</code></pre>
+<h2 id="oneoff">oneoff</h2>
+<pre><code class="lang-c"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">oneoff</span><span class="hljs-params">(<span class="hljs-keyword">char</span> *cfgfile, <span class="hljs-keyword">char</span> *weightfile, <span class="hljs-keyword">char</span> *outfile)</span>
 </span>{
     gpu_index = <span class="hljs-number">-1</span>;
     network *net = parse_network_cfg(cfgfile);
@@ -1893,8 +1898,9 @@
     *net-&gt;seen = <span class="hljs-number">0</span>;
     save_weights(net, outfile);
 }
-
-<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">oneoff2</span><span class="hljs-params">(<span class="hljs-keyword">char</span> *cfgfile, <span class="hljs-keyword">char</span> *weightfile, <span class="hljs-keyword">char</span> *outfile, <span class="hljs-keyword">int</span> l)</span>
+</code></pre>
+<h2 id="oneoff2">oneoff2</h2>
+<pre><code class="lang-c"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">oneoff2</span><span class="hljs-params">(<span class="hljs-keyword">char</span> *cfgfile, <span class="hljs-keyword">char</span> *weightfile, <span class="hljs-keyword">char</span> *outfile, <span class="hljs-keyword">int</span> l)</span>
 </span>{
     gpu_index = <span class="hljs-number">-1</span>;
     network *net = parse_network_cfg(cfgfile);
@@ -1905,15 +1911,17 @@
     *net-&gt;seen = <span class="hljs-number">0</span>;
     save_weights_upto(net, outfile, net-&gt;n);
 }
-
-<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">partial</span><span class="hljs-params">(<span class="hljs-keyword">char</span> *cfgfile, <span class="hljs-keyword">char</span> *weightfile, <span class="hljs-keyword">char</span> *outfile, <span class="hljs-keyword">int</span> max)</span>
+</code></pre>
+<h2 id="partial">partial</h2>
+<pre><code class="lang-c"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">partial</span><span class="hljs-params">(<span class="hljs-keyword">char</span> *cfgfile, <span class="hljs-keyword">char</span> *weightfile, <span class="hljs-keyword">char</span> *outfile, <span class="hljs-keyword">int</span> max)</span>
 </span>{
     gpu_index = <span class="hljs-number">-1</span>;
     network *net = load_network(cfgfile, weightfile, <span class="hljs-number">1</span>);
     save_weights_upto(net, outfile, max);
 }
-
-<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">print_weights</span><span class="hljs-params">(<span class="hljs-keyword">char</span> *cfgfile, <span class="hljs-keyword">char</span> *weightfile, <span class="hljs-keyword">int</span> n)</span>
+</code></pre>
+<h2 id="printweights">print_weights</h2>
+<pre><code class="lang-c"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">print_weights</span><span class="hljs-params">(<span class="hljs-keyword">char</span> *cfgfile, <span class="hljs-keyword">char</span> *weightfile, <span class="hljs-keyword">int</span> n)</span>
 </span>{
     gpu_index = <span class="hljs-number">-1</span>;
     network *net = load_network(cfgfile, weightfile, <span class="hljs-number">1</span>);
@@ -1931,8 +1939,9 @@
     }
     <span class="hljs-comment">//printf(&quot;]&quot;);</span>
 }
-
-<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">rescale_net</span><span class="hljs-params">(<span class="hljs-keyword">char</span> *cfgfile, <span class="hljs-keyword">char</span> *weightfile, <span class="hljs-keyword">char</span> *outfile)</span>
+</code></pre>
+<h2 id="rescalenet">rescale_net</h2>
+<pre><code class="lang-c"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">rescale_net</span><span class="hljs-params">(<span class="hljs-keyword">char</span> *cfgfile, <span class="hljs-keyword">char</span> *weightfile, <span class="hljs-keyword">char</span> *outfile)</span>
 </span>{
     gpu_index = <span class="hljs-number">-1</span>;
     network *net = load_network(cfgfile, weightfile, <span class="hljs-number">0</span>);
@@ -1946,8 +1955,9 @@
     }
     save_weights(net, outfile);
 }
-
-<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">rgbgr_net</span><span class="hljs-params">(<span class="hljs-keyword">char</span> *cfgfile, <span class="hljs-keyword">char</span> *weightfile, <span class="hljs-keyword">char</span> *outfile)</span>
+</code></pre>
+<h2 id="rgbgrnet">rgbgr_net</h2>
+<pre><code class="lang-c"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">rgbgr_net</span><span class="hljs-params">(<span class="hljs-keyword">char</span> *cfgfile, <span class="hljs-keyword">char</span> *weightfile, <span class="hljs-keyword">char</span> *outfile)</span>
 </span>{
     gpu_index = <span class="hljs-number">-1</span>;
     network *net = load_network(cfgfile, weightfile, <span class="hljs-number">0</span>);
@@ -1961,8 +1971,9 @@
     }
     save_weights(net, outfile);
 }
-
-<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">reset_normalize_net</span><span class="hljs-params">(<span class="hljs-keyword">char</span> *cfgfile, <span class="hljs-keyword">char</span> *weightfile, <span class="hljs-keyword">char</span> *outfile)</span>
+</code></pre>
+<h2 id="resetnormalizenet">reset_normalize_net</h2>
+<pre><code class="lang-c"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">reset_normalize_net</span><span class="hljs-params">(<span class="hljs-keyword">char</span> *cfgfile, <span class="hljs-keyword">char</span> *weightfile, <span class="hljs-keyword">char</span> *outfile)</span>
 </span>{
     gpu_index = <span class="hljs-number">-1</span>;
     network *net = load_network(cfgfile, weightfile, <span class="hljs-number">0</span>);
@@ -1986,8 +1997,9 @@
     }
     save_weights(net, outfile);
 }
-
-<span class="hljs-function">layer <span class="hljs-title">normalize_layer</span><span class="hljs-params">(layer l, <span class="hljs-keyword">int</span> n)</span>
+</code></pre>
+<h2 id="normalizelayer">normalize_layer</h2>
+<pre><code class="lang-c"><span class="hljs-function">layer <span class="hljs-title">normalize_layer</span><span class="hljs-params">(layer l, <span class="hljs-keyword">int</span> n)</span>
 </span>{
     <span class="hljs-keyword">int</span> j;
     l.batch_normalize=<span class="hljs-number">1</span>;
@@ -1999,8 +2011,9 @@
     l.rolling_variance = <span class="hljs-built_in">calloc</span>(n, <span class="hljs-keyword">sizeof</span>(<span class="hljs-keyword">float</span>));
     <span class="hljs-keyword">return</span> l;
 }
-
-<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">normalize_net</span><span class="hljs-params">(<span class="hljs-keyword">char</span> *cfgfile, <span class="hljs-keyword">char</span> *weightfile, <span class="hljs-keyword">char</span> *outfile)</span>
+</code></pre>
+<h2 id="normalizenet">normalize_net</h2>
+<pre><code class="lang-c"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">normalize_net</span><span class="hljs-params">(<span class="hljs-keyword">char</span> *cfgfile, <span class="hljs-keyword">char</span> *weightfile, <span class="hljs-keyword">char</span> *outfile)</span>
 </span>{
     gpu_index = <span class="hljs-number">-1</span>;
     network *net = load_network(cfgfile, weightfile, <span class="hljs-number">0</span>);
@@ -2025,8 +2038,9 @@
     }
     save_weights(net, outfile);
 }
-
-<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">statistics_net</span><span class="hljs-params">(<span class="hljs-keyword">char</span> *cfgfile, <span class="hljs-keyword">char</span> *weightfile)</span>
+</code></pre>
+<h2 id="statisticsnet">statistics_net</h2>
+<pre><code class="lang-c"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">statistics_net</span><span class="hljs-params">(<span class="hljs-keyword">char</span> *cfgfile, <span class="hljs-keyword">char</span> *weightfile)</span>
 </span>{
     gpu_index = <span class="hljs-number">-1</span>;
     network *net = load_network(cfgfile, weightfile, <span class="hljs-number">0</span>);
@@ -2055,8 +2069,9 @@
         <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;\n&quot;</span>);
     }
 }
-
-<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">denormalize_net</span><span class="hljs-params">(<span class="hljs-keyword">char</span> *cfgfile, <span class="hljs-keyword">char</span> *weightfile, <span class="hljs-keyword">char</span> *outfile)</span>
+</code></pre>
+<h2 id="denormalizenet">denormalize_net</h2>
+<pre><code class="lang-c"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">denormalize_net</span><span class="hljs-params">(<span class="hljs-keyword">char</span> *cfgfile, <span class="hljs-keyword">char</span> *weightfile, <span class="hljs-keyword">char</span> *outfile)</span>
 </span>{
     gpu_index = <span class="hljs-number">-1</span>;
     network *net = load_network(cfgfile, weightfile, <span class="hljs-number">0</span>);
@@ -2089,8 +2104,9 @@
     }
     save_weights(net, outfile);
 }
-
-<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">mkimg</span><span class="hljs-params">(<span class="hljs-keyword">char</span> *cfgfile, <span class="hljs-keyword">char</span> *weightfile, <span class="hljs-keyword">int</span> h, <span class="hljs-keyword">int</span> w, <span class="hljs-keyword">int</span> num, <span class="hljs-keyword">char</span> *prefix)</span>
+</code></pre>
+<h2 id="mkimg">mkimg</h2>
+<pre><code class="lang-c"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">mkimg</span><span class="hljs-params">(<span class="hljs-keyword">char</span> *cfgfile, <span class="hljs-keyword">char</span> *weightfile, <span class="hljs-keyword">int</span> h, <span class="hljs-keyword">int</span> w, <span class="hljs-keyword">int</span> num, <span class="hljs-keyword">char</span> *prefix)</span>
 </span>{
     network *net = load_network(cfgfile, weightfile, <span class="hljs-number">0</span>);
     image *ims = get_weights(net-&gt;layers[<span class="hljs-number">0</span>]);
@@ -2115,14 +2131,16 @@
         free_image(im);
     }
 }
-
-<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">visualize</span><span class="hljs-params">(<span class="hljs-keyword">char</span> *cfgfile, <span class="hljs-keyword">char</span> *weightfile)</span>
+</code></pre>
+<h2 id="visualize">visualize</h2>
+<pre><code class="lang-c"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">visualize</span><span class="hljs-params">(<span class="hljs-keyword">char</span> *cfgfile, <span class="hljs-keyword">char</span> *weightfile)</span>
 </span>{
     network *net = load_network(cfgfile, weightfile, <span class="hljs-number">0</span>);
     visualize_network(net);
 }
-
-<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">(<span class="hljs-keyword">int</span> argc, <span class="hljs-keyword">char</span> **argv)</span>
+</code></pre>
+<h2 id="main">main</h2>
+<pre><code class="lang-c"><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">(<span class="hljs-keyword">int</span> argc, <span class="hljs-keyword">char</span> **argv)</span>
 </span>{
     <span class="hljs-comment">//test_resize(&quot;data/bad.jpg&quot;);</span>
     <span class="hljs-comment">//test_box();</span>
@@ -2269,7 +2287,7 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"darknet.c","level":"6.7","depth":1,"next":{"title":"detector.c","level":"6.8","depth":1,"path":"part5_examples/detector.md","ref":"part5_examples/detector.md","articles":[]},"previous":{"title":"coco.c","level":"6.6","depth":1,"path":"part5_examples/coco.md","ref":"part5_examples/coco.md","articles":[]},"dir":"ltr"},"config":{"plugins":["advanced-emoji","theme-gestalt","-theme-default","styles-sass-fix","theme-api","mathjax","ga"],"root":"./","styles":{"website":"website-1600186244488.css"},"pluginsConfig":{"styles-sass-fix":{},"theme-gestalt":{"showLevel":false,"styles":{"website":"styles/website.css"},"logo":"/darknet_book/assets/darknet.png","baseUrl":null,"excludeDefaultStyles":true,"doNotHideChildrenChapters":false},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"theme-api":{"languages":[],"split":true,"theme":"light"},"mathjax":{"forceSVG":false,"version":"2.6-latest"},"ga":{"configuration":"auto","token":"UA-136921229-1"},"advanced-emoji":{"embedEmojis":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]}},"theme":"default","author":"JJM","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{"BASE_URL":"https://jjeamin.github.io"},"title":"DarkNet Book","output.name":"site","gitbook":"*"},"file":{"path":"part5_examples/darknet.md","mtime":"2020-09-15T15:38:50.937Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-09-15T16:10:39.415Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"darknet.c","level":"6.7","depth":1,"next":{"title":"detector.c","level":"6.8","depth":1,"path":"part5_examples/detector.md","ref":"part5_examples/detector.md","articles":[]},"previous":{"title":"coco.c","level":"6.6","depth":1,"path":"part5_examples/coco.md","ref":"part5_examples/coco.md","articles":[]},"dir":"ltr"},"config":{"plugins":["advanced-emoji","theme-gestalt","-theme-default","styles-sass-fix","theme-api","mathjax","ga"],"root":"./","styles":{"website":"website-1600237079999.css"},"pluginsConfig":{"styles-sass-fix":{},"theme-gestalt":{"showLevel":false,"styles":{"website":"styles/website.css"},"logo":"/darknet_book/assets/darknet.png","baseUrl":null,"excludeDefaultStyles":true,"doNotHideChildrenChapters":false},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"theme-api":{"languages":[],"split":true,"theme":"light"},"mathjax":{"forceSVG":false,"version":"2.6-latest"},"ga":{"configuration":"auto","token":"UA-136921229-1"},"advanced-emoji":{"embedEmojis":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]}},"theme":"default","author":"JJM","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{"BASE_URL":"https://jjeamin.github.io"},"title":"DarkNet Book","output.name":"site","gitbook":"*"},"file":{"path":"part5_examples/darknet.md","mtime":"2020-09-16T05:42:52.956Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-09-16T06:17:55.067Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>

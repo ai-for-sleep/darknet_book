@@ -42,7 +42,7 @@
 
     
         
-        <link rel="stylesheet" href="../website-1600186244488.css">
+        <link rel="stylesheet" href="../website-1600237079999.css">
         
     
 
@@ -1724,8 +1724,9 @@
                                 
                                 <h1 id="captchac">captcha.c</h1>
 <pre><code class="lang-c"><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-string">&quot;darknet.h&quot;</span></span>
-
-<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">fix_data_captcha</span><span class="hljs-params">(data d, <span class="hljs-keyword">int</span> mask)</span>
+</code></pre>
+<h2 id="fixdatacaptcha">fix_data_captcha</h2>
+<pre><code class="lang-c"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">fix_data_captcha</span><span class="hljs-params">(data d, <span class="hljs-keyword">int</span> mask)</span>
 </span>{
     matrix labels = d.y;
     <span class="hljs-keyword">int</span> i, j;
@@ -1748,8 +1749,9 @@
         }
     }
 }
-
-<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">train_captcha</span><span class="hljs-params">(<span class="hljs-keyword">char</span> *cfgfile, <span class="hljs-keyword">char</span> *weightfile)</span>
+</code></pre>
+<h2 id="traincaptcha">train_captcha</h2>
+<pre><code class="lang-c"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">train_captcha</span><span class="hljs-params">(<span class="hljs-keyword">char</span> *cfgfile, <span class="hljs-keyword">char</span> *weightfile)</span>
 </span>{
     srand(time(<span class="hljs-number">0</span>));
     <span class="hljs-keyword">float</span> avg_loss = <span class="hljs-number">-1</span>;
@@ -1814,8 +1816,9 @@
         }
     }
 }
-
-<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">test_captcha</span><span class="hljs-params">(<span class="hljs-keyword">char</span> *cfgfile, <span class="hljs-keyword">char</span> *weightfile, <span class="hljs-keyword">char</span> *filename)</span>
+</code></pre>
+<h2 id="testcaptcha">test_captcha</h2>
+<pre><code class="lang-c"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">test_captcha</span><span class="hljs-params">(<span class="hljs-keyword">char</span> *cfgfile, <span class="hljs-keyword">char</span> *weightfile, <span class="hljs-keyword">char</span> *filename)</span>
 </span>{
     network *net = load_network(cfgfile, weightfile, <span class="hljs-number">0</span>);
     set_batch_network(net, <span class="hljs-number">1</span>);
@@ -1851,8 +1854,9 @@
         <span class="hljs-keyword">if</span> (filename) <span class="hljs-keyword">break</span>;
     }
 }
-
-<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">valid_captcha</span><span class="hljs-params">(<span class="hljs-keyword">char</span> *cfgfile, <span class="hljs-keyword">char</span> *weightfile, <span class="hljs-keyword">char</span> *filename)</span>
+</code></pre>
+<h2 id="validcaptcha">valid_captcha</h2>
+<pre><code class="lang-c"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">valid_captcha</span><span class="hljs-params">(<span class="hljs-keyword">char</span> *cfgfile, <span class="hljs-keyword">char</span> *weightfile, <span class="hljs-keyword">char</span> *filename)</span>
 </span>{
     <span class="hljs-keyword">char</span> **labels = get_labels(<span class="hljs-string">&quot;/data/captcha/reimgs.labels.list&quot;</span>);
     network *net = load_network(cfgfile, weightfile, <span class="hljs-number">0</span>);
@@ -1889,8 +1893,9 @@
         <span class="hljs-keyword">if</span> (filename) <span class="hljs-keyword">break</span>;
     }
 }
-
-<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">run_captcha</span><span class="hljs-params">(<span class="hljs-keyword">int</span> argc, <span class="hljs-keyword">char</span> **argv)</span>
+</code></pre>
+<h2 id="runcaptcha">run_captcha</h2>
+<pre><code class="lang-c"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">run_captcha</span><span class="hljs-params">(<span class="hljs-keyword">int</span> argc, <span class="hljs-keyword">char</span> **argv)</span>
 </span>{
     <span class="hljs-keyword">if</span>(argc &lt; <span class="hljs-number">4</span>){
         <span class="hljs-built_in">fprintf</span>(<span class="hljs-built_in">stderr</span>, <span class="hljs-string">&quot;usage: %s %s [train/test/valid] [cfg] [weights (optional)]\n&quot;</span>, argv[<span class="hljs-number">0</span>], argv[<span class="hljs-number">1</span>]);
@@ -1952,7 +1957,7 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"captcha.c","level":"6.3","depth":1,"next":{"title":"cifar.c","level":"6.4","depth":1,"path":"part5_examples/cifar.md","ref":"part5_examples/cifar.md","articles":[]},"previous":{"title":"attention.c","level":"6.2","depth":1,"path":"part5_examples/attention.md","ref":"part5_examples/attention.md","articles":[]},"dir":"ltr"},"config":{"plugins":["advanced-emoji","theme-gestalt","-theme-default","styles-sass-fix","theme-api","mathjax","ga"],"root":"./","styles":{"website":"website-1600186244488.css"},"pluginsConfig":{"styles-sass-fix":{},"theme-gestalt":{"showLevel":false,"styles":{"website":"styles/website.css"},"logo":"/darknet_book/assets/darknet.png","baseUrl":null,"excludeDefaultStyles":true,"doNotHideChildrenChapters":false},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"theme-api":{"languages":[],"split":true,"theme":"light"},"mathjax":{"forceSVG":false,"version":"2.6-latest"},"ga":{"configuration":"auto","token":"UA-136921229-1"},"advanced-emoji":{"embedEmojis":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]}},"theme":"default","author":"JJM","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{"BASE_URL":"https://jjeamin.github.io"},"title":"DarkNet Book","output.name":"site","gitbook":"*"},"file":{"path":"part5_examples/captcha.md","mtime":"2020-09-15T15:37:19.641Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-09-15T16:10:39.415Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"captcha.c","level":"6.3","depth":1,"next":{"title":"cifar.c","level":"6.4","depth":1,"path":"part5_examples/cifar.md","ref":"part5_examples/cifar.md","articles":[]},"previous":{"title":"attention.c","level":"6.2","depth":1,"path":"part5_examples/attention.md","ref":"part5_examples/attention.md","articles":[]},"dir":"ltr"},"config":{"plugins":["advanced-emoji","theme-gestalt","-theme-default","styles-sass-fix","theme-api","mathjax","ga"],"root":"./","styles":{"website":"website-1600237079999.css"},"pluginsConfig":{"styles-sass-fix":{},"theme-gestalt":{"showLevel":false,"styles":{"website":"styles/website.css"},"logo":"/darknet_book/assets/darknet.png","baseUrl":null,"excludeDefaultStyles":true,"doNotHideChildrenChapters":false},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"theme-api":{"languages":[],"split":true,"theme":"light"},"mathjax":{"forceSVG":false,"version":"2.6-latest"},"ga":{"configuration":"auto","token":"UA-136921229-1"},"advanced-emoji":{"embedEmojis":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]}},"theme":"default","author":"JJM","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{"BASE_URL":"https://jjeamin.github.io"},"title":"DarkNet Book","output.name":"site","gitbook":"*"},"file":{"path":"part5_examples/captcha.md","mtime":"2020-09-16T05:34:46.085Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-09-16T06:17:55.067Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>

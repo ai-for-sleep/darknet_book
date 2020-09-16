@@ -42,7 +42,7 @@
 
     
         
-        <link rel="stylesheet" href="../website-1600186244488.css">
+        <link rel="stylesheet" href="../website-1600237079999.css">
         
     
 
@@ -1727,8 +1727,9 @@
 
 <span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;sys/time.h&gt;</span></span>
 <span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;assert.h&gt;</span></span>
-
-<span class="hljs-function"><span class="hljs-keyword">float</span> *<span class="hljs-title">get_regression_values</span><span class="hljs-params">(<span class="hljs-keyword">char</span> **labels, <span class="hljs-keyword">int</span> n)</span>
+</code></pre>
+<h2 id="getregressionvalues">get_regression_values</h2>
+<pre><code class="lang-c"><span class="hljs-function"><span class="hljs-keyword">float</span> *<span class="hljs-title">get_regression_values</span><span class="hljs-params">(<span class="hljs-keyword">char</span> **labels, <span class="hljs-keyword">int</span> n)</span>
 </span>{
     <span class="hljs-keyword">float</span> *v = <span class="hljs-built_in">calloc</span>(n, <span class="hljs-keyword">sizeof</span>(<span class="hljs-keyword">float</span>));
     <span class="hljs-keyword">int</span> i;
@@ -1739,8 +1740,9 @@
     }
     <span class="hljs-keyword">return</span> v;
 }
-
-<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">train_classifier</span><span class="hljs-params">(<span class="hljs-keyword">char</span> *datacfg, <span class="hljs-keyword">char</span> *cfgfile, <span class="hljs-keyword">char</span> *weightfile, <span class="hljs-keyword">int</span> *gpus, <span class="hljs-keyword">int</span> ngpus, <span class="hljs-keyword">int</span> clear)</span>
+</code></pre>
+<h2 id="trainclassifier">train_classifier</h2>
+<pre><code class="lang-c"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">train_classifier</span><span class="hljs-params">(<span class="hljs-keyword">char</span> *datacfg, <span class="hljs-keyword">char</span> *cfgfile, <span class="hljs-keyword">char</span> *weightfile, <span class="hljs-keyword">int</span> *gpus, <span class="hljs-keyword">int</span> ngpus, <span class="hljs-keyword">int</span> clear)</span>
 </span>{
     <span class="hljs-keyword">int</span> i;
 
@@ -1891,8 +1893,9 @@
     free_list(plist);
     <span class="hljs-built_in">free</span>(base);
 }
-
-<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">validate_classifier_crop</span><span class="hljs-params">(<span class="hljs-keyword">char</span> *datacfg, <span class="hljs-keyword">char</span> *filename, <span class="hljs-keyword">char</span> *weightfile)</span>
+</code></pre>
+<h2 id="validateclassifiercrop">validate_classifier_crop</h2>
+<pre><code class="lang-c"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">validate_classifier_crop</span><span class="hljs-params">(<span class="hljs-keyword">char</span> *datacfg, <span class="hljs-keyword">char</span> *filename, <span class="hljs-keyword">char</span> *weightfile)</span>
 </span>{
     <span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>;
     network *net = load_network(filename, weightfile, <span class="hljs-number">0</span>);
@@ -1955,8 +1958,9 @@
         free_data(val);
     }
 }
-
-<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">validate_classifier_10</span><span class="hljs-params">(<span class="hljs-keyword">char</span> *datacfg, <span class="hljs-keyword">char</span> *filename, <span class="hljs-keyword">char</span> *weightfile)</span>
+</code></pre>
+<h2 id="validateclassifier10">validate_classifier_10</h2>
+<pre><code class="lang-c"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">validate_classifier_10</span><span class="hljs-params">(<span class="hljs-keyword">char</span> *datacfg, <span class="hljs-keyword">char</span> *filename, <span class="hljs-keyword">char</span> *weightfile)</span>
 </span>{
     <span class="hljs-keyword">int</span> i, j;
     network *net = load_network(filename, weightfile, <span class="hljs-number">0</span>);
@@ -2024,8 +2028,9 @@
         <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;%d: top 1: %f, top %d: %f\n&quot;</span>, i, avg_acc/(i+<span class="hljs-number">1</span>), topk, avg_topk/(i+<span class="hljs-number">1</span>));
     }
 }
-
-<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">validate_classifier_full</span><span class="hljs-params">(<span class="hljs-keyword">char</span> *datacfg, <span class="hljs-keyword">char</span> *filename, <span class="hljs-keyword">char</span> *weightfile)</span>
+</code></pre>
+<h2 id="validateclassifierfull">validate_classifier_full</h2>
+<pre><code class="lang-c"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">validate_classifier_full</span><span class="hljs-params">(<span class="hljs-keyword">char</span> *datacfg, <span class="hljs-keyword">char</span> *filename, <span class="hljs-keyword">char</span> *weightfile)</span>
 </span>{
     <span class="hljs-keyword">int</span> i, j;
     network *net = load_network(filename, weightfile, <span class="hljs-number">0</span>);
@@ -2081,9 +2086,9 @@
         <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;%d: top 1: %f, top %d: %f\n&quot;</span>, i, avg_acc/(i+<span class="hljs-number">1</span>), topk, avg_topk/(i+<span class="hljs-number">1</span>));
     }
 }
-
-
-<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">validate_classifier_single</span><span class="hljs-params">(<span class="hljs-keyword">char</span> *datacfg, <span class="hljs-keyword">char</span> *filename, <span class="hljs-keyword">char</span> *weightfile)</span>
+</code></pre>
+<h2 id="validateclassifiersingle">validate_classifier_single</h2>
+<pre><code class="lang-c"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">validate_classifier_single</span><span class="hljs-params">(<span class="hljs-keyword">char</span> *datacfg, <span class="hljs-keyword">char</span> *filename, <span class="hljs-keyword">char</span> *weightfile)</span>
 </span>{
     <span class="hljs-keyword">int</span> i, j;
     network *net = load_network(filename, weightfile, <span class="hljs-number">0</span>);
@@ -2141,8 +2146,9 @@
         <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;%d: top 1: %f, top %d: %f\n&quot;</span>, i, avg_acc/(i+<span class="hljs-number">1</span>), topk, avg_topk/(i+<span class="hljs-number">1</span>));
     }
 }
-
-<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">validate_classifier_multi</span><span class="hljs-params">(<span class="hljs-keyword">char</span> *datacfg, <span class="hljs-keyword">char</span> *cfg, <span class="hljs-keyword">char</span> *weights)</span>
+</code></pre>
+<h2 id="validateclassifiermulti">validate_classifier_multi</h2>
+<pre><code class="lang-c"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">validate_classifier_multi</span><span class="hljs-params">(<span class="hljs-keyword">char</span> *datacfg, <span class="hljs-keyword">char</span> *cfg, <span class="hljs-keyword">char</span> *weights)</span>
 </span>{
     <span class="hljs-keyword">int</span> i, j;
     network *net = load_network(cfg, weights, <span class="hljs-number">0</span>);
@@ -2203,8 +2209,9 @@
         <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;%d: top 1: %f, top %d: %f\n&quot;</span>, i, avg_acc/(i+<span class="hljs-number">1</span>), topk, avg_topk/(i+<span class="hljs-number">1</span>));
     }
 }
-
-<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">try_classifier</span><span class="hljs-params">(<span class="hljs-keyword">char</span> *datacfg, <span class="hljs-keyword">char</span> *cfgfile, <span class="hljs-keyword">char</span> *weightfile, <span class="hljs-keyword">char</span> *filename, <span class="hljs-keyword">int</span> layer_num)</span>
+</code></pre>
+<h2 id="tryclassifier">try_classifier</h2>
+<pre><code class="lang-c"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">try_classifier</span><span class="hljs-params">(<span class="hljs-keyword">char</span> *datacfg, <span class="hljs-keyword">char</span> *cfgfile, <span class="hljs-keyword">char</span> *weightfile, <span class="hljs-keyword">char</span> *filename, <span class="hljs-keyword">int</span> layer_num)</span>
 </span>{
     network *net = load_network(cfgfile, weightfile, <span class="hljs-number">0</span>);
     set_batch_network(net, <span class="hljs-number">1</span>);
@@ -2281,8 +2288,9 @@
         <span class="hljs-keyword">if</span> (filename) <span class="hljs-keyword">break</span>;
     }
 }
-
-<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">predict_classifier</span><span class="hljs-params">(<span class="hljs-keyword">char</span> *datacfg, <span class="hljs-keyword">char</span> *cfgfile, <span class="hljs-keyword">char</span> *weightfile, <span class="hljs-keyword">char</span> *filename, <span class="hljs-keyword">int</span> top)</span>
+</code></pre>
+<h2 id="predictclassifier">predict_classifier</h2>
+<pre><code class="lang-c"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">predict_classifier</span><span class="hljs-params">(<span class="hljs-keyword">char</span> *datacfg, <span class="hljs-keyword">char</span> *cfgfile, <span class="hljs-keyword">char</span> *weightfile, <span class="hljs-keyword">char</span> *filename, <span class="hljs-keyword">int</span> top)</span>
 </span>{
     network *net = load_network(cfgfile, weightfile, <span class="hljs-number">0</span>);
     set_batch_network(net, <span class="hljs-number">1</span>);
@@ -2334,9 +2342,9 @@
         <span class="hljs-keyword">if</span> (filename) <span class="hljs-keyword">break</span>;
     }
 }
-
-
-<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">label_classifier</span><span class="hljs-params">(<span class="hljs-keyword">char</span> *datacfg, <span class="hljs-keyword">char</span> *filename, <span class="hljs-keyword">char</span> *weightfile)</span>
+</code></pre>
+<h2 id="labelclassifier">label_classifier</h2>
+<pre><code class="lang-c"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">label_classifier</span><span class="hljs-params">(<span class="hljs-keyword">char</span> *datacfg, <span class="hljs-keyword">char</span> *filename, <span class="hljs-keyword">char</span> *weightfile)</span>
 </span>{
     <span class="hljs-keyword">int</span> i;
     network *net = load_network(filename, weightfile, <span class="hljs-number">0</span>);
@@ -2370,8 +2378,9 @@
         <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;%s\n&quot;</span>, labels[ind]);
     }
 }
-
-<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">csv_classifier</span><span class="hljs-params">(<span class="hljs-keyword">char</span> *datacfg, <span class="hljs-keyword">char</span> *cfgfile, <span class="hljs-keyword">char</span> *weightfile)</span>
+</code></pre>
+<h2 id="csvclassifier">csv_classifier</h2>
+<pre><code class="lang-c"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">csv_classifier</span><span class="hljs-params">(<span class="hljs-keyword">char</span> *datacfg, <span class="hljs-keyword">char</span> *cfgfile, <span class="hljs-keyword">char</span> *weightfile)</span>
 </span>{
     <span class="hljs-keyword">int</span> i,j;
     network *net = load_network(cfgfile, weightfile, <span class="hljs-number">0</span>);
@@ -2410,8 +2419,9 @@
         <span class="hljs-built_in">fprintf</span>(<span class="hljs-built_in">stderr</span>, <span class="hljs-string">&quot;%lf seconds, %d images, %d total\n&quot;</span>, what_time_is_it_now() - time, i+<span class="hljs-number">1</span>, m);
     }
 }
-
-<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">test_classifier</span><span class="hljs-params">(<span class="hljs-keyword">char</span> *datacfg, <span class="hljs-keyword">char</span> *cfgfile, <span class="hljs-keyword">char</span> *weightfile, <span class="hljs-keyword">int</span> target_layer)</span>
+</code></pre>
+<h2 id="testclassifier">test_classifier</h2>
+<pre><code class="lang-c"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">test_classifier</span><span class="hljs-params">(<span class="hljs-keyword">char</span> *datacfg, <span class="hljs-keyword">char</span> *cfgfile, <span class="hljs-keyword">char</span> *weightfile, <span class="hljs-keyword">int</span> target_layer)</span>
 </span>{
     <span class="hljs-keyword">int</span> curr = <span class="hljs-number">0</span>;
     network *net = load_network(cfgfile, weightfile, <span class="hljs-number">0</span>);
@@ -2479,8 +2489,9 @@
         free_data(val);
     }
 }
-
-<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">file_output_classifier</span><span class="hljs-params">(<span class="hljs-keyword">char</span> *datacfg, <span class="hljs-keyword">char</span> *filename, <span class="hljs-keyword">char</span> *weightfile, <span class="hljs-keyword">char</span> *listfile)</span>
+</code></pre>
+<h2 id="fileoutputclassifier">file_output_classifier</h2>
+<pre><code class="lang-c"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">file_output_classifier</span><span class="hljs-params">(<span class="hljs-keyword">char</span> *datacfg, <span class="hljs-keyword">char</span> *filename, <span class="hljs-keyword">char</span> *weightfile, <span class="hljs-keyword">char</span> *listfile)</span>
 </span>{
     <span class="hljs-keyword">int</span> i,j;
     network *net = load_network(filename, weightfile, <span class="hljs-number">0</span>);
@@ -2517,9 +2528,9 @@
         <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;\n&quot;</span>);
     }
 }
-
-
-<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">threat_classifier</span><span class="hljs-params">(<span class="hljs-keyword">char</span> *datacfg, <span class="hljs-keyword">char</span> *cfgfile, <span class="hljs-keyword">char</span> *weightfile, <span class="hljs-keyword">int</span> cam_index, <span class="hljs-keyword">const</span> <span class="hljs-keyword">char</span> *filename)</span>
+</code></pre>
+<h2 id="threatclassifier">threat_classifier</h2>
+<pre><code class="lang-c"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">threat_classifier</span><span class="hljs-params">(<span class="hljs-keyword">char</span> *datacfg, <span class="hljs-keyword">char</span> *cfgfile, <span class="hljs-keyword">char</span> *weightfile, <span class="hljs-keyword">int</span> cam_index, <span class="hljs-keyword">const</span> <span class="hljs-keyword">char</span> *filename)</span>
 </span>{
 <span class="hljs-meta">#<span class="hljs-meta-keyword">ifdef</span> OPENCV</span>
     <span class="hljs-keyword">float</span> threat = <span class="hljs-number">0</span>;
@@ -2640,9 +2651,9 @@
     }
 <span class="hljs-meta">#<span class="hljs-meta-keyword">endif</span></span>
 }
-
-
-<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">gun_classifier</span><span class="hljs-params">(<span class="hljs-keyword">char</span> *datacfg, <span class="hljs-keyword">char</span> *cfgfile, <span class="hljs-keyword">char</span> *weightfile, <span class="hljs-keyword">int</span> cam_index, <span class="hljs-keyword">const</span> <span class="hljs-keyword">char</span> *filename)</span>
+</code></pre>
+<h2 id="gunclassifier">gun_classifier</h2>
+<pre><code class="lang-c"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">gun_classifier</span><span class="hljs-params">(<span class="hljs-keyword">char</span> *datacfg, <span class="hljs-keyword">char</span> *cfgfile, <span class="hljs-keyword">char</span> *weightfile, <span class="hljs-keyword">int</span> cam_index, <span class="hljs-keyword">const</span> <span class="hljs-keyword">char</span> *filename)</span>
 </span>{
 <span class="hljs-meta">#<span class="hljs-meta-keyword">ifdef</span> OPENCV</span>
     <span class="hljs-keyword">int</span> bad_cats[] = {<span class="hljs-number">218</span>, <span class="hljs-number">539</span>, <span class="hljs-number">540</span>, <span class="hljs-number">1213</span>, <span class="hljs-number">1501</span>, <span class="hljs-number">1742</span>, <span class="hljs-number">1911</span>, <span class="hljs-number">2415</span>, <span class="hljs-number">4348</span>, <span class="hljs-number">19223</span>, <span class="hljs-number">368</span>, <span class="hljs-number">369</span>, <span class="hljs-number">370</span>, <span class="hljs-number">1133</span>, <span class="hljs-number">1200</span>, <span class="hljs-number">1306</span>, <span class="hljs-number">2122</span>, <span class="hljs-number">2301</span>, <span class="hljs-number">2537</span>, <span class="hljs-number">2823</span>, <span class="hljs-number">3179</span>, <span class="hljs-number">3596</span>, <span class="hljs-number">3639</span>, <span class="hljs-number">4489</span>, <span class="hljs-number">5107</span>, <span class="hljs-number">5140</span>, <span class="hljs-number">5289</span>, <span class="hljs-number">6240</span>, <span class="hljs-number">6631</span>, <span class="hljs-number">6762</span>, <span class="hljs-number">7048</span>, <span class="hljs-number">7171</span>, <span class="hljs-number">7969</span>, <span class="hljs-number">7984</span>, <span class="hljs-number">7989</span>, <span class="hljs-number">8824</span>, <span class="hljs-number">8927</span>, <span class="hljs-number">9915</span>, <span class="hljs-number">10270</span>, <span class="hljs-number">10448</span>, <span class="hljs-number">13401</span>, <span class="hljs-number">15205</span>, <span class="hljs-number">18358</span>, <span class="hljs-number">18894</span>, <span class="hljs-number">18895</span>, <span class="hljs-number">19249</span>, <span class="hljs-number">19697</span>};
@@ -2707,8 +2718,9 @@
     }
 <span class="hljs-meta">#<span class="hljs-meta-keyword">endif</span></span>
 }
-
-<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">demo_classifier</span><span class="hljs-params">(<span class="hljs-keyword">char</span> *datacfg, <span class="hljs-keyword">char</span> *cfgfile, <span class="hljs-keyword">char</span> *weightfile, <span class="hljs-keyword">int</span> cam_index, <span class="hljs-keyword">const</span> <span class="hljs-keyword">char</span> *filename)</span>
+</code></pre>
+<h2 id="democlassifier">demo_classifier</h2>
+<pre><code class="lang-c"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">demo_classifier</span><span class="hljs-params">(<span class="hljs-keyword">char</span> *datacfg, <span class="hljs-keyword">char</span> *cfgfile, <span class="hljs-keyword">char</span> *weightfile, <span class="hljs-keyword">int</span> cam_index, <span class="hljs-keyword">const</span> <span class="hljs-keyword">char</span> *filename)</span>
 </span>{
 <span class="hljs-meta">#<span class="hljs-meta-keyword">ifdef</span> OPENCV</span>
     <span class="hljs-keyword">char</span> *base = basecfg(cfgfile);
@@ -2780,9 +2792,9 @@
     }
 <span class="hljs-meta">#<span class="hljs-meta-keyword">endif</span></span>
 }
-
-
-<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">run_classifier</span><span class="hljs-params">(<span class="hljs-keyword">int</span> argc, <span class="hljs-keyword">char</span> **argv)</span>
+</code></pre>
+<h2 id="runclassifier">run_classifier</h2>
+<pre><code class="lang-c"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">run_classifier</span><span class="hljs-params">(<span class="hljs-keyword">int</span> argc, <span class="hljs-keyword">char</span> **argv)</span>
 </span>{
     <span class="hljs-keyword">if</span>(argc &lt; <span class="hljs-number">4</span>){
         <span class="hljs-built_in">fprintf</span>(<span class="hljs-built_in">stderr</span>, <span class="hljs-string">&quot;usage: %s %s [train/test/valid] [cfg] [weights (optional)]\n&quot;</span>, argv[<span class="hljs-number">0</span>], argv[<span class="hljs-number">1</span>]);
@@ -2863,7 +2875,7 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"classifier.c","level":"6.5","depth":1,"next":{"title":"coco.c","level":"6.6","depth":1,"path":"part5_examples/coco.md","ref":"part5_examples/coco.md","articles":[]},"previous":{"title":"cifar.c","level":"6.4","depth":1,"path":"part5_examples/cifar.md","ref":"part5_examples/cifar.md","articles":[]},"dir":"ltr"},"config":{"plugins":["advanced-emoji","theme-gestalt","-theme-default","styles-sass-fix","theme-api","mathjax","ga"],"root":"./","styles":{"website":"website-1600186244488.css"},"pluginsConfig":{"styles-sass-fix":{},"theme-gestalt":{"showLevel":false,"styles":{"website":"styles/website.css"},"logo":"/darknet_book/assets/darknet.png","baseUrl":null,"excludeDefaultStyles":true,"doNotHideChildrenChapters":false},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"theme-api":{"languages":[],"split":true,"theme":"light"},"mathjax":{"forceSVG":false,"version":"2.6-latest"},"ga":{"configuration":"auto","token":"UA-136921229-1"},"advanced-emoji":{"embedEmojis":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]}},"theme":"default","author":"JJM","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{"BASE_URL":"https://jjeamin.github.io"},"title":"DarkNet Book","output.name":"site","gitbook":"*"},"file":{"path":"part5_examples/classifier.md","mtime":"2020-09-15T15:38:02.213Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-09-15T16:10:39.415Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"classifier.c","level":"6.5","depth":1,"next":{"title":"coco.c","level":"6.6","depth":1,"path":"part5_examples/coco.md","ref":"part5_examples/coco.md","articles":[]},"previous":{"title":"cifar.c","level":"6.4","depth":1,"path":"part5_examples/cifar.md","ref":"part5_examples/cifar.md","articles":[]},"dir":"ltr"},"config":{"plugins":["advanced-emoji","theme-gestalt","-theme-default","styles-sass-fix","theme-api","mathjax","ga"],"root":"./","styles":{"website":"website-1600237079999.css"},"pluginsConfig":{"styles-sass-fix":{},"theme-gestalt":{"showLevel":false,"styles":{"website":"styles/website.css"},"logo":"/darknet_book/assets/darknet.png","baseUrl":null,"excludeDefaultStyles":true,"doNotHideChildrenChapters":false},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"theme-api":{"languages":[],"split":true,"theme":"light"},"mathjax":{"forceSVG":false,"version":"2.6-latest"},"ga":{"configuration":"auto","token":"UA-136921229-1"},"advanced-emoji":{"embedEmojis":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]}},"theme":"default","author":"JJM","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{"BASE_URL":"https://jjeamin.github.io"},"title":"DarkNet Book","output.name":"site","gitbook":"*"},"file":{"path":"part5_examples/classifier.md","mtime":"2020-09-16T05:38:36.910Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-09-16T06:17:55.067Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>

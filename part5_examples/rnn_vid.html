@@ -42,7 +42,7 @@
 
     
         
-        <link rel="stylesheet" href="../website-1600186244488.css">
+        <link rel="stylesheet" href="../website-1600237079999.css">
         
     
 
@@ -1723,21 +1723,21 @@
                                 <section class="normal markdown-section">
                                 
                                 <h1 id="rnnvidc">rnn_vid.c</h1>
-<pre><code class="lang-c">#include &quot;darknet.h&quot;
+<pre><code class="lang-c"><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-string">&quot;darknet.h&quot;</span></span>
 
-#ifdef OPENCV
-image get_image_from_stream(CvCapture *cap);
-image ipl_to_image(IplImage* src);
+<span class="hljs-meta">#<span class="hljs-meta-keyword">ifdef</span> OPENCV</span>
+<span class="hljs-function">image <span class="hljs-title">get_image_from_stream</span><span class="hljs-params">(CvCapture *cap)</span></span>;
+<span class="hljs-function">image <span class="hljs-title">ipl_to_image</span><span class="hljs-params">(IplImage* src)</span></span>;
 
-void reconstruct_picture(network net, float *features, image recon, image update, float rate, float momentum, float lambda, int smooth_size, int iters);
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">reconstruct_picture</span><span class="hljs-params">(network net, <span class="hljs-keyword">float</span> *features, image recon, image update, <span class="hljs-keyword">float</span> rate, <span class="hljs-keyword">float</span> momentum, <span class="hljs-keyword">float</span> lambda, <span class="hljs-keyword">int</span> smooth_size, <span class="hljs-keyword">int</span> iters)</span></span>;
 
-
-typedef struct {
-    float *x;
-    float *y;
+<span class="hljs-keyword">typedef</span> <span class="hljs-keyword">struct</span> {
+    <span class="hljs-keyword">float</span> *x;
+    <span class="hljs-keyword">float</span> *y;
 } float_pair;
-
-float_pair get_rnn_vid_data(network net, char **files, int n, int batch, int steps)
+</code></pre>
+<h2 id="getrnnviddata">get_rnn_vid_data</h2>
+<pre><code class="lang-c">float_pair get_rnn_vid_data(network net, char **files, int n, int batch, int steps)
 {
     int b;
     assert(net.batch == steps + 1);
@@ -1791,145 +1791,147 @@ float_pair get_rnn_vid_data(network net, char **files, int n, int batch, int ste
 
     return p;
 }
-
-
-void train_vid_rnn(char *cfgfile, char *weightfile)
-{
-    char *train_videos = &quot;data/vid/train.txt&quot;;
-    char *backup_directory = &quot;/home/pjreddie/backup/&quot;;
-    srand(time(0));
-    char *base = basecfg(cfgfile);
-    printf(&quot;%s\n&quot;, base);
-    float avg_loss = -1;
+</code></pre>
+<h2 id="trainvidrnn">train_vid_rnn</h2>
+<pre><code class="lang-c"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">train_vid_rnn</span><span class="hljs-params">(<span class="hljs-keyword">char</span> *cfgfile, <span class="hljs-keyword">char</span> *weightfile)</span>
+</span>{
+    <span class="hljs-keyword">char</span> *train_videos = <span class="hljs-string">&quot;data/vid/train.txt&quot;</span>;
+    <span class="hljs-keyword">char</span> *backup_directory = <span class="hljs-string">&quot;/home/pjreddie/backup/&quot;</span>;
+    srand(time(<span class="hljs-number">0</span>));
+    <span class="hljs-keyword">char</span> *base = basecfg(cfgfile);
+    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;%s\n&quot;</span>, base);
+    <span class="hljs-keyword">float</span> avg_loss = <span class="hljs-number">-1</span>;
     network net = parse_network_cfg(cfgfile);
-    if(weightfile){
+    <span class="hljs-keyword">if</span>(weightfile){
         load_weights(&amp;net, weightfile);
     }
-    printf(&quot;Learning Rate: %g, Momentum: %g, Decay: %g\n&quot;, net.learning_rate, net.momentum, net.decay);
-    int imgs = net.batch*net.subdivisions;
-    int i = *net.seen/imgs;
+    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;Learning Rate: %g, Momentum: %g, Decay: %g\n&quot;</span>, net.learning_rate, net.momentum, net.decay);
+    <span class="hljs-keyword">int</span> imgs = net.batch*net.subdivisions;
+    <span class="hljs-keyword">int</span> i = *net.seen/imgs;
 
-    list *plist = get_paths(train_videos);
-    int N = plist-&gt;size;
-    char **paths = (char **)list_to_array(plist);
-    clock_t time;
-    int steps = net.time_steps;
-    int batch = net.batch / net.time_steps;
+    <span class="hljs-built_in">list</span> *plist = get_paths(train_videos);
+    <span class="hljs-keyword">int</span> N = plist-&gt;size;
+    <span class="hljs-keyword">char</span> **paths = (<span class="hljs-keyword">char</span> **)list_to_array(plist);
+    <span class="hljs-keyword">clock_t</span> time;
+    <span class="hljs-keyword">int</span> steps = net.time_steps;
+    <span class="hljs-keyword">int</span> batch = net.batch / net.time_steps;
 
-    network extractor = parse_network_cfg(&quot;cfg/extractor.cfg&quot;);
-    load_weights(&amp;extractor, &quot;/home/pjreddie/trained/yolo-coco.conv&quot;);
+    network extractor = parse_network_cfg(<span class="hljs-string">&quot;cfg/extractor.cfg&quot;</span>);
+    load_weights(&amp;extractor, <span class="hljs-string">&quot;/home/pjreddie/trained/yolo-coco.conv&quot;</span>);
 
-    while(get_current_batch(net) &lt; net.max_batches){
-        i += 1;
+    <span class="hljs-keyword">while</span>(get_current_batch(net) &lt; net.max_batches){
+        i += <span class="hljs-number">1</span>;
         time=clock();
         float_pair p = get_rnn_vid_data(extractor, paths, N, batch, steps);
 
-        copy_cpu(net.inputs*net.batch, p.x, 1, net.input, 1);
-        copy_cpu(net.truths*net.batch, p.y, 1, net.truth, 1);
-        float loss = train_network_datum(net) / (net.batch);
+        copy_cpu(net.inputs*net.batch, p.x, <span class="hljs-number">1</span>, net.input, <span class="hljs-number">1</span>);
+        copy_cpu(net.truths*net.batch, p.y, <span class="hljs-number">1</span>, net.truth, <span class="hljs-number">1</span>);
+        <span class="hljs-keyword">float</span> loss = train_network_datum(net) / (net.batch);
 
 
-        free(p.x);
-        if (avg_loss &lt; 0) avg_loss = loss;
-        avg_loss = avg_loss*.9 + loss*.1;
+        <span class="hljs-built_in">free</span>(p.x);
+        <span class="hljs-keyword">if</span> (avg_loss &lt; <span class="hljs-number">0</span>) avg_loss = loss;
+        avg_loss = avg_loss*<span class="hljs-number">.9</span> + loss*<span class="hljs-number">.1</span>;
 
-        fprintf(stderr, &quot;%d: %f, %f avg, %f rate, %lf seconds\n&quot;, i, loss, avg_loss, get_current_rate(net), sec(clock()-time));
-        if(i%100==0){
-            char buff[256];
-            sprintf(buff, &quot;%s/%s_%d.weights&quot;, backup_directory, base, i);
+        <span class="hljs-built_in">fprintf</span>(<span class="hljs-built_in">stderr</span>, <span class="hljs-string">&quot;%d: %f, %f avg, %f rate, %lf seconds\n&quot;</span>, i, loss, avg_loss, get_current_rate(net), sec(clock()-time));
+        <span class="hljs-keyword">if</span>(i%<span class="hljs-number">100</span>==<span class="hljs-number">0</span>){
+            <span class="hljs-keyword">char</span> buff[<span class="hljs-number">256</span>];
+            <span class="hljs-built_in">sprintf</span>(buff, <span class="hljs-string">&quot;%s/%s_%d.weights&quot;</span>, backup_directory, base, i);
             save_weights(net, buff);
         }
-        if(i%10==0){
-            char buff[256];
-            sprintf(buff, &quot;%s/%s.backup&quot;, backup_directory, base);
+        <span class="hljs-keyword">if</span>(i%<span class="hljs-number">10</span>==<span class="hljs-number">0</span>){
+            <span class="hljs-keyword">char</span> buff[<span class="hljs-number">256</span>];
+            <span class="hljs-built_in">sprintf</span>(buff, <span class="hljs-string">&quot;%s/%s.backup&quot;</span>, backup_directory, base);
             save_weights(net, buff);
         }
     }
-    char buff[256];
-    sprintf(buff, &quot;%s/%s_final.weights&quot;, backup_directory, base);
+    <span class="hljs-keyword">char</span> buff[<span class="hljs-number">256</span>];
+    <span class="hljs-built_in">sprintf</span>(buff, <span class="hljs-string">&quot;%s/%s_final.weights&quot;</span>, backup_directory, base);
     save_weights(net, buff);
 }
-
-
-image save_reconstruction(network net, image *init, float *feat, char *name, int i)
-{
+</code></pre>
+<h2 id="savereconstruction">save_reconstruction</h2>
+<pre><code class="lang-c"><span class="hljs-function">image <span class="hljs-title">save_reconstruction</span><span class="hljs-params">(network net, image *init, <span class="hljs-keyword">float</span> *feat, <span class="hljs-keyword">char</span> *name, <span class="hljs-keyword">int</span> i)</span>
+</span>{
     image recon;
-    if (init) {
+    <span class="hljs-keyword">if</span> (init) {
         recon = copy_image(*init);
-    } else {
-        recon = make_random_image(net.w, net.h, 3);
+    } <span class="hljs-keyword">else</span> {
+        recon = make_random_image(net.w, net.h, <span class="hljs-number">3</span>);
     }
 
-    image update = make_image(net.w, net.h, 3);
-    reconstruct_picture(net, feat, recon, update, .01, .9, .1, 2, 50);
-    char buff[256];
-    sprintf(buff, &quot;%s%d&quot;, name, i);
+    image update = make_image(net.w, net.h, <span class="hljs-number">3</span>);
+    reconstruct_picture(net, feat, recon, update, <span class="hljs-number">.01</span>, <span class="hljs-number">.9</span>, <span class="hljs-number">.1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">50</span>);
+    <span class="hljs-keyword">char</span> buff[<span class="hljs-number">256</span>];
+    <span class="hljs-built_in">sprintf</span>(buff, <span class="hljs-string">&quot;%s%d&quot;</span>, name, i);
     save_image(recon, buff);
     free_image(update);
-    return recon;
+    <span class="hljs-keyword">return</span> recon;
 }
-
-void generate_vid_rnn(char *cfgfile, char *weightfile)
-{
-    network extractor = parse_network_cfg(&quot;cfg/extractor.recon.cfg&quot;);
-    load_weights(&amp;extractor, &quot;/home/pjreddie/trained/yolo-coco.conv&quot;);
+</code></pre>
+<h2 id="generatevidrnn">generate_vid_rnn</h2>
+<pre><code class="lang-c"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">generate_vid_rnn</span><span class="hljs-params">(<span class="hljs-keyword">char</span> *cfgfile, <span class="hljs-keyword">char</span> *weightfile)</span>
+</span>{
+    network extractor = parse_network_cfg(<span class="hljs-string">&quot;cfg/extractor.recon.cfg&quot;</span>);
+    load_weights(&amp;extractor, <span class="hljs-string">&quot;/home/pjreddie/trained/yolo-coco.conv&quot;</span>);
 
     network net = parse_network_cfg(cfgfile);
-    if(weightfile){
+    <span class="hljs-keyword">if</span>(weightfile){
         load_weights(&amp;net, weightfile);
     }
-    set_batch_network(&amp;extractor, 1);
-    set_batch_network(&amp;net, 1);
+    set_batch_network(&amp;extractor, <span class="hljs-number">1</span>);
+    set_batch_network(&amp;net, <span class="hljs-number">1</span>);
 
-    int i;
-    CvCapture *cap = cvCaptureFromFile(&quot;/extra/vid/ILSVRC2015/Data/VID/snippets/val/ILSVRC2015_val_00007030.mp4&quot;);
-    float *feat;
-    float *next;
+    <span class="hljs-keyword">int</span> i;
+    CvCapture *cap = cvCaptureFromFile(<span class="hljs-string">&quot;/extra/vid/ILSVRC2015/Data/VID/snippets/val/ILSVRC2015_val_00007030.mp4&quot;</span>);
+    <span class="hljs-keyword">float</span> *feat;
+    <span class="hljs-keyword">float</span> *next;
     image last;
-    for(i = 0; i &lt; 25; ++i){
+    <span class="hljs-keyword">for</span>(i = <span class="hljs-number">0</span>; i &lt; <span class="hljs-number">25</span>; ++i){
         image im = get_image_from_stream(cap);
         image re = resize_image(im, extractor.w, extractor.h);
         feat = network_predict(extractor, re.data);
-        if(i &gt; 0){
-            printf(&quot;%f %f\n&quot;, mean_array(feat, 14*14*512), variance_array(feat, 14*14*512));
-            printf(&quot;%f %f\n&quot;, mean_array(next, 14*14*512), variance_array(next, 14*14*512));
-            printf(&quot;%f\n&quot;, mse_array(feat, 14*14*512));
-            axpy_cpu(14*14*512, -1, feat, 1, next, 1);
-            printf(&quot;%f\n&quot;, mse_array(next, 14*14*512));
+        <span class="hljs-keyword">if</span>(i &gt; <span class="hljs-number">0</span>){
+            <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;%f %f\n&quot;</span>, mean_array(feat, <span class="hljs-number">14</span>*<span class="hljs-number">14</span>*<span class="hljs-number">512</span>), variance_array(feat, <span class="hljs-number">14</span>*<span class="hljs-number">14</span>*<span class="hljs-number">512</span>));
+            <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;%f %f\n&quot;</span>, mean_array(next, <span class="hljs-number">14</span>*<span class="hljs-number">14</span>*<span class="hljs-number">512</span>), variance_array(next, <span class="hljs-number">14</span>*<span class="hljs-number">14</span>*<span class="hljs-number">512</span>));
+            <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;%f\n&quot;</span>, mse_array(feat, <span class="hljs-number">14</span>*<span class="hljs-number">14</span>*<span class="hljs-number">512</span>));
+            axpy_cpu(<span class="hljs-number">14</span>*<span class="hljs-number">14</span>*<span class="hljs-number">512</span>, <span class="hljs-number">-1</span>, feat, <span class="hljs-number">1</span>, next, <span class="hljs-number">1</span>);
+            <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;%f\n&quot;</span>, mse_array(next, <span class="hljs-number">14</span>*<span class="hljs-number">14</span>*<span class="hljs-number">512</span>));
         }
         next = network_predict(net, feat);
 
         free_image(im);
 
-        free_image(save_reconstruction(extractor, 0, feat, &quot;feat&quot;, i));
-        free_image(save_reconstruction(extractor, 0, next, &quot;next&quot;, i));
-        if (i==24) last = copy_image(re);
+        free_image(save_reconstruction(extractor, <span class="hljs-number">0</span>, feat, <span class="hljs-string">&quot;feat&quot;</span>, i));
+        free_image(save_reconstruction(extractor, <span class="hljs-number">0</span>, next, <span class="hljs-string">&quot;next&quot;</span>, i));
+        <span class="hljs-keyword">if</span> (i==<span class="hljs-number">24</span>) last = copy_image(re);
         free_image(re);
     }
-    for(i = 0; i &lt; 30; ++i){
+    <span class="hljs-keyword">for</span>(i = <span class="hljs-number">0</span>; i &lt; <span class="hljs-number">30</span>; ++i){
         next = network_predict(net, next);
-        image new = save_reconstruction(extractor, &amp;last, next, &quot;new&quot;, i);
+        image <span class="hljs-keyword">new</span> = save_reconstruction(extractor, &amp;last, next, <span class="hljs-string">&quot;new&quot;</span>, i);
         free_image(last);
-        last = new;
+        last = <span class="hljs-keyword">new</span>;
     }
 }
-
-void run_vid_rnn(int argc, char **argv)
-{
-    if(argc &lt; 4){
-        fprintf(stderr, &quot;usage: %s %s [train/test/valid] [cfg] [weights (optional)]\n&quot;, argv[0], argv[1]);
-        return;
+</code></pre>
+<h2 id="runvidrnn">run_vid_rnn</h2>
+<pre><code class="lang-c"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">run_vid_rnn</span><span class="hljs-params">(<span class="hljs-keyword">int</span> argc, <span class="hljs-keyword">char</span> **argv)</span>
+</span>{
+    <span class="hljs-keyword">if</span>(argc &lt; <span class="hljs-number">4</span>){
+        <span class="hljs-built_in">fprintf</span>(<span class="hljs-built_in">stderr</span>, <span class="hljs-string">&quot;usage: %s %s [train/test/valid] [cfg] [weights (optional)]\n&quot;</span>, argv[<span class="hljs-number">0</span>], argv[<span class="hljs-number">1</span>]);
+        <span class="hljs-keyword">return</span>;
     }
 
-    char *cfg = argv[3];
-    char *weights = (argc &gt; 4) ? argv[4] : 0;
-    //char *filename = (argc &gt; 5) ? argv[5]: 0;
-    if(0==strcmp(argv[2], &quot;train&quot;)) train_vid_rnn(cfg, weights);
-    else if(0==strcmp(argv[2], &quot;generate&quot;)) generate_vid_rnn(cfg, weights);
+    <span class="hljs-keyword">char</span> *cfg = argv[<span class="hljs-number">3</span>];
+    <span class="hljs-keyword">char</span> *weights = (argc &gt; <span class="hljs-number">4</span>) ? argv[<span class="hljs-number">4</span>] : <span class="hljs-number">0</span>;
+    <span class="hljs-comment">//char *filename = (argc &gt; 5) ? argv[5]: 0;</span>
+    <span class="hljs-keyword">if</span>(<span class="hljs-number">0</span>==<span class="hljs-built_in">strcmp</span>(argv[<span class="hljs-number">2</span>], <span class="hljs-string">&quot;train&quot;</span>)) train_vid_rnn(cfg, weights);
+    <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span>(<span class="hljs-number">0</span>==<span class="hljs-built_in">strcmp</span>(argv[<span class="hljs-number">2</span>], <span class="hljs-string">&quot;generate&quot;</span>)) generate_vid_rnn(cfg, weights);
 }
-#else
-void run_vid_rnn(int argc, char **argv){}
-#endif
+<span class="hljs-meta">#<span class="hljs-meta-keyword">else</span></span>
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">run_vid_rnn</span><span class="hljs-params">(<span class="hljs-keyword">int</span> argc, <span class="hljs-keyword">char</span> **argv)</span></span>{}
+<span class="hljs-meta">#<span class="hljs-meta-keyword">endif</span></span>
 </code></pre>
 
                                 
@@ -1974,7 +1976,7 @@ void run_vid_rnn(int argc, char **argv){}
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"rnn_vid.c","level":"6.16","depth":1,"next":{"title":"segmenter.c","level":"6.17","depth":1,"path":"part5_examples/segmenter.md","ref":"part5_examples/segmenter.md","articles":[]},"previous":{"title":"rnn.c","level":"6.15","depth":1,"path":"part5_examples/rnn.md","ref":"part5_examples/rnn.md","articles":[]},"dir":"ltr"},"config":{"plugins":["advanced-emoji","theme-gestalt","-theme-default","styles-sass-fix","theme-api","mathjax","ga"],"root":"./","styles":{"website":"website-1600186244488.css"},"pluginsConfig":{"styles-sass-fix":{},"theme-gestalt":{"showLevel":false,"styles":{"website":"styles/website.css"},"logo":"/darknet_book/assets/darknet.png","baseUrl":null,"excludeDefaultStyles":true,"doNotHideChildrenChapters":false},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"theme-api":{"languages":[],"split":true,"theme":"light"},"mathjax":{"forceSVG":false,"version":"2.6-latest"},"ga":{"configuration":"auto","token":"UA-136921229-1"},"advanced-emoji":{"embedEmojis":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]}},"theme":"default","author":"JJM","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{"BASE_URL":"https://jjeamin.github.io"},"title":"DarkNet Book","output.name":"site","gitbook":"*"},"file":{"path":"part5_examples/rnn_vid.md","mtime":"2020-09-15T15:57:15.926Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-09-15T16:10:39.415Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"rnn_vid.c","level":"6.16","depth":1,"next":{"title":"segmenter.c","level":"6.17","depth":1,"path":"part5_examples/segmenter.md","ref":"part5_examples/segmenter.md","articles":[]},"previous":{"title":"rnn.c","level":"6.15","depth":1,"path":"part5_examples/rnn.md","ref":"part5_examples/rnn.md","articles":[]},"dir":"ltr"},"config":{"plugins":["advanced-emoji","theme-gestalt","-theme-default","styles-sass-fix","theme-api","mathjax","ga"],"root":"./","styles":{"website":"website-1600237079999.css"},"pluginsConfig":{"styles-sass-fix":{},"theme-gestalt":{"showLevel":false,"styles":{"website":"styles/website.css"},"logo":"/darknet_book/assets/darknet.png","baseUrl":null,"excludeDefaultStyles":true,"doNotHideChildrenChapters":false},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"theme-api":{"languages":[],"split":true,"theme":"light"},"mathjax":{"forceSVG":false,"version":"2.6-latest"},"ga":{"configuration":"auto","token":"UA-136921229-1"},"advanced-emoji":{"embedEmojis":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]}},"theme":"default","author":"JJM","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{"BASE_URL":"https://jjeamin.github.io"},"title":"DarkNet Book","output.name":"site","gitbook":"*"},"file":{"path":"part5_examples/rnn_vid.md","mtime":"2020-09-16T05:52:09.582Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-09-16T06:17:55.067Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>

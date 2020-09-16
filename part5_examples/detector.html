@@ -42,7 +42,7 @@
 
     
         
-        <link rel="stylesheet" href="../website-1600186244488.css">
+        <link rel="stylesheet" href="../website-1600237079999.css">
         
     
 
@@ -1726,9 +1726,9 @@
 <pre><code class="lang-c"><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-string">&quot;darknet.h&quot;</span></span>
 
 <span class="hljs-keyword">static</span> <span class="hljs-keyword">int</span> coco_ids[] = {<span class="hljs-number">1</span>,<span class="hljs-number">2</span>,<span class="hljs-number">3</span>,<span class="hljs-number">4</span>,<span class="hljs-number">5</span>,<span class="hljs-number">6</span>,<span class="hljs-number">7</span>,<span class="hljs-number">8</span>,<span class="hljs-number">9</span>,<span class="hljs-number">10</span>,<span class="hljs-number">11</span>,<span class="hljs-number">13</span>,<span class="hljs-number">14</span>,<span class="hljs-number">15</span>,<span class="hljs-number">16</span>,<span class="hljs-number">17</span>,<span class="hljs-number">18</span>,<span class="hljs-number">19</span>,<span class="hljs-number">20</span>,<span class="hljs-number">21</span>,<span class="hljs-number">22</span>,<span class="hljs-number">23</span>,<span class="hljs-number">24</span>,<span class="hljs-number">25</span>,<span class="hljs-number">27</span>,<span class="hljs-number">28</span>,<span class="hljs-number">31</span>,<span class="hljs-number">32</span>,<span class="hljs-number">33</span>,<span class="hljs-number">34</span>,<span class="hljs-number">35</span>,<span class="hljs-number">36</span>,<span class="hljs-number">37</span>,<span class="hljs-number">38</span>,<span class="hljs-number">39</span>,<span class="hljs-number">40</span>,<span class="hljs-number">41</span>,<span class="hljs-number">42</span>,<span class="hljs-number">43</span>,<span class="hljs-number">44</span>,<span class="hljs-number">46</span>,<span class="hljs-number">47</span>,<span class="hljs-number">48</span>,<span class="hljs-number">49</span>,<span class="hljs-number">50</span>,<span class="hljs-number">51</span>,<span class="hljs-number">52</span>,<span class="hljs-number">53</span>,<span class="hljs-number">54</span>,<span class="hljs-number">55</span>,<span class="hljs-number">56</span>,<span class="hljs-number">57</span>,<span class="hljs-number">58</span>,<span class="hljs-number">59</span>,<span class="hljs-number">60</span>,<span class="hljs-number">61</span>,<span class="hljs-number">62</span>,<span class="hljs-number">63</span>,<span class="hljs-number">64</span>,<span class="hljs-number">65</span>,<span class="hljs-number">67</span>,<span class="hljs-number">70</span>,<span class="hljs-number">72</span>,<span class="hljs-number">73</span>,<span class="hljs-number">74</span>,<span class="hljs-number">75</span>,<span class="hljs-number">76</span>,<span class="hljs-number">77</span>,<span class="hljs-number">78</span>,<span class="hljs-number">79</span>,<span class="hljs-number">80</span>,<span class="hljs-number">81</span>,<span class="hljs-number">82</span>,<span class="hljs-number">84</span>,<span class="hljs-number">85</span>,<span class="hljs-number">86</span>,<span class="hljs-number">87</span>,<span class="hljs-number">88</span>,<span class="hljs-number">89</span>,<span class="hljs-number">90</span>};
-
-
-<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">train_detector</span><span class="hljs-params">(<span class="hljs-keyword">char</span> *datacfg, <span class="hljs-keyword">char</span> *cfgfile, <span class="hljs-keyword">char</span> *weightfile, <span class="hljs-keyword">int</span> *gpus, <span class="hljs-keyword">int</span> ngpus, <span class="hljs-keyword">int</span> clear)</span>
+</code></pre>
+<h2 id="traindetector">train_detector</h2>
+<pre><code class="lang-c"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">train_detector</span><span class="hljs-params">(<span class="hljs-keyword">char</span> *datacfg, <span class="hljs-keyword">char</span> *cfgfile, <span class="hljs-keyword">char</span> *weightfile, <span class="hljs-keyword">int</span> *gpus, <span class="hljs-keyword">int</span> ngpus, <span class="hljs-keyword">int</span> clear)</span>
 </span>{
     <span class="hljs-built_in">list</span> *options = read_data_cfg(datacfg);
     <span class="hljs-keyword">char</span> *train_images = option_find_str(options, <span class="hljs-string">&quot;train&quot;</span>, <span class="hljs-string">&quot;data/train.list&quot;</span>);
@@ -1877,17 +1877,18 @@
     <span class="hljs-built_in">sprintf</span>(buff, <span class="hljs-string">&quot;%s/%s_final.weights&quot;</span>, backup_directory, base);
     save_weights(net, buff);
 }
-
-
-<span class="hljs-function"><span class="hljs-keyword">static</span> <span class="hljs-keyword">int</span> <span class="hljs-title">get_coco_image_id</span><span class="hljs-params">(<span class="hljs-keyword">char</span> *filename)</span>
+</code></pre>
+<h2 id="getcocoimageid">get_coco_image_id</h2>
+<pre><code class="lang-c"><span class="hljs-function"><span class="hljs-keyword">static</span> <span class="hljs-keyword">int</span> <span class="hljs-title">get_coco_image_id</span><span class="hljs-params">(<span class="hljs-keyword">char</span> *filename)</span>
 </span>{
     <span class="hljs-keyword">char</span> *p = <span class="hljs-built_in">strrchr</span>(filename, <span class="hljs-string">&apos;/&apos;</span>);
     <span class="hljs-keyword">char</span> *c = <span class="hljs-built_in">strrchr</span>(filename, <span class="hljs-string">&apos;_&apos;</span>);
     <span class="hljs-keyword">if</span>(c) p = c;
     <span class="hljs-keyword">return</span> atoi(p+<span class="hljs-number">1</span>);
 }
-
-<span class="hljs-function"><span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">print_cocos</span><span class="hljs-params">(FILE *fp, <span class="hljs-keyword">char</span> *image_path, detection *dets, <span class="hljs-keyword">int</span> num_boxes, <span class="hljs-keyword">int</span> classes, <span class="hljs-keyword">int</span> w, <span class="hljs-keyword">int</span> h)</span>
+</code></pre>
+<h2 id="printcocos">print_cocos</h2>
+<pre><code class="lang-c"><span class="hljs-function"><span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">print_cocos</span><span class="hljs-params">(FILE *fp, <span class="hljs-keyword">char</span> *image_path, detection *dets, <span class="hljs-keyword">int</span> num_boxes, <span class="hljs-keyword">int</span> classes, <span class="hljs-keyword">int</span> w, <span class="hljs-keyword">int</span> h)</span>
 </span>{
     <span class="hljs-keyword">int</span> i, j;
     <span class="hljs-keyword">int</span> image_id = get_coco_image_id(image_path);
@@ -1912,8 +1913,9 @@
         }
     }
 }
-
-<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">print_detector_detections</span><span class="hljs-params">(FILE **fps, <span class="hljs-keyword">char</span> *id, detection *dets, <span class="hljs-keyword">int</span> total, <span class="hljs-keyword">int</span> classes, <span class="hljs-keyword">int</span> w, <span class="hljs-keyword">int</span> h)</span>
+</code></pre>
+<h2 id="printdetectordetections">print_detector_detections</h2>
+<pre><code class="lang-c"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">print_detector_detections</span><span class="hljs-params">(FILE **fps, <span class="hljs-keyword">char</span> *id, detection *dets, <span class="hljs-keyword">int</span> total, <span class="hljs-keyword">int</span> classes, <span class="hljs-keyword">int</span> w, <span class="hljs-keyword">int</span> h)</span>
 </span>{
     <span class="hljs-keyword">int</span> i, j;
     <span class="hljs-keyword">for</span>(i = <span class="hljs-number">0</span>; i &lt; total; ++i){
@@ -1933,8 +1935,9 @@
         }
     }
 }
-
-<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">print_imagenet_detections</span><span class="hljs-params">(FILE *fp, <span class="hljs-keyword">int</span> id, detection *dets, <span class="hljs-keyword">int</span> total, <span class="hljs-keyword">int</span> classes, <span class="hljs-keyword">int</span> w, <span class="hljs-keyword">int</span> h)</span>
+</code></pre>
+<h2 id="printimagenetdetections">print_imagenet_detections</h2>
+<pre><code class="lang-c"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">print_imagenet_detections</span><span class="hljs-params">(FILE *fp, <span class="hljs-keyword">int</span> id, detection *dets, <span class="hljs-keyword">int</span> total, <span class="hljs-keyword">int</span> classes, <span class="hljs-keyword">int</span> w, <span class="hljs-keyword">int</span> h)</span>
 </span>{
     <span class="hljs-keyword">int</span> i, j;
     <span class="hljs-keyword">for</span>(i = <span class="hljs-number">0</span>; i &lt; total; ++i){
@@ -1955,8 +1958,9 @@
         }
     }
 }
-
-<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">validate_detector_flip</span><span class="hljs-params">(<span class="hljs-keyword">char</span> *datacfg, <span class="hljs-keyword">char</span> *cfgfile, <span class="hljs-keyword">char</span> *weightfile, <span class="hljs-keyword">char</span> *outfile)</span>
+</code></pre>
+<h2 id="validatedetectorflip">validate_detector_flip</h2>
+<pre><code class="lang-c"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">validate_detector_flip</span><span class="hljs-params">(<span class="hljs-keyword">char</span> *datacfg, <span class="hljs-keyword">char</span> *cfgfile, <span class="hljs-keyword">char</span> *weightfile, <span class="hljs-keyword">char</span> *outfile)</span>
 </span>{
     <span class="hljs-keyword">int</span> j;
     <span class="hljs-built_in">list</span> *options = read_data_cfg(datacfg);
@@ -2084,9 +2088,9 @@
     }
     <span class="hljs-built_in">fprintf</span>(<span class="hljs-built_in">stderr</span>, <span class="hljs-string">&quot;Total Detection Time: %f Seconds\n&quot;</span>, what_time_is_it_now() - start);
 }
-
-
-<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">validate_detector</span><span class="hljs-params">(<span class="hljs-keyword">char</span> *datacfg, <span class="hljs-keyword">char</span> *cfgfile, <span class="hljs-keyword">char</span> *weightfile, <span class="hljs-keyword">char</span> *outfile)</span>
+</code></pre>
+<h2 id="validatedetector">validate_detector</h2>
+<pre><code class="lang-c"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">validate_detector</span><span class="hljs-params">(<span class="hljs-keyword">char</span> *datacfg, <span class="hljs-keyword">char</span> *cfgfile, <span class="hljs-keyword">char</span> *weightfile, <span class="hljs-keyword">char</span> *outfile)</span>
 </span>{
     <span class="hljs-keyword">int</span> j;
     <span class="hljs-built_in">list</span> *options = read_data_cfg(datacfg);
@@ -2210,8 +2214,9 @@
     }
     <span class="hljs-built_in">fprintf</span>(<span class="hljs-built_in">stderr</span>, <span class="hljs-string">&quot;Total Detection Time: %f Seconds\n&quot;</span>, what_time_is_it_now() - start);
 }
-
-<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">validate_detector_recall</span><span class="hljs-params">(<span class="hljs-keyword">char</span> *cfgfile, <span class="hljs-keyword">char</span> *weightfile)</span>
+</code></pre>
+<h2 id="validatedetectorrecall">validate_detector_recall</h2>
+<pre><code class="lang-c"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">validate_detector_recall</span><span class="hljs-params">(<span class="hljs-keyword">char</span> *cfgfile, <span class="hljs-keyword">char</span> *weightfile)</span>
 </span>{
     network *net = load_network(cfgfile, weightfile, <span class="hljs-number">0</span>);
     set_batch_network(net, <span class="hljs-number">1</span>);
@@ -2282,9 +2287,9 @@
         free_image(sized);
     }
 }
-
-
-<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">test_detector</span><span class="hljs-params">(<span class="hljs-keyword">char</span> *datacfg, <span class="hljs-keyword">char</span> *cfgfile, <span class="hljs-keyword">char</span> *weightfile, <span class="hljs-keyword">char</span> *filename, <span class="hljs-keyword">float</span> thresh, <span class="hljs-keyword">float</span> hier_thresh, <span class="hljs-keyword">char</span> *outfile, <span class="hljs-keyword">int</span> fullscreen)</span>
+</code></pre>
+<h2 id="testdetector">test_detector</h2>
+<pre><code class="lang-c"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">test_detector</span><span class="hljs-params">(<span class="hljs-keyword">char</span> *datacfg, <span class="hljs-keyword">char</span> *cfgfile, <span class="hljs-keyword">char</span> *weightfile, <span class="hljs-keyword">char</span> *filename, <span class="hljs-keyword">float</span> thresh, <span class="hljs-keyword">float</span> hier_thresh, <span class="hljs-keyword">char</span> *outfile, <span class="hljs-keyword">int</span> fullscreen)</span>
 </span>{
     <span class="hljs-built_in">list</span> *options = read_data_cfg(datacfg);
     <span class="hljs-keyword">char</span> *name_list = option_find_str(options, <span class="hljs-string">&quot;names&quot;</span>, <span class="hljs-string">&quot;data/names.list&quot;</span>);
@@ -2344,174 +2349,9 @@
         <span class="hljs-keyword">if</span> (filename) <span class="hljs-keyword">break</span>;
     }
 }
-
-<span class="hljs-comment">/*
-void censor_detector(char *datacfg, char *cfgfile, char *weightfile, int cam_index, const char *filename, int class, float thresh, int skip)
-{
-#ifdef OPENCV
-    char *base = basecfg(cfgfile);
-    network *net = load_network(cfgfile, weightfile, 0);
-    set_batch_network(net, 1);
-
-    srand(2222222);
-    CvCapture * cap;
-
-    int w = 1280;
-    int h = 720;
-
-    if(filename){
-        cap = cvCaptureFromFile(filename);
-    }else{
-        cap = cvCaptureFromCAM(cam_index);
-    }
-
-    if(w){
-        cvSetCaptureProperty(cap, CV_CAP_PROP_FRAME_WIDTH, w);
-    }
-    if(h){
-        cvSetCaptureProperty(cap, CV_CAP_PROP_FRAME_HEIGHT, h);
-    }
-
-    if(!cap) error(&quot;Couldn&apos;t connect to webcam.\n&quot;);
-    cvNamedWindow(base, CV_WINDOW_NORMAL);
-    cvResizeWindow(base, 512, 512);
-    float fps = 0;
-    int i;
-    float nms = .45;
-
-    while(1){
-        image in = get_image_from_stream(cap);
-        //image in_s = resize_image(in, net-&gt;w, net-&gt;h);
-        image in_s = letterbox_image(in, net-&gt;w, net-&gt;h);
-        layer l = net-&gt;layers[net-&gt;n-1];
-
-        float *X = in_s.data;
-        network_predict(net, X);
-        int nboxes = 0;
-        detection *dets = get_network_boxes(net, in.w, in.h, thresh, 0, 0, 0, &amp;nboxes);
-        //if (nms) do_nms_obj(boxes, probs, l.w*l.h*l.n, l.classes, nms);
-        if (nms) do_nms_sort(dets, nboxes, l.classes, nms);
-
-        for(i = 0; i &lt; nboxes; ++i){
-            if(dets[i].prob[class] &gt; thresh){
-                box b = dets[i].bbox;
-                int left  = b.x-b.w/2.;
-                int top   = b.y-b.h/2.;
-                censor_image(in, left, top, b.w, b.h);
-            }
-        }
-        show_image(in, base);
-        cvWaitKey(10);
-        free_detections(dets, nboxes);
-
-
-        free_image(in_s);
-        free_image(in);
-
-
-        float curr = 0;
-        fps = .9*fps + .1*curr;
-        for(i = 0; i &lt; skip; ++i){
-            image in = get_image_from_stream(cap);
-            free_image(in);
-        }
-    }
-    #endif
-}
-
-void extract_detector(char *datacfg, char *cfgfile, char *weightfile, int cam_index, const char *filename, int class, float thresh, int skip)
-{
-#ifdef OPENCV
-    char *base = basecfg(cfgfile);
-    network *net = load_network(cfgfile, weightfile, 0);
-    set_batch_network(net, 1);
-
-    srand(2222222);
-    CvCapture * cap;
-
-    int w = 1280;
-    int h = 720;
-
-    if(filename){
-        cap = cvCaptureFromFile(filename);
-    }else{
-        cap = cvCaptureFromCAM(cam_index);
-    }
-
-    if(w){
-        cvSetCaptureProperty(cap, CV_CAP_PROP_FRAME_WIDTH, w);
-    }
-    if(h){
-        cvSetCaptureProperty(cap, CV_CAP_PROP_FRAME_HEIGHT, h);
-    }
-
-    if(!cap) error(&quot;Couldn&apos;t connect to webcam.\n&quot;);
-    cvNamedWindow(base, CV_WINDOW_NORMAL);
-    cvResizeWindow(base, 512, 512);
-    float fps = 0;
-    int i;
-    int count = 0;
-    float nms = .45;
-
-    while(1){
-        image in = get_image_from_stream(cap);
-        //image in_s = resize_image(in, net-&gt;w, net-&gt;h);
-        image in_s = letterbox_image(in, net-&gt;w, net-&gt;h);
-        layer l = net-&gt;layers[net-&gt;n-1];
-
-        show_image(in, base);
-
-        int nboxes = 0;
-        float *X = in_s.data;
-        network_predict(net, X);
-        detection *dets = get_network_boxes(net, in.w, in.h, thresh, 0, 0, 1, &amp;nboxes);
-        //if (nms) do_nms_obj(boxes, probs, l.w*l.h*l.n, l.classes, nms);
-        if (nms) do_nms_sort(dets, nboxes, l.classes, nms);
-
-        for(i = 0; i &lt; nboxes; ++i){
-            if(dets[i].prob[class] &gt; thresh){
-                box b = dets[i].bbox;
-                int size = b.w*in.w &gt; b.h*in.h ? b.w*in.w : b.h*in.h;
-                int dx  = b.x*in.w-size/2.;
-                int dy  = b.y*in.h-size/2.;
-                image bim = crop_image(in, dx, dy, size, size);
-                char buff[2048];
-                sprintf(buff, &quot;results/extract/%07d&quot;, count);
-                ++count;
-                save_image(bim, buff);
-                free_image(bim);
-            }
-        }
-        free_detections(dets, nboxes);
-
-
-        free_image(in_s);
-        free_image(in);
-
-
-        float curr = 0;
-        fps = .9*fps + .1*curr;
-        for(i = 0; i &lt; skip; ++i){
-            image in = get_image_from_stream(cap);
-            free_image(in);
-        }
-    }
-    #endif
-}
-*/</span>
-
-<span class="hljs-comment">/*
-void network_detect(network *net, image im, float thresh, float hier_thresh, float nms, detection *dets)
-{
-    network_predict_image(net, im);
-    layer l = net-&gt;layers[net-&gt;n-1];
-    int nboxes = num_boxes(net);
-    fill_network_boxes(net, im.w, im.h, thresh, hier_thresh, 0, 0, dets);
-    if (nms) do_nms_sort(dets, nboxes, l.classes, nms);
-}
-*/</span>
-
-<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">run_detector</span><span class="hljs-params">(<span class="hljs-keyword">int</span> argc, <span class="hljs-keyword">char</span> **argv)</span>
+</code></pre>
+<h2 id="rundetector">run_detector</h2>
+<pre><code class="lang-c"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">run_detector</span><span class="hljs-params">(<span class="hljs-keyword">int</span> argc, <span class="hljs-keyword">char</span> **argv)</span>
 </span>{
     <span class="hljs-keyword">char</span> *prefix = find_char_arg(argc, argv, <span class="hljs-string">&quot;-prefix&quot;</span>, <span class="hljs-number">0</span>);
     <span class="hljs-keyword">float</span> thresh = find_float_arg(argc, argv, <span class="hljs-string">&quot;-thresh&quot;</span>, <span class="hljs-number">.5</span>);
@@ -2617,7 +2457,7 @@ void network_detect(network *net, image im, float thresh, float hier_thresh, flo
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"detector.c","level":"6.8","depth":1,"next":{"title":"dice.c","level":"6.9","depth":1,"path":"part5_examples/dice.md","ref":"part5_examples/dice.md","articles":[]},"previous":{"title":"darknet.c","level":"6.7","depth":1,"path":"part5_examples/darknet.md","ref":"part5_examples/darknet.md","articles":[]},"dir":"ltr"},"config":{"plugins":["advanced-emoji","theme-gestalt","-theme-default","styles-sass-fix","theme-api","mathjax","ga"],"root":"./","styles":{"website":"website-1600186244488.css"},"pluginsConfig":{"styles-sass-fix":{},"theme-gestalt":{"showLevel":false,"styles":{"website":"styles/website.css"},"logo":"/darknet_book/assets/darknet.png","baseUrl":null,"excludeDefaultStyles":true,"doNotHideChildrenChapters":false},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"theme-api":{"languages":[],"split":true,"theme":"light"},"mathjax":{"forceSVG":false,"version":"2.6-latest"},"ga":{"configuration":"auto","token":"UA-136921229-1"},"advanced-emoji":{"embedEmojis":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]}},"theme":"default","author":"JJM","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{"BASE_URL":"https://jjeamin.github.io"},"title":"DarkNet Book","output.name":"site","gitbook":"*"},"file":{"path":"part5_examples/detector.md","mtime":"2020-09-15T15:55:01.563Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-09-15T16:10:39.415Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"detector.c","level":"6.8","depth":1,"next":{"title":"dice.c","level":"6.9","depth":1,"path":"part5_examples/dice.md","ref":"part5_examples/dice.md","articles":[]},"previous":{"title":"darknet.c","level":"6.7","depth":1,"path":"part5_examples/darknet.md","ref":"part5_examples/darknet.md","articles":[]},"dir":"ltr"},"config":{"plugins":["advanced-emoji","theme-gestalt","-theme-default","styles-sass-fix","theme-api","mathjax","ga"],"root":"./","styles":{"website":"website-1600237079999.css"},"pluginsConfig":{"styles-sass-fix":{},"theme-gestalt":{"showLevel":false,"styles":{"website":"styles/website.css"},"logo":"/darknet_book/assets/darknet.png","baseUrl":null,"excludeDefaultStyles":true,"doNotHideChildrenChapters":false},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"theme-api":{"languages":[],"split":true,"theme":"light"},"mathjax":{"forceSVG":false,"version":"2.6-latest"},"ga":{"configuration":"auto","token":"UA-136921229-1"},"advanced-emoji":{"embedEmojis":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]}},"theme":"default","author":"JJM","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{"BASE_URL":"https://jjeamin.github.io"},"title":"DarkNet Book","output.name":"site","gitbook":"*"},"file":{"path":"part5_examples/detector.md","mtime":"2020-09-16T05:44:40.448Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-09-16T06:17:55.067Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>

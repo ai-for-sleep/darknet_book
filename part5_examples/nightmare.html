@@ -42,7 +42,7 @@
 
     
         
-        <link rel="stylesheet" href="../website-1600186244488.css">
+        <link rel="stylesheet" href="../website-1600237079999.css">
         
     
 
@@ -1723,23 +1723,25 @@
                                 <section class="normal markdown-section">
                                 
                                 <h1 id="nightmarec">nightmare.c</h1>
-<pre><code class="lang-c">#include &quot;darknet.h&quot;
+<pre><code class="lang-c"><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-string">&quot;darknet.h&quot;</span></span>
 
-#include &lt;math.h&gt;
+<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;math.h&gt;</span></span>
 
-// ./darknet nightmare cfg/extractor.recon.cfg ~/trained/yolo-coco.conv frame6.png -reconstruct -iters 500 -i 3 -lambda .1 -rate .01 -smooth 2
-
-float abs_mean(float *x, int n)
-{
-    int i;
-    float sum = 0;
-    for (i = 0; i &lt; n; ++i){
-        sum += fabs(x[i]);
+<span class="hljs-comment">// ./darknet nightmare cfg/extractor.recon.cfg ~/trained/yolo-coco.conv frame6.png -reconstruct -iters 500 -i 3 -lambda .1 -rate .01 -smooth 2</span>
+</code></pre>
+<h2 id="absmean">abs_mean</h2>
+<pre><code class="lang-c"><span class="hljs-function"><span class="hljs-keyword">float</span> <span class="hljs-title">abs_mean</span><span class="hljs-params">(<span class="hljs-keyword">float</span> *x, <span class="hljs-keyword">int</span> n)</span>
+</span>{
+    <span class="hljs-keyword">int</span> i;
+    <span class="hljs-keyword">float</span> sum = <span class="hljs-number">0</span>;
+    <span class="hljs-keyword">for</span> (i = <span class="hljs-number">0</span>; i &lt; n; ++i){
+        sum += <span class="hljs-built_in">fabs</span>(x[i]);
     }
-    return sum/n;
+    <span class="hljs-keyword">return</span> sum/n;
 }
-
-void calculate_loss(float *output, float *delta, int n, float thresh)
+</code></pre>
+<h2 id="calculateloss">calculate_loss</h2>
+<pre><code class="lang-c">void calculate_loss(float *output, float *delta, int n, float thresh)
 {
     int i;
     float mean = mean_array(output, n);
@@ -1749,33 +1751,34 @@ void calculate_loss(float *output, float *delta, int n, float thresh)
         else delta[i] = 0;
     }
 }
+</code></pre>
+<h2 id="optimizepicture">optimize_picture</h2>
+<pre><code class="lang-c"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">optimize_picture</span><span class="hljs-params">(network *net, image orig, <span class="hljs-keyword">int</span> max_layer, <span class="hljs-keyword">float</span> scale, <span class="hljs-keyword">float</span> rate, <span class="hljs-keyword">float</span> thresh, <span class="hljs-keyword">int</span> norm)</span>
+</span>{
+    <span class="hljs-comment">//scale_image(orig, 2);</span>
+    <span class="hljs-comment">//translate_image(orig, -1);</span>
+    net-&gt;n = max_layer + <span class="hljs-number">1</span>;
 
-void optimize_picture(network *net, image orig, int max_layer, float scale, float rate, float thresh, int norm)
-{
-    //scale_image(orig, 2);
-    //translate_image(orig, -1);
-    net-&gt;n = max_layer + 1;
-
-    int dx = rand()%16 - 8;
-    int dy = rand()%16 - 8;
-    int flip = rand()%2;
+    <span class="hljs-keyword">int</span> dx = rand()%<span class="hljs-number">16</span> - <span class="hljs-number">8</span>;
+    <span class="hljs-keyword">int</span> dy = rand()%<span class="hljs-number">16</span> - <span class="hljs-number">8</span>;
+    <span class="hljs-keyword">int</span> flip = rand()%<span class="hljs-number">2</span>;
 
     image crop = crop_image(orig, dx, dy, orig.w, orig.h);
-    image im = resize_image(crop, (int)(orig.w * scale), (int)(orig.h * scale));
-    if(flip) flip_image(im);
+    image im = resize_image(crop, (<span class="hljs-keyword">int</span>)(orig.w * scale), (<span class="hljs-keyword">int</span>)(orig.h * scale));
+    <span class="hljs-keyword">if</span>(flip) flip_image(im);
 
     resize_network(net, im.w, im.h);
-    layer last = net-&gt;layers[net-&gt;n-1];
-    //net-&gt;layers[net-&gt;n - 1].activation = LINEAR;
+    layer last = net-&gt;layers[net-&gt;n<span class="hljs-number">-1</span>];
+    <span class="hljs-comment">//net-&gt;layers[net-&gt;n - 1].activation = LINEAR;</span>
 
     image delta = make_image(im.w, im.h, im.c);
 
-#ifdef GPU
+<span class="hljs-meta">#<span class="hljs-meta-keyword">ifdef</span> GPU</span>
     net-&gt;delta_gpu = cuda_make_array(delta.data, im.w*im.h*im.c);
-    copy_cpu(net-&gt;inputs, im.data, 1, net-&gt;input, 1);
+    copy_cpu(net-&gt;inputs, im.data, <span class="hljs-number">1</span>, net-&gt;input, <span class="hljs-number">1</span>);
 
     forward_network_gpu(net);
-    copy_gpu(last.outputs, last.output_gpu, 1, last.delta_gpu, 1);
+    copy_gpu(last.outputs, last.output_gpu, <span class="hljs-number">1</span>, last.delta_gpu, <span class="hljs-number">1</span>);
 
     cuda_pull_array(last.delta_gpu, last.delta, last.outputs);
     calculate_loss(last.delta, last.delta, last.outputs, thresh);
@@ -1785,46 +1788,46 @@ void optimize_picture(network *net, image orig, int max_layer, float scale, floa
 
     cuda_pull_array(net-&gt;delta_gpu, delta.data, im.w*im.h*im.c);
     cuda_free(net-&gt;delta_gpu);
-    net-&gt;delta_gpu = 0;
-#else
-    printf(&quot;\nnet: %d %d %d im: %d %d %d\n&quot;, net-&gt;w, net-&gt;h, net-&gt;inputs, im.w, im.h, im.c);
-    copy_cpu(net-&gt;inputs, im.data, 1, net-&gt;input, 1);
+    net-&gt;delta_gpu = <span class="hljs-number">0</span>;
+<span class="hljs-meta">#<span class="hljs-meta-keyword">else</span></span>
+    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;\nnet: %d %d %d im: %d %d %d\n&quot;</span>, net-&gt;w, net-&gt;h, net-&gt;inputs, im.w, im.h, im.c);
+    copy_cpu(net-&gt;inputs, im.data, <span class="hljs-number">1</span>, net-&gt;input, <span class="hljs-number">1</span>);
     net-&gt;delta = delta.data;
     forward_network(net);
-    copy_cpu(last.outputs, last.output, 1, last.delta, 1);
+    copy_cpu(last.outputs, last.output, <span class="hljs-number">1</span>, last.delta, <span class="hljs-number">1</span>);
     calculate_loss(last.output, last.delta, last.outputs, thresh);
     backward_network(net);
-#endif
+<span class="hljs-meta">#<span class="hljs-meta-keyword">endif</span></span>
 
-    if(flip) flip_image(delta);
-    //normalize_array(delta.data, delta.w*delta.h*delta.c);
+    <span class="hljs-keyword">if</span>(flip) flip_image(delta);
+    <span class="hljs-comment">//normalize_array(delta.data, delta.w*delta.h*delta.c);</span>
     image resized = resize_image(delta, orig.w, orig.h);
     image out = crop_image(resized, -dx, -dy, orig.w, orig.h);
 
-    /*
+    <span class="hljs-comment">/*
        image g = grayscale_image(out);
        free_image(out);
        out = g;
-     */
+     */</span>
 
-    //rate = rate / abs_mean(out.data, out.w*out.h*out.c);
+    <span class="hljs-comment">//rate = rate / abs_mean(out.data, out.w*out.h*out.c);</span>
     image gray = make_image(out.w, out.h, out.c);
-    fill_image(gray, .5);
-    axpy_cpu(orig.w*orig.h*orig.c, -1, orig.data, 1, gray.data, 1);
-    axpy_cpu(orig.w*orig.h*orig.c, .1, gray.data, 1, out.data, 1);
+    fill_image(gray, <span class="hljs-number">.5</span>);
+    axpy_cpu(orig.w*orig.h*orig.c, <span class="hljs-number">-1</span>, orig.data, <span class="hljs-number">1</span>, gray.data, <span class="hljs-number">1</span>);
+    axpy_cpu(orig.w*orig.h*orig.c, <span class="hljs-number">.1</span>, gray.data, <span class="hljs-number">1</span>, out.data, <span class="hljs-number">1</span>);
 
-    if(norm) normalize_array(out.data, out.w*out.h*out.c);
-    axpy_cpu(orig.w*orig.h*orig.c, rate, out.data, 1, orig.data, 1);
+    <span class="hljs-keyword">if</span>(norm) normalize_array(out.data, out.w*out.h*out.c);
+    axpy_cpu(orig.w*orig.h*orig.c, rate, out.data, <span class="hljs-number">1</span>, orig.data, <span class="hljs-number">1</span>);
 
-    /*
+    <span class="hljs-comment">/*
        normalize_array(orig.data, orig.w*orig.h*orig.c);
        scale_image(orig, sqrt(var));
        translate_image(orig, mean);
-     */
+     */</span>
 
-    //translate_image(orig, 1);
-    //scale_image(orig, .5);
-    //normalize_image(orig);
+    <span class="hljs-comment">//translate_image(orig, 1);</span>
+    <span class="hljs-comment">//scale_image(orig, .5);</span>
+    <span class="hljs-comment">//normalize_image(orig);</span>
 
     constrain_image(orig);
 
@@ -1835,20 +1838,21 @@ void optimize_picture(network *net, image orig, int max_layer, float scale, floa
     free_image(out);
 
 }
-
-void smooth(image recon, image update, float lambda, int num)
-{
-    int i, j, k;
-    int ii, jj;
-    for(k = 0; k &lt; recon.c; ++k){
-        for(j = 0; j &lt; recon.h; ++j){
-            for(i = 0; i &lt; recon.w; ++i){
-                int out_index = i + recon.w*(j + recon.h*k);
-                for(jj = j-num; jj &lt;= j + num &amp;&amp; jj &lt; recon.h; ++jj){
-                    if (jj &lt; 0) continue;
-                    for(ii = i-num; ii &lt;= i + num &amp;&amp; ii &lt; recon.w; ++ii){
-                        if (ii &lt; 0) continue;
-                        int in_index = ii + recon.w*(jj + recon.h*k);
+</code></pre>
+<h2 id="smooth">smooth</h2>
+<pre><code class="lang-c"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">smooth</span><span class="hljs-params">(image recon, image update, <span class="hljs-keyword">float</span> lambda, <span class="hljs-keyword">int</span> num)</span>
+</span>{
+    <span class="hljs-keyword">int</span> i, j, k;
+    <span class="hljs-keyword">int</span> ii, jj;
+    <span class="hljs-keyword">for</span>(k = <span class="hljs-number">0</span>; k &lt; recon.c; ++k){
+        <span class="hljs-keyword">for</span>(j = <span class="hljs-number">0</span>; j &lt; recon.h; ++j){
+            <span class="hljs-keyword">for</span>(i = <span class="hljs-number">0</span>; i &lt; recon.w; ++i){
+                <span class="hljs-keyword">int</span> out_index = i + recon.w*(j + recon.h*k);
+                <span class="hljs-keyword">for</span>(jj = j-num; jj &lt;= j + num &amp;&amp; jj &lt; recon.h; ++jj){
+                    <span class="hljs-keyword">if</span> (jj &lt; <span class="hljs-number">0</span>) <span class="hljs-keyword">continue</span>;
+                    <span class="hljs-keyword">for</span>(ii = i-num; ii &lt;= i + num &amp;&amp; ii &lt; recon.w; ++ii){
+                        <span class="hljs-keyword">if</span> (ii &lt; <span class="hljs-number">0</span>) <span class="hljs-keyword">continue</span>;
+                        <span class="hljs-keyword">int</span> in_index = ii + recon.w*(jj + recon.h*k);
                         update.data[out_index] += lambda * (recon.data[in_index] - recon.data[out_index]);
                     }
                 }
@@ -1856,280 +1860,174 @@ void smooth(image recon, image update, float lambda, int num)
         }
     }
 }
-
-void reconstruct_picture(network *net, float *features, image recon, image update, float rate, float momentum, float lambda, int smooth_size, int iters)
-{
-    int iter = 0;
-    for (iter = 0; iter &lt; iters; ++iter) {
+</code></pre>
+<h2 id="reconstructpicture">reconstruct_picture</h2>
+<pre><code class="lang-c"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">reconstruct_picture</span><span class="hljs-params">(network *net, <span class="hljs-keyword">float</span> *features, image recon, image update, <span class="hljs-keyword">float</span> rate, <span class="hljs-keyword">float</span> momentum, <span class="hljs-keyword">float</span> lambda, <span class="hljs-keyword">int</span> smooth_size, <span class="hljs-keyword">int</span> iters)</span>
+</span>{
+    <span class="hljs-keyword">int</span> iter = <span class="hljs-number">0</span>;
+    <span class="hljs-keyword">for</span> (iter = <span class="hljs-number">0</span>; iter &lt; iters; ++iter) {
         image delta = make_image(recon.w, recon.h, recon.c);
 
-#ifdef GPU
+<span class="hljs-meta">#<span class="hljs-meta-keyword">ifdef</span> GPU</span>
         layer l = get_network_output_layer(net);
         cuda_push_array(net-&gt;input_gpu, recon.data, recon.w*recon.h*recon.c);
-        //cuda_push_array(net-&gt;truth_gpu, features, net-&gt;truths);
+        <span class="hljs-comment">//cuda_push_array(net-&gt;truth_gpu, features, net-&gt;truths);</span>
         net-&gt;delta_gpu = cuda_make_array(delta.data, delta.w*delta.h*delta.c);
 
         forward_network_gpu(net);
         cuda_push_array(l.delta_gpu, features, l.outputs);
-        axpy_gpu(l.outputs, -1, l.output_gpu, 1, l.delta_gpu, 1);
+        axpy_gpu(l.outputs, <span class="hljs-number">-1</span>, l.output_gpu, <span class="hljs-number">1</span>, l.delta_gpu, <span class="hljs-number">1</span>);
         backward_network_gpu(net);
 
         cuda_pull_array(net-&gt;delta_gpu, delta.data, delta.w*delta.h*delta.c);
 
         cuda_free(net-&gt;delta_gpu);
-#else
+<span class="hljs-meta">#<span class="hljs-meta-keyword">else</span></span>
         net-&gt;input = recon.data;
         net-&gt;delta = delta.data;
         net-&gt;truth = features;
 
         forward_network(net);
         backward_network(net);
-#endif
+<span class="hljs-meta">#<span class="hljs-meta-keyword">endif</span></span>
 
-        //normalize_array(delta.data, delta.w*delta.h*delta.c);
-        axpy_cpu(recon.w*recon.h*recon.c, 1, delta.data, 1, update.data, 1);
-        //smooth(recon, update, lambda, smooth_size);
+        <span class="hljs-comment">//normalize_array(delta.data, delta.w*delta.h*delta.c);</span>
+        axpy_cpu(recon.w*recon.h*recon.c, <span class="hljs-number">1</span>, delta.data, <span class="hljs-number">1</span>, update.data, <span class="hljs-number">1</span>);
+        <span class="hljs-comment">//smooth(recon, update, lambda, smooth_size);</span>
 
-        axpy_cpu(recon.w*recon.h*recon.c, rate, update.data, 1, recon.data, 1);
-        scal_cpu(recon.w*recon.h*recon.c, momentum, update.data, 1);
+        axpy_cpu(recon.w*recon.h*recon.c, rate, update.data, <span class="hljs-number">1</span>, recon.data, <span class="hljs-number">1</span>);
+        scal_cpu(recon.w*recon.h*recon.c, momentum, update.data, <span class="hljs-number">1</span>);
 
-        float mag = mag_array(delta.data, recon.w*recon.h*recon.c);
-        printf(&quot;mag: %f\n&quot;, mag);
-        //scal_cpu(recon.w*recon.h*recon.c, 600/mag, recon.data, 1);
+        <span class="hljs-keyword">float</span> mag = mag_array(delta.data, recon.w*recon.h*recon.c);
+        <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;mag: %f\n&quot;</span>, mag);
+        <span class="hljs-comment">//scal_cpu(recon.w*recon.h*recon.c, 600/mag, recon.data, 1);</span>
 
         constrain_image(recon);
         free_image(delta);
     }
 }
-
-/*
-void run_lsd(int argc, char **argv)
-{
-    srand(0);
-    if(argc &lt; 3){
-        fprintf(stderr, &quot;usage: %s %s [cfg] [weights] [image] [options! (optional)]\n&quot;, argv[0], argv[1]);
-        return;
+</code></pre>
+<h2 id="runnightmare">run_nightmare</h2>
+<pre><code class="lang-c"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">run_nightmare</span><span class="hljs-params">(<span class="hljs-keyword">int</span> argc, <span class="hljs-keyword">char</span> **argv)</span>
+</span>{
+    srand(<span class="hljs-number">0</span>);
+    <span class="hljs-keyword">if</span>(argc &lt; <span class="hljs-number">4</span>){
+        <span class="hljs-built_in">fprintf</span>(<span class="hljs-built_in">stderr</span>, <span class="hljs-string">&quot;usage: %s %s [cfg] [weights] [image] [layer] [options! (optional)]\n&quot;</span>, argv[<span class="hljs-number">0</span>], argv[<span class="hljs-number">1</span>]);
+        <span class="hljs-keyword">return</span>;
     }
 
-    char *cfg = argv[2];
-    char *weights = argv[3];
-    char *input = argv[4];
+    <span class="hljs-keyword">char</span> *cfg = argv[<span class="hljs-number">2</span>];
+    <span class="hljs-keyword">char</span> *weights = argv[<span class="hljs-number">3</span>];
+    <span class="hljs-keyword">char</span> *input = argv[<span class="hljs-number">4</span>];
+    <span class="hljs-keyword">int</span> max_layer = atoi(argv[<span class="hljs-number">5</span>]);
 
-    int norm = find_int_arg(argc, argv, &quot;-norm&quot;, 1);
-    int rounds = find_int_arg(argc, argv, &quot;-rounds&quot;, 1);
-    int iters = find_int_arg(argc, argv, &quot;-iters&quot;, 10);
-    float rate = find_float_arg(argc, argv, &quot;-rate&quot;, .04);
-    float momentum = find_float_arg(argc, argv, &quot;-momentum&quot;, .9);
-    float lambda = find_float_arg(argc, argv, &quot;-lambda&quot;, .01);
-    char *prefix = find_char_arg(argc, argv, &quot;-prefix&quot;, 0);
-    int reconstruct = find_arg(argc, argv, &quot;-reconstruct&quot;);
-    int smooth_size = find_int_arg(argc, argv, &quot;-smooth&quot;, 1);
+    <span class="hljs-keyword">int</span> range = find_int_arg(argc, argv, <span class="hljs-string">&quot;-range&quot;</span>, <span class="hljs-number">1</span>);
+    <span class="hljs-keyword">int</span> norm = find_int_arg(argc, argv, <span class="hljs-string">&quot;-norm&quot;</span>, <span class="hljs-number">1</span>);
+    <span class="hljs-keyword">int</span> rounds = find_int_arg(argc, argv, <span class="hljs-string">&quot;-rounds&quot;</span>, <span class="hljs-number">1</span>);
+    <span class="hljs-keyword">int</span> iters = find_int_arg(argc, argv, <span class="hljs-string">&quot;-iters&quot;</span>, <span class="hljs-number">10</span>);
+    <span class="hljs-keyword">int</span> octaves = find_int_arg(argc, argv, <span class="hljs-string">&quot;-octaves&quot;</span>, <span class="hljs-number">4</span>);
+    <span class="hljs-keyword">float</span> zoom = find_float_arg(argc, argv, <span class="hljs-string">&quot;-zoom&quot;</span>, <span class="hljs-number">1.</span>);
+    <span class="hljs-keyword">float</span> rate = find_float_arg(argc, argv, <span class="hljs-string">&quot;-rate&quot;</span>, <span class="hljs-number">.04</span>);
+    <span class="hljs-keyword">float</span> thresh = find_float_arg(argc, argv, <span class="hljs-string">&quot;-thresh&quot;</span>, <span class="hljs-number">1.</span>);
+    <span class="hljs-keyword">float</span> rotate = find_float_arg(argc, argv, <span class="hljs-string">&quot;-rotate&quot;</span>, <span class="hljs-number">0</span>);
+    <span class="hljs-keyword">float</span> momentum = find_float_arg(argc, argv, <span class="hljs-string">&quot;-momentum&quot;</span>, <span class="hljs-number">.9</span>);
+    <span class="hljs-keyword">float</span> lambda = find_float_arg(argc, argv, <span class="hljs-string">&quot;-lambda&quot;</span>, <span class="hljs-number">.01</span>);
+    <span class="hljs-keyword">char</span> *prefix = find_char_arg(argc, argv, <span class="hljs-string">&quot;-prefix&quot;</span>, <span class="hljs-number">0</span>);
+    <span class="hljs-keyword">int</span> reconstruct = find_arg(argc, argv, <span class="hljs-string">&quot;-reconstruct&quot;</span>);
+    <span class="hljs-keyword">int</span> smooth_size = find_int_arg(argc, argv, <span class="hljs-string">&quot;-smooth&quot;</span>, <span class="hljs-number">1</span>);
 
-    network net = parse_network_cfg(cfg);
-    load_weights(&amp;net, weights);
-    char *cfgbase = basecfg(cfg);
-    char *imbase = basecfg(input);
+    network *net = load_network(cfg, weights, <span class="hljs-number">0</span>);
+    <span class="hljs-keyword">char</span> *cfgbase = basecfg(cfg);
+    <span class="hljs-keyword">char</span> *imbase = basecfg(input);
 
-    set_batch_network(&amp;net, 1);
-    image im = load_image_color(input, 0, 0);
-
-    float *features = 0;
-    image update;
-    if (reconstruct){
-        im = letterbox_image(im, net-&gt;w, net-&gt;h);
-
-        int zz = 0;
-        network_predict(net, im.data);
-        image out_im = get_network_image(net);
-        image crop = crop_image(out_im, zz, zz, out_im.w-2*zz, out_im.h-2*zz);
-        //flip_image(crop);
-        image f_im = resize_image(crop, out_im.w, out_im.h);
-        free_image(crop);
-        printf(&quot;%d features\n&quot;, out_im.w*out_im.h*out_im.c);
-
-
-        im = resize_image(im, im.w, im.h);
-        f_im = resize_image(f_im, f_im.w, f_im.h);
-        features = f_im.data;
-
-        int i;
-        for(i = 0; i &lt; 14*14*512; ++i){
-            features[i] += rand_uniform(-.19, .19);
-        }
-
-        free_image(im);
-        im = make_random_image(im.w, im.h, im.c);
-        update = make_image(im.w, im.h, im.c);
-
-    }
-
-    int e;
-    int n;
-    for(e = 0; e &lt; rounds; ++e){
-        fprintf(stderr, &quot;Iteration: &quot;);
-        fflush(stderr);
-        for(n = 0; n &lt; iters; ++n){  
-            fprintf(stderr, &quot;%d, &quot;, n);
-            fflush(stderr);
-            if(reconstruct){
-                reconstruct_picture(net, features, im, update, rate, momentum, lambda, smooth_size, 1);
-                //if ((n+1)%30 == 0) rate *= .5;
-                show_image(im, &quot;reconstruction&quot;);
-#ifdef OPENCV
-                cvWaitKey(10);
-#endif
-            }else{
-                int layer = max_layer + rand()%range - range/2;
-                int octave = rand()%octaves;
-                optimize_picture(&amp;net, im, layer, 1/pow(1.33333333, octave), rate, thresh, norm);
-            }
-        }
-        fprintf(stderr, &quot;done\n&quot;);
-        char buff[256];
-        if (prefix){
-            sprintf(buff, &quot;%s/%s_%s_%d_%06d&quot;,prefix, imbase, cfgbase, max_layer, e);
-        }else{
-            sprintf(buff, &quot;%s_%s_%d_%06d&quot;,imbase, cfgbase, max_layer, e);
-        }
-        printf(&quot;%d %s\n&quot;, e, buff);
-        save_image(im, buff);
-        //show_image(im, buff);
-        //cvWaitKey(0);
-
-        if(rotate){
-            image rot = rotate_image(im, rotate);
-            free_image(im);
-            im = rot;
-        }
-        image crop = crop_image(im, im.w * (1. - zoom)/2., im.h * (1.-zoom)/2., im.w*zoom, im.h*zoom);
-        image resized = resize_image(crop, im.w, im.h);
-        free_image(im);
-        free_image(crop);
-        im = resized;
-    }
-}
-*/
-
-void run_nightmare(int argc, char **argv)
-{
-    srand(0);
-    if(argc &lt; 4){
-        fprintf(stderr, &quot;usage: %s %s [cfg] [weights] [image] [layer] [options! (optional)]\n&quot;, argv[0], argv[1]);
-        return;
-    }
-
-    char *cfg = argv[2];
-    char *weights = argv[3];
-    char *input = argv[4];
-    int max_layer = atoi(argv[5]);
-
-    int range = find_int_arg(argc, argv, &quot;-range&quot;, 1);
-    int norm = find_int_arg(argc, argv, &quot;-norm&quot;, 1);
-    int rounds = find_int_arg(argc, argv, &quot;-rounds&quot;, 1);
-    int iters = find_int_arg(argc, argv, &quot;-iters&quot;, 10);
-    int octaves = find_int_arg(argc, argv, &quot;-octaves&quot;, 4);
-    float zoom = find_float_arg(argc, argv, &quot;-zoom&quot;, 1.);
-    float rate = find_float_arg(argc, argv, &quot;-rate&quot;, .04);
-    float thresh = find_float_arg(argc, argv, &quot;-thresh&quot;, 1.);
-    float rotate = find_float_arg(argc, argv, &quot;-rotate&quot;, 0);
-    float momentum = find_float_arg(argc, argv, &quot;-momentum&quot;, .9);
-    float lambda = find_float_arg(argc, argv, &quot;-lambda&quot;, .01);
-    char *prefix = find_char_arg(argc, argv, &quot;-prefix&quot;, 0);
-    int reconstruct = find_arg(argc, argv, &quot;-reconstruct&quot;);
-    int smooth_size = find_int_arg(argc, argv, &quot;-smooth&quot;, 1);
-
-    network *net = load_network(cfg, weights, 0);
-    char *cfgbase = basecfg(cfg);
-    char *imbase = basecfg(input);
-
-    set_batch_network(net, 1);
-    image im = load_image_color(input, 0, 0);
-    if(0){
-        float scale = 1;
-        if(im.w &gt; 512 || im.h &gt; 512){
-            if(im.w &gt; im.h) scale = 512.0/im.w;
-            else scale = 512.0/im.h;
+    set_batch_network(net, <span class="hljs-number">1</span>);
+    image im = load_image_color(input, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>);
+    <span class="hljs-keyword">if</span>(<span class="hljs-number">0</span>){
+        <span class="hljs-keyword">float</span> scale = <span class="hljs-number">1</span>;
+        <span class="hljs-keyword">if</span>(im.w &gt; <span class="hljs-number">512</span> || im.h &gt; <span class="hljs-number">512</span>){
+            <span class="hljs-keyword">if</span>(im.w &gt; im.h) scale = <span class="hljs-number">512.0</span>/im.w;
+            <span class="hljs-keyword">else</span> scale = <span class="hljs-number">512.0</span>/im.h;
         }
         image resized = resize_image(im, scale*im.w, scale*im.h);
         free_image(im);
         im = resized;
     }
-    //im = letterbox_image(im, net-&gt;w, net-&gt;h);
+    <span class="hljs-comment">//im = letterbox_image(im, net-&gt;w, net-&gt;h);</span>
 
-    float *features = 0;
+    <span class="hljs-keyword">float</span> *features = <span class="hljs-number">0</span>;
     image update;
-    if (reconstruct){
+    <span class="hljs-keyword">if</span> (reconstruct){
         net-&gt;n = max_layer;
         im = letterbox_image(im, net-&gt;w, net-&gt;h);
-        //resize_network(&amp;net, im.w, im.h);
+        <span class="hljs-comment">//resize_network(&amp;net, im.w, im.h);</span>
 
         network_predict(net, im.data);
-        if(net-&gt;layers[net-&gt;n-1].type == REGION){
-            printf(&quot;region!\n&quot;);
-            zero_objectness(net-&gt;layers[net-&gt;n-1]);
+        <span class="hljs-keyword">if</span>(net-&gt;layers[net-&gt;n<span class="hljs-number">-1</span>].type == REGION){
+            <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;region!\n&quot;</span>);
+            zero_objectness(net-&gt;layers[net-&gt;n<span class="hljs-number">-1</span>]);
         }
         image out_im = copy_image(get_network_image(net));
-        /*
+        <span class="hljs-comment">/*
            image crop = crop_image(out_im, zz, zz, out_im.w-2*zz, out_im.h-2*zz);
         //flip_image(crop);
         image f_im = resize_image(crop, out_im.w, out_im.h);
         free_image(crop);
-         */
-        printf(&quot;%d features\n&quot;, out_im.w*out_im.h*out_im.c);
+         */</span>
+        <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;%d features\n&quot;</span>, out_im.w*out_im.h*out_im.c);
 
         features = out_im.data;
 
-        /*
+        <span class="hljs-comment">/*
         int i;
            for(i = 0; i &lt; 14*14*512; ++i){
         //features[i] += rand_uniform(-.19, .19);
         }
         free_image(im);
         im = make_random_image(im.w, im.h, im.c);
-         */
+         */</span>
         update = make_image(im.w, im.h, im.c);
     }
 
-    int e;
-    int n;
-    for(e = 0; e &lt; rounds; ++e){
-        fprintf(stderr, &quot;Iteration: &quot;);
-        fflush(stderr);
-        for(n = 0; n &lt; iters; ++n){  
-            fprintf(stderr, &quot;%d, &quot;, n);
-            fflush(stderr);
-            if(reconstruct){
-                reconstruct_picture(net, features, im, update, rate, momentum, lambda, smooth_size, 1);
-                //if ((n+1)%30 == 0) rate *= .5;
-                show_image(im, &quot;reconstruction&quot;, 10);
-            }else{
-                int layer = max_layer + rand()%range - range/2;
-                int octave = rand()%octaves;
-                optimize_picture(net, im, layer, 1/pow(1.33333333, octave), rate, thresh, norm);
+    <span class="hljs-keyword">int</span> e;
+    <span class="hljs-keyword">int</span> n;
+    <span class="hljs-keyword">for</span>(e = <span class="hljs-number">0</span>; e &lt; rounds; ++e){
+        <span class="hljs-built_in">fprintf</span>(<span class="hljs-built_in">stderr</span>, <span class="hljs-string">&quot;Iteration: &quot;</span>);
+        fflush(<span class="hljs-built_in">stderr</span>);
+        <span class="hljs-keyword">for</span>(n = <span class="hljs-number">0</span>; n &lt; iters; ++n){  
+            <span class="hljs-built_in">fprintf</span>(<span class="hljs-built_in">stderr</span>, <span class="hljs-string">&quot;%d, &quot;</span>, n);
+            fflush(<span class="hljs-built_in">stderr</span>);
+            <span class="hljs-keyword">if</span>(reconstruct){
+                reconstruct_picture(net, features, im, update, rate, momentum, lambda, smooth_size, <span class="hljs-number">1</span>);
+                <span class="hljs-comment">//if ((n+1)%30 == 0) rate *= .5;</span>
+                show_image(im, <span class="hljs-string">&quot;reconstruction&quot;</span>, <span class="hljs-number">10</span>);
+            }<span class="hljs-keyword">else</span>{
+                <span class="hljs-keyword">int</span> layer = max_layer + rand()%range - range/<span class="hljs-number">2</span>;
+                <span class="hljs-keyword">int</span> octave = rand()%octaves;
+                optimize_picture(net, im, layer, <span class="hljs-number">1</span>/<span class="hljs-built_in">pow</span>(<span class="hljs-number">1.33333333</span>, octave), rate, thresh, norm);
             }
         }
-        fprintf(stderr, &quot;done\n&quot;);
-        if(0){
+        <span class="hljs-built_in">fprintf</span>(<span class="hljs-built_in">stderr</span>, <span class="hljs-string">&quot;done\n&quot;</span>);
+        <span class="hljs-keyword">if</span>(<span class="hljs-number">0</span>){
             image g = grayscale_image(im);
             free_image(im);
             im = g;
         }
-        char buff[256];
-        if (prefix){
-            sprintf(buff, &quot;%s/%s_%s_%d_%06d&quot;,prefix, imbase, cfgbase, max_layer, e);
-        }else{
-            sprintf(buff, &quot;%s_%s_%d_%06d&quot;,imbase, cfgbase, max_layer, e);
+        <span class="hljs-keyword">char</span> buff[<span class="hljs-number">256</span>];
+        <span class="hljs-keyword">if</span> (prefix){
+            <span class="hljs-built_in">sprintf</span>(buff, <span class="hljs-string">&quot;%s/%s_%s_%d_%06d&quot;</span>,prefix, imbase, cfgbase, max_layer, e);
+        }<span class="hljs-keyword">else</span>{
+            <span class="hljs-built_in">sprintf</span>(buff, <span class="hljs-string">&quot;%s_%s_%d_%06d&quot;</span>,imbase, cfgbase, max_layer, e);
         }
-        printf(&quot;%d %s\n&quot;, e, buff);
+        <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;%d %s\n&quot;</span>, e, buff);
         save_image(im, buff);
-        //show_image(im, buff, 0);
+        <span class="hljs-comment">//show_image(im, buff, 0);</span>
 
-        if(rotate){
+        <span class="hljs-keyword">if</span>(rotate){
             image rot = rotate_image(im, rotate);
             free_image(im);
             im = rot;
         }
-        image crop = crop_image(im, im.w * (1. - zoom)/2., im.h * (1.-zoom)/2., im.w*zoom, im.h*zoom);
+        image crop = crop_image(im, im.w * (<span class="hljs-number">1.</span> - zoom)/<span class="hljs-number">2.</span>, im.h * (<span class="hljs-number">1.</span>-zoom)/<span class="hljs-number">2.</span>, im.w*zoom, im.h*zoom);
         image resized = resize_image(crop, im.w, im.h);
         free_image(im);
         free_image(crop);
@@ -2180,7 +2078,7 @@ void run_nightmare(int argc, char **argv)
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"nightmare.c","level":"6.13","depth":1,"next":{"title":"regressor.c","level":"6.14","depth":1,"path":"part5_examples/regressor.md","ref":"part5_examples/regressor.md","articles":[]},"previous":{"title":"lsd.c","level":"6.12","depth":1,"path":"part5_examples/lsd.md","ref":"part5_examples/lsd.md","articles":[]},"dir":"ltr"},"config":{"plugins":["advanced-emoji","theme-gestalt","-theme-default","styles-sass-fix","theme-api","mathjax","ga"],"root":"./","styles":{"website":"website-1600186244488.css"},"pluginsConfig":{"styles-sass-fix":{},"theme-gestalt":{"showLevel":false,"styles":{"website":"styles/website.css"},"logo":"/darknet_book/assets/darknet.png","baseUrl":null,"excludeDefaultStyles":true,"doNotHideChildrenChapters":false},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"theme-api":{"languages":[],"split":true,"theme":"light"},"mathjax":{"forceSVG":false,"version":"2.6-latest"},"ga":{"configuration":"auto","token":"UA-136921229-1"},"advanced-emoji":{"embedEmojis":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]}},"theme":"default","author":"JJM","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{"BASE_URL":"https://jjeamin.github.io"},"title":"DarkNet Book","output.name":"site","gitbook":"*"},"file":{"path":"part5_examples/nightmare.md","mtime":"2020-09-15T15:57:44.605Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-09-15T16:10:39.415Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"nightmare.c","level":"6.13","depth":1,"next":{"title":"regressor.c","level":"6.14","depth":1,"path":"part5_examples/regressor.md","ref":"part5_examples/regressor.md","articles":[]},"previous":{"title":"lsd.c","level":"6.12","depth":1,"path":"part5_examples/lsd.md","ref":"part5_examples/lsd.md","articles":[]},"dir":"ltr"},"config":{"plugins":["advanced-emoji","theme-gestalt","-theme-default","styles-sass-fix","theme-api","mathjax","ga"],"root":"./","styles":{"website":"website-1600237079999.css"},"pluginsConfig":{"styles-sass-fix":{},"theme-gestalt":{"showLevel":false,"styles":{"website":"styles/website.css"},"logo":"/darknet_book/assets/darknet.png","baseUrl":null,"excludeDefaultStyles":true,"doNotHideChildrenChapters":false},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"theme-api":{"languages":[],"split":true,"theme":"light"},"mathjax":{"forceSVG":false,"version":"2.6-latest"},"ga":{"configuration":"auto","token":"UA-136921229-1"},"advanced-emoji":{"embedEmojis":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]}},"theme":"default","author":"JJM","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{"BASE_URL":"https://jjeamin.github.io"},"title":"DarkNet Book","output.name":"site","gitbook":"*"},"file":{"path":"part5_examples/nightmare.md","mtime":"2020-09-16T05:54:13.757Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-09-16T06:17:55.067Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>
