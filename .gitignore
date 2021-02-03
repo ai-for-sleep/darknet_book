@@ -1,5 +1,7 @@
 /node_modules
 /_book
+/_site
+.jekyll-cache/
 /darknet_book
 
 # Node rules:
